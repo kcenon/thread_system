@@ -4,10 +4,14 @@
 
 /**
  * @file queue_factory_sample.cpp
- * @brief Demonstrates queue_factory usage for convenient queue creation
+ * @brief Queue factory for requirements-based and compile-time queue selection
+ * @example queue_factory_sample.cpp
  *
- * This sample shows how to use the queue_factory class to create different
- * queue types based on requirements, either at runtime or compile-time.
+ * Five examples: simple factory methods, requirements-based automatic
+ * selection, optimal queue for the current platform, compile-time type
+ * aliases, and practical use cases (financial, HFT, web server).
+ *
+ * @see queue_factory, scheduler_interface, adaptive_job_queue, job_queue
  */
 
 #include <kcenon/thread/queue/queue_factory.h>

@@ -2,6 +2,18 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file node_pool_sample.cpp
+ * @brief Lock-free node pool for high-performance memory allocation
+ * @example node_pool_sample.cpp
+ *
+ * Demonstrates basic allocation and deallocation, concurrent multi-threaded
+ * usage, performance comparison against standard new/delete, and memory
+ * efficiency including fragmentation behaviour.
+ *
+ * @see node_pool
+ */
+
 #include "thread_base/lockfree/memory/node_pool.h"
 #include "logger/core/logger.h"
 #include <thread>

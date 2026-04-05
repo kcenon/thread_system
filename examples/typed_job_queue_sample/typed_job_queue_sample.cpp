@@ -2,6 +2,18 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file typed_job_queue_sample.cpp
+ * @brief Lock-free typed job queue with MPMC patterns and performance benchmarks
+ * @example typed_job_queue_sample.cpp
+ *
+ * Covers five scenarios: basic typed queue usage, multi-producer/multi-consumer
+ * processing, performance comparison, a real-world task scheduling system, and
+ * high-contention stress testing.
+ *
+ * @see typed_job_queue_t, callback_typed_job, job_types
+ */
+
 #include "typed_thread_pool/scheduling/typed_job_queue.h"
 #include "typed_thread_pool/jobs/typed_job.h"
 #include "typed_thread_pool/jobs/callback_typed_job.h"

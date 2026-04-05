@@ -2,6 +2,18 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file typed_thread_pool_sample_2.cpp
+ * @brief Typed thread pool with a custom priority enum (test_priority)
+ * @example typed_thread_pool_sample_2.cpp
+ *
+ * Shows how to use typed_thread_pool_t with a user-defined enum type
+ * (test_priority) instead of the built-in job_types. Workers handle
+ * Top, Middle, or Bottom priority lanes.
+ *
+ * @see typed_thread_pool_t, typed_thread_worker_t, callback_typed_job_t, test_priority
+ */
+
 #include <iostream>
 #include <memory>
 #include <chrono>

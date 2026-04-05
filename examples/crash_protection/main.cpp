@@ -5,10 +5,13 @@
 /**
  * @file main.cpp
  * @brief Crash protection demonstration for thread system
- * 
- * This example demonstrates comprehensive crash protection mechanisms
- * including signal handling, graceful shutdown, resource cleanup, and
- * automatic recovery capabilities.
+ * @example crash_protection/main.cpp
+ *
+ * Demonstrates comprehensive crash protection mechanisms including signal
+ * handling, graceful shutdown, resource cleanup, scoped crash callbacks,
+ * and automatic recovery capabilities via crash_handler.
+ *
+ * @see crash_handler, crash_context, scoped_crash_callback, thread_pool_crash_safety
  */
 
 #include <iostream>

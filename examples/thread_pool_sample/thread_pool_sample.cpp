@@ -2,6 +2,18 @@
 // Copyright (c) 2024, 🍀☀🌕🌥 🌊
 // See the LICENSE file in the project root for full license information.
 
+/**
+ * @file thread_pool_sample.cpp
+ * @brief Thread pool sample with logger integration and batch job submission
+ * @example thread_pool_sample.cpp
+ *
+ * Shows how to create a thread pool with multiple workers, enqueue a large
+ * batch of callback jobs, and use the logger system for output. This is the
+ * canonical "hello world" for thread_system with logging.
+ *
+ * @see thread_pool, callback_job, log_module
+ */
+
 #include <iostream>
 #include <memory>
 #include <chrono>
