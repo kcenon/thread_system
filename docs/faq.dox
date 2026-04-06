@@ -1,0 +1,127 @@
+/**
+@page faq Frequently Asked Questions
+
+@tableofcontents
+
+This FAQ collects the most common questions from developers integrating Thread
+System into their projects. For longer walkthroughs, see the
+@ref tutorial_threadpool, @ref tutorial_dag, and @ref tutorial_lockfree pages.
+
+@section faq_threads How many threads should I use?
+
+Start with @c std::thread::hardware_concurrency() for CPU-bound work. For
+I/O-bound or mixed workloads, oversubscribe by a factor proportional to the
+average wait time over compute time — a 2x to 4x multiplier is a reasonable
+starting point. Avoid setting a fixed worker count without measuring; the
+optimal number depends on the workload, the host, and other processes
+contending for the same cores. The autoscaler can adjust the count over time
+based on queue depth and observed latency.
+
+@section faq_cancel How do I handle task cancellation?
+
+Use a @c kcenon::thread::cancellation_token. Pass the token to long-running
+jobs and check @c is_cancellation_requested() between work units. Cancellation
+is cooperative — the runtime cannot interrupt arbitrary code, so jobs must poll
+periodically. Tokens form a hierarchy: cancelling a parent cancels all linked
+children, which is useful for shutting down a request and all of its background
+fan-out.
+
+@code{.cpp}
+auto token = kcenon::thread::cancellation_token::create();
+pool->submit_task([token]() -> kcenon::thread::result_void {
+    while (!token->is_cancellation_requested()) {
+        // do a chunk of work
+    }
+    return {};
+});
+// later
+token->cancel();
+@endcode
+
+@section faq_async Thread pool vs. std::async — which is better?
+
+@c std::async on most implementations either spawns a new thread per call or
+uses an opaque process-wide pool with no scheduling controls. A dedicated
+thread pool gives you:
+- Bounded resource use.
+- Visibility into queue depth and latency.
+- Priority routing via @c typed_thread_pool.
+- Cooperative cancellation and structured shutdown.
+
+Use @c std::async only for one-off background work in small programs. Anything
+that runs in production with predictable load should use a thread pool.
+
+@section faq_monitoring How do I integrate with monitoring_system?
+
+Thread System exposes its diagnostic counters through the @c diagnostics and
+@c metrics modules. monitoring_system depends on Thread System and consumes
+these counters directly — you do not need to wire anything by hand. If you
+want to publish custom metrics, register a callback with
+@c thread_pool_diagnostics::observe(). Counters include queue depth, worker
+utilization, completed jobs, and per-priority latency histograms.
+
+@section faq_deadlock How do I avoid deadlocks when using the pool?
+
+A few rules prevent the most common cases:
+- Do not call @c future.get() from inside a job submitted to the same pool if
+  the awaited job depends on a worker from that pool — this can starve the
+  pool. Use the DAG scheduler for in-pool dependencies instead.
+- Acquire locks in a consistent global order across jobs.
+- Prefer @c std::scoped_lock to lock multiple mutexes atomically.
+- Avoid holding a mutex across @c submit_task — release first, then submit.
+- Watch for hidden blocking inside callbacks (logging, allocators, mutexes
+  used by other threads). The thread pool diagnostics can flag long-running
+  jobs that point at hidden contention.
+
+@section faq_perf How do I tune the pool for performance?
+
+1. Measure first. Use the included benchmarks or your own to capture baseline
+   throughput and latency.
+2. Right-size the worker count for your workload class.
+3. Try @c adaptive_job_queue (the default) before forcing a specific queue.
+4. Enable work stealing for highly imbalanced workloads only.
+5. Use @c typed_thread_pool to give latency-sensitive work a dedicated worker.
+6. Profile contention with @c perf or @c vtune to spot accidentally shared
+   state inside callbacks.
+
+@section faq_platform Are there platform differences I should know about?
+
+Thread System works on Linux, macOS, and Windows. Notable differences:
+- Linux supports NUMA-aware work stealing; macOS and Windows builds compile
+  the same code but treat the host as a single NUMA node.
+- Windows requires MSVC 2022 or newer for full @c std::format support.
+- macOS uses Grand Central Dispatch underneath @c std::thread, but the
+  thread pool itself does not depend on GCD.
+- ARMv7 and RISC-V are untested. AArch64 (Apple Silicon, Linux ARM64) is
+  supported and benchmarked.
+
+@section faq_memory How does memory management work for jobs and queues?
+
+Jobs are heap-allocated by the queue (typically as @c std::unique_ptr nodes).
+Lock-free queues defer node deletion until hazard pointer scanning confirms
+no thread is reading them. As a user you do not need to manage queue node
+lifetimes; just pass a callable into @c submit_task or build a typed job and
+the framework owns it from there. Avoid capturing very large objects by value
+in the lambda — capture by @c std::shared_ptr or move into the job.
+
+@section faq_errors How are errors propagated from jobs?
+
+Jobs return @c kcenon::thread::result_void or @c result<T>, which wrap the
+@c common_system Result type. Failures surface through the future returned by
+@c submit_task — calling @c .get() rethrows nothing; instead inspect the
+result and call @c get_error() (note: not @c error()) to read the failure
+detail. The DAG scheduler aggregates failures across nodes and exposes them
+through the run result.
+
+@section faq_testing How do I test code that uses the thread pool?
+
+- For unit tests, prefer the @c minimal_thread_pool example as a lightweight
+  fixture: it has predictable startup and shutdown costs.
+- Use a small worker count (1 or 2) so concurrency bugs surface deterministically.
+- Wait on futures returned from @c submit_task; never sleep-and-hope.
+- For races, run the test under TSan (@c cmake --preset tsan) and inside
+  Valgrind on Linux (@c valgrind --tool=helgrind).
+- The repository includes stress and sanitizer presets — use them in CI to
+  catch regressions in your downstream code as well.
+
+*/

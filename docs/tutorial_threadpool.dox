@@ -1,0 +1,177 @@
+/**
+@page tutorial_threadpool Tutorial: Thread Pool
+
+@tableofcontents
+
+This tutorial walks through the practical use of Thread System's two thread pool
+flavors: the basic @c thread_pool and the priority-aware @c typed_thread_pool. It
+covers when to choose each, how to configure work-stealing, and how to size the
+pool appropriately for the workload.
+
+@section tutorial_tp_intro Introduction
+
+A thread pool amortizes the cost of thread creation by reusing a fixed (or
+adaptive) set of worker threads. Submitting a task to the pool is significantly
+cheaper than spawning a new thread per task, and the pool can apply scheduling
+strategies that improve throughput, fairness, and cache locality.
+
+Thread System provides two pool flavors:
+- @c kcenon::thread::thread_pool — FIFO scheduling with an adaptive job queue.
+- @c kcenon::thread::typed_thread_pool_t<JobType> — Priority/type-aware
+  scheduling with per-type workers and aging to prevent starvation.
+
+@section tutorial_tp_when_basic When to Use thread_pool
+
+Reach for the basic @c thread_pool when:
+- All tasks are roughly equal in importance and latency requirements.
+- You need a simple submit-and-forget API with @c std::future return values.
+- The workload does not benefit from priority differentiation.
+- Throughput is the primary metric, not tail latency for hot work classes.
+
+The basic pool is the right default for most applications.
+
+@section tutorial_tp_when_typed When to Use typed_thread_pool
+
+Use @c typed_thread_pool_t when:
+- Tasks have distinct priority classes (e.g., interactive vs. background).
+- Some workers should be dedicated to a single priority to bound latency.
+- You want priority aging to prevent starvation of low-priority work.
+- You need explicit job type routing for instrumentation or rate limiting.
+
+The cost is a slightly more complex API and per-type queues, which trade
+throughput for predictable latency.
+
+@section tutorial_tp_workstealing Work-Stealing Configuration
+
+Work stealing lets idle workers pull jobs from busy peers. It is opt-in because
+the implementation introduces additional synchronization and is most useful for
+highly imbalanced workloads.
+
+Build with @c THREAD_ENABLE_WORK_STEALING=ON, then configure the pool:
+
+@code{.cpp}
+#include <kcenon/thread/stealing/work_stealing_pool.h>
+
+auto pool = kcenon::thread::stealing::work_stealing_pool::builder{}
+    .worker_count(std::thread::hardware_concurrency())
+    .numa_aware(true)        // Pin per-NUMA-node workers when available
+    .steal_attempts(4)       // Tries before parking the worker
+    .build();
+pool->start();
+@endcode
+
+Guidelines:
+- Enable NUMA awareness only on multi-socket Linux hosts; the topology probe is
+  cheap but unnecessary on consumer hardware.
+- Keep @c steal_attempts in the 2 to 8 range; higher values waste cycles, lower
+  values miss steal opportunities.
+- Profile both modes (mutex queue vs. work stealing) — work stealing is not
+  always faster for short, evenly distributed jobs.
+
+@section tutorial_tp_sizing Sizing the Pool
+
+The optimal worker count depends on whether the workload is CPU-bound or
+I/O-bound.
+
+- **CPU-bound**: Use @c std::thread::hardware_concurrency(). Adding more workers
+  than physical (or logical) cores rarely helps and increases context switching.
+- **I/O-bound**: A larger pool is fine. A common starting point is
+  @c hardware_concurrency() * (1 + average_wait_time / average_compute_time).
+- **Mixed**: Split the workload across two pools — one CPU-sized for compute
+  tasks and one larger pool for blocking I/O — to keep the compute pool free of
+  blocked workers.
+
+When in doubt, measure with your actual workload. The autoscaler can adjust the
+worker count over time based on queue depth and latency.
+
+@section tutorial_tp_example1 Example 1: Basic Thread Pool
+
+@code{.cpp}
+#include <kcenon/thread/thread_pool.h>
+#include <iostream>
+
+int main() {
+    auto pool = kcenon::thread::thread_pool::create();
+    pool->start();
+
+    auto fut = pool->submit_task([]() -> kcenon::thread::result_void {
+        std::cout << "Hello from a worker thread\n";
+        return {};
+    });
+    fut.wait();
+
+    pool->stop();
+    return 0;
+}
+@endcode
+
+@section tutorial_tp_example2 Example 2: Typed Thread Pool with Priorities
+
+@code{.cpp}
+#include <kcenon/thread/typed_thread_pool.h>
+
+int main() {
+    using job_types = kcenon::thread::job_types;
+    auto pool = std::make_shared<
+        kcenon::thread::typed_thread_pool_t<job_types>>();
+
+    // Dedicated high-priority worker bounds tail latency for interactive jobs.
+    pool->add_worker(job_types::High);
+    // Mixed worker handles normal and background work.
+    pool->add_worker({job_types::Normal, job_types::Background});
+    pool->start();
+
+    pool->enqueue(
+        std::make_unique<kcenon::thread::callback_typed_job_t<job_types>>(
+            []() -> kcenon::thread::result_void {
+                // Latency-sensitive interactive task
+                return {};
+            }, job_types::High));
+
+    pool->enqueue(
+        std::make_unique<kcenon::thread::callback_typed_job_t<job_types>>(
+            []() -> kcenon::thread::result_void {
+                // Lower priority background task
+                return {};
+            }, job_types::Background));
+
+    pool->stop();
+    return 0;
+}
+@endcode
+
+@section tutorial_tp_example3 Example 3: Sizing for an I/O-Bound Workload
+
+@code{.cpp}
+#include <kcenon/thread/thread_pool.h>
+#include <thread>
+
+int main() {
+    // I/O-bound workload: roughly 4x oversubscription is a reasonable start.
+    const std::size_t cores  = std::thread::hardware_concurrency();
+    const std::size_t workers = std::max<std::size_t>(cores * 4, 8);
+
+    auto pool = kcenon::thread::thread_pool::builder{}
+        .worker_count(workers)
+        .build();
+    pool->start();
+
+    for (int i = 0; i < 100; ++i) {
+        pool->submit_task([i]() -> kcenon::thread::result_void {
+            // Blocking network or disk operation here.
+            return {};
+        });
+    }
+
+    pool->stop();
+    return 0;
+}
+@endcode
+
+@section tutorial_tp_next Next Steps
+
+- @ref tutorial_dag for orchestrating work with explicit dependencies.
+- @ref tutorial_lockfree for choosing the right underlying queue.
+- @ref faq for quick answers to common pool questions.
+
+*/
