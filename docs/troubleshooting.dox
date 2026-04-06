@@ -1,0 +1,147 @@
+/**
+@page troubleshooting Troubleshooting Guide
+
+@tableofcontents
+
+When something goes wrong with concurrent code, the symptoms are often vague —
+a hang, a crash without a stack trace, or a slowdown that only appears under
+load. This page collects the most frequent issues we see with Thread System and
+the diagnostic steps that resolve them.
+
+@section ts_deadlock 1. Deadlock detection
+
+**Symptoms**: The pool stops making progress, queue depth grows, futures never
+complete.
+
+**Common causes**:
+- A job calls @c future.get() on another job submitted to the same pool, but
+  every worker is blocked waiting on a future, so nothing can run the
+  awaited job.
+- Two jobs acquire the same locks in different orders.
+- A callback blocks on a mutex held elsewhere in user code.
+
+**Diagnostic steps**:
+1. Use @c kcenon::thread::diagnostics::dump_pool_state() (or your debugger) to
+   list worker stack traces. If every worker is parked in @c std::future::wait,
+   you have an in-pool dependency cycle.
+2. Run under @c gdb / @c lldb and inspect each worker's backtrace. Look for
+   matching mutex addresses across two threads.
+3. Enable thread sanitizer (@c cmake --preset tsan) and re-run the failing
+   test. TSan detects most lock-order inversions automatically.
+
+**Fix**: Use the DAG scheduler for in-pool dependencies. Adopt @c std::scoped_lock
+to lock multiple mutexes atomically. Never hold a mutex across @c submit_task.
+
+@section ts_leak 2. Memory leak with futures
+
+**Symptoms**: RSS grows steadily under load even though jobs complete.
+
+**Common causes**:
+- The pool returns a future from @c submit_task and the caller never reads or
+  drops it. The shared state stays alive until the future is destroyed.
+- Lambdas capture large objects by value; the lambda lives until the job
+  finishes, pinning the captures.
+- The hazard pointer retire list never reaches the reclamation threshold
+  because one thread rarely runs.
+
+**Diagnostic steps**:
+1. Run under @c valgrind --tool=memcheck or AddressSanitizer
+   (@c cmake --preset asan).
+2. Use @c heaptrack or @c jemalloc statistics to find the call site that
+   allocates the leaked memory.
+3. Check job lifetimes — long-running jobs delay cleanup of everything they
+   capture.
+
+**Fix**: Drop futures you do not need (or call @c .wait() and let them go).
+Capture large state by @c std::shared_ptr or move it. For hazard pointer
+buildup, occasionally call @c hazard_domain::scan_now() from a maintenance
+thread.
+
+@section ts_platform 3. Platform-specific threading issues
+
+**Symptoms**: The code runs on Linux but hangs on Windows, or works on x86_64
+but crashes on AArch64.
+
+**Common causes**:
+- Relying on a particular memory ordering that is enforced on x86 but not on
+  weakly ordered architectures.
+- Using thread-local storage that is destroyed in a different order on
+  different platforms during shutdown.
+- Differences in @c std::thread::hardware_concurrency() reporting (cgroups on
+  Linux containers, hybrid cores on Windows).
+
+**Diagnostic steps**:
+1. Reproduce on the failing platform under TSan if available.
+2. Audit any custom @c std::atomic usage; default to
+   @c std::memory_order_seq_cst until proven slow.
+3. On Linux containers, check @c /sys/fs/cgroup limits — they affect what
+   @c hardware_concurrency() returns.
+
+**Fix**: Use @c std::memory_order_seq_cst by default, then relax with care
+after profiling. Pin thread-local cleanup order using explicit
+@c thread_local destructors. Configure the pool's worker count from a runtime
+setting instead of trusting platform defaults.
+
+@section ts_perf 4. Performance problems
+
+**Symptoms**: Throughput is lower than expected, tail latency spikes, CPU
+utilization is high without forward progress.
+
+**Common causes**:
+- Workers spend most time in the kernel waking up from condition variables.
+- A single hot lock inside a callback bottlenecks every worker.
+- The job queue is mutex-backed under high contention; switching to lock-free
+  helps.
+- False sharing between counters or job control blocks placed on the same
+  cache line.
+
+**Diagnostic steps**:
+1. Run the @c benchmarks/thread_pool_benchmark and compare against the
+   shipped baseline numbers.
+2. Use @c perf record -F 999 -g to find the hottest functions.
+3. Check @c thread_pool_diagnostics::queue_depth and worker idle counters —
+   if workers are idle while the queue is non-empty, there is a wakeup or
+   stealing problem.
+4. Run the autoscaler in observation-only mode and compare its
+   recommendation to your static configuration.
+
+**Fix**: Switch to @c adaptive_job_queue, enable work stealing for skewed
+loads, split CPU and I/O work into separate pools, and align hot counters to
+cache lines (@c alignas(64)).
+
+@section ts_hang 5. Hang on shutdown
+
+**Symptoms**: The program reaches @c pool->stop() but never returns.
+
+**Common causes**:
+- Pending jobs that wait on a cancellation token nobody cancelled.
+- Futures still held by the caller; the pool destructor blocks until the
+  shared state is released.
+- A worker thread holds a hazard pointer to a node and never reaches the
+  reclamation point.
+- Nested pools — pool A's worker waits on a future from pool B, which is
+  already shutting down.
+
+**Diagnostic steps**:
+1. Attach a debugger and dump every thread's backtrace. Workers parked in
+   @c condition_variable::wait inside @c stop() indicate jobs that never
+   completed.
+2. Confirm cancellation tokens are actually cancelled before @c stop().
+3. Look for futures captured by other long-lived objects.
+
+**Fix**: Cancel any cancellation tokens before stopping the pool. Use
+@c stop(std::chrono::seconds(N)) to bound the wait. Shut down dependent pools
+in reverse dependency order — outermost first.
+
+@section ts_more More help
+
+If these steps do not isolate the issue, open a GitHub issue with:
+- The exact build configuration (compiler, version, CMake preset).
+- A minimal reproduction (the smaller the better).
+- Sanitizer output if available (TSan, ASan, UBSan).
+- @c thread_pool_diagnostics dump captured at the failure point.
+
+See also @ref faq for quick answers and @ref tutorial_threadpool for usage
+patterns that prevent these issues in the first place.
+
+*/

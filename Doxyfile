@@ -100,7 +100,12 @@ INPUT                  = ./core \
                          ./src \
                          ./include \
                          ./examples \
-                         ./docs/mainpage.dox
+                         ./docs/mainpage.dox \
+                         ./docs/tutorial_threadpool.dox \
+                         ./docs/tutorial_dag.dox \
+                         ./docs/tutorial_lockfree.dox \
+                         ./docs/faq.dox \
+                         ./docs/troubleshooting.dox
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \

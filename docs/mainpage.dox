@@ -202,6 +202,19 @@ cd thread_system
 | **Adapters** | `adapters/` | common_executor_adapter.h, job_queue_adapter.h | Bridges to common_system IExecutor |
 | **Concepts** | `concepts/` | thread_concepts.h | C++20 concepts for thread domain |
 
+@section learning Learning Resources
+
+New to Thread System? Start here. These pages walk through the most common
+integration scenarios and answer the questions developers ask most often.
+
+| Resource | Description |
+|----------|-------------|
+| @ref tutorial_threadpool | Choosing between basic and typed pools, work-stealing, sizing |
+| @ref tutorial_dag | Defining task dependencies, execution order, error handling |
+| @ref tutorial_lockfree | MPMC vs SPSC selection, hazard pointers, performance |
+| @ref faq | Quick answers to the 10 most common integration questions |
+| @ref troubleshooting | Diagnosing deadlocks, leaks, hangs, and performance issues |
+
 @section examples Examples
 
 | Example | Source | Description |
