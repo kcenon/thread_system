@@ -1,4 +1,4 @@
 The package kcenon-thread-system provides CMake targets:
 
     find_package(thread_system CONFIG REQUIRED)
-    target_link_libraries(main PRIVATE thread_system::ThreadSystem)
+    target_link_libraries(main PRIVATE thread_system::thread_system)
