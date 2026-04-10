@@ -69,6 +69,7 @@
 #include <tuple>
 #include <string>
 #include <memory>
+#include <mutex>
 #include <vector>
 #include <chrono>
 #include <optional>
@@ -772,6 +773,11 @@ namespace kcenon::thread
 		 * Lazily initialized on first access to diagnostics().
 		 */
 		mutable std::unique_ptr<diagnostics::thread_pool_diagnostics> diagnostics_;
+
+		/**
+		 * @brief Once flag for thread-safe lazy initialization of diagnostics_.
+		 */
+		mutable std::once_flag diagnostics_init_flag_;
 
 		/**
 		 * @brief Registered pool policies for extending thread pool behavior.
