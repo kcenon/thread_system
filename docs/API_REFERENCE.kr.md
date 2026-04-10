@@ -21,7 +21,7 @@ category: "API"
 1. [네임스페이스](#네임스페이스)
 2. [thread_pool (권장)](#thread_pool-권장)
 3. [typed_thread_pool](#typed_thread_pool)
-4. [Lock-Free 큐](#lock-free-큐)
+4. [Concurrent 큐](#concurrent-큐)
 5. [동기화 프리미티브](#동기화-프리미티브)
 6. [NUMA 토폴로지](#numa-토폴로지)
 7. [작업 훔치기 유틸리티](#작업-훔치기-유틸리티)

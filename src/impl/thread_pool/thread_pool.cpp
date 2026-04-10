@@ -766,17 +766,17 @@ auto thread_pool::get_active_worker_count() const -> std::size_t {
 // ============================================================================
 
 auto thread_pool::diagnostics() -> diagnostics::thread_pool_diagnostics& {
-    if (!diagnostics_) {
+    std::call_once(diagnostics_init_flag_, [this]() {
         diagnostics_ = std::make_unique<diagnostics::thread_pool_diagnostics>(*this);
-    }
+    });
     return *diagnostics_;
 }
 
 auto thread_pool::diagnostics() const -> const diagnostics::thread_pool_diagnostics& {
-    if (!diagnostics_) {
+    std::call_once(diagnostics_init_flag_, [this]() {
         diagnostics_ = std::make_unique<diagnostics::thread_pool_diagnostics>(
             const_cast<thread_pool&>(*this));
-    }
+    });
     return *diagnostics_;
 }
 
