@@ -38,6 +38,11 @@ module;
 #include <kcenon/thread/core/job_queue.h>
 #include <kcenon/thread/queue/adaptive_job_queue.h>
 #include <kcenon/thread/queue/queue_factory.h>
+
+// The legacy lockfree_queue.h re-exports concurrent_queue under the old
+// name for backward compatibility. Suppress its deprecation notice here
+// because the module itself is the authorized re-exporter.
+#define THREAD_SUPPRESS_LEGACY_LOCKFREE_QUEUE_WARNING 1
 #include <kcenon/thread/lockfree/lockfree_queue.h>
 #include <kcenon/thread/lockfree/lockfree_job_queue.h>
 #include <kcenon/thread/lockfree/work_stealing_deque.h>
