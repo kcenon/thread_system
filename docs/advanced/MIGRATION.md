@@ -16,6 +16,7 @@ category: "MIGR"
 
 ## Table of Contents
 
+- [v1.0.0 API Freeze (current)](#v100-api-freeze-current)
 - [v3.0.0 Migration (common_system)](#v300-migration-common_system)
 - [Overview](#overview)
 - [Migration Status](#migration-status)
@@ -34,6 +35,78 @@ category: "MIGR"
 - [Timeline](#timeline)
   - [Current Status (2025-09-13)](#current-status-2025-09-13)
   - [Detailed Status Log](#detailed-status-log)
+
+## v1.0.0 API Freeze (current)
+
+**Release Date:** 2026-04-14
+
+v1.0.0 is an **API stability commitment**. From v1.0.0 onward, any breaking change
+to the public API requires a major version bump. This section records the surface
+that was frozen and the legacy APIs that remain only for migration support.
+
+### Frozen Public Surface
+
+The authoritative public headers live under `include/kcenon/thread/`:
+
+| Subsystem | Path | Notes |
+|-----------|------|-------|
+| Core threading | `core/` | `thread_pool`, `thread_worker`, `job`, `job_queue`, `cancellation_token`, `future_job`, `submit_options` |
+| Queues | `queue/`, `concurrent/` | `adaptive_job_queue`, `concurrent_queue`, `queue_factory` |
+| DAG | `dag/` | `dag_scheduler`, `dag_job`, `dag_job_builder` |
+| Configuration | `thread_config.h`, `config/` | Unified builder for pool, DAG, and aging settings |
+| Error handling | `core/error_handling.h` | `error_code` enum + `common::Result<T>` / `common::VoidResult` helpers |
+| Synchronization | `core/sync_primitives.h`, `core/hazard_pointer.h` | Lock-free reclamation helpers |
+
+### Deprecated in v1.0.0 (slated for removal in v2.0.0)
+
+The following APIs emit compiler warnings in v1.0.0 and will be removed in v2.0.0.
+
+| Symbol | Replacement | Trigger |
+|--------|-------------|---------|
+| `thread_system::` / `thread_module::` / `thread_namespace::` namespace aliases | Use `kcenon::thread::` directly | `#pragma message` on `compatibility.h` include |
+| `utility_module::` namespace alias | Use `kcenon::thread::utils::` directly | `#pragma message` on `compatibility.h` include |
+| `kcenon::thread::log_level` (enum in `thread_logger.h`) | `kcenon::thread::log_level_v2` or `common::interfaces::log_level` | Warnings via the deprecated `thread_logger` methods that consume it |
+| `kcenon::thread::thread_logger::log()`, `log_error()`, `set_enabled()`, `is_enabled()`, `set_level()`, `set_lightweight_mode()`, `is_lightweight_mode()` | `thread_context::log()` with `common::interfaces::ILogger` | `[[deprecated]]` attribute |
+| `<kcenon/thread/lockfree/lockfree_queue.h>` (forwarding header) | `<kcenon/thread/concurrent/concurrent_queue.h>` | `#pragma message` on include |
+| `<kcenon/thread/core/thread_pool_fmt.h>` (forwarding header) | `<kcenon/thread/formatters.h>` | `#pragma message` on include (pre-existing) |
+| `<kcenon/thread/dag/dag_config.h>` (documentation-only deprecation) | `<kcenon/thread/thread_config.h>` builder | Doxygen `@deprecated` |
+| `<kcenon/thread/impl/typed_pool/priority_aging_config.h>` (documentation-only deprecation) | `<kcenon/thread/thread_config.h>` builder | Doxygen `@deprecated` |
+
+### Silencing Legacy Warnings During Migration
+
+While migrating a dependent project, warnings emitted by legacy headers can be
+silenced by defining the following macros **before** the `#include`:
+
+```cpp
+// Legacy namespace aliases in compatibility.h
+#define THREAD_SUPPRESS_LEGACY_NAMESPACE_WARNING 1
+#include <kcenon/thread/compatibility.h>
+
+// Legacy forwarding header lockfree_queue.h
+#define THREAD_SUPPRESS_LEGACY_LOCKFREE_QUEUE_WARNING 1
+#include <kcenon/thread/lockfree/lockfree_queue.h>
+```
+
+These macros must be removed before v2.0.0 adoption.
+
+### API Changes Since v3.0.0
+
+- `cancellation_token::check_cancelled()` returns `common::VoidResult`
+  (previously `throw_if_cancelled()` threw `std::runtime_error`). See #671.
+- `cancellable_future<T>::get()` / `get_for()` return
+  `common::Result<T>` / `common::Result<std::optional<T>>`. See #671.
+- `thread_pool::submit_wait_any()` returns `common::Result<R>` with
+  `error_code::invalid_argument` for empty input. See #671.
+
+### Removed in v1.0.0
+
+Previously removed in v3.0.0 (kept for reference):
+
+- `kcenon::thread::result<T>` / `result_void` / `error` — use `common::Result<T>` / `common::VoidResult` / `common::error_info`.
+- `kcenon::thread::logger_interface` / `monitoring_interface` / `monitorable_interface` — use `common::interfaces::ILogger` / `IMonitor` / `IMonitorable`.
+- `kcenon::thread::throw_if_cancelled()` — removed in #671, replaced by `check_cancelled()` returning `common::VoidResult`.
+
+---
 
 ## v3.0.0 Migration (common_system)
 
