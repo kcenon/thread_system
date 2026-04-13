@@ -48,5 +48,15 @@
 
 #pragma once
 
+#if !defined(THREAD_SUPPRESS_LEGACY_LOCKFREE_QUEUE_WARNING) \
+    && !defined(KCENON_THREAD_LOCKFREE_QUEUE_H_WARNED)
+#define KCENON_THREAD_LOCKFREE_QUEUE_H_WARNED 1
+#if defined(_MSC_VER)
+#pragma message("<kcenon/thread/lockfree/lockfree_queue.h> is deprecated since v1.0.0 and will be removed in v2.0.0. Include <kcenon/thread/concurrent/concurrent_queue.h> instead. Define THREAD_SUPPRESS_LEGACY_LOCKFREE_QUEUE_WARNING to silence this warning.")
+#elif defined(__GNUC__) || defined(__clang__)
+#pragma message "<kcenon/thread/lockfree/lockfree_queue.h> is deprecated since v1.0.0 and will be removed in v2.0.0. Include <kcenon/thread/concurrent/concurrent_queue.h> instead. Define THREAD_SUPPRESS_LEGACY_LOCKFREE_QUEUE_WARNING to silence this warning."
+#endif
+#endif
+
 // Include the new location
 #include <kcenon/thread/concurrent/concurrent_queue.h>
