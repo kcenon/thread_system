@@ -158,12 +158,14 @@ TEST_F(FuturePromiseTest, SubmitWaitAnyReturnsFirstResult) {
     auto result = pool_->submit_wait_any(std::move(tasks));
 
     // Should return quickly (the fast task)
-    EXPECT_TRUE(result == 1 || result == 2);
+    ASSERT_TRUE(result.is_ok());
+    EXPECT_TRUE(result.unwrap() == 1 || result.unwrap() == 2);
 }
 
-TEST_F(FuturePromiseTest, SubmitWaitAnyThrowsOnEmptyVector) {
+TEST_F(FuturePromiseTest, SubmitWaitAnyReturnsErrorOnEmptyVector) {
     std::vector<std::function<int()>> empty_tasks;
-    EXPECT_THROW(pool_->submit_wait_any(std::move(empty_tasks)), std::invalid_argument);
+    auto result = pool_->submit_wait_any(std::move(empty_tasks));
+    EXPECT_TRUE(result.is_err());
 }
 
 // ============================================================================
@@ -248,7 +250,9 @@ TEST_F(FuturePromiseTest, CancellableFutureBasicUsage) {
 
     cancellable_future<int> cf(std::move(future), token);
     EXPECT_FALSE(cf.is_cancelled());
-    EXPECT_EQ(cf.get(), 42);
+    auto result = cf.get();
+    ASSERT_TRUE(result.is_ok());
+    EXPECT_EQ(result.unwrap(), 42);
 }
 
 TEST_F(FuturePromiseTest, CancellableFutureCancel) {
@@ -273,9 +277,10 @@ TEST_F(FuturePromiseTest, CancellableFutureGetForWithTimeout) {
 
     cancellable_future<int> cf(std::move(future), token);
 
-    // Short timeout - should return nullopt
+    // Short timeout - should return ok(nullopt)
     auto result = cf.get_for(std::chrono::milliseconds(10));
-    EXPECT_FALSE(result.has_value());
+    ASSERT_TRUE(result.is_ok());
+    EXPECT_FALSE(result.unwrap().has_value());
 }
 
 TEST_F(FuturePromiseTest, CancellableFutureIsReady) {

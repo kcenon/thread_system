@@ -9,6 +9,8 @@
  * @brief Implementation of a cancellation token for cooperative cancellation
  */
 
+#include <kcenon/thread/core/error_handling.h>
+
 #include <atomic>
 #include <functional>
 #include <memory>
@@ -139,13 +141,15 @@ public:
     }
     
     /**
-     * @brief Throws an exception if the token has been canceled
-     * @throws std::runtime_error if the token has been canceled
+     * @brief Checks if the token has been canceled and returns an error result
+     * @return common::VoidResult — error with operation_canceled if cancelled,
+     *         success otherwise
      */
-    void throw_if_cancelled() const {
+    [[nodiscard]] common::VoidResult check_cancelled() const {
         if (is_cancelled()) {
-            throw std::runtime_error("Operation cancelled");
+            return make_error_result(error_code::operation_canceled);
         }
+        return common::ok();
     }
     
     /**

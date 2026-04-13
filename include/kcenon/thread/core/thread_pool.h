@@ -488,12 +488,13 @@ namespace kcenon::thread
 		 * @tparam R Return type (automatically deduced)
 		 * @param callables Vector of functions to execute
 		 * @param opts Submit options (wait_any is implicitly true)
-		 * @return First completed result
+		 * @return common::Result<R> containing the first completed result, or an
+		 *         error if callables is empty or execution failed
 		 */
 		template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
 		[[nodiscard]] auto submit_wait_any(std::vector<F>&& callables,
 		                                   const submit_options& opts = {})
-		    -> R;
+		    -> common::Result<R>;
 
 		/**
 		 * @brief Check if the thread pool is currently running

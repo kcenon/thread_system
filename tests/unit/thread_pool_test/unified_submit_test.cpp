@@ -225,12 +225,14 @@ TEST_F(UnifiedSubmitTest, SubmitWaitAnyReturnsFirstResult) {
 
     auto result = pool_->submit_wait_any(std::move(tasks));
 
-    EXPECT_TRUE(result == 1 || result == 2);
+    ASSERT_TRUE(result.is_ok());
+    EXPECT_TRUE(result.unwrap() == 1 || result.unwrap() == 2);
 }
 
-TEST_F(UnifiedSubmitTest, SubmitWaitAnyThrowsOnEmptyVector) {
+TEST_F(UnifiedSubmitTest, SubmitWaitAnyReturnsErrorOnEmptyVector) {
     std::vector<std::function<int()>> empty_tasks;
-    EXPECT_THROW(pool_->submit_wait_any(std::move(empty_tasks)), std::invalid_argument);
+    auto result = pool_->submit_wait_any(std::move(empty_tasks));
+    EXPECT_TRUE(result.is_err());
 }
 
 TEST_F(UnifiedSubmitTest, SubmitWaitAnyWithOptions) {
@@ -240,7 +242,8 @@ TEST_F(UnifiedSubmitTest, SubmitWaitAnyWithOptions) {
 
     auto result = pool_->submit_wait_any(std::move(tasks), submit_options::named("any_job"));
 
-    EXPECT_TRUE(result == 10 || result == 20);
+    ASSERT_TRUE(result.is_ok());
+    EXPECT_TRUE(result.unwrap() == 10 || result.unwrap() == 20);
 }
 
 }  // namespace kcenon::thread::test

@@ -13,11 +13,11 @@
  */
 
 #include <kcenon/thread/core/cancellation_token.h>
+#include <kcenon/thread/core/error_handling.h>
 
 #include <chrono>
 #include <future>
 #include <optional>
-#include <stdexcept>
 
 namespace kcenon::thread {
 
@@ -82,42 +82,55 @@ public:
     /**
      * @brief Wait for and retrieve the result
      *
-     * @return The result value
-     * @throws std::runtime_error if the operation was cancelled
-     * @throws Any exception thrown by the callable
+     * @return common::Result<R> containing the value on success, or an error
+     *         if the operation was cancelled or threw an exception
      *
      * This method blocks until the result is ready or the operation
      * is cancelled.
      */
-    [[nodiscard]] auto get() -> R {
+    [[nodiscard]] auto get() -> common::Result<R> {
         if (token_.is_cancelled()) {
-            throw std::runtime_error("Operation cancelled");
+            return make_error_result<R>(error_code::operation_canceled);
         }
-        return future_.get();
+        try {
+            return common::Result<R>::ok(future_.get());
+        } catch (const std::exception& e) {
+            return make_error_result<R>(error_code::job_execution_failed, e.what());
+        } catch (...) {
+            return make_error_result<R>(error_code::unknown_error, "Unknown exception in future");
+        }
     }
 
     /**
      * @brief Wait for the result with timeout
      *
      * @param timeout Maximum time to wait
-     * @return The result if ready within timeout, std::nullopt otherwise
-     * @throws std::runtime_error if the operation was cancelled
+     * @return common::Result<std::optional<R>> containing the value if ready,
+     *         std::nullopt on timeout, or an error if cancelled/failed
      *
      * This method waits up to the specified timeout for the result.
-     * Returns std::nullopt if the timeout expires before the result is ready.
+     * Returns std::nullopt in the Result if the timeout expires.
      */
     [[nodiscard]] auto get_for(std::chrono::milliseconds timeout)
-        -> std::optional<R>
+        -> common::Result<std::optional<R>>
     {
         if (token_.is_cancelled()) {
-            throw std::runtime_error("Operation cancelled");
+            return make_error_result<std::optional<R>>(error_code::operation_canceled);
         }
 
         auto status = future_.wait_for(timeout);
         if (status == std::future_status::ready) {
-            return future_.get();
+            try {
+                return common::Result<std::optional<R>>::ok(future_.get());
+            } catch (const std::exception& e) {
+                return make_error_result<std::optional<R>>(
+                    error_code::job_execution_failed, e.what());
+            } catch (...) {
+                return make_error_result<std::optional<R>>(
+                    error_code::unknown_error, "Unknown exception in future");
+            }
         }
-        return std::nullopt;
+        return common::Result<std::optional<R>>::ok(std::nullopt);
     }
 
     /**
@@ -215,24 +228,37 @@ public:
     cancellable_future(cancellable_future&&) noexcept = default;
     cancellable_future& operator=(cancellable_future&&) noexcept = default;
 
-    void get() {
+    [[nodiscard]] auto get() -> common::VoidResult {
         if (token_.is_cancelled()) {
-            throw std::runtime_error("Operation cancelled");
+            return make_error_result(error_code::operation_canceled);
         }
-        future_.get();
+        try {
+            future_.get();
+            return common::ok();
+        } catch (const std::exception& e) {
+            return make_error_result(error_code::job_execution_failed, e.what());
+        } catch (...) {
+            return make_error_result(error_code::unknown_error, "Unknown exception in future");
+        }
     }
 
-    [[nodiscard]] auto get_for(std::chrono::milliseconds timeout) -> bool {
+    [[nodiscard]] auto get_for(std::chrono::milliseconds timeout) -> common::Result<bool> {
         if (token_.is_cancelled()) {
-            throw std::runtime_error("Operation cancelled");
+            return make_error_result<bool>(error_code::operation_canceled);
         }
 
         auto status = future_.wait_for(timeout);
         if (status == std::future_status::ready) {
-            future_.get();
-            return true;
+            try {
+                future_.get();
+                return common::Result<bool>::ok(true);
+            } catch (const std::exception& e) {
+                return make_error_result<bool>(error_code::job_execution_failed, e.what());
+            } catch (...) {
+                return make_error_result<bool>(error_code::unknown_error, "Unknown exception in future");
+            }
         }
-        return false;
+        return common::Result<bool>::ok(false);
     }
 
     [[nodiscard]] auto is_ready() const -> bool {

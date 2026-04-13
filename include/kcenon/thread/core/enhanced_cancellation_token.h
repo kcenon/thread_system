@@ -11,6 +11,7 @@
 
 #include "cancellation_exception.h"
 #include "cancellation_reason.h"
+#include "error_handling.h"
 
 #include <atomic>
 #include <chrono>
@@ -230,10 +231,11 @@ namespace kcenon::thread
 		[[nodiscard]] auto get_reason() const -> std::optional<cancellation_reason>;
 
 		/**
-		 * @brief Throws if the token has been cancelled.
-		 * @throws operation_cancelled_exception if cancelled.
+		 * @brief Checks if the token has been cancelled and returns an error result.
+		 * @return common::VoidResult — error with operation_canceled if cancelled,
+		 *         success otherwise
 		 */
-		auto throw_if_cancelled() const -> void;
+		[[nodiscard]] auto check_cancelled() const -> common::VoidResult;
 
 		// ====================================================================
 		// Timeout/Deadline
@@ -404,13 +406,13 @@ namespace kcenon::thread
 	 * void process_request(enhanced_cancellation_token token) {
 	 *     cancellation_scope scope(token);
 	 *
-	 *     scope.check_cancelled();  // Throws if cancelled
+	 *     if (scope.check_cancelled().is_err()) return;
 	 *     step_1();
 	 *
-	 *     scope.check_cancelled();
+	 *     if (scope.check_cancelled().is_err()) return;
 	 *     step_2();
 	 *
-	 *     scope.check_cancelled();
+	 *     if (scope.check_cancelled().is_err()) return;
 	 *     step_3();
 	 * }
 	 * @endcode
@@ -442,10 +444,11 @@ namespace kcenon::thread
 		[[nodiscard]] auto is_cancelled() const -> bool;
 
 		/**
-		 * @brief Throws if the token is cancelled.
-		 * @throws operation_cancelled_exception if cancelled.
+		 * @brief Checks if the token is cancelled and returns an error result.
+		 * @return common::VoidResult — error with operation_canceled if cancelled,
+		 *         success otherwise
 		 */
-		auto check_cancelled() const -> void;
+		[[nodiscard]] auto check_cancelled() const -> common::VoidResult;
 
 		/**
 		 * @brief Gets the underlying token.

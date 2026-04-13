@@ -104,26 +104,23 @@ TEST_F(enhanced_cancellation_token_test, CancelWithException)
 	EXPECT_TRUE(reason->exception.has_value());
 }
 
-TEST_F(enhanced_cancellation_token_test, ThrowIfCancelled)
+TEST_F(enhanced_cancellation_token_test, CheckCancelled)
 {
 	auto token = enhanced_cancellation_token::create();
 
-	// Should not throw when not cancelled
-	EXPECT_NO_THROW(token.throw_if_cancelled());
+	// Should return success when not cancelled
+	auto ok_result = token.check_cancelled();
+	EXPECT_TRUE(ok_result.is_ok());
 
 	token.cancel("Test cancellation");
 
-	// Should throw when cancelled
-	EXPECT_THROW(token.throw_if_cancelled(), operation_cancelled_exception);
-
-	try
-	{
-		token.throw_if_cancelled();
-	}
-	catch (const operation_cancelled_exception& ex)
-	{
-		EXPECT_EQ(ex.reason().reason_type, cancellation_reason::type::user_requested);
-	}
+	// Should return error when cancelled
+	auto err_result = token.check_cancelled();
+	EXPECT_TRUE(err_result.is_err());
+	EXPECT_EQ(get_error_code(err_result.error()),
+			  error_code::operation_canceled);
+	EXPECT_TRUE(err_result.error().message.find("Test cancellation")
+				!= std::string::npos);
 }
 
 // ============================================================================
@@ -431,12 +428,20 @@ TEST_F(enhanced_cancellation_token_test, CancellationScope)
 	cancellation_scope scope(token);
 
 	EXPECT_FALSE(scope.is_cancelled());
-	EXPECT_NO_THROW(scope.check_cancelled());
+	{
+		auto result = scope.check_cancelled();
+		EXPECT_TRUE(result.is_ok());
+	}
 
 	token.cancel();
 
 	EXPECT_TRUE(scope.is_cancelled());
-	EXPECT_THROW(scope.check_cancelled(), operation_cancelled_exception);
+	{
+		auto result = scope.check_cancelled();
+		EXPECT_TRUE(result.is_err());
+		EXPECT_EQ(get_error_code(result.error()),
+				  error_code::operation_canceled);
+	}
 }
 
 TEST_F(enhanced_cancellation_token_test, CancellationContext)

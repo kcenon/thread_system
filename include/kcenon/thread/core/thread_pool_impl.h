@@ -15,6 +15,7 @@
  * Separated from thread_pool.h to reduce header size and improve compilation times.
  */
 
+#include <kcenon/thread/core/error_handling.h>
 #include <kcenon/thread/core/future_job.h>
 #include <kcenon/thread/utils/batch_operations.h>
 
@@ -23,7 +24,6 @@
 #include <thread>
 #include <memory>
 #include <atomic>
-#include <stdexcept>
 
 namespace kcenon::thread {
 
@@ -77,10 +77,10 @@ auto thread_pool::submit_wait_all(std::vector<F>&& callables, const submit_optio
 
 template<typename F, typename R>
 auto thread_pool::submit_wait_any(std::vector<F>&& callables, const submit_options& opts)
-    -> R
+    -> common::Result<R>
 {
     if (callables.empty()) {
-        throw std::invalid_argument("Empty callables vector");
+        return make_error_result<R>(error_code::invalid_argument, "Empty callables vector");
     }
 
     auto futures = submit<F, R>(std::move(callables), opts);
@@ -105,7 +105,13 @@ auto thread_pool::submit_wait_any(std::vector<F>&& callables, const submit_optio
         }).detach();
     }
 
-    return result_future.get();
+    try {
+        return common::Result<R>::ok(result_future.get());
+    } catch (const std::exception& e) {
+        return make_error_result<R>(error_code::job_execution_failed, e.what());
+    } catch (...) {
+        return make_error_result<R>(error_code::unknown_error, "Unknown exception in submit_wait_any");
+    }
 }
 
 template<typename T>
