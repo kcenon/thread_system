@@ -22,9 +22,11 @@ namespace kcenon::thread
 	 *
 	 * @ingroup cancellation
 	 *
-	 * This exception is thrown by throw_if_cancelled() when the associated
-	 * cancellation token has been cancelled. It carries the cancellation_reason
-	 * for inspection by catch handlers.
+	 * This exception type represents a cancelled operation. It carries the
+	 * cancellation_reason for inspection by catch handlers.
+	 *
+	 * @note As of v1.0, public APIs use common::VoidResult via check_cancelled()
+	 *       instead of throwing this exception directly.
 	 *
 	 * ### Design Principles
 	 * - **Rich Information**: Carries full cancellation_reason for debugging
@@ -33,16 +35,15 @@ namespace kcenon::thread
 	 *
 	 * ### Usage Example
 	 * @code
-	 * try {
-	 *     token.throw_if_cancelled();
-	 *     do_work();
-	 * } catch (const operation_cancelled_exception& ex) {
-	 *     auto reason = ex.reason();
-	 *     LOG_INFO("Operation cancelled: {}", reason.to_string());
+	 * auto result = token.check_cancelled();
+	 * if (result.is_err()) {
+	 *     LOG_INFO("Operation cancelled: {}", result.error().message);
+	 *     return result;
 	 * }
+	 * do_work();
 	 * @endcode
 	 *
-	 * @see enhanced_cancellation_token::throw_if_cancelled()
+	 * @see enhanced_cancellation_token::check_cancelled()
 	 * @see cancellation_reason
 	 */
 	class operation_cancelled_exception : public std::exception

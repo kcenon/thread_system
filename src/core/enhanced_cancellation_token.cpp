@@ -297,21 +297,19 @@ namespace kcenon::thread
 		return state_->reason;
 	}
 
-	auto enhanced_cancellation_token::throw_if_cancelled() const -> void
+	auto enhanced_cancellation_token::check_cancelled() const -> common::VoidResult
 	{
 		if (is_cancelled())
 		{
 			auto reason = get_reason();
-			if (reason)
+			std::string msg = "Operation cancelled";
+			if (reason && !reason->message.empty())
 			{
-				throw operation_cancelled_exception(*reason);
+				msg += ": " + reason->message;
 			}
-			throw operation_cancelled_exception(
-				cancellation_reason{cancellation_reason::type::user_requested,
-									"Operation cancelled",
-									std::chrono::steady_clock::now(),
-									std::nullopt});
+			return make_error_result(error_code::operation_canceled, msg);
 		}
+		return common::ok();
 	}
 
 	auto enhanced_cancellation_token::has_timeout() const -> bool
@@ -586,9 +584,9 @@ namespace kcenon::thread
 		return token_.is_cancelled();
 	}
 
-	auto cancellation_scope::check_cancelled() const -> void
+	auto cancellation_scope::check_cancelled() const -> common::VoidResult
 	{
-		token_.throw_if_cancelled();
+		return token_.check_cancelled();
 	}
 
 	auto cancellation_scope::token() const -> const enhanced_cancellation_token&
