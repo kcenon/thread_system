@@ -1,0 +1,58 @@
+# Thread System Change Impact Graph — when X changes, review Y.
+_meta: {schema: "1.0.0", generated: "2026-04-12"}
+
+cascade:
+  THR-ARCH-001:
+    targets:
+      - {doc: THR-ARCH-DET, why: "Architecture details elaborate high-level architecture"}
+      - {doc: THR-ARCH-OV,  why: "Overview summarizes architecture"}
+      - {doc: THR-API-001,  why: "API surface depends on architecture"}
+      - {doc: THR-PROJ-001, why: "Directory mirrors architecture"}
+      - {doc: THR-FEAT-001, why: "Features reference architecture"}
+
+  THR-API-001:
+    targets:
+      - {doc: THR-API-QR,  why: "Quick reference must match full API"}
+      - {doc: THR-API-KR,  why: "Korean mirror"}
+      - {doc: THR-FEAT-001, why: "Features implemented via API"}
+      - {doc: THR-GS-001,  why: "Getting Started uses API"}
+      - {doc: THR-CHG-001, why: "API changes in changelog"}
+
+  THR-G-METRICS:
+    targets:
+      - {doc: THR-G-DIAG,        why: "Diagnostics use metrics"}
+      - {doc: THR-METRICS-AUDIT, why: "Audit verifies metrics"}
+      - {doc: THR-G-AUTO,        why: "Autoscaler consumes metrics"}
+      - {doc: THR-QUAL-001,      why: "Quality claims rely on metrics"}
+
+  THR-G-POLICY:
+    targets:
+      - {doc: THR-G-QBACK, why: "Backward compatibility references policy queues"}
+      - {doc: THR-API-001, why: "Queue API reflects policy options"}
+
+  THR-G-NUMA:
+    targets:
+      - {doc: THR-ARCH-DET, why: "NUMA topology is architectural detail"}
+      - {doc: THR-BENCH,    why: "NUMA benchmarks"}
+
+  THR-G-AUTO:
+    targets:
+      - {doc: THR-G-METRICS, why: "Autoscaler reads metrics"}
+      - {doc: THR-API-001,   why: "Autoscaler API"}
+
+  THR-QUAL-001:
+    targets:
+      - {doc: THR-QUAL-KR, why: "Korean mirror"}
+      - {doc: THR-BENCH,   why: "Quality report references benchmarks"}
+
+korean_pairs:
+  - {en: THR-ARCH-001, kr: THR-ARCH-KR}
+  - {en: THR-API-001,  kr: THR-API-KR}
+  - {en: THR-FEAT-001, kr: THR-FEAT-KR}
+  - {en: THR-PROJ-001, kr: THR-PROJ-KR}
+  - {en: THR-CHG-001,  kr: THR-CHG-KR}
+  - {en: THR-QUAL-001, kr: THR-QUAL-KR}
+  - {en: THR-BENCH,    kr: THR-BENCH-KR}
+
+external_deps:
+  - {source: common_system, target: THR-ARCH-001, why: "thread_system depends on common_system (tier 0)"}

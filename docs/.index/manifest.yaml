@@ -1,0 +1,51 @@
+# Thread System Document Manifest — read this FIRST, then load only needed sections.
+_meta: {schema: "1.0.0", generated: "2026-04-12", docs: 31, project: "thread_system", tier: 1}
+
+core:
+  - {id: THR-DOC-IDX,  file: README.md,                title: "Project README",                keywords: [index, overview], lines: 245}
+  - {id: THR-ARCH-001, file: ARCHITECTURE.md,          title: "Architecture",                  keywords: [architecture, thread-pool, queue, scheduler], lines: 514}
+  - {id: THR-ARCH-KR,  file: ARCHITECTURE.kr.md,       title: "아키텍처 (한국어)",              keywords: [architecture, korean], lines: 477, mirrors: THR-ARCH-001}
+  - {id: THR-ARCH-DET, file: ARCHITECTURE_DETAILS.md,  title: "Architecture Details",          keywords: [architecture, internals, design], lines: 456}
+  - {id: THR-ARCH-DIAG, file: ARCHITECTURE_DIAGRAM.md, title: "Architecture Diagram",          keywords: [architecture, diagram, visual], lines: 35}
+  - {id: THR-ARCH-OV,  file: ARCHITECTURE_OVERVIEW.md, title: "Architecture Overview",         keywords: [architecture, overview, components], lines: 227}
+  - {id: THR-API-001,  file: API_REFERENCE.md,         title: "API Reference",                 keywords: [api, thread-pool, worker, task, queue], lines: 1623}
+  - {id: THR-API-KR,   file: API_REFERENCE.kr.md,      title: "API 참조 (한국어)",              keywords: [api, korean], lines: 957, mirrors: THR-API-001}
+  - {id: THR-API-QR,   file: API_QUICK_REFERENCE.md,   title: "API Quick Reference",           keywords: [api, cheatsheet], lines: 319}
+  - {id: THR-FEAT-001, file: FEATURES.md,              title: "Features",                      keywords: [features, pool, scheduler, metrics, numa], lines: 1403}
+  - {id: THR-FEAT-KR,  file: FEATURES.kr.md,           title: "기능 (한국어)",                   keywords: [features, korean], lines: 1045, mirrors: THR-FEAT-001}
+  - {id: THR-PROJ-001, file: PROJECT_STRUCTURE.md,     title: "Project Structure",             keywords: [structure, directory], lines: 1072}
+  - {id: THR-PROJ-KR,  file: PROJECT_STRUCTURE.kr.md,  title: "프로젝트 구조 (한국어)",          keywords: [structure, korean], lines: 663, mirrors: THR-PROJ-001}
+  - {id: THR-CHG-001,  file: CHANGELOG.md,             title: "Changelog",                     keywords: [changelog, versions], lines: 1154}
+  - {id: THR-CHG-KR,   file: CHANGELOG.kr.md,          title: "변경 이력 (한국어)",              keywords: [changelog, korean], lines: 754, mirrors: THR-CHG-001}
+  - {id: THR-GS-001,   file: GETTING_STARTED.md,       title: "Getting Started",               keywords: [getting-started, tutorial], lines: 342}
+
+guides:
+  - {id: THR-G-AUTO,   file: AUTOSCALER_GUIDE.md,       title: "Autoscaler Guide",              keywords: [autoscaler, scaling, adaptive], lines: 855}
+  - {id: THR-G-DIAG,   file: DIAGNOSTICS_GUIDE.md,      title: "Diagnostics Guide",             keywords: [diagnostics, debug, telemetry], lines: 531}
+  - {id: THR-G-DIAG-M, file: DIAGNOSTICS_METRICS_GUIDE.md, title: "Diagnostics Metrics (index)", keywords: [diagnostics, metrics, index], lines: 43}
+  - {id: THR-G-METRICS, file: METRICS_GUIDE.md,         title: "Metrics Guide",                 keywords: [metrics, instrumentation, observability], lines: 1036}
+  - {id: THR-G-NUMA,   file: NUMA_GUIDE.md,             title: "NUMA Guide",                    keywords: [numa, affinity, topology, pinning], lines: 827}
+  - {id: THR-G-POLICY, file: POLICY_QUEUE_GUIDE.md,     title: "Policy Queue Guide",            keywords: [policy, queue, fifo, lifo, priority], lines: 747}
+  - {id: THR-G-QBACK,  file: QUEUE_BACKWARD_COMPATIBILITY.md, title: "Queue Backward Compatibility", keywords: [queue, migration, compatibility], lines: 265}
+
+quality:
+  - {id: THR-QUAL-001, file: PRODUCTION_QUALITY.md,    title: "Production Quality",            keywords: [quality, ci, sanitizers, tsan, asan], lines: 983}
+  - {id: THR-QUAL-KR,  file: PRODUCTION_QUALITY.kr.md, title: "프로덕션 품질 (한국어)",          keywords: [quality, korean], lines: 449, mirrors: THR-QUAL-001}
+  - {id: THR-BENCH,    file: BENCHMARKS.md,            title: "Benchmarks",                    keywords: [benchmarks, performance, throughput, latency], lines: 648}
+  - {id: THR-BENCH-KR, file: BENCHMARKS.kr.md,         title: "벤치마크 (한국어)",              keywords: [benchmarks, korean], lines: 310, mirrors: THR-BENCH}
+
+reference:
+  - {id: THR-SOUP,     file: SOUP.md,                  title: "SOUP",                          keywords: [soup, third-party], lines: 124}
+  - {id: THR-TRACE,    file: TRACEABILITY.md,          title: "Traceability",                  keywords: [traceability], lines: 150}
+  - {id: THR-ECO,      file: ECOSYSTEM.md,             title: "Ecosystem",                     keywords: [ecosystem], lines: 34}
+  - {id: THR-METRICS-AUDIT, file: metrics_audit.md,    title: "Metrics Audit",                 keywords: [metrics, audit, internal], lines: 171}
+
+load_patterns:
+  quick_start:         [THR-DOC-IDX, THR-GS-001, THR-API-QR]
+  architecture_review: [THR-ARCH-001, THR-ARCH-DET, THR-ARCH-OV]
+  api_deep:            [THR-API-001, THR-FEAT-001]
+  metrics_work:        [THR-G-METRICS, THR-G-DIAG, THR-METRICS-AUDIT]
+  numa_work:           [THR-G-NUMA, THR-ARCH-DET]
+  queue_work:          [THR-G-POLICY, THR-G-QBACK, THR-API-001]
+  autoscaler_work:     [THR-G-AUTO, THR-G-METRICS]
+  quality_audit:       [THR-QUAL-001, THR-BENCH]

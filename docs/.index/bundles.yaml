@@ -1,0 +1,67 @@
+# Thread System Document Bundles — load a bundle to get all context for a feature.
+_meta: {schema: "1.0.0", generated: "2026-04-12"}
+
+quickstart:
+  name: "Quickstart"
+  files: [README.md, GETTING_STARTED.md, API_QUICK_REFERENCE.md]
+
+api-core:
+  name: "Core API Reference"
+  files: [API_REFERENCE.md, API_QUICK_REFERENCE.md, FEATURES.md]
+
+architecture:
+  name: "Architecture"
+  desc: "Overview, details, diagram, project structure"
+  files: [ARCHITECTURE.md, ARCHITECTURE_OVERVIEW.md, ARCHITECTURE_DETAILS.md, PROJECT_STRUCTURE.md]
+
+thread-pool:
+  name: "Thread Pool"
+  files: [ARCHITECTURE.md, API_REFERENCE.md, FEATURES.md, GETTING_STARTED.md]
+
+queue:
+  name: "Queue Subsystem"
+  desc: "Lock-free queues, policies, backward compatibility"
+  files: [POLICY_QUEUE_GUIDE.md, QUEUE_BACKWARD_COMPATIBILITY.md, API_REFERENCE.md, ARCHITECTURE_DETAILS.md]
+
+policy-queue:
+  name: "Policy Queue"
+  files: [POLICY_QUEUE_GUIDE.md, API_REFERENCE.md]
+
+scheduler:
+  name: "Scheduler"
+  files: [ARCHITECTURE_DETAILS.md, API_REFERENCE.md, FEATURES.md]
+
+autoscaler:
+  name: "Autoscaler"
+  desc: "Adaptive scaling based on metrics"
+  files: [AUTOSCALER_GUIDE.md, METRICS_GUIDE.md, API_REFERENCE.md]
+
+numa:
+  name: "NUMA Support"
+  desc: "Topology, affinity, thread pinning"
+  files: [NUMA_GUIDE.md, ARCHITECTURE_DETAILS.md, BENCHMARKS.md]
+
+metrics:
+  name: "Metrics Instrumentation"
+  desc: "Metric collection, export, audit"
+  files: [METRICS_GUIDE.md, DIAGNOSTICS_GUIDE.md, metrics_audit.md]
+
+diagnostics:
+  name: "Diagnostics"
+  files: [DIAGNOSTICS_GUIDE.md, METRICS_GUIDE.md]
+
+performance:
+  name: "Performance & Benchmarks"
+  files: [BENCHMARKS.md]
+
+quality-assurance:
+  name: "Quality Assurance"
+  files: [PRODUCTION_QUALITY.md, BENCHMARKS.md]
+
+migration:
+  name: "Migration Guide"
+  files: [QUEUE_BACKWARD_COMPATIBILITY.md, CHANGELOG.md]
+
+compliance:
+  name: "Compliance (SOUP / Traceability)"
+  files: [SOUP.md, TRACEABILITY.md]

@@ -1,0 +1,29 @@
+# Thread System Query Router — match query to minimum document set.
+_meta: {schema: "1.0.0", generated: "2026-04-12"}
+
+intent_routes:
+  - {keywords: [getting started, tutorial, install, 시작], bundle: quickstart}
+  - {keywords: [api, reference, method, 레퍼런스], bundle: api-core}
+  - {keywords: [architecture, design, layered, 아키텍처], bundle: architecture}
+  - {keywords: [thread pool, pool, worker, 스레드 풀], bundle: thread-pool}
+  - {keywords: [queue, lock free, mpmc, 큐], bundle: queue}
+  - {keywords: [policy queue, priority, fifo, lifo, 정책], bundle: policy-queue}
+  - {keywords: [scheduler, scheduling, 스케줄러], bundle: scheduler}
+  - {keywords: [autoscaler, scaling, adaptive, 자동 확장], bundle: autoscaler}
+  - {keywords: [numa, affinity, topology, pinning, 친화성], bundle: numa}
+  - {keywords: [metrics, telemetry, instrumentation, 계측, 메트릭], bundle: metrics}
+  - {keywords: [diagnostics, debug, trace, 진단], bundle: diagnostics}
+  - {keywords: [benchmark, performance, throughput, latency, 성능], bundle: performance}
+  - {keywords: [sanitizer, tsan, asan, quality, 품질], bundle: quality-assurance}
+  - {keywords: [migration, compatibility, upgrade, 마이그레이션], bundle: migration}
+
+fallback:
+  primary: THR-DOC-IDX
+  secondary: [THR-API-QR, THR-FEAT-001]
+
+skip:
+  - ECOSYSTEM.md
+  - SOUP.md
+  - TRACEABILITY.md
+  - DIAGNOSTICS_METRICS_GUIDE.md  # 43 lines, index-only
+  - ARCHITECTURE_DIAGRAM.md       # 35 lines, diagram-only
