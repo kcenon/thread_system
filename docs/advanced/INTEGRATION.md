@@ -12,7 +12,7 @@ category: "INTR"
 
 > **SSOT**: This document is the single source of truth for **Integration Guide - Thread System**.
 
-> **Language:** **English** | [한국어](INTEGRATION.kr.md)
+> **Language:** **English** <!-- TODO: target file does not exist --> | [한국어](INTEGRATION.kr.md)
 
 ## Overview
 
@@ -970,7 +970,7 @@ auto typed_pool = std::make_shared<kcenon::thread::typed_thread_pool<Type>>(
 
 ### Complete Integration Example
 
-See [examples/integration_example/](examples/integration_example/) for a complete application demonstrating:
+See [examples/integration_example/](../../examples/integration_example/) for a complete application demonstrating:
 - Thread pool with logger and monitoring
 - Network server using thread pool backend
 - Service registry for dependency injection
@@ -991,9 +991,9 @@ make
 
 ## Support
 
-- **Documentation**: [docs/](docs/)
-- **API Reference**: [docs/API_REFERENCE.md](docs/API_REFERENCE.md)
-- **Architecture Guide**: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- **Documentation**: [docs/](../)
+- **API Reference**: [docs/API_REFERENCE.md](../API_REFERENCE.md)
+- **Architecture Guide**: [docs/ARCHITECTURE.md](../ARCHITECTURE.md)
 - **Issues**: [GitHub Issues](https://github.com/kcenon/thread_system/issues)
 - **Email**: kcenon@naver.com
 

@@ -640,7 +640,7 @@ worker->set_batch_processing(true, 32);  // Process 32 jobs at once
 - [Feature Documentation](FEATURES.md)
 - [Performance Baseline](performance/BASELINE.md)
 - [Architecture Guide](advanced/ARCHITECTURE.md)
-- [Optimization Guide](guides/PERFORMANCE.md)
+- [Optimization Guide](advanced/PERFORMANCE.md)
 
 ---
 

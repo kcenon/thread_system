@@ -48,6 +48,7 @@ cmake -S . -B build -DBUILD_DOCUMENTATION=ON
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_ASAN=ON -DENABLE_UBSAN=ON
 ```
 
+<!-- TODO: target file does not exist -->
 For detailed platform-specific build instructions, see [Platform Build Guide](./PLATFORM_BUILD_GUIDE.md).
 
 ## Modules

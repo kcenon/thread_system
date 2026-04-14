@@ -18,6 +18,7 @@ This directory contains integration guides for using thread_system with other KC
 
 ## Integration Guides
 
+<!-- TODO: target files do not exist -->
 - [With Common System](with-common-system.md) - IExecutor interface implementation
 - [With Logger System](with-logger.md) - Thread-safe logging
 - [With Monitoring System](with-monitoring.md) - Thread pool metrics
@@ -147,4 +148,4 @@ scheduler->schedule_periodic(
 ## Additional Resources
 
 - [Thread System API Reference](../API_REFERENCE.md)
-- [Ecosystem Integration Guide](../../../ECOSYSTEM.md)
+- [Ecosystem Integration Guide](../ECOSYSTEM.md)

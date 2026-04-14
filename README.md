@@ -337,7 +337,7 @@ logger_system    monitoring_system
 - **Performance-optimized**: Each system optimized for its domain
 - **Unified ecosystem**: Consistent API design
 
-**🌐 [Ecosystem Integration Guide →](../ECOSYSTEM.md)**
+**🌐 [Ecosystem Integration Guide →](docs/ECOSYSTEM.md)**
 
 ---
 

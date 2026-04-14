@@ -1114,7 +1114,7 @@ Need help with migration?
 1. **Read Documentation**:
    - [README.md](README.md) - Feature overview
    - [ARCHITECTURE.md](ARCHITECTURE.md) - System design
-   - [examples/](examples/) - Code examples
+   - [examples/](../../examples/) - Code examples
 
 2. **Optimize Configuration**:
    - Review worker count

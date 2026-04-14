@@ -52,7 +52,7 @@ Thread System framework의 완전한 API 문서입니다.
    - [Logger System](#logger-system)
    - [Monitoring System](#monitoring-system)
 9. [Utilities Module](#utilities-module-utility_module)
-   - [formatter_macros](#formatter-macros)
+   - [formatter_macros](#formatter_macros)
    - [convert_string](#convert_string)
 10. [빠른 참조](#빠른-참조)
 
