@@ -1,0 +1,5 @@
+<map id="demo_non_cooperative_job" name="demo_non_cooperative_job">
+<area shape="rect" id="Node000001" title="Demonstrates what happens with non&#45;cooperating jobs." alt="" coords="5,13,207,38"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#aec5fe973e44efa3d1040ff7bec85f822" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="255,5,409,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,23,241,23,241,28,207,28"/>
+</map>

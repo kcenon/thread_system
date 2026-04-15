@@ -1,0 +1,5 @@
+<map id="kcenon::thread::backpressure_stats::snapshot" name="kcenon::thread::backpressure_stats::snapshot">
+<area shape="rect" id="Node000001" title="Creates a copyable snapshot of current statistics." alt="" coords="312,5,527,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#a12efef9fff5249dc4498a9fbd5148fb8" title="Returns backpressure statistics snapshot." alt="" coords="5,5,264,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="298,28,264,28,264,23,298,23"/>
+</map>

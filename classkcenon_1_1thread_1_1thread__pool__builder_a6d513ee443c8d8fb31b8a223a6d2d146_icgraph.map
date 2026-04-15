@@ -1,0 +1,7 @@
+<map id="kcenon::thread::thread_pool_builder::build" name="kcenon::thread::thread_pool_builder::build">
+<area shape="rect" id="Node000001" title="Builds and returns the configured thread pool." alt="" coords="483,5,652,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool__builder.html#a95f3c4f5c7874fa10a22b144418636ae" title="Builds the pool and starts it immediately." alt="" coords="217,5,435,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="469,28,435,28,435,23,469,23"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1event__bus.html#a388ba5983e34cd73d0ab7fddcaf600c1" title="Constructor." alt="" coords="5,5,169,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="204,28,170,28,170,23,204,23"/>
+</map>

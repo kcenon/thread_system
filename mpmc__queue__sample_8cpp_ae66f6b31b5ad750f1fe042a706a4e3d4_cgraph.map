@@ -1,0 +1,24 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,131,60,157"/>
+<area shape="rect" id="Node000002" href="$mpmc__queue__sample_8cpp.html#a2eae948c8b6adfa8552c3ed50ddba103" title=" " alt="" coords="129,106,285,131"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,138,115,129,116,135,61,143"/>
+<area shape="rect" id="Node000006" href="$mpmc__queue__sample_8cpp.html#a945cedda90dc9326e3e06de84c543c52" title=" " alt="" coords="108,57,307,82"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="48,129,74,109,107,91,126,83,128,88,109,96,77,114,51,133"/>
+<area shape="rect" id="Node000008" href="$mpmc__queue__sample_8cpp.html#a8d76c423bb645996fcbb1e72c8f1cdda" title=" " alt="" coords="144,155,271,181"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="60,145,131,155,130,160,60,150"/>
+<area shape="rect" id="Node000009" href="$mpmc__queue__sample_8cpp.html#a86233f9bdfa543063cc95c88d9f6da6d" title=" " alt="" coords="123,205,292,230"/>
+<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="52,154,78,173,109,190,132,198,130,203,107,194,75,177,49,159"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1job.html#abb0aab22ba1692b557b8138afcd99894" title="The core task execution method to be overridden by derived classes." alt="" coords="363,69,510,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="285,106,349,98,350,103,286,111"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1result.html#a8e25bd72212bd159e41c1c153bc73785" title="Checks if the result contains a value." alt="" coords="355,197,519,237"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="280,129,308,140,323,151,333,162,342,172,356,183,366,189,364,194,353,188,339,176,329,165,320,155,305,145,278,134"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="355,133,519,173"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="286,128,341,136,341,142,285,133"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="307,75,350,79,349,84,307,81"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="355,5,519,45"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="274,54,341,41,342,46,275,59"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="264,153,306,140,354,119,371,112,373,117,356,124,308,145,265,158"/>
+<area shape="poly" id="edge10_Node000008_Node000004" title=" " alt="" coords="268,178,342,194,341,200,266,183"/>
+<area shape="poly" id="edge11_Node000008_Node000005" title=" " alt="" coords="271,161,340,157,341,162,271,167"/>
+<area shape="poly" id="edge13_Node000009_Node000004" title=" " alt="" coords="292,215,341,215,341,220,292,220"/>
+</map>

@@ -1,0 +1,25 @@
+<map id="kcenon::thread::cancellable_future&lt; R &gt;" name="kcenon::thread::cancellable_future&lt; R &gt;">
+<area shape="rect" id="Node000001" title="A future wrapper that supports cancellation." alt="" coords="386,1232,579,1592"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="383,769,582,1169"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="485,1169,485,1216,480,1216,480,1169"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="396,612,569,707"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="485,707,485,753,480,753,480,707"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="246,469,445,549"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="383,548,430,598,426,601,379,551"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="209,319,354,385"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="279,385,278,415,285,444,290,455,286,457,280,446,273,415,273,385"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="243,133,368,199"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="302,213,288,319,283,319,297,212"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="294,5,317,71"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="308,71,308,117,303,117,303,71"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="66,133,187,199"/>
+<area shape="poly" id="edge9_Node000009_Node000007" title=" " alt="" coords="295,49,224,97,184,126,181,121,221,92,292,45"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="428,223,577,288"/>
+<area shape="poly" id="edge12_Node000011_Node000007" title=" " alt="" coords="319,50,465,209,461,212,315,54"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="5,312,184,392"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="131,390,160,418,193,443,232,464,230,469,191,448,157,422,128,394"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="110,213,107,223,99,269,97,312,92,311,94,268,101,222,104,211"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="378,319,462,385"/>
+<area shape="poly" id="edge10_Node000004_Node000010" title=" " alt="" coords="409,386,381,446,376,456,372,453,376,444,404,384"/>
+<area shape="poly" id="edge11_Node000003_Node000011" title=" " alt="" coords="510,302,517,416,517,469,512,522,496,612,491,611,506,521,511,469,512,416,504,302"/>
+</map>

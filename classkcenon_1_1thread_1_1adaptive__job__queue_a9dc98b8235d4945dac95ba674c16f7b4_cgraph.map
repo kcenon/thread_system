@@ -1,0 +1,7 @@
+<map id="kcenon::thread::adaptive_job_queue::~adaptive_job_queue" name="kcenon::thread::adaptive_job_queue::~adaptive_job_queue">
+<area shape="rect" id="Node000001" title="Destructor &#45; cleans up both queue implementations." alt="" coords="5,37,252,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a13fd7607807564d9911e34636cc9008a" title="Signals the queue to stop." alt="" coords="323,5,507,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="252,41,310,34,310,40,252,46"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a7cac7090605cce3bf0beff1bf9d36e04" title=" " alt="" coords="300,69,531,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="252,68,287,72,286,78,252,74"/>
+</map>

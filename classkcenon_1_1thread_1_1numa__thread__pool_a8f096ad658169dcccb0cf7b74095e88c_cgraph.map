@@ -1,0 +1,5 @@
+<map id="kcenon::thread::numa_thread_pool::is_numa_work_stealing_enabled" name="kcenon::thread::numa_thread_pool::is_numa_work_stealing_enabled">
+<area shape="rect" id="Node000001" title="Check if NUMA work stealing is currently enabled." alt="" coords="5,5,184,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1numa__thread__pool.html#aa8b79d79c3a33aa533d0e0f4a6af9f1e" title="Get the current NUMA work&#45;stealing configuration." alt="" coords="232,5,423,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,30,218,30,218,35,184,35"/>
+</map>

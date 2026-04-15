@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$classkcenon_1_1thread_1_1pool__policy.html" title="Base interface for thread pool policies." alt="" coords="5,69,160,109"/>
+<area shape="rect" id="Node000001" href="$classkcenon_1_1thread_1_1autoscaling__pool__policy.html" title="Pool policy that implements automatic scaling for dynamic worker management." alt="" coords="208,5,411,45"/>
+<area shape="poly" id="edge29_Node000000_Node000001" title=" " alt="" coords="167,63,237,43,239,48,168,68"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1circuit__breaker__policy.html" title="Pool policy that implements circuit breaker pattern for failure protection." alt="" coords="226,69,393,109"/>
+<area shape="poly" id="edge30_Node000000_Node000002" title=" " alt="" coords="174,87,226,87,226,92,174,92"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1work__stealing__pool__policy.html" title="Pool policy that implements work&#45;stealing behavior for load balancing." alt="" coords="228,133,391,173"/>
+<area shape="poly" id="edge31_Node000000_Node000003" title=" " alt="" coords="168,111,239,131,237,136,167,116"/>
+</map>

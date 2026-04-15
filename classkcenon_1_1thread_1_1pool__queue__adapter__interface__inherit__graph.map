@@ -1,0 +1,7 @@
+<map id="kcenon::thread::pool_queue_adapter_interface" name="kcenon::thread::pool_queue_adapter_interface">
+<area shape="rect" id="Node000001" title="Abstract interface for queue adapters used by thread_pool." alt="" coords="110,5,293,380"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job__queue__adapter.html" title="Adapter for job_queue to pool_queue_adapter_interface." alt="" coords="5,435,179,715"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="147,394,135,436,129,434,141,392"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1policy__queue__adapter.html" title="Adapter for policy_queue to pool_queue_adapter_interface." alt="" coords="203,428,421,723"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="262,392,272,427,267,428,257,394"/>
+</map>

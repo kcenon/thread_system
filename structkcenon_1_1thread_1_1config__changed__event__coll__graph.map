@@ -1,0 +1,9 @@
+<map id="kcenon::thread::config_changed_event" name="kcenon::thread::config_changed_event">
+<area shape="rect" id="Node000001" title="Configuration changed event." alt="" coords="32,303,216,423"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1event__base.html" title="Event base class for type safety." alt="" coords="5,135,200,240"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,253,119,302,114,303,108,254"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="225,155,303,220"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="240,222,184,292,180,288,236,219"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="199,5,329,85"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="267,99,267,154,261,154,261,99"/>
+</map>

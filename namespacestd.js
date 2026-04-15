@@ -1,0 +1,20 @@
+var namespacestd =
+[
+    [ "formatter< kcenon::thread::job_queue >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1job__queue_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1job__queue_01_4" ],
+    [ "formatter< kcenon::thread::job_queue, wchar_t >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1job__queue_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1job__queue_00_01wchar__t_01_4" ],
+    [ "formatter< kcenon::thread::job_types >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1job__types_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1job__types_01_4" ],
+    [ "formatter< kcenon::thread::job_types, wchar_t >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1job__types_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1job__types_00_01wchar__t_01_4" ],
+    [ "formatter< kcenon::thread::thread_conditions >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_01_4" ],
+    [ "formatter< kcenon::thread::thread_conditions, wchar_t >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_00_01wchar__t_01_4" ],
+    [ "formatter< kcenon::thread::thread_pool >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_01_4" ],
+    [ "formatter< kcenon::thread::thread_pool, wchar_t >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_00_01wchar__t_01_4" ],
+    [ "formatter< kcenon::thread::thread_worker >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_01_4" ],
+    [ "formatter< kcenon::thread::thread_worker, wchar_t >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_00_01wchar__t_01_4" ],
+    [ "formatter< kcenon::thread::typed_thread_pool_t< job_type > >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__pool__t_3_01job__type_01_4_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__pool__t_3_01job__type_01_4_01_4" ],
+    [ "formatter< kcenon::thread::typed_thread_pool_t< job_type >, wchar_t >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__pool__t_3_01job__type_01_4_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__pool__t_3_01job__type_01_4_00_01wchar__t_01_4" ],
+    [ "formatter< kcenon::thread::typed_thread_worker_t< job_type > >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_01_4" ],
+    [ "formatter< kcenon::thread::typed_thread_worker_t< job_type >, wchar_t >", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_00_01wchar__t_01_4" ],
+    [ "formatter< test_priority >", "structstd_1_1formatter_3_01test__priority_01_4.html", "structstd_1_1formatter_3_01test__priority_01_4" ],
+    [ "formatter< test_priority, wchar_t >", "structstd_1_1formatter_3_01test__priority_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01test__priority_00_01wchar__t_01_4" ],
+    [ "is_error_code_enum< kcenon::thread::error_code >", "structstd_1_1is__error__code__enum_3_01kcenon_1_1thread_1_1error__code_01_4.html", null ]
+];

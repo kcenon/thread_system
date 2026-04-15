@@ -1,0 +1,7 @@
+<map id="kcenon::thread::numa_work_stealer::steal_for" name="kcenon::thread::numa_work_stealer::steal_for">
+<area shape="rect" id="Node000001" title="Attempt to steal work for a worker." alt="" coords="5,37,184,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1result.html#a8e25bd72212bd159e41c1c153bc73785" title="Checks if the result contains a value." alt="" coords="232,5,396,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,42,218,37,219,42,185,47"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="232,69,396,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="185,68,219,73,218,78,184,73"/>
+</map>

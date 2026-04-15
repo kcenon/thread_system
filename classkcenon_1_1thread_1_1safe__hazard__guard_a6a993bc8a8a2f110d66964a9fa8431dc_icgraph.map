@@ -1,0 +1,17 @@
+<map id="kcenon::thread::safe_hazard_guard::protect" name="kcenon::thread::safe_hazard_guard::protect">
+<area shape="rect" id="Node000001" title="Protect a pointer." alt="" coords="473,167,644,207"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#afdd966b3ada4a6b20d091496e1d6c491" title="Dequeues a job from the queue (thread&#45;safe)" alt="" coords="239,87,405,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="480,166,404,142,406,137,481,161"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#afb89103f76f6f283269656d2e8ea5987" title="Checks if the queue is empty." alt="" coords="219,167,425,207"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="459,190,426,190,426,185,459,185"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#aeb0b4702c6e4e8b3ab089afcfc43d0da" title="Enqueues a job into the queue (thread&#45;safe)" alt="" coords="239,235,405,289"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="482,214,406,239,404,233,481,209"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#aa056f40166ae638be2650cca50c63609" title="Get next job (delegates to dequeue)" alt="" coords="5,5,171,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="229,85,166,63,168,58,231,79"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#a294c4d8798a079d98c372df72a2ce89c" title="Tries to dequeue a job without blocking." alt="" coords="5,84,171,139"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="225,116,171,115,171,110,225,110"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#a0358cd30749f36d3f3e00570b20d46e0" title="Destructor." alt="" coords="5,163,171,217"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="227,148,172,166,170,161,225,143"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#a6df782bf457c67f3f67d66fa902c3f2c" title="Schedule a job (delegates to enqueue)" alt="" coords="5,241,171,296"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="226,267,171,269,171,264,225,262"/>
+</map>

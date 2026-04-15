@@ -1,0 +1,7 @@
+<map id="kcenon::thread::lockfree::circular_array::grow" name="kcenon::thread::lockfree::circular_array::grow">
+<area shape="rect" id="Node000001" title="Create a new array with double the capacity, copying elements." alt="" coords="5,37,185,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1lockfree_1_1circular__array.html#a94df86e18c993b06ed254fca14670869" title="Constructs a circular array with given capacity." alt="" coords="233,5,448,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,43,219,38,220,44,186,48"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1lockfree_1_1circular__array.html#abe5269850abfc35b726f4f3adb3f1f1d" title="Get element at index with relaxed memory ordering." alt="" coords="251,69,431,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="186,66,237,73,236,78,185,72"/>
+</map>

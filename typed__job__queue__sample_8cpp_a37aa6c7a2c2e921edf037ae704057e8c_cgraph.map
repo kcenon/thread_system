@@ -1,0 +1,7 @@
+<map id="mpmc_typed_queue_example" name="mpmc_typed_queue_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,224,70"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html#abb0aab22ba1692b557b8138afcd99894" title="The core task execution method to be overridden by derived classes." alt="" coords="281,5,427,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,42,267,34,268,40,210,47"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="272,69,436,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,67,259,74,258,79,210,73"/>
+</map>

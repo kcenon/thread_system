@@ -1,0 +1,9 @@
+<map id="kcenon::thread::metrics::MetricsBackend" name="kcenon::thread::metrics::MetricsBackend">
+<area shape="rect" id="Node000001" title="Abstract interface for metrics export backends." alt="" coords="197,5,365,265"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1JsonBackend.html" title="JSON format backend." alt="" coords="5,313,173,493"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,266,156,315,151,312,187,262"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1LoggingBackend.html" title="Logging backend for debugging and diagnostics." alt="" coords="197,323,365,483"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="284,279,284,323,279,323,279,279"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1PrometheusBackend.html" title="Prometheus/OpenMetrics format backend." alt="" coords="390,313,573,493"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="376,258,417,312,412,315,372,261"/>
+</map>

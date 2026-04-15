@@ -1,0 +1,5 @@
+<map id="kcenon::thread::diagnostics::bottleneck_report::requires_immediate_action" name="kcenon::thread::diagnostics::bottleneck_report::requires_immediate_action">
+<area shape="rect" id="Node000001" title="Checks if immediate action is required." alt="" coords="5,5,212,60"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1diagnostics_1_1bottleneck__report.html#a9bf6d604a3e2a5351474108a21ddee69" title="Gets the severity level of the bottleneck." alt="" coords="260,13,467,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,30,246,30,246,35,212,35"/>
+</map>

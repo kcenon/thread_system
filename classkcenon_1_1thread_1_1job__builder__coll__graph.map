@@ -1,0 +1,34 @@
+<map id="kcenon::thread::job_builder" name="kcenon::thread::job_builder">
+<area shape="rect" id="Node000001" title="Fluent builder for creating and configuring jobs with composition." alt="" coords="147,1423,311,1963"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="50,1050,129,1115"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,1116,94,1241,101,1319,115,1398,144,1496,139,1497,109,1399,96,1320,88,1241,86,1116"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,655,136,735"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="76,749,90,1050,85,1050,71,749"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="74,416,233,481"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="165,481,179,543,187,615,187,1084,191,1246,202,1406,197,1407,186,1247,181,1084,181,615,174,543,160,482"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="206,133,327,199"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="197,208,184,224,171,247,162,272,151,324,149,374,152,415,146,416,144,374,146,324,156,270,166,245,179,221,193,205"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="177,312,356,392"/>
+<area shape="poly" id="edge13_Node000012_Node000005" title=" " alt="" coords="269,213,269,312,264,312,264,213"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="533,5,555,71"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="534,47,343,133,341,128,531,42"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="481,133,607,199"/>
+<area shape="poly" id="edge11_Node000011_Node000006" title=" " alt="" coords="547,71,547,117,541,117,541,71"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="613,223,763,288"/>
+<area shape="poly" id="edge16_Node000014_Node000006" title=" " alt="" coords="558,51,621,132,666,207,662,210,616,135,554,54"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1cancellation__token.html" title="Provides a mechanism for cooperative cancellation of operations." alt="" coords="221,883,419,1283"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="293,1283,274,1407,269,1406,288,1282"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="325,648,499,743"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="404,743,374,867,369,866,398,742"/>
+<area shape="rect" id="Node000009" href="$structkcenon_1_1thread_1_1cancellation__token_1_1token__state.html" title=" " alt="" coords="313,505,511,585"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="415,585,415,631,409,631,409,585"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="489,319,634,385"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="564,385,557,434,548,460,534,483,521,497,518,493,530,480,543,457,552,433,559,384"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="540,212,538,249,541,288,550,318,545,319,536,288,533,249,535,212"/>
+<area shape="poly" id="edge12_Node000009_Node000012" title=" " alt="" coords="282,391,302,436,330,480,342,493,338,496,326,483,297,438,277,394"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="381,319,465,385"/>
+<area shape="poly" id="edge14_Node000009_Node000013" title=" " alt="" coords="420,385,416,416,414,489,408,489,411,416,414,385"/>
+<area shape="poly" id="edge15_Node000008_Node000014" title=" " alt="" coords="694,302,694,342,690,389,679,437,661,483,626,534,584,579,538,618,493,650,490,646,534,614,580,575,622,530,656,480,674,435,684,388,688,342,689,302"/>
+<area shape="rect" id="Node000015" href="$classkcenon_1_1thread_1_1retry__policy.html" title="Encapsulates retry behavior configuration for jobs." alt="" coords="443,805,645,1360"/>
+<area shape="poly" id="edge17_Node000001_Node000015" title=" " alt="" coords="446,1349,421,1400,374,1484,323,1564,318,1561,369,1481,416,1397,441,1347"/>
+</map>

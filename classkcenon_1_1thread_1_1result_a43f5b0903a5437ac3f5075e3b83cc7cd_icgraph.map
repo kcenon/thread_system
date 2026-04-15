@@ -1,0 +1,9 @@
+<map id="kcenon::thread::result::get_error" name="kcenon::thread::result::get_error">
+<area shape="rect" id="Node000001" title="Gets the error." alt="" coords="217,85,381,125"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1typed__thread__pool__builder.html#aef76dceb2211826180d070153f5770c1" title="Build the typed thread pool with current configuration." alt="" coords="5,5,169,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="226,83,167,63,169,57,228,78"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread.html#a784252132673ec4a20586b2e30e95ce4" title=" " alt="" coords="5,85,169,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="204,107,169,107,169,102,204,102"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread.html#ae74d16b31132be9b2a85893c0f5e0203" title=" " alt="" coords="5,149,169,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="220,131,155,151,153,146,218,126"/>
+</map>

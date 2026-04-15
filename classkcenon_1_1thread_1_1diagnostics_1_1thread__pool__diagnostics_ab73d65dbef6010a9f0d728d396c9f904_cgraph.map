@@ -1,0 +1,5 @@
+<map id="kcenon::thread::diagnostics::thread_pool_diagnostics::is_healthy" name="kcenon::thread::diagnostics::thread_pool_diagnostics::is_healthy">
+<area shape="rect" id="Node000001" title="Quick check if pool is healthy." alt="" coords="5,5,207,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#aa909fc61736d7362f1dfbad08bbe4f65" title="Check if the thread pool is currently running." alt="" coords="255,13,424,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,30,241,30,241,35,207,35"/>
+</map>

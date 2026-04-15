@@ -1,0 +1,53 @@
+<map id="include/kcenon/thread/pool_policies/autoscaling_pool_policy.h" name="include/kcenon/thread/pool_policies/autoscaling_pool_policy.h">
+<area shape="rect" id="Node000001" title="Pool policy implementing automatic worker scaling based on load." alt="" coords="468,5,659,60"/>
+<area shape="rect" id="Node000002" href="$pool__policy_8h.html" title="Base interface for extensible thread pool behavior policies." alt="" coords="250,115,357,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="491,63,349,113,347,108,489,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="283,203,361,229"/>
+<area shape="poly" id="edge30_Node000001_Node000004" title=" " alt="" coords="530,62,350,197,347,193,527,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="218,291,277,317"/>
+<area shape="poly" id="edge31_Node000001_Node000005" title=" " alt="" coords="468,45,400,55,332,68,275,87,254,98,240,110,228,129,222,150,220,197,228,241,240,278,235,279,223,243,214,197,216,149,224,127,236,106,251,93,273,82,331,63,399,49,467,40"/>
+<area shape="rect" id="Node000006" href="$autoscaler_8h.html" title="Automatic scaling of thread pool workers based on load metrics." alt="" coords="651,108,817,148"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="613,58,689,99,686,104,610,62"/>
+<area shape="rect" id="Node000007" href="$autoscaling__policy_8h.html" title="Configuration for autoscaling behavior and thresholds." alt="" coords="657,203,811,229"/>
+<area shape="poly" id="edge28_Node000001_Node000007" title=" " alt="" coords="579,59,606,102,641,146,672,172,703,194,700,198,668,177,637,150,602,105,575,62"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="1229,203,1295,229"/>
+<area shape="poly" id="edge29_Node000001_Node000017" title=" " alt="" coords="659,50,913,108,1066,148,1217,193,1224,196,1222,201,1216,199,1065,153,912,113,658,56"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,284,193,324"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="292,143,133,277,130,273,288,139"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="308,140,319,189,314,190,303,141"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="299,142,274,197,262,240,254,279,249,277,257,238,269,195,294,140"/>
+<area shape="poly" id="edge25_Node000006_Node000004" title=" " alt="" coords="652,143,520,165,373,199,364,201,363,196,372,193,519,160,651,138"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="737,148,737,189,731,189,731,148"/>
+<area shape="rect" id="Node000008" href="$scaling__metrics_8h.html" title="Scaling direction and metrics for autoscaling decisions." alt="" coords="657,291,793,317"/>
+<area shape="poly" id="edge15_Node000006_Node000008" title=" " alt="" coords="696,150,668,170,647,197,642,216,647,235,667,262,692,282,689,286,663,265,642,237,636,216,642,195,664,167,692,146"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="586,372,653,397"/>
+<area shape="poly" id="edge22_Node000006_Node000009" title=" " alt="" coords="691,150,661,170,636,197,620,238,613,282,613,324,617,358,612,358,608,324,608,281,614,237,632,195,657,166,688,146"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="979,291,1043,317"/>
+<area shape="poly" id="edge27_Node000006_Node000013" title=" " alt="" coords="761,146,877,234,926,261,973,283,971,288,924,266,874,238,758,151"/>
+<area shape="rect" id="Node000014" href="$include_2kcenon_2thread_2core_2error__handling_8h.html" title="Error codes and utilities for the thread system." alt="" coords="385,196,531,236"/>
+<area shape="poly" id="edge16_Node000006_Node000014" title=" " alt="" coords="674,151,532,195,530,189,673,146"/>
+<area shape="poly" id="edge21_Node000006_Node000017" title=" " alt="" coords="817,132,1002,151,1110,169,1217,193,1225,196,1224,201,1216,199,1109,174,1001,157,817,137"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="887,203,1029,229"/>
+<area shape="poly" id="edge23_Node000006_Node000018" title=" " alt="" coords="784,146,917,196,915,201,782,151"/>
+<area shape="rect" id="Node000019" title=" " alt="" coords="1053,203,1116,229"/>
+<area shape="poly" id="edge24_Node000006_Node000019" title=" " alt="" coords="817,140,926,162,1043,193,1049,195,1047,201,1041,199,924,167,816,145"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="1141,203,1205,229"/>
+<area shape="poly" id="edge26_Node000006_Node000020" title=" " alt="" coords="817,135,964,156,1047,173,1129,193,1136,196,1135,201,1128,199,1046,178,963,161,817,140"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="735,229,730,278,725,277,730,229"/>
+<area shape="poly" id="edge11_Node000007_Node000009" title=" " alt="" coords="712,231,678,253,647,285,631,322,624,359,618,358,626,321,642,283,675,249,709,227"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="788,372,859,397"/>
+<area shape="poly" id="edge12_Node000007_Node000010" title=" " alt="" coords="753,227,781,250,807,283,821,321,826,358,820,358,815,322,802,285,778,254,750,231"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="868,291,955,317"/>
+<area shape="poly" id="edge13_Node000007_Node000012" title=" " alt="" coords="759,226,876,283,874,288,757,231"/>
+<area shape="poly" id="edge14_Node000007_Node000013" title=" " alt="" coords="781,226,868,250,968,281,974,284,972,289,966,287,867,255,779,231"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="711,319,647,366,644,362,708,315"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="741,315,800,361,796,365,738,319"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="691,372,758,397"/>
+<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="727,317,727,358,722,358,722,317"/>
+<area shape="poly" id="edge20_Node000014_Node000003" title=" " alt="" coords="385,237,192,283,191,278,384,232"/>
+<area shape="poly" id="edge17_Node000014_Node000005" title=" " alt="" coords="409,239,290,286,286,288,284,283,288,282,407,234"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="301,291,399,317"/>
+<area shape="poly" id="edge18_Node000014_Node000015" title=" " alt="" coords="436,238,377,285,374,280,432,234"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="423,291,531,317"/>
+<area shape="poly" id="edge19_Node000014_Node000016" title=" " alt="" coords="465,236,474,277,469,278,460,237"/>
+</map>

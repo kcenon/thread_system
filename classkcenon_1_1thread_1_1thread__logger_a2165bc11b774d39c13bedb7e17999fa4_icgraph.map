@@ -1,0 +1,9 @@
+<map id="kcenon::thread::thread_logger::level_to_string" name="kcenon::thread::thread_logger::level_to_string">
+<area shape="rect" id="Node000001" title=" " alt="" coords="440,37,615,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__logger.html#a85bc1649f6ee37d8b808c8d6b747bbbe" title="Log a message with context." alt="" coords="223,37,392,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="426,60,392,60,392,55,426,55"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__logger.html#a155455bc371cccdaf6fd31bf22e28487" title="Log error with error code." alt="" coords="5,5,175,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="209,46,174,40,175,35,209,40"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__base.html#ae1460dac6f0f3707149ebef082038b74" title="Starts the worker thread." alt="" coords="5,69,175,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="209,74,175,80,174,74,209,69"/>
+</map>

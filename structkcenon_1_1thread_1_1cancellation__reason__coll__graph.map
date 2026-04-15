@@ -1,0 +1,7 @@
+<map id="kcenon::thread::cancellation_reason" name="kcenon::thread::cancellation_reason">
+<area shape="rect" id="Node000001" title="Holds information about why a cancellation occurred." alt="" coords="5,263,204,403"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="65,135,144,200"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,200,107,246,102,246,102,200"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="39,5,170,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,99,107,134,102,134,102,99"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="kcenon::thread::pool_policy" name="kcenon::thread::pool_policy">
+<area shape="rect" id="Node000001" title="Base interface for thread pool policies." alt="" coords="256,5,405,205"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1autoscaling__pool__policy.html" title="Pool policy that implements automatic scaling for dynamic worker management." alt="" coords="5,303,211,603"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="250,217,225,255,194,304,189,301,220,252,246,214"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1circuit__breaker__policy.html" title="Pool policy that implements circuit breaker pattern for failure protection." alt="" coords="235,303,427,603"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="333,219,333,302,328,302,328,219"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1work__stealing__pool__policy.html" title="Pool policy that implements work&#45;stealing behavior for load balancing." alt="" coords="451,253,616,652"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="415,212,441,252,453,273,448,275,436,255,411,215"/>
+</map>

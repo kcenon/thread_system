@@ -1,0 +1,7 @@
+<map id="std::formatter&lt; kcenon::thread::typed_thread_worker_t&lt; job_type &gt; &gt;::format" name="std::formatter&lt; kcenon::thread::typed_thread_worker_t&lt; job_type &gt; &gt;::format">
+<area shape="rect" id="Node000001" title="Formats a typed_thread_worker_t&lt;job_type&gt; instance to a string." alt="" coords="5,5,192,75"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__base.html#a1130c1076dfd5fec14bb0453ff0dbc9e" title="Returns a string representation of this thread_base object." alt="" coords="240,20,409,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,37,226,37,226,43,192,43"/>
+<area shape="rect" id="Node000003" href="$classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="457,20,644,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="410,37,444,37,444,43,410,43"/>
+</map>

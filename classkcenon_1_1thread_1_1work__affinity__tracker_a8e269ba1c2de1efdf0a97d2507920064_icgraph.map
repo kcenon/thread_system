@@ -1,0 +1,5 @@
+<map id="kcenon::thread::work_affinity_tracker::get_matrix_index" name="kcenon::thread::work_affinity_tracker::get_matrix_index">
+<area shape="rect" id="Node000001" title="Get the matrix index for a worker pair." alt="" coords="229,5,388,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1work__affinity__tracker.html#a687f8b624edcdde822a657ceafc5e86c" title="Record a cooperation event between two workers." alt="" coords="5,5,181,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,35,182,35,182,30,215,30"/>
+</map>

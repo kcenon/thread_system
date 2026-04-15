@@ -1,0 +1,7 @@
+<map id="kcenon::thread::thread_context::log" name="kcenon::thread::thread_context::log">
+<area shape="rect" id="Node000001" title="Log a message if logger is available (v2 API with conversion)" alt="" coords="5,37,175,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__logger.html#aa82a04c11d0645cbd22bb8f0c5a58b57" title="Check if shutdown is in progress." alt="" coords="229,5,419,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,43,215,38,215,43,175,48"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__context.html#a4f466c3d980339ff15a1556c3a086e6d" title="Convert log_level_v2 to common::interfaces::log_level." alt="" coords="223,69,425,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,66,209,71,209,76,174,72"/>
+</map>

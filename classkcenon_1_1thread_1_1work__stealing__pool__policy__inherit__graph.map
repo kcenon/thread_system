@@ -1,0 +1,5 @@
+<map id="kcenon::thread::work_stealing_pool_policy" name="kcenon::thread::work_stealing_pool_policy">
+<area shape="rect" id="Node000001" title="Pool policy that implements work&#45;stealing behavior for load balancing." alt="" coords="5,253,171,652"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1pool__policy.html" title="Base interface for thread pool policies." alt="" coords="13,5,163,205"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,219,91,253,85,253,85,219"/>
+</map>

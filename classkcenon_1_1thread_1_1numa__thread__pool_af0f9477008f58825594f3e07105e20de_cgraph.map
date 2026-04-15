@@ -1,0 +1,5 @@
+<map id="kcenon::thread::numa_thread_pool::ensure_topology_detected" name="kcenon::thread::numa_thread_pool::ensure_topology_detected">
+<area shape="rect" id="Node000001" title="Ensure topology is detected." alt="" coords="5,5,169,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1numa__topology.html#a394d1c43d0b95b4d3cfd5b6caec4ce83" title="Detect and return the system&#39;s NUMA topology." alt="" coords="217,13,381,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,30,204,30,204,35,170,35"/>
+</map>

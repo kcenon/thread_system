@@ -1,0 +1,26 @@
+var structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot =
+[
+    [ "active_workers", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a0e012b95a0fe665b283e316c9e273a7e", null ],
+    [ "avg_queue_depth", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a86f41ec05875a9da8f12cabe3350586f", null ],
+    [ "current_queue_depth", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#abf4c842a1df86ffd42171cc0baf17e14", null ],
+    [ "enqueue_latency_p50_us", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a137140798123356284cf2e9ce841342f", null ],
+    [ "enqueue_latency_p90_us", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a406fb5d3f2c5893b644dc195db4591f9", null ],
+    [ "enqueue_latency_p99_us", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#afb5dcb0ce39ceb139e8be4ac4e73fbb9", null ],
+    [ "execution_latency_p50_us", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a9ec0747341b39c4be5743d4931a9e6f5", null ],
+    [ "execution_latency_p90_us", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#ab38150c6754d19df7ac3a0315d9b1cce", null ],
+    [ "execution_latency_p99_us", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a4a98c9465d51dbe7367258bb71a6151e", null ],
+    [ "peak_queue_depth", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a041756293cd8cd14b164c22f47e7baca", null ],
+    [ "per_worker_utilization", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#af5faec0205cf7be842e41c58b3eb79db", null ],
+    [ "snapshot_time", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a2d64b68478b3d0b2c51d8aa8188620fe", null ],
+    [ "tasks_executed", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a574eed2beb7b18c5fbd7cc8ac29252f0", null ],
+    [ "tasks_failed", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a1a22cc4f21f86849b5d22b1937d466ef", null ],
+    [ "tasks_submitted", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a5dc88280667287efde79676b7664ac74", null ],
+    [ "throughput_1m", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#aa6715f28d01a5c4fe1ad82293d12f68b", null ],
+    [ "throughput_1s", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a030cb05e8b9b72bf5e19c74966fa8e2f", null ],
+    [ "total_busy_time_ns", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a1a4f72bbd2641b4bf45b150c195132e9", null ],
+    [ "total_idle_time_ns", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a70a475c01b56ad2e9f57170791384b45", null ],
+    [ "wait_time_p50_us", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#aa14ded1d0dbe8b8a0baefcf583a9f95a", null ],
+    [ "wait_time_p90_us", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a4955c5d921882d5dc37cec47568d9797", null ],
+    [ "wait_time_p99_us", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#adf069602095bc42eb964e398014d25e5", null ],
+    [ "worker_utilization", "structkcenon_1_1thread_1_1metrics_1_1EnhancedSnapshot.html#a0652c622738d941c6cd4d5d5df74e829", null ]
+];

@@ -1,0 +1,15 @@
+<map id="include/kcenon/thread/utils/atomic_wait.h" name="include/kcenon/thread/utils/atomic_wait.h">
+<area shape="rect" id="Node000001" title="C++17&#45;compatible atomic wait/notify implementation." alt="" coords="237,5,403,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,72,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="253,48,86,94,85,89,252,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,93,160,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="275,48,170,91,168,86,273,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="185,93,327,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="307,47,276,84,272,81,302,44"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="352,93,416,119"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="338,44,368,81,364,84,333,47"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="440,93,507,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="358,43,440,85,438,89,356,48"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="531,93,623,119"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="382,43,528,87,526,92,381,48"/>
+</map>

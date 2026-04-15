@@ -1,0 +1,10 @@
+<map id="kcenon::thread::queue_factory::create_standard_queue" name="kcenon::thread::queue_factory::create_standard_queue">
+<area shape="rect" id="Node000001" title="Create standard job_queue." alt="" coords="321,23,556,63"/>
+<area shape="rect" id="Node000002" href="$queue__factory__sample_8cpp.html#a8ffcedced988fc0c2482f387f6ae2498" title="Example 5: Practical use cases." alt="" coords="115,5,267,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="307,33,267,28,267,23,308,27"/>
+<area shape="rect" id="Node000004" href="$queue__factory__sample_8cpp.html#a8b2eea4d80cd88bd056753c035751940" title="Example 1: Simple factory usage." alt="" coords="108,55,273,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="308,59,274,62,273,57,307,53"/>
+<area shape="rect" id="Node000003" href="$queue__factory__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,31,60,56"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="102,35,60,42,60,36,101,30"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="94,55,60,50,60,45,95,50"/>
+</map>

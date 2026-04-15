@@ -1,0 +1,7 @@
+<map id="utility_module::convert_string::add_utf8_bom" name="utility_module::convert_string::add_utf8_bom">
+<area shape="rect" id="Node000001" title="Adds a UTF&#45;8 BOM to a string if it doesn&#39;t already have one." alt="" coords="5,37,179,77"/>
+<area shape="rect" id="Node000002" href="$classutility__module_1_1convert__string.html#ad00daa34a9204efebf23e4f51c9341a1" title="Decodes a Base64 string into a byte array." alt="" coords="227,5,401,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,42,213,37,213,43,179,48"/>
+<area shape="rect" id="Node000003" href="$classutility__module_1_1convert__string.html#a23b88b5238efac1c97b203589755ed1b" title="Encodes a byte array into a Base64 string." alt="" coords="227,69,401,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="179,67,213,72,213,77,178,72"/>
+</map>

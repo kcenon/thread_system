@@ -1,0 +1,9 @@
+<map id="kcenon::thread::metrics::EnhancedThreadPoolMetrics::record_enqueue" name="kcenon::thread::metrics::EnhancedThreadPoolMetrics::record_enqueue">
+<area shape="rect" id="Node000001" title="Record enqueue operation latency." alt="" coords="5,5,220,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a0ea635577a50e41efa2fa2f540b4a7a8" title="Record a latency value." alt="" coords="268,13,467,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,30,254,30,254,35,220,35"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#acebf5a20dc245be8ab3f01d18b680ca6" title="Record a raw nanosecond value." alt="" coords="515,13,735,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="467,30,501,30,501,35,467,35"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a3b39aa0514608d33fe38aed94c4afaa3" title="Compute the bucket index for a given value." alt="" coords="783,5,997,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="735,30,769,30,769,35,735,35"/>
+</map>

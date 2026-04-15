@@ -1,0 +1,6 @@
+<map id="kcenon::thread::enhanced_cancellation_token::is_cancellation_requested" name="kcenon::thread::enhanced_cancellation_token::is_cancellation_requested">
+<area shape="rect" id="Node000001" title="Checks if cancellation has been requested." alt="" coords="5,29,196,84"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1enhanced__cancellation__token.html#a77756ddbe3aa4c18d88ca4b3e1fa0695" title="Checks if the token has been cancelled." alt="" coords="244,29,435,84"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,54,230,54,230,59,196,59"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="293,29,293,19,302,10,317,5,339,3,366,6,381,14,379,18,365,11,339,8,318,10,305,15,298,21,298,29"/>
+</map>

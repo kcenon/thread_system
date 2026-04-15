@@ -1,0 +1,19 @@
+<map id="different_policies_example" name="different_policies_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,184,140,224"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#afaf53bb542a3bc84905263fe7a8ecab2" title="Get current operating mode." alt="" coords="188,5,383,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="82,182,122,120,152,85,186,55,195,49,198,54,190,59,156,89,127,123,87,185"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a575742ca11fe9522d2da36c5dcb0e206" title="Dequeues a job from the current active queue." alt="" coords="193,69,377,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="99,182,140,154,187,126,214,112,217,117,189,130,142,158,102,186"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="431,127,595,167"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="137,181,188,169,307,154,417,147,417,152,307,159,188,175,138,186"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a2db2e9a6d16f7b9a9da6ba3c2176d4ac" title="Checks if the queue is empty." alt="" coords="193,184,377,224"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="140,201,179,201,179,207,140,207"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a586cab78d0bb73cac4c7fff9c644cceb" title="Enqueues a job into the current active queue." alt="" coords="193,248,377,288"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="141,222,206,241,204,247,139,227"/>
+<area shape="rect" id="Node000007" href="$adaptive__queue__sample_8cpp.html#a69b0926a5d57c054e334865c63324613" title=" " alt="" coords="224,313,347,338"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="94,222,136,261,189,298,211,307,209,312,187,302,132,265,91,226"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="203,363,367,403"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="87,223,127,284,156,318,190,347,201,354,198,359,186,351,152,322,123,287,83,226"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="366,107,420,121,419,126,365,112"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="354,246,381,234,431,204,475,173,478,177,434,209,384,238,356,250"/>
+</map>

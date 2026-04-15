@@ -1,0 +1,9 @@
+<map id="kcenon::thread::diagnostics::bottleneck_report::to_string" name="kcenon::thread::diagnostics::bottleneck_report::to_string">
+<area shape="rect" id="Node000001" title="Converts the bottleneck report to a human&#45;readable string." alt="" coords="5,37,216,77"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread_1_1diagnostics.html#a016953281c0f93d2fb82176c1da217f7" title="Converts bottleneck_type to human&#45;readable string." alt="" coords="289,5,490,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,43,275,36,275,41,217,48"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1diagnostics_1_1bottleneck__report.html#ac7df6b118b82d0f8e3b8bce556590bdd" title="Gets severity as a string." alt="" coords="264,69,515,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="217,67,251,71,250,76,216,72"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1diagnostics_1_1bottleneck__report.html#a9bf6d604a3e2a5351474108a21ddee69" title="Gets the severity level of the bottleneck." alt="" coords="563,69,769,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="515,87,549,87,549,92,515,92"/>
+</map>

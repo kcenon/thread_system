@@ -1,0 +1,7 @@
+<map id="kcenon::thread::thread_pool::start" name="kcenon::thread::thread_pool::start">
+<area shape="rect" id="Node000001" title="Starts the thread pool and all associated workers." alt="" coords="5,5,175,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1cancellation__token.html#a96d31c388122def979393ed4b19a3061" title="Creates a new cancellation token." alt="" coords="223,5,429,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,23,209,23,209,28,175,28"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1cancellation__token.html#a43cb9007fd321a0e234353ea7b6f252b" title=" " alt="" coords="477,5,684,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="429,23,464,23,464,28,429,28"/>
+</map>

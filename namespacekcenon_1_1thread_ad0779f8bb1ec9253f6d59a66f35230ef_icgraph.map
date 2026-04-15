@@ -1,0 +1,75 @@
+<map id="kcenon::thread::error_code_to_string" name="kcenon::thread::error_code_to_string">
+<area shape="rect" id="Node000001" title="Converts an error_code to a string representation." alt="" coords="1041,837,1200,877"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__error__category.html#adce597428a61ddf5dcb8b176489beef4" title="Returns a message for the given error code." alt="" coords="803,773,993,813"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1036,836,967,816,969,811,1038,831"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread.html#a899d6d797fc353567761b0d4ed2637e6" title="Convert a thread::error_code to common::error_info." alt="" coords="828,837,968,877"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1028,860,968,860,968,855,1028,855"/>
+<area shape="rect" id="Node000031" href="$classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7" title="Converts the error to a string representation." alt="" coords="819,1029,977,1069"/>
+<area shape="poly" id="edge30_Node000001_Node000031" title=" " alt="" coords="1088,888,924,1031,921,1027,1084,884"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread.html#a13f75c13dd33420c01a704c8bd09a79e" title="Create a common::VoidResult error from a thread::error_code." alt="" coords="579,773,742,813"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="814,837,735,816,736,811,815,832"/>
+<area shape="rect" id="Node000030" href="$classkcenon_1_1thread_1_1dag__scheduler.html#a178657d812da56bd3a0ef3caa1117a3f" title="Called when a job fails." alt="" coords="567,837,754,877"/>
+<area shape="poly" id="edge29_Node000003_Node000030" title=" " alt="" coords="814,860,754,860,754,855,814,855"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1dag__scheduler.html#a9f8274ec36d1c57ad1f12a2381d4b921" title="Adds a dependency between jobs." alt="" coords="284,5,495,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="655,760,644,610,620,399,601,291,578,193,550,113,534,82,517,59,493,42,497,38,521,55,539,79,555,111,583,192,606,290,625,398,649,609,660,759"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#aabe66f3b73a578b69daae56e664af393" title="Applies backpressure logic for a single job." alt="" coords="272,69,507,109"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="654,760,641,622,615,430,597,333,574,244,548,172,533,144,517,123,503,112,506,108,521,119,537,141,553,170,580,243,602,332,621,429,647,621,660,759"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1cancellation__token.html#a19865b6fa421a08e31bb0e8b1272e1a1" title="Checks if the token has been canceled and returns an error result." alt="" coords="286,133,493,173"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="653,760,638,634,611,462,592,375,570,296,545,232,531,207,517,189,491,171,494,166,521,185,536,204,550,229,575,295,597,374,616,461,644,633,659,759"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1enhanced__cancellation__token.html#affd76e91fe16e5c8914f243e98f263c2" title="Checks if the token has been cancelled and returns an error result." alt="" coords="291,198,488,253"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="652,760,634,649,605,501,586,427,565,360,542,304,517,267,487,246,490,242,521,263,546,302,570,358,591,426,610,500,639,648,657,759"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1dag__job.html#a7929c9b2e227e0aba5b03b52b3eafd1b" title="Executes the job&#39;s work function." alt="" coords="314,277,465,317"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="657,759,652,673,645,617,633,557,615,496,591,436,558,380,517,331,492,315,464,305,466,300,495,310,520,327,563,377,596,433,620,494,638,556,650,616,657,672,662,759"/>
+<area shape="rect" id="Node000011" href="$classkcenon_1_1thread_1_1future__job.html#af461395c384f514743c3f7652b6b40a1" title="Executes the callable and sets the promise value." alt="" coords="306,341,473,381"/>
+<area shape="poly" id="edge10_Node000004_Node000011" title=" " alt="" coords="655,760,646,685,624,587,606,535,583,484,553,437,517,397,496,382,472,373,474,368,499,378,520,393,558,434,588,482,611,533,629,585,652,684,660,760"/>
+<area shape="rect" id="Node000012" href="$classkcenon_1_1thread_1_1job__builder_1_1built__job.html#a5ede20928c5c268c5322686e3644c5f5" title="The core task execution method to be overridden by derived classes." alt="" coords="316,406,463,461"/>
+<area shape="poly" id="edge11_Node000004_Node000012" title=" " alt="" coords="651,760,638,699,612,623,594,583,573,543,547,507,517,475,491,458,462,447,464,442,494,454,520,471,551,504,577,541,599,580,617,621,643,698,657,759"/>
+<area shape="rect" id="Node000013" href="$classkcenon_1_1thread_1_1protected__job.html#a6cc2586f81d28b3b54a422da7c938b09" title="Executes the wrapped job with circuit breaker protection." alt="" coords="295,485,484,525"/>
+<area shape="poly" id="edge12_Node000004_Node000013" title=" " alt="" coords="648,761,631,711,604,651,566,590,543,563,517,540,483,521,486,517,520,535,547,559,571,587,609,648,636,709,653,759"/>
+<area shape="rect" id="Node000014" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#ac7217bb05cd064cbae4f748d1d34ed2d" title="Enqueues a job with backpressure handling." alt="" coords="282,549,497,589"/>
+<area shape="poly" id="edge13_Node000004_Node000014" title=" " alt="" coords="642,762,622,724,594,681,559,639,517,604,495,592,498,587,520,599,563,635,598,678,626,722,647,759"/>
+<area shape="rect" id="Node000015" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#a9537ef88cad03ae7efbd5fbc316a3f31" title="Enqueues a batch of jobs with backpressure handling." alt="" coords="282,613,497,653"/>
+<area shape="poly" id="edge14_Node000004_Node000015" title=" " alt="" coords="632,765,582,714,551,689,517,668,490,656,492,651,520,663,554,685,586,711,636,761"/>
+<area shape="rect" id="Node000016" href="$classkcenon_1_1thread_1_1dag__scheduler.html#a450f49b11993727fcf374821dac674a8" title="Executes a specific job and its dependencies." alt="" coords="314,677,465,717"/>
+<area shape="poly" id="edge15_Node000004_Node000016" title=" " alt="" coords="607,770,518,732,464,716,466,711,520,727,609,765"/>
+<area shape="rect" id="Node000017" href="$classkcenon_1_1thread_1_1dag__scheduler.html#aaa7226261f67723702361a2ff65bb758" title="Executes all jobs in dependency order." alt="" coords="302,741,477,781"/>
+<area shape="poly" id="edge16_Node000004_Node000017" title=" " alt="" coords="565,785,477,774,477,769,566,780"/>
+<area shape="rect" id="Node000018" href="$classkcenon_1_1thread_1_1dag__scheduler.html#a79e4e110a9627709afccbb58625fc7af" title="Executes a single job." alt="" coords="300,805,479,845"/>
+<area shape="poly" id="edge17_Node000004_Node000018" title=" " alt="" coords="566,807,479,817,479,812,565,802"/>
+<area shape="rect" id="Node000019" href="$classkcenon_1_1thread_1_1cancellable__future.html#a75528d9668ae292947cb0fd951647f44" title="Wait for and retrieve the result." alt="" coords="289,869,490,909"/>
+<area shape="poly" id="edge18_Node000004_Node000019" title=" " alt="" coords="583,821,568,828,544,844,520,860,487,872,485,867,517,855,541,839,565,823,580,816"/>
+<area shape="rect" id="Node000020" href="$classkcenon_1_1thread_1_1cancellable__future_3_01void_01_4.html#a9e198ed51c9e939d6d6830099ae3712d" title=" " alt="" coords="289,933,490,973"/>
+<area shape="poly" id="edge19_Node000004_Node000020" title=" " alt="" coords="574,823,569,827,552,851,546,875,539,899,532,912,520,923,492,940,489,935,517,919,528,908,534,897,541,873,547,848,565,823,571,819"/>
+<area shape="rect" id="Node000021" href="$classkcenon_1_1thread_1_1cancellable__future.html#affade48357f4f3dc5b4da5f7c44598f7" title="Wait for the result with timeout." alt="" coords="289,997,490,1037"/>
+<area shape="poly" id="edge20_Node000004_Node000021" title=" " alt="" coords="572,824,569,827,554,847,548,866,546,906,544,947,536,967,520,987,492,1006,489,1001,517,983,532,965,539,946,541,906,542,865,550,844,565,824,569,820"/>
+<area shape="rect" id="Node000022" href="$classkcenon_1_1thread_1_1cancellable__future_3_01void_01_4.html#a7ba9d4127cbbdd33dc84abde8f54d862" title=" " alt="" coords="289,1061,490,1101"/>
+<area shape="poly" id="edge21_Node000004_Node000022" title=" " alt="" coords="572,824,569,827,551,855,543,883,543,910,547,938,550,966,549,995,541,1023,521,1051,492,1071,489,1066,517,1047,536,1021,544,994,544,967,541,939,538,911,538,882,546,853,565,824,568,820"/>
+<area shape="rect" id="Node000023" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#a6b73443a5226b222200a89b6b2fe9cb8" title="Handles adaptive policy." alt="" coords="260,1125,519,1165"/>
+<area shape="poly" id="edge22_Node000004_Node000023" title=" " alt="" coords="572,824,569,827,547,863,539,899,541,935,547,970,553,1006,554,1042,545,1079,521,1115,506,1127,503,1123,517,1112,540,1077,549,1042,548,1007,542,971,535,935,534,899,542,861,565,824,568,820"/>
+<area shape="rect" id="Node000024" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#accee24d75bdad406f8f2f9a6a9588fd7" title="Handles blocking policy with timeout." alt="" coords="271,1189,507,1229"/>
+<area shape="poly" id="edge23_Node000004_Node000024" title=" " alt="" coords="572,824,569,827,553,849,543,872,534,915,538,959,547,1002,556,1046,559,1090,556,1112,549,1134,538,1157,521,1179,507,1191,504,1187,517,1176,533,1154,544,1132,551,1111,554,1090,551,1047,542,1004,533,960,529,915,538,870,548,847,565,824,568,820"/>
+<area shape="rect" id="Node000025" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#aef44e5a3b2392bb33919506fbd160d56" title="Handles callback policy." alt="" coords="262,1253,517,1293"/>
+<area shape="poly" id="edge24_Node000004_Node000025" title=" " alt="" coords="571,824,569,827,551,854,539,880,532,906,530,932,535,983,548,1035,560,1086,564,1138,561,1164,554,1190,540,1217,521,1243,507,1255,504,1251,517,1240,536,1214,549,1188,556,1163,559,1138,554,1087,542,1036,530,984,525,932,527,905,534,878,546,851,565,824,567,821"/>
+<area shape="rect" id="Node000026" href="$classkcenon_1_1thread_1_1circuit__breaker__policy.html#a747f83bfe4acfa08a7260e38f656f37e" title="Checks circuit state before allowing job enqueue." alt="" coords="284,1317,495,1357"/>
+<area shape="poly" id="edge25_Node000004_Node000026" title=" " alt="" coords="571,824,569,827,548,858,535,888,528,919,525,948,533,1008,548,1067,563,1126,569,1186,566,1216,558,1246,543,1276,521,1307,497,1326,493,1321,517,1303,539,1274,553,1244,561,1215,564,1186,558,1127,543,1068,527,1009,520,949,522,918,530,887,543,855,565,824,567,821"/>
+<area shape="rect" id="Node000027" href="$classkcenon_1_1thread_1_1dag__scheduler.html#add9980e3a502533c1e9b047f17984483" title="Removes a job from the DAG (only if not yet started)" alt="" coords="301,1381,478,1421"/>
+<area shape="poly" id="edge26_Node000004_Node000027" title=" " alt="" coords="571,824,569,827,557,847,549,873,541,938,542,1015,547,1098,551,1182,552,1259,543,1324,534,1350,521,1371,502,1387,479,1397,477,1392,499,1383,517,1368,529,1348,538,1323,546,1259,546,1182,542,1099,537,1015,536,938,544,872,552,845,564,824,567,821"/>
+<area shape="rect" id="Node000028" href="$classkcenon_1_1thread_1_1dag__scheduler.html#a6aed14ff0a1553b2cce7e5a0233fc0fe" title="Resets the scheduler for reuse." alt="" coords="314,1445,465,1485"/>
+<area shape="poly" id="edge27_Node000004_Node000028" title=" " alt="" coords="571,824,569,827,556,850,547,879,539,951,541,1037,547,1131,553,1224,554,1310,545,1382,535,1412,521,1435,496,1454,466,1465,464,1460,493,1450,517,1432,530,1409,540,1381,549,1310,548,1224,542,1131,535,1038,534,951,542,877,551,848,564,824,567,821"/>
+<area shape="rect" id="Node000029" href="$classkcenon_1_1thread_1_1thread__pool.html#a051576a2aeabcb8e238d8dc5c068c171" title="Submit a batch and return first completed result." alt="" coords="301,1509,477,1549"/>
+<area shape="poly" id="edge28_Node000004_Node000029" title=" " alt="" coords="571,824,569,827,555,852,545,884,539,922,537,964,539,1060,547,1163,555,1266,557,1361,554,1403,547,1441,536,1473,521,1499,501,1515,479,1526,476,1521,499,1511,517,1496,532,1471,542,1440,548,1403,551,1361,549,1266,542,1163,534,1060,532,964,534,921,540,883,550,850,564,824,567,821"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1cancellation__scope.html#a8c09b34e6c7bdbcded1f241ad6063318" title="Checks if the token is cancelled and returns an error result." alt="" coords="5,205,212,245"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="277,228,212,228,212,223,277,223"/>
+<area shape="rect" id="Node000032" href="$classkcenon_1_1thread_1_1error.html#afd0ec7a0a2a347643cf93dd9a1612de7" title="Implicit conversion to string." alt="" coords="581,901,740,941"/>
+<area shape="poly" id="edge31_Node000031_Node000032" title=" " alt="" coords="859,1023,810,989,753,956,726,944,728,939,756,951,813,984,862,1019"/>
+<area shape="rect" id="Node000033" href="$namespacekcenon_1_1thread.html#a784252132673ec4a20586b2e30e95ce4" title=" " alt="" coords="579,965,743,1005"/>
+<area shape="poly" id="edge32_Node000031_Node000033" title=" " alt="" coords="809,1028,735,1008,736,1003,811,1023"/>
+<area shape="rect" id="Node000034" href="$namespacekcenon_1_1thread.html#ae74d16b31132be9b2a85893c0f5e0203" title=" " alt="" coords="579,1029,743,1069"/>
+<area shape="poly" id="edge33_Node000031_Node000034" title=" " alt="" coords="805,1052,743,1052,743,1047,805,1047"/>
+<area shape="rect" id="Node000035" href="$classkcenon_1_1thread_1_1result.html#a9100b0aab523e8d0ad9c0fca2b857b19" title="Gets the value or throws an exception." alt="" coords="579,1093,743,1133"/>
+<area shape="poly" id="edge34_Node000031_Node000035" title=" " alt="" coords="811,1076,736,1096,735,1091,809,1070"/>
+<area shape="rect" id="Node000036" href="$classkcenon_1_1thread_1_1result.html#ae0c165f3508e75ab04189d91a68b3733" title="Gets the value or throws an exception." alt="" coords="579,1157,743,1197"/>
+<area shape="poly" id="edge35_Node000031_Node000036" title=" " alt="" coords="862,1080,813,1114,756,1148,728,1160,726,1155,753,1143,810,1110,859,1076"/>
+<area shape="rect" id="Node000037" href="$classkcenon_1_1thread_1_1result_3_01void_01_4.html#a9f3616e7ea5d6d49c1f3b31c5f8f3d19" title="Throws an exception if the result contains an error." alt="" coords="567,1221,755,1261"/>
+<area shape="poly" id="edge36_Node000031_Node000037" title=" " alt="" coords="878,1082,828,1147,794,1182,756,1212,734,1224,731,1219,753,1207,790,1178,824,1144,874,1079"/>
+</map>

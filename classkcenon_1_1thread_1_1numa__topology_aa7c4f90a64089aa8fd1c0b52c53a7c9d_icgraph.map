@@ -1,0 +1,5 @@
+<map id="kcenon::thread::numa_topology::is_numa_available" name="kcenon::thread::numa_topology::is_numa_available">
+<area shape="rect" id="Node000001" title="Check if NUMA is available on this system." alt="" coords="223,13,437,53"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1numa__thread__pool.html#a6c637521f9f192d40825c521dbe47bc4" title="Check if the system has NUMA architecture." alt="" coords="5,5,175,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,35,175,35,175,30,209,30"/>
+</map>

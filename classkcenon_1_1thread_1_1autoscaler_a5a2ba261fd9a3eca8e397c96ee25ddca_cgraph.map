@@ -1,0 +1,5 @@
+<map id="kcenon::thread::autoscaler::execute_scaling" name="kcenon::thread::autoscaler::execute_scaling">
+<area shape="rect" id="Node000001" title="Executes a scaling decision." alt="" coords="5,5,200,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="248,5,412,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,23,234,23,234,28,201,28"/>
+</map>

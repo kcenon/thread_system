@@ -1,0 +1,11 @@
+<map id="include/kcenon/thread/core/error_handling.h" name="include/kcenon/thread/core/error_handling.h">
+<area shape="rect" id="Node000001" title="Error codes and utilities for the thread system." alt="" coords="117,5,283,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,101,64,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,48,70,97,67,92,162,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="89,101,186,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,47,156,91,152,88,184,44"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="210,101,318,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="216,44,249,88,245,91,212,47"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="342,93,530,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="253,43,372,86,371,91,251,48"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="kcenon::thread::detail::lockfree_job_queue::get_next_job" name="kcenon::thread::detail::lockfree_job_queue::get_next_job">
+<area shape="rect" id="Node000001" title="Get next job (delegates to dequeue)" alt="" coords="5,5,171,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#afdd966b3ada4a6b20d091496e1d6c491" title="Dequeues a job from the queue (thread&#45;safe)" alt="" coords="219,5,384,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,30,205,30,205,35,171,35"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__guard.html#a6a993bc8a8a2f110d66964a9fa8431dc" title="Protect a pointer." alt="" coords="432,13,603,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="385,30,418,30,418,35,385,35"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html#acf1c44aa138a473548e2a73bf107508d" title="Protect a pointer from reclamation." alt="" coords="651,5,825,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="603,30,637,30,637,35,603,35"/>
+</map>

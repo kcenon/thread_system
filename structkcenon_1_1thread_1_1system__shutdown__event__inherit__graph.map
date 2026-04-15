@@ -1,0 +1,5 @@
+<map id="kcenon::thread::system_shutdown_event" name="kcenon::thread::system_shutdown_event">
+<area shape="rect" id="Node000001" title="System shutdown event." alt="" coords="5,159,207,279"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1event__base.html" title="Event base class for type safety." alt="" coords="9,5,203,111"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,124,109,158,103,158,103,124"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="sample_monitoring" name="sample_monitoring">
+<area shape="rect" id="Node000001" title=" " alt="" coords="35,133,175,279"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,204,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,99,107,133,102,133,102,99"/>
+</map>

@@ -1,0 +1,26 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="28,273,173,313"/>
+<area shape="rect" id="Node000001" href="$classkcenon_1_1thread_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="294,213,441,253"/>
+<area shape="poly" id="edge39_Node000000_Node000001" title=" " alt="" coords="186,271,293,247,294,252,187,277"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="265,281,469,306"/>
+<area shape="poly" id="edge41_Node000000_Node000008" title=" " alt="" coords="187,291,265,291,265,296,187,296"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1typed__thread__pool__t.html" title="Typed thread pool template." alt="" coords="265,331,469,371"/>
+<area shape="poly" id="edge43_Node000000_Node000010" title=" " alt="" coords="187,309,274,328,273,333,186,314"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html" title="A job queue with comprehensive backpressure mechanisms." alt="" coords="539,211,753,251"/>
+<area shape="poly" id="edge40_Node000001_Node000002" title=" " alt="" coords="454,230,539,229,539,234,454,235"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1numa__thread__pool.html" title="A NUMA&#45;aware thread pool optimized for Non&#45;Uniform Memory Access architectures." alt="" coords="564,275,728,315"/>
+<area shape="poly" id="edge42_Node000008_Node000009" title=" " alt="" coords="483,291,564,292,564,297,483,297"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html" title="Mixin interface for queue capability introspection." alt="" coords="16,140,185,180"/>
+<area shape="poly" id="edge46_Node000003_Node000001" title=" " alt="" coords="187,181,245,197,294,211,293,216,243,203,185,186"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html" title="Adaptive queue that switches between mutex and lock&#45;free modes." alt="" coords="275,5,459,45"/>
+<area shape="poly" id="edge44_Node000003_Node000004" title=" " alt="" coords="180,131,194,122,209,106,217,89,226,72,242,55,274,39,276,44,246,59,230,75,222,91,214,109,198,126,183,136"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html" title="Lock&#45;free Multi&#45;Producer Multi&#45;Consumer (MPMC) job queue (Internal implementation)" alt="" coords="285,69,449,109"/>
+<area shape="poly" id="edge45_Node000003_Node000006" title=" " alt="" coords="187,134,243,119,288,107,290,112,245,124,189,139"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1policy__queue.html" title="Policy&#45;based queue template." alt="" coords="244,134,491,189"/>
+<area shape="poly" id="edge47_Node000003_Node000007" title=" " alt="" coords="199,158,244,158,244,163,199,163"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,72,196,112"/>
+<area shape="poly" id="edge50_Node000005_Node000001" title=" " alt="" coords="183,116,198,126,214,145,222,164,230,181,246,198,269,211,295,220,293,225,267,216,242,202,225,184,217,166,210,148,194,130,180,121"/>
+<area shape="poly" id="edge48_Node000005_Node000004" title=" " alt="" coords="194,66,286,43,287,48,195,71"/>
+<area shape="poly" id="edge49_Node000005_Node000006" title=" " alt="" coords="210,88,285,87,285,93,210,94"/>
+<area shape="poly" id="edge51_Node000005_Node000007" title=" " alt="" coords="192,113,263,131,261,137,191,118"/>
+</map>

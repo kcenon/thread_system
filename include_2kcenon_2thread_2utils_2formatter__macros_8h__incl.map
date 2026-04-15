@@ -1,0 +1,28 @@
+<map id="include/kcenon/thread/utils/formatter_macros.h" name="include/kcenon/thread/utils/formatter_macros.h">
+<area shape="rect" id="Node000001" title="Provides macros for generating std::formatter specializations." alt="" coords="108,5,295,45"/>
+<area shape="rect" id="Node000002" href="$include_2kcenon_2thread_2utils_2formatter_8h.html" title="Generic formatter for enum types using user&#45;provided converter functors." alt="" coords="154,93,249,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,46,204,79,199,79,199,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,72,192"/>
+<area shape="poly" id="edge14_Node000001_Node000003" title=" " alt="" coords="183,48,63,159,59,155,179,44"/>
+<area shape="rect" id="Node000007" href="$include_2kcenon_2thread_2utils_2convert__string_8h.html" title="String encoding conversion, Base64 encoding/decoding utilities." alt="" coords="434,93,561,119"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="273,43,442,87,440,92,272,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="176,121,79,163,77,159,174,116"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="335,167,393,192"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="229,116,326,159,324,163,226,121"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="213,167,310,192"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="213,117,245,154,241,158,209,121"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="97,167,189,192"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="194,121,163,158,159,155,190,117"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="477,121,399,162,397,158,475,116"/>
+<area shape="poly" id="edge13_Node000007_Node000005" title=" " alt="" coords="460,121,313,165,312,160,459,116"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="717,167,771,192"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="538,116,704,164,702,169,536,121"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="795,167,858,192"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="558,116,783,164,781,169,557,121"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="417,167,484,192"/>
+<area shape="poly" id="edge10_Node000007_Node000010" title=" " alt="" coords="492,120,468,157,464,154,487,118"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="508,167,583,192"/>
+<area shape="poly" id="edge11_Node000007_Node000011" title=" " alt="" coords="507,118,532,154,528,157,503,121"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="607,167,692,192"/>
+<area shape="poly" id="edge12_Node000007_Node000012" title=" " alt="" coords="523,116,613,158,611,163,521,121"/>
+</map>

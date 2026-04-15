@@ -1,0 +1,11 @@
+<map id="kcenon::thread::backpressure_job_queue::handle_block_policy" name="kcenon::thread::backpressure_job_queue::handle_block_policy">
+<area shape="rect" id="Node000001" title="Handles blocking policy with timeout." alt="" coords="5,37,241,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="289,5,453,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="241,39,275,35,276,40,242,45"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread.html#a13f75c13dd33420c01a704c8bd09a79e" title="Create a common::VoidResult error from a thread::error_code." alt="" coords="290,69,453,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="242,70,276,74,276,80,241,75"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread.html#a899d6d797fc353567761b0d4ed2637e6" title="Convert a thread::error_code to common::error_info." alt="" coords="501,69,641,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="453,87,488,87,488,92,453,92"/>
+<area shape="rect" id="Node000005" href="$namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="689,69,848,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="642,87,675,87,675,92,642,92"/>
+</map>

@@ -1,0 +1,52 @@
+<map id="kcenon::thread::numa_work_stealer" name="kcenon::thread::numa_work_stealer">
+<area shape="rect" id="Node000001" title="NUMA&#45;aware work stealer with enhanced victim selection policies." alt="" coords="678,2063,894,2727"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1enhanced__work__stealing__config.html" title="Configuration for enhanced work&#45;stealing with NUMA awareness." alt="" coords="119,1640,317,2000"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="319,1985,331,1998,412,2085,500,2167,587,2241,667,2304,663,2308,584,2245,496,2171,408,2089,327,2002,315,1988"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1numa__topology.html" title="NUMA (Non&#45;Uniform Memory Access) topology information." alt="" coords="341,1670,503,1970"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="505,1947,671,2208,667,2211,501,1950"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="341,1307,503,1387"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="425,1388,425,1653,419,1653,419,1388"/>
+<area shape="rect" id="Node000005" href="$structkcenon_1_1thread_1_1numa__node.html" title="Information about a single NUMA node." alt="" coords="247,799,442,885"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="354,884,416,1291,411,1292,348,885"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="261,423,391,489"/>
+<area shape="poly" id="edge9_Node000003_Node000006" title=" " alt="" coords="317,490,275,621,254,707,238,795,225,914,220,1016,223,1106,233,1189,250,1272,272,1360,331,1577,356,1654,351,1655,326,1578,267,1362,245,1273,228,1190,218,1106,215,1016,220,914,233,794,249,706,270,620,312,488"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="330,489,345,783,339,783,325,489"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="5,802,172,882"/>
+<area shape="poly" id="edge11_Node000009_Node000006" title=" " alt="" coords="304,491,270,527,226,558,209,565,193,567,165,565,140,566,128,571,116,582,108,596,101,616,93,669,89,785,84,785,87,668,96,614,103,593,112,578,125,567,139,561,165,560,193,562,208,560,223,554,266,523,300,487"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="357,181,479,246"/>
+<area shape="poly" id="edge8_Node000004_Node000007" title=" " alt="" coords="430,260,438,317,445,445,443,544,442,644,451,770,457,794,462,854,463,913,466,1003,463,1094,449,1211,432,1308,427,1307,444,1210,458,1093,461,1003,458,913,457,854,451,795,446,771,436,644,437,544,440,445,433,318,424,260"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="404,260,341,424,336,422,399,258"/>
+<area shape="poly" id="edge12_Node000009_Node000007" title=" " alt="" coords="344,227,282,243,215,268,182,285,151,305,123,329,100,357,71,412,53,473,45,535,44,598,49,658,58,714,79,801,74,802,53,715,44,659,39,598,40,535,48,471,66,410,96,355,120,326,148,301,179,280,212,263,281,238,343,222"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="805,5,828,71"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="806,47,495,182,492,177,804,42"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="754,181,879,246"/>
+<area shape="poly" id="edge16_Node000012_Node000008" title=" " alt="" coords="819,71,819,164,814,164,814,71"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="1190,423,1339,489"/>
+<area shape="poly" id="edge22_Node000016_Node000008" title=" " alt="" coords="830,48,1220,410,1216,414,826,52"/>
+<area shape="poly" id="edge10_Node000003_Node000009" title=" " alt="" coords="80,883,51,1008,39,1094,31,1189,31,1288,44,1389,55,1438,70,1486,90,1532,115,1576,136,1600,159,1612,184,1616,211,1615,269,1614,299,1621,330,1638,350,1656,347,1660,327,1642,298,1626,268,1620,211,1621,183,1621,157,1617,133,1604,110,1579,85,1535,65,1488,50,1440,38,1390,26,1289,26,1188,33,1093,46,1007,75,881"/>
+<area shape="rect" id="Node000010" href="$structkcenon_1_1thread_1_1work__stealing__stats.html" title="Statistics for work&#45;stealing operations." alt="" coords="769,913,931,1093"/>
+<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="853,1094,851,1314,845,1577,832,1815,817,2047,811,2046,827,1815,839,1577,846,1313,848,1093"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="821,423,1020,489"/>
+<area shape="poly" id="edge14_Node000010_Node000011" title=" " alt="" coords="894,490,864,532,841,581,824,662,819,745,823,825,831,896,826,897,817,825,814,745,819,661,835,579,859,529,889,487"/>
+<area shape="rect" id="Node000014" href="$classkcenon_1_1thread_1_1work__affinity__tracker.html" title="Tracks cooperation patterns between workers for locality&#45;aware stealing." alt="" coords="981,1117,1183,1577"/>
+<area shape="poly" id="edge23_Node000014_Node000011" title=" " alt="" coords="940,488,958,531,974,579,987,666,988,734,987,802,993,889,1009,995,1029,1101,1024,1102,1004,996,987,890,981,802,983,734,982,666,969,581,953,533,935,490"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="1139,795,1289,889"/>
+<area shape="poly" id="edge20_Node000015_Node000011" title=" " alt="" coords="947,488,1011,579,1043,633,1065,677,1089,720,1127,769,1139,782,1135,785,1123,772,1084,723,1060,680,1038,636,1006,581,942,491"/>
+<area shape="poly" id="edge15_Node000011_Node000012" title=" " alt="" coords="838,258,910,422,905,424,833,260"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="623,643,805,708"/>
+<area shape="poly" id="edge30_Node000020_Node000012" title=" " alt="" coords="788,259,772,288,759,318,736,408,723,500,717,581,716,643,711,642,712,581,718,499,731,407,754,316,767,285,784,257"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="995,1773,1169,1867"/>
+<area shape="poly" id="edge17_Node000001_Node000013" title=" " alt="" coords="1060,1869,904,2172,899,2169,1056,1866"/>
+<area shape="poly" id="edge18_Node000013_Node000014" title=" " alt="" coords="1085,1577,1085,1756,1079,1756,1079,1577"/>
+<area shape="poly" id="edge19_Node000014_Node000015" title=" " alt="" coords="1171,891,1156,915,1138,959,1123,1006,1102,1102,1097,1101,1118,1005,1133,957,1152,912,1166,888"/>
+<area shape="poly" id="edge24_Node000013_Node000016" title=" " alt="" coords="1287,501,1301,539,1311,580,1318,633,1317,675,1311,771,1307,1001,1303,1095,1296,1181,1283,1267,1263,1358,1236,1460,1198,1578,1155,1684,1110,1774,1105,1771,1150,1682,1193,1576,1230,1458,1258,1357,1278,1266,1290,1181,1298,1094,1302,1001,1306,771,1312,675,1312,633,1306,580,1296,540,1282,502"/>
+<area shape="poly" id="edge21_Node000015_Node000016" title=" " alt="" coords="1229,501,1203,538,1183,581,1170,633,1167,675,1172,717,1183,770,1191,794,1186,795,1178,771,1167,718,1162,675,1165,632,1178,579,1198,535,1224,498"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="1402,802,1607,882"/>
+<area shape="poly" id="edge28_Node000017_Node000016" title=" " alt="" coords="1300,499,1325,537,1345,579,1352,608,1354,634,1350,679,1349,722,1356,745,1370,769,1385,786,1403,801,1400,805,1381,790,1365,772,1351,747,1344,723,1344,679,1349,634,1347,609,1339,581,1320,539,1296,502"/>
+<area shape="poly" id="edge25_Node000001_Node000017" title=" " alt="" coords="1504,883,1481,1067,1459,1200,1428,1352,1386,1515,1332,1683,1300,1766,1265,1847,1226,1926,1183,2001,1122,2088,1051,2169,978,2241,909,2302,905,2298,974,2237,1048,2165,1118,2085,1178,1999,1221,1923,1260,1845,1295,1764,1327,1681,1381,1514,1423,1351,1454,1200,1476,1066,1499,882"/>
+<area shape="rect" id="Node000018" href="$classkcenon_1_1thread_1_1backoff__calculator.html" title="Calculates backoff delays for work&#45;stealing operations." alt="" coords="1485,356,1663,556"/>
+<area shape="poly" id="edge26_Node000017_Node000018" title=" " alt="" coords="1578,556,1570,661,1561,717,1547,771,1541,788,1536,786,1542,770,1556,716,1565,661,1573,556"/>
+<area shape="rect" id="Node000019" href="$structkcenon_1_1thread_1_1steal__backoff__config.html" title="Configuration for backoff behavior." alt="" coords="1499,133,1649,293"/>
+<area shape="poly" id="edge27_Node000018_Node000019" title=" " alt="" coords="1577,294,1577,340,1571,340,1571,294"/>
+<area shape="poly" id="edge29_Node000001_Node000020" title=" " alt="" coords="714,708,707,836,702,1002,702,1821,707,1933,719,2046,714,2047,701,1934,697,1821,697,1002,701,836,709,708"/>
+</map>

@@ -1,0 +1,29 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,153,60,179"/>
+<area shape="rect" id="Node000002" href="$typed__thread__pool__sample__2_8cpp.html#aa3f0b7249bf28fd9f1be6a9094be08bf" title=" " alt="" coords="135,153,251,179"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,163,120,163,120,169,60,169"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#aec5fe973e44efa3d1040ff7bec85f822" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="351,89,506,129"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="34,152,41,124,54,88,76,52,90,37,107,24,143,8,181,3,221,6,260,15,332,45,390,79,387,83,330,49,258,20,220,11,182,8,144,14,109,28,93,40,80,55,59,90,46,126,39,154"/>
+<area shape="rect" id="Node000004" href="$typed__thread__pool__sample__2_8cpp.html#a8d986ee76ac0cece6635815924ac089f" title=" " alt="" coords="129,39,256,64"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="39,152,65,114,85,93,106,75,120,67,122,72,110,79,88,96,70,117,44,155"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__pool.html#af7d8c0189c9b08f50b369df16040a0e8" title="Starts the thread pool and all associated workers." alt="" coords="108,253,277,293"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="46,177,73,207,110,237,122,244,119,249,106,242,70,211,42,181"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1thread__pool.html#af0d13085ca8af0504a4b4a82630fc18d" title="Stops the thread pool and all worker threads." alt="" coords="108,89,277,129"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="59,154,122,131,124,136,61,159"/>
+<area shape="rect" id="Node000009" href="$typed__thread__pool__sample__2_8cpp.html#a053c6e0a280d23520270f183587cb036" title=" " alt="" coords="151,203,234,228"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="61,172,109,188,139,197,137,202,107,193,60,177"/>
+<area shape="rect" id="Node000011" href="$classkcenon_1_1thread_1_1thread__pool.html#a3548c068b3f0f369dd09af0df56383c0" title="Provides a string representation of this thread_pool." alt="" coords="108,317,277,357"/>
+<area shape="poly" id="edge14_Node000001_Node000011" title=" " alt="" coords="40,178,63,238,83,272,110,303,115,307,112,311,106,307,79,275,58,240,35,180"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="245,151,338,128,339,133,246,156"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="246,62,339,84,338,89,245,67"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1cancellation__token.html#a96d31c388122def979393ed4b19a3061" title="Creates a new cancellation token." alt="" coords="325,253,532,293"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="278,270,312,270,312,275,278,275"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1cancellation__token.html#a43cb9007fd321a0e234353ea7b6f252b" title=" " alt="" coords="580,253,787,293"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="532,270,566,270,566,275,532,275"/>
+<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="278,106,338,106,338,111,278,111"/>
+<area shape="poly" id="edge13_Node000009_Node000003" title=" " alt="" coords="233,203,276,188,332,161,382,133,385,138,334,166,278,193,235,208"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1thread__pool.html#aadb01256dae22254645858d28bc7d593" title="Enqueues a batch of jobs into the shared job_queue." alt="" coords="344,189,513,229"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="234,212,330,209,330,214,234,217"/>
+<area shape="rect" id="Node000012" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#a8f00efcd854ecca1c3d3f8a29d81e580" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="347,317,511,357"/>
+<area shape="poly" id="edge15_Node000011_Node000012" title=" " alt="" coords="278,334,333,334,333,339,278,339"/>
+</map>

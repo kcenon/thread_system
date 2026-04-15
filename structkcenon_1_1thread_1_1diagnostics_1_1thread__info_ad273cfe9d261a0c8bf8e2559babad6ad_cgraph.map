@@ -1,0 +1,15 @@
+<map id="kcenon::thread::diagnostics::thread_info::to_json" name="kcenon::thread::diagnostics::thread_info::to_json">
+<area shape="rect" id="Node000001" title="Converts the thread info to a JSON string." alt="" coords="5,133,207,173"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1diagnostics_1_1thread__info.html#a74ac7a142b3aaf49343d0bc9962acf6b" title="Converts busy time to milliseconds." alt="" coords="255,5,461,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,131,186,93,253,55,270,48,272,53,256,60,189,98,135,136"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1diagnostics_1_1thread__info.html#a42aabaae53ad223fddcd32e0d9237256" title="Converts idle time to milliseconds." alt="" coords="257,69,459,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="185,131,265,110,266,115,186,136"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1diagnostics_1_1thread__info.html#a79f2f9f35cfa5f49380c285da1f5f90e" title="Calculates the duration in the current state." alt="" coords="255,133,461,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="207,151,241,151,241,156,207,156"/>
+<area shape="rect" id="Node000005" href="$structkcenon_1_1thread_1_1diagnostics_1_1thread__info.html#a33412ab5bc069a1db1e67be5f8257ddc" title="Calculates the success rate." alt="" coords="257,197,459,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="186,171,266,191,265,197,185,176"/>
+<area shape="rect" id="Node000007" href="$namespacekcenon_1_1thread_1_1diagnostics.html#ab4a80f175e72ee0ed4cd46d54e3648f7" title="Converts worker_state to human&#45;readable string." alt="" coords="257,261,459,301"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="135,171,189,209,256,247,272,254,270,259,253,252,186,214,132,176"/>
+<area shape="rect" id="Node000006" href="$structkcenon_1_1thread_1_1diagnostics_1_1thread__info.html#a35fdac960801662afb17bd81037819fd" title="Gets the total number of jobs processed (completed + failed)." alt="" coords="509,197,711,237"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="459,215,496,215,496,220,459,220"/>
+</map>

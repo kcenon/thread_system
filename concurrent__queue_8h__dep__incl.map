@@ -1,0 +1,8 @@
+<map id="include/kcenon/thread/concurrent/concurrent_queue.h" name="include/kcenon/thread/concurrent/concurrent_queue.h">
+<area shape="rect" id="Node000001" title="Thread&#45;safe MPMC queue with blocking wait support." alt="" coords="85,5,253,60"/>
+<area shape="rect" id="Node000002" href="$lockfree__queue_8h.html" title="Backward compatibility header for concurrent_queue." alt="" coords="5,108,200,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,73,118,110,114,106,140,70"/>
+<area shape="rect" id="Node000003" href="$queue_8cppm.html" title="C++20 module partition for thread_system queue implementations." alt="" coords="77,196,262,221"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="199,71,215,108,218,128,215,149,200,176,183,198,179,194,196,173,209,147,212,128,210,109,194,73"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="130,157,161,194,157,197,126,160"/>
+</map>

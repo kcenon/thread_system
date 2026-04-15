@@ -1,0 +1,5 @@
+<map id="kcenon::thread::work_stealing_stats::reset" name="kcenon::thread::work_stealing_stats::reset">
+<area shape="rect" id="Node000001" title="Reset all statistics to zero." alt="" coords="247,5,408,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1numa__work__stealer.html#ae50e8c2aeeeca272459aaca7521edcd6" title="Reset all statistics to zero." alt="" coords="5,5,199,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="233,28,199,28,199,23,233,23"/>
+</map>

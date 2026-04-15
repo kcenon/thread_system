@@ -1,0 +1,7 @@
+<map id="kcenon::thread::atomic_shared_ptr::operator=" name="kcenon::thread::atomic_shared_ptr::operator=">
+<area shape="rect" id="Node000001" title="Copy assignment &#45; atomically copies the shared_ptr." alt="" coords="5,37,177,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1atomic__shared__ptr.html#a21bc10fb01018392d3f2798e54b46b9b" title="Atomically load the current value." alt="" coords="225,5,397,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,42,212,37,212,42,178,47"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1atomic__shared__ptr.html#a1dfb9c4197932f1e7c651ae203ce71a0" title="Atomically store a new value." alt="" coords="225,69,397,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="178,67,212,72,212,78,178,73"/>
+</map>

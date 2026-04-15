@@ -1,0 +1,9 @@
+<map id="kcenon::thread::metrics::SlidingWindowCounter::Bucket" name="kcenon::thread::metrics::SlidingWindowCounter::Bucket">
+<area shape="rect" id="Node000001" title="Time bucket structure." alt="" coords="20,404,189,579"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,261,204,327"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,327,107,388,102,388,102,327"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="42,133,167,199"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,213,107,261,102,261,102,213"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="93,5,116,71"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="107,71,107,117,102,117,102,71"/>
+</map>

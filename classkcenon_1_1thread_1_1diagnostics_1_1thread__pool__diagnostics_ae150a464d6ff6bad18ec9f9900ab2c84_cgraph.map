@@ -1,0 +1,5 @@
+<map id="kcenon::thread::diagnostics::thread_pool_diagnostics::dump_thread_states" name="kcenon::thread::diagnostics::thread_pool_diagnostics::dump_thread_states">
+<area shape="rect" id="Node000001" title="Gets current state of all worker threads." alt="" coords="5,5,207,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#aa68a68ac5ec911d075d10e0537cf43b3" title="Collects diagnostics information from all workers." alt="" coords="255,5,424,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,30,241,30,241,35,207,35"/>
+</map>

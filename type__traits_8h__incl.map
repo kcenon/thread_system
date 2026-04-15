@@ -1,0 +1,15 @@
+<map id="include/kcenon/thread/impl/typed_pool/type_traits.h" name="include/kcenon/thread/impl/typed_pool/type_traits.h">
+<area shape="rect" id="Node000001" title="Type traits for typed_thread_pool module." alt="" coords="131,5,297,60"/>
+<area shape="rect" id="Node000002" href="$thread__concepts_8h.html" title="C++20 Concepts for thread_system." alt="" coords="125,108,303,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,60,217,94,211,94,211,60"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,196,97,221"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="173,62,144,84,116,110,87,148,65,185,61,182,82,145,112,106,140,80,170,58"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="323,196,382,221"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="263,58,292,80,317,106,338,145,350,182,345,184,333,147,313,110,288,84,260,62"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="176,150,89,192,87,188,174,146"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="121,196,208,221"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="204,150,181,186,177,183,200,147"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="233,196,299,221"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="229,147,253,183,248,186,224,150"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="249,146,321,187,319,191,246,150"/>
+</map>

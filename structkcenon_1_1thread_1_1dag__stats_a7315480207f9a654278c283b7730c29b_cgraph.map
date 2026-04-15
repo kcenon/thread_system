@@ -1,0 +1,5 @@
+<map id="kcenon::thread::dag_stats::all_succeeded" name="kcenon::thread::dag_stats::all_succeeded">
+<area shape="rect" id="Node000001" title="Check if all jobs succeeded." alt="" coords="5,5,167,45"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1dag__stats.html#ade5045144a5d0c5862578b7206ceac4f" title="Check if all jobs are complete (success or failure)" alt="" coords="215,5,365,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,23,201,23,201,28,167,28"/>
+</map>

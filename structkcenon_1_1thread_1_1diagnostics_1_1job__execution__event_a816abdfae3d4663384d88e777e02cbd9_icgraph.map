@@ -1,0 +1,7 @@
+<map id="kcenon::thread::diagnostics::job_execution_event::wait_time_ms" name="kcenon::thread::diagnostics::job_execution_event::wait_time_ms">
+<area shape="rect" id="Node000001" title="Converts wait_time to milliseconds." alt="" coords="283,30,484,85"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1diagnostics_1_1job__execution__event.html#abe6f9dd69222ceb8cd1aefc0d9b98902" title="Converts the event to a JSON string." alt="" coords="11,5,229,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="269,46,229,41,230,36,269,41"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1diagnostics_1_1job__execution__event.html#ab0ce0573776cd131d3bfca3f009cab2c" title="Converts the event to a human&#45;readable string." alt="" coords="5,69,235,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="269,74,235,78,235,73,268,69"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="kcenon::thread::diagnostics::bottleneck_type_to_string" name="kcenon::thread::diagnostics::bottleneck_type_to_string">
+<area shape="rect" id="Node000001" title="Converts bottleneck_type to human&#45;readable string." alt="" coords="264,77,465,117"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1diagnostics_1_1bottleneck__report.html#ad5d6d2c39a9c2c838e190f80ea122b73" title="Converts the bottleneck report to a JSON string." alt="" coords="10,5,211,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="280,76,181,48,183,43,281,71"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a228383967039855596df136bcd696ab7" title="Exports diagnostics as JSON." alt="" coords="10,70,211,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="251,100,211,100,211,95,251,95"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1diagnostics_1_1bottleneck__report.html#a4d7cbc10bf4af577441acc8d780f6834" title="Converts the bottleneck report to a human&#45;readable string." alt="" coords="5,149,216,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="281,124,183,152,181,147,280,119"/>
+</map>

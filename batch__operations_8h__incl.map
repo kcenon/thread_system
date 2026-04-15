@@ -1,0 +1,11 @@
+<map id="include/kcenon/thread/utils/batch_operations.h" name="include/kcenon/thread/utils/batch_operations.h">
+<area shape="rect" id="Node000001" title="Helper templates for batch operations to eliminate duplicated loop patterns." alt="" coords="74,5,257,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,67,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,48,68,88,65,84,133,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="91,93,154,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="157,47,138,83,133,80,153,44"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="178,93,238,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="178,44,198,80,193,83,173,47"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="262,93,354,119"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="201,43,276,84,274,89,198,48"/>
+</map>

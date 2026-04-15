@@ -1,0 +1,7 @@
+<map id="include/kcenon/thread/core/service_registry.h" name="include/kcenon/thread/core/service_registry.h">
+<area shape="rect" id="Node000001" title="Lightweight service registry for dependency lookup within the thread system." alt="" coords="121,5,293,45"/>
+<area shape="rect" id="Node000002" href="$service__registry__sample_2main_8cpp.html" title="Service registry sample showing singleton service registration and thread pool usage." alt="" coords="5,93,200,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,56,127,95,124,91,171,52"/>
+<area shape="rect" id="Node000003" href="$core_8cppm.html" title="C++20 module partition for thread_system core components." alt="" coords="224,101,397,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="242,52,298,98,295,102,239,56"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="kcenon::thread::protected_job::do_work" name="kcenon::thread::protected_job::do_work">
+<area shape="rect" id="Node000001" title="Executes the wrapped job with circuit breaker protection." alt="" coords="5,37,195,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="243,5,407,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,41,229,36,230,42,195,46"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread.html#a13f75c13dd33420c01a704c8bd09a79e" title="Create a common::VoidResult error from a thread::error_code." alt="" coords="243,69,406,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="195,68,230,73,229,78,194,73"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread.html#a899d6d797fc353567761b0d4ed2637e6" title="Convert a thread::error_code to common::error_info." alt="" coords="455,69,595,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="406,87,441,87,441,92,406,92"/>
+<area shape="rect" id="Node000005" href="$namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="643,69,801,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="595,87,629,87,629,92,595,92"/>
+</map>

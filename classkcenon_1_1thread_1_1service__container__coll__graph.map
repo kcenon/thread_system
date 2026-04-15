@@ -1,0 +1,20 @@
+<map id="kcenon::thread::service_container" name="kcenon::thread::service_container">
+<area shape="rect" id="Node000001" title="Modern service container for dependency injection." alt="" coords="8,768,175,968"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,618,89,683"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="56,683,70,752,65,753,51,684"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="114,596,301,705"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="181,707,155,755,150,752,176,704"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1service__container_1_1service__entry.html" title=" " alt="" coords="46,433,225,533"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="155,533,170,571,174,580,169,582,165,573,150,535"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="43,276,212,341"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="131,341,135,417,130,417,126,342"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="21,141,170,206"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="109,219,122,275,117,276,104,220"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="116,5,139,71"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="118,56,108,75,99,95,95,125,90,124,94,94,103,72,114,54"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="194,133,338,213"/>
+<area shape="poly" id="edge9_Node000008_Node000007" title=" " alt="" coords="141,53,187,107,202,121,198,125,183,111,137,57"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="272,227,274,297,273,384,265,479,247,573,239,597,234,595,242,571,260,478,268,383,269,297,267,227"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="256,5,279,71"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="270,71,269,117,264,117,264,71"/>
+</map>

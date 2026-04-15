@@ -1,0 +1,9 @@
+<map id="kcenon::thread::dag_job::set_work_with_result" name="kcenon::thread::dag_job::set_work_with_result">
+<area shape="rect" id="Node000001" title="Sets the work function with result." alt="" coords="5,62,156,117"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="204,5,368,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,63,207,47,209,52,157,68"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1dag__job.html#ab2a4a00346d2a02275f64a956ca0a18e" title="Sets the result value." alt="" coords="211,69,361,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,87,197,87,197,92,156,92"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="204,133,368,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="157,110,209,127,207,132,156,115"/>
+</map>

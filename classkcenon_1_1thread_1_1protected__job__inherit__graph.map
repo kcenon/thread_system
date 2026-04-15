@@ -1,0 +1,5 @@
+<map id="kcenon::thread::protected_job" name="kcenon::thread::protected_job">
+<area shape="rect" id="Node000001" title="A job wrapper that integrates circuit breaker protection." alt="" coords="5,499,213,644"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="15,5,204,451"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,464,112,498,107,498,107,464"/>
+</map>

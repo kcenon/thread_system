@@ -1,0 +1,7 @@
+<map id="kcenon::thread::metrics::PrometheusBackend::export_base" name="kcenon::thread::metrics::PrometheusBackend::export_base">
+<area shape="rect" id="Node000001" title="Export base metrics snapshot." alt="" coords="5,49,256,89"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1PrometheusBackend.html#a8502d1629fd2b243efa9091bbe284fda" title="Format labels for Prometheus output." alt="" coords="304,5,519,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,50,290,46,290,51,257,55"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBackend.html#a5eb8fc7214223b30ab8c16eabf384961" title="Get all configured labels." alt="" coords="321,85,501,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="257,82,308,89,308,94,256,87"/>
+</map>

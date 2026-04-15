@@ -1,0 +1,21 @@
+<map id="src/metrics/latency_histogram.cpp" name="src/metrics/latency_histogram.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="357,5,504,45"/>
+<area shape="rect" id="Node000002" href="$latency__histogram_8h.html" title="HDR&#45;style histogram for latency distribution with logarithmic buckets." alt="" coords="200,93,368,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="400,48,330,89,327,84,397,43"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="358,181,421,207"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="429,46,398,169,393,167,423,45"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="445,181,504,207"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="438,45,471,168,466,169,433,46"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="493,101,579,126"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="456,44,513,90,509,94,452,48"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="187,181,243,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="269,135,236,172,232,169,265,132"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="267,181,333,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="290,133,298,167,292,168,285,134"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,181,72,207"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="226,136,86,181,84,175,224,131"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="311,131,364,171,361,175,308,136"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="96,181,163,207"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="248,136,165,177,163,173,246,131"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="331,131,435,174,433,179,329,136"/>
+</map>

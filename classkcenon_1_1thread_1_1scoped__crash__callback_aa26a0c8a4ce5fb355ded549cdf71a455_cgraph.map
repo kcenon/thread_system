@@ -1,0 +1,7 @@
+<map id="kcenon::thread::scoped_crash_callback::~scoped_crash_callback" name="kcenon::thread::scoped_crash_callback::~scoped_crash_callback">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,34,196,89"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1crash__handler.html#aa5bda67531b9424e8704f1cc67ba04a2" title="Get the global crash handler instance." alt="" coords="244,5,407,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,43,230,38,231,43,197,49"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1crash__handler.html#a1a37af3460b9d3a9a4b752d61499741d" title="Unregister a crash callback." alt="" coords="244,70,407,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="197,74,231,80,230,85,196,79"/>
+</map>
