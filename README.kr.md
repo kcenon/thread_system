@@ -165,7 +165,7 @@ include(FetchContent)
 FetchContent_Declare(
     thread_system
     GIT_REPOSITORY https://github.com/kcenon/thread_system.git
-    GIT_TAG v0.3.0  # 특정 릴리스 태그에 고정; main 사용 금지
+    GIT_TAG v1.0.0  # 특정 릴리스 태그에 고정; main 사용 금지
 )
 FetchContent_MakeAvailable(thread_system)
 
