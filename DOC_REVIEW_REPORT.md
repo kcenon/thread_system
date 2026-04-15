@@ -254,3 +254,73 @@ Recommendation: Add explicit `> **See also (authoritative source):** ...` pointe
 4. Unify C++ compiler baseline into one single-source table (suggest `CONTRIBUTING.md`) and have other docs link to it rather than restate.
 5. Create a `docs/INDEX.md` (or extend `docs/README.md`) that links every doc currently orphaned, eliminating the "23 orphans" finding without touching content.
 6. For architecture docs — declare `docs/advanced/THREAD_SYSTEM_ARCHITECTURE.md` (or one chosen file) as canonical; mark the others as scoped views with `> Scope: X (authoritative: Y)` banners.
+
+---
+
+## Post-Fix Re-Validation (2026-04-15)
+
+**Fix commit**: `ca09c3dd` — "docs: fix 74 broken links, 5 anchors, 4 version refs"
+**Re-run scope**: Phase 1 only (anchors + inter-file links).
+**Method**: Python validator replays the Phase 1 rules (GitHub-style slugification with duplicate suffixes, fenced-code and HTML-comment skipping, external-URL exclusion) against both the pre-fix commit (`2b210572`) and the fix commit (`ca09c3dd`); classifies each current break as Residual (existed pre-fix) or Regression (new since fix).
+**Files scanned**: 111 markdown files (excluding `build*/`, `.git/`, `node_modules/`, `vcpkg_installed/`).
+
+### Before / After
+
+| Metric | Pre-fix (`2b210572`) | Post-fix (`ca09c3dd`) | Delta |
+|--------|-----------|------------|-------|
+| Broken intra-file anchors | 15 | 13 | -2 |
+| Broken inter-file links | 73 | 19 | -54 |
+| Total Phase-1 Must-Fix (validator-observed) | 88 | 32 | -56 |
+| Fixed by this commit | — | 56 | — |
+| Residual (still broken, pre-existing) | — | 32 | — |
+| Regressions (broken, new since fix) | — | **0** | — |
+
+> The prior report enumerated 86 Phase-1 Must-Fix items; the validator now observes 88 pre-fix breaks. The +2 delta comes from items the prior enumeration missed (e.g., `docs/advanced/API_REFERENCE.{md,kr.md}` `#resultt-template`, `docs/advanced/MIGRATION.kr.md` Korean phase-heading anchors, `docs/ARCHITECTURE_DIAGRAM.md:27` `#3-threading--job-execution-flow`). These are pre-existing defects, not regressions.
+
+### Residual Must-Fix (32)
+
+Intra-file anchor residuals (13):
+
+1. `docs/advanced/API_REFERENCE.kr.md:26` — `#resultt-template` (heading is `### result<T> Template`; slug is `#resultt-template` only if `<` / `>` are stripped — actual slug generated is `resultt-template` which MATCHES; however the validator finds no match because the actual heading slug currently renders as `result-template`; TOC entry is inconsistent with heading normalization — prior report did not enumerate this).
+2. `docs/advanced/API_REFERENCE.md:29` — same as #1.
+3. `docs/advanced/MIGRATION.kr.md:22` — `#phase-1-interface-추출-및-정리--완료` (Korean heading with `✅` emoji; GitHub slug drops emoji then collapses double hyphens differently).
+4. `docs/advanced/MIGRATION.kr.md:23` — `#phase-2-새로운-repository-구조-생성--완료`.
+5. `docs/advanced/MIGRATION.kr.md:24` — `#phase-3-component-마이그레이션--완료`.
+6. `docs/advanced/MIGRATION.kr.md:25` — `#phase-4-통합-테스트--완료`.
+7. `docs/advanced/MIGRATION.kr.md:27` — `#phase-5-점진적-배포--대기-중`.
+8. `docs/advanced/PERFORMANCE.kr.md:27` — `#typed-lock-free-thread-pool-benchmark` (TOC drift; fix commit added TODO marker at line 26 only).
+9. `docs/guides/FAQ.md:27` — `#thread-pool-basics`.
+10. `docs/guides/FAQ.md:28` — `#job-scheduling`.
+11. `docs/guides/FAQ.md:29` — `#synchronization`.
+12. `docs/guides/FAQ.md:30` — `#performance`.
+13. `docs/guides/FAQ.md:31` — `#integration`.
+
+Inter-file link residuals (19):
+
+14. `docs/ARCHITECTURE_DIAGRAM.md:27` — `ARCHITECTURE_OVERVIEW.md#3-threading--job-execution-flow` (anchor does not exist in target; actual heading slug is `3-threading-job-execution-flow` — single hyphen).
+15. `docs/QUEUE_BACKWARD_COMPATIBILITY.md:15` — `QUEUE_BACKWARD_COMPATIBILITY.kr.md` (Korean counterpart still missing).
+16. `docs/advanced/INTEGRATION.md:15` — `INTEGRATION.kr.md` (Korean counterpart still missing).
+17. `docs/advanced/QUEUE_SELECTION_GUIDE.md:15` — `QUEUE_SELECTION_GUIDE.kr.md` (Korean counterpart still missing).
+18. `docs/advanced/README.kr.md:49` — `DESIGN_IMPROVEMENTS.kr.md` (target file does not exist).
+19. `docs/advanced/README.kr.md:69` — `DESIGN_IMPROVEMENTS.kr.md`.
+20. `docs/advanced/README.md:49` — `DESIGN_IMPROVEMENTS.md` (target file does not exist).
+21. `docs/advanced/README.md:69` — `DESIGN_IMPROVEMENTS.md`.
+22. `docs/advanced/USER_GUIDE.kr.md:52` — `./PLATFORM_BUILD_GUIDE.md` (target file does not exist).
+23. `docs/advanced/USER_GUIDE.md:52` — `./PLATFORM_BUILD_GUIDE.md`.
+24. `docs/guides/LOG_LEVEL_MIGRATION_GUIDE.kr.md:296` — `../advanced/LOG_LEVEL_UNIFICATION_PLAN.md` (target file does not exist).
+25. `docs/guides/LOG_LEVEL_MIGRATION_GUIDE.kr.md:298` — `../../../logger_system/docs/advanced/LOG_LEVEL_SEMANTIC_STANDARD.md` (resolves outside repo).
+26. `docs/guides/LOG_LEVEL_MIGRATION_GUIDE.md:296` — `../advanced/LOG_LEVEL_UNIFICATION_PLAN.md`.
+27. `docs/guides/LOG_LEVEL_MIGRATION_GUIDE.md:298` — `../../../logger_system/docs/advanced/LOG_LEVEL_SEMANTIC_STANDARD.md`.
+28. `docs/integration/README.md:22` — `with-common-system.md` (integration sub-guide missing).
+29. `docs/integration/README.md:23` — `with-logger.md`.
+30. `docs/integration/README.md:24` — `with-monitoring.md`.
+31. `docs/integration/README.md:25` — `with-network-system.md`.
+32. `docs/integration/README.md:26` — `with-database-system.md`.
+
+### Regressions (0)
+
+No Phase-1 regressions detected. Every post-fix broken anchor or link was verified to also exist in the pre-fix tree (`2b210572`).
+
+### Verdict
+
+**PARTIAL-PASS** — 0 regressions, but 32 residual Phase-1 Must-Fix items remain. The fix commit resolved 56 of 88 validator-observed broken references (64%). Remaining work is concentrated in three areas: (a) missing target files that the fix marked with `<!-- TODO -->` markers rather than deleting/creating (`DESIGN_IMPROVEMENTS*`, `PLATFORM_BUILD_GUIDE.md`, `LOG_LEVEL_UNIFICATION_PLAN.md`, `docs/integration/with-*.md`, Korean counterparts); (b) FAQ TOC drift in `docs/guides/FAQ.md` and `docs/advanced/PERFORMANCE.kr.md`; (c) anchor-slug mismatches in `docs/advanced/API_REFERENCE*.md`, `docs/advanced/MIGRATION.kr.md`, and `docs/ARCHITECTURE_DIAGRAM.md`.
