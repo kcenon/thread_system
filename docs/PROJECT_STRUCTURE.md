@@ -913,8 +913,8 @@ utilities (no dependencies)
 ### External Dependencies
 
 **Required**:
-- C++20 compiler (GCC 9+, Clang 10+, MSVC 2019+)
-- CMake 3.16+
+- C++20 compiler (GCC 13+, Clang 17+, MSVC 2022+)
+- CMake 3.20+
 
 **Optional** (via vcpkg):
 - Google Test (for unit tests)

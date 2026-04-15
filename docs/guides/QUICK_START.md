@@ -220,7 +220,7 @@ pool->shutdown_pool(true);
 
 - **[Build Guide](BUILD_GUIDE.md)** - Detailed build instructions for all platforms
 - **[User Guide](../advanced/USER_GUIDE.md)** - Comprehensive usage guide
-- **[API Reference](../advanced/02-API_REFERENCE.md)** - Complete API documentation
+- **[API Reference](../advanced/API_REFERENCE.md)** - Complete API documentation
 - **[Examples](../../examples/)** - More sample applications
 
 ---

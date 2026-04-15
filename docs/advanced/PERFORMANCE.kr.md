@@ -23,6 +23,7 @@ category: "PERF"
 3. [핵심 성능 Metric](#핵심-성능-metric)
 4. [Data Race 수정 영향](#data-race-수정-영향)
 5. [상세 Benchmark 결과](#상세-benchmark-결과)
+<!-- TODO: target heading does not exist in this document -->
 6. [Typed Lock-Free Thread Pool Benchmark](#typed-lock-free-thread-pool-benchmark)
 7. [확장성 분석](#확장성-분석)
 8. [메모리 성능](#메모리-성능)

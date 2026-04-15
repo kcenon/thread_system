@@ -12,7 +12,7 @@ category: "GUID"
 
 > **SSOT**: This document is the single source of truth for **Queue Selection Guide**.
 
-> **Language:** **English** | [한국어](QUEUE_SELECTION_GUIDE.kr.md)
+> **Language:** **English** <!-- TODO: target file does not exist --> | [한국어](QUEUE_SELECTION_GUIDE.kr.md)
 
 This guide helps you choose the right queue implementation for your use case.
 

@@ -42,7 +42,7 @@ category: "GUID"
 - 상태 추적을 통한 향상된 관리 가능성
 
 ### Q: 커스텀 worker thread를 어떻게 생성하나요?
-**A:** `thread_base`를 상속하고 필요에 따라 virtual method를 재정의합니다. 자세한 패턴과 예제는 [patterns 문서](PATTERNS.md#worker-thread-pattern)를 참조하세요.
+**A:** `thread_base`를 상속하고 필요에 따라 virtual method를 재정의합니다. 자세한 패턴과 예제는 [patterns 문서](PATTERNS.md#1-worker-thread-pattern)를 참조하세요.
 
 ### Q: worker thread를 주기적으로 깨우려면 어떻게 하나요?
 **A:** `set_wake_interval` method를 사용합니다. 최적화 가이드라인은 [patterns 문서](PATTERNS.md#wake-interval-optimization)를 참조하세요.
@@ -82,7 +82,7 @@ category: "GUID"
 **A:** 예, `typed_thread_pool`은 비교 연산자를 제공하는 모든 타입과 작동할 수 있는 template 클래스입니다. 애플리케이션의 타입 시스템을 나타내는 커스텀 enum 또는 클래스를 정의할 수 있습니다.
 
 ### Q: 특정 타입 레벨에 worker를 어떻게 할당하나요?
-**A:** worker를 생성할 때 처리해야 할 타입 레벨을 지정합니다. 완전한 타입 기반 실행 패턴은 [patterns 문서](PATTERNS.md#type-based-job-execution-pattern)를 참조하세요.
+**A:** worker를 생성할 때 처리해야 할 타입 레벨을 지정합니다. 완전한 타입 기반 실행 패턴은 [patterns 문서](PATTERNS.md#3-type-based-job-execution-pattern)를 참조하세요.
 
 ### Q: 특정 타입 레벨에 대한 worker가 없으면 어떻게 되나요?
 **A:** 해당 타입 레벨의 job은 처리할 수 있는 worker가 사용 가능해지거나 thread pool이 중지될 때까지 queue에 남아 있습니다.

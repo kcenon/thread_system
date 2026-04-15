@@ -278,8 +278,8 @@ void execute(F&& func) {
 
 ## 관련 문서
 
-- [아키텍처 가이드](01-ARCHITECTURE.kr.md) - 시스템 설계 개요
-- [API 레퍼런스](02-API_REFERENCE.kr.md) - 완전한 API 문서
+- [아키텍처 가이드](ARCHITECTURE.kr.md) - 시스템 설계 개요
+- [API 레퍼런스](API_REFERENCE.kr.md) - 완전한 API 문서
 - [빌드 가이드](../guides/BUILD_GUIDE.kr.md) - 빌드 지침 및 옵션
 
 ---

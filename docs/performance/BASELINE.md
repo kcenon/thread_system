@@ -3,7 +3,7 @@ doc_id: "THR-PERF-007"
 doc_title: "Baseline Performance Metrics"
 doc_version: "1.0.0"
 doc_date: "2026-04-04"
-doc_status: "Released"
+doc_status: "Draft"
 project: "thread_system"
 category: "PERF"
 ---
@@ -51,6 +51,7 @@ This document records baseline performance metrics for the thread_system. These 
 **Metric**: Time to submit a task to the thread pool
 **Test File**: `thread_pool_benchmarks/submission_bench.cpp`
 
+<!-- TODO: fill TBD cells with actual benchmark measurements -->
 | Statistic | Target Value | Unit | Notes |
 |-----------|-------------|------|-------|
 | Mean | TBD | μs | Average submission time |

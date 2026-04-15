@@ -278,8 +278,8 @@ void execute(F&& func) {
 
 ## Related Documentation
 
-- [Architecture Guide](01-ARCHITECTURE.md) - System design overview
-- [API Reference](02-API_REFERENCE.md) - Complete API documentation
+- [Architecture Guide](ARCHITECTURE.md) - System design overview
+- [API Reference](API_REFERENCE.md) - Complete API documentation
 - [Build Guide](../guides/BUILD_GUIDE.md) - Build instructions and options
 
 ---

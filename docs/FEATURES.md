@@ -1394,8 +1394,8 @@ Choose the right features for your use case:
 **See Also**:
 - [Performance Benchmarks](BENCHMARKS.md)
 - [Architecture Guide](advanced/ARCHITECTURE.md)
-- [API Reference](guides/API_REFERENCE.md)
-- [User Guide](guides/USER_GUIDE.md)
+- [API Reference](API_REFERENCE.md)
+- [User Guide](advanced/USER_GUIDE.md)
 
 ---
 

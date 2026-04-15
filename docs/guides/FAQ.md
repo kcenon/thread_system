@@ -23,6 +23,7 @@ This FAQ addresses common questions about the thread_system, covering thread poo
 ## Table of Contents
 
 1. [General Questions](#general-questions)
+<!-- TODO: sections below are listed in TOC but corresponding headings do not exist in this document -->
 2. [Thread Pool Basics](#thread-pool-basics)
 3. [Job Scheduling](#job-scheduling)
 4. [Synchronization](#synchronization)
@@ -195,7 +196,7 @@ auto pool = thread_pool::create(4, {
 **Documentation:**
 - [Architecture](../ARCHITECTURE.md)
 - [API Reference](../API_REFERENCE.md)
-- [Build Guide](../BUILD_GUIDE.md)
+- [Build Guide](./BUILD_GUIDE.md)
 
 **Support:**
 - [GitHub Issues](https://github.com/kcenon/thread_system/issues)
