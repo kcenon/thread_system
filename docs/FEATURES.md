@@ -12,7 +12,7 @@ category: "FEAT"
 
 > **SSOT**: This document is the single source of truth for **Thread System Features**.
 
-**Version**: 0.3.0.0
+**Version**: 1.0.0
 **Last Updated**: 2026-02-08
 **Language**: [English] | [한국어](FEATURES.kr.md)
 

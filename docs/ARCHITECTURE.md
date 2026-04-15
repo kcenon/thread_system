@@ -510,5 +510,5 @@ graph TD
 ---
 
 **Date**: 2026-02-08
-**Version**: 0.3.0.0
+**Version**: 1.0.0
 **Author**: kcenon@naver.com

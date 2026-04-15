@@ -12,7 +12,7 @@ category: "API"
 
 > **SSOT**: This document is the single source of truth for **thread_system API Reference**.
 
-> **Version**: 0.3.1.0
+> **Version**: 1.0.0
 > **Last Updated**: 2025-01-09
 > **Language**: [English]
 
@@ -1619,5 +1619,5 @@ int main() {
 
 **Created**: 2025-11-21
 **Updated**: 2025-01-09
-**Version**: 0.3.1.0
+**Version**: 1.0.0
 **Author**: kcenon@naver.com

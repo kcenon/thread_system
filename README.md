@@ -35,7 +35,7 @@ A modern C++20 multithreading framework designed to democratize concurrent progr
 Thread System is a comprehensive multithreading framework that provides intuitive abstractions and robust implementations for building high-performance, thread-safe applications.
 
 **Key Value Propositions**:
-- **Well-Tested**: 95%+ CI/CD success rate, zero ThreadSanitizer warnings, 72% code coverage
+- **Well-Tested**: 95%+ CI/CD success rate, zero ThreadSanitizer warnings, 49% code coverage
 - **High Performance**: 1.16M jobs/second baseline, 4x faster lock-free queues, adaptive optimization
 - **Developer Friendly**: Intuitive API, comprehensive documentation, rich examples
 - **Flexible Architecture**: Modular design with optional logger/monitoring integration
@@ -409,7 +409,7 @@ include(FetchContent)
 FetchContent_Declare(
     thread_system
     GIT_REPOSITORY https://github.com/kcenon/thread_system.git
-    GIT_TAG v0.3.0  # Pin to a specific release tag; do NOT use main
+    GIT_TAG v1.0.0  # Pin to a specific release tag; do NOT use main
 )
 FetchContent_MakeAvailable(thread_system)
 
@@ -481,7 +481,7 @@ cmake --build build
 ### Quality Metrics
 
 - ✅ **95%+ CI/CD Success Rate** across all platforms
-- ✅ **72% Code Coverage** with comprehensive test suite
+- ✅ **49% Code Coverage** with comprehensive test suite
 - ✅ **Zero ThreadSanitizer Warnings** in production code
 - ✅ **Zero AddressSanitizer Leaks** - 100% RAII compliance
 - ✅ **Multi-Platform Support**: Linux, macOS, Windows
