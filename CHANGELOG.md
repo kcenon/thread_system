@@ -7,14 +7,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Documentation
+## [1.0.0] - 2026-04-15
 
-- Modernize Doxygen documentation with doxygen-awesome-css theme and refactored mainpage ([#652](https://github.com/kcenon/thread_system/issues/652))
+### Added
+
+- vcpkg CMake preset for streamlined builds ([#632](https://github.com/kcenon/thread_system/issues/632))
+- Tutorials, FAQ, and troubleshooting guide ([#661](https://github.com/kcenon/thread_system/issues/661))
+- Getting Started guide with categorized examples ([#655](https://github.com/kcenon/thread_system/issues/655))
+- Architecture Decision Records (ADR) ([#648](https://github.com/kcenon/thread_system/issues/648))
+- SSOT documentation registry ([#646](https://github.com/kcenon/thread_system/issues/646))
+- Issue/PR templates, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY ([#628](https://github.com/kcenon/thread_system/issues/628))
+- CHANGELOG.md and CONTRIBUTING.md ([#596](https://github.com/kcenon/thread_system/issues/596))
+- Documentation audit CI workflow for PRs ([#650](https://github.com/kcenon/thread_system/issues/650))
+- Automated vcpkg registry sync on release ([#629](https://github.com/kcenon/thread_system/issues/629))
+
+### Changed
+
+- **BREAKING**: Rename CMake project from `ThreadSystem` to `thread_system` ([#642](https://github.com/kcenon/thread_system/issues/642))
+- Replace `throw` statements with `Result<T>` in all public API headers ([#675](https://github.com/kcenon/thread_system/issues/675))
+- Add deprecation markers for v1.0 API freeze ([#676](https://github.com/kcenon/thread_system/issues/676))
+- Remove deprecated job classes, resilience headers, and policy methods ([#611](https://github.com/kcenon/thread_system/issues/611))
+- Standardize license headers to short BSD-3-Clause format ([#641](https://github.com/kcenon/thread_system/issues/641))
+- Standardize CMake export naming to `thread_system-targets` ([#588](https://github.com/kcenon/thread_system/issues/588))
+- Standardize minimum CMake version to 3.20 ([#621](https://github.com/kcenon/thread_system/issues/621))
+- Migrate vcpkg version field to `version-semver` ([#624](https://github.com/kcenon/thread_system/issues/624))
+
+### Fixed
+
+- Thread-safe diagnostics initialization with `std::call_once` ([#669](https://github.com/kcenon/thread_system/issues/669))
+- vcpkg usage target name mismatch and stale fmt dependency ([#664](https://github.com/kcenon/thread_system/issues/664))
+- `hazard_pointer` memory ordering issues for lock-free correctness
+- pkg-config template for unified library ([#634](https://github.com/kcenon/thread_system/issues/634))
+- Missing port-version in vcpkg overlay manifest ([#636](https://github.com/kcenon/thread_system/issues/636))
 
 ### Performance
 
-- Replace mutex with atomic counter for `job_queue` read-only query APIs ([#607](https://github.com/kcenon/thread_system/issues/607))
-- Add exponential backoff to `lockfree_job_queue` CAS retry loops to reduce CPU spin waste ([#608](https://github.com/kcenon/thread_system/issues/608))
+- Replace mutex with atomic counter for `job_queue` read-only query APIs ([#609](https://github.com/kcenon/thread_system/issues/609))
+- Add exponential backoff to `lockfree_job_queue` CAS retry loops ([#610](https://github.com/kcenon/thread_system/issues/610))
+- Lock-free freelist pool for queue node allocation
+- Cap affinity matrix growth and add diagnostics sampling
+- Replace 10ms polling sleep with `condition_variable` blocking in thread pool
+
+### Documentation
+
+- Modernize Doxygen with doxygen-awesome-css theme ([#654](https://github.com/kcenon/thread_system/issues/654))
+- Split oversized documents into focused sub-documents ([#666](https://github.com/kcenon/thread_system/issues/666))
+- Add ecosystem navigation and dependency map ([#657](https://github.com/kcenon/thread_system/issues/657))
+- Add `@file` Doxygen blocks to public API headers ([#647](https://github.com/kcenon/thread_system/issues/647))
+- Add YAML frontmatter to all docs/ markdown files ([#644](https://github.com/kcenon/thread_system/issues/644))
+- Standardize README badge set and Table of Contents ([#593](https://github.com/kcenon/thread_system/issues/593), [#595](https://github.com/kcenon/thread_system/issues/595))
+
+### Infrastructure
+
+- Upgrade dependencies: spdlog 1.15.3, gtest 1.17.0, benchmark 1.9.5
+- Adopt setup-vcpkg composite action for CI standardization ([#622](https://github.com/kcenon/thread_system/issues/622))
+- Bump codecov/codecov-action to v6 ([#637](https://github.com/kcenon/thread_system/issues/637))
 
 ## [0.3.1] - 2026-03-14
 
