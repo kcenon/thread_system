@@ -55,7 +55,7 @@ Complete API documentation for the Thread System framework.
    - [Logger System](#logger-system)
    - [Monitoring System](#monitoring-system)
 9. [Utilities Module](#utilities-module-utility_module)
-   - [formatter_macros](#formatter-macros)
+   - [formatter_macros](#formatter_macros)
    - [convert_string](#convert_string)
 10. [Quick Reference](#quick-reference)
 

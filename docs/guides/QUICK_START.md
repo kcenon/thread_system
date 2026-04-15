@@ -126,7 +126,7 @@ include(FetchContent)
 FetchContent_Declare(
     thread_system
     GIT_REPOSITORY https://github.com/kcenon/thread_system.git
-    GIT_TAG v0.3.0  # Pin to a specific release tag; do NOT use main
+    GIT_TAG v1.0.0  # Pin to a specific release tag; do NOT use main
 )
 FetchContent_MakeAvailable(thread_system)
 
@@ -220,7 +220,7 @@ pool->shutdown_pool(true);
 
 - **[Build Guide](BUILD_GUIDE.md)** - Detailed build instructions for all platforms
 - **[User Guide](../advanced/USER_GUIDE.md)** - Comprehensive usage guide
-- **[API Reference](../advanced/02-API_REFERENCE.md)** - Complete API documentation
+- **[API Reference](../advanced/API_REFERENCE.md)** - Complete API documentation
 - **[Examples](../../examples/)** - More sample applications
 
 ---

@@ -815,7 +815,7 @@ include(FetchContent)
 FetchContent_Declare(
     thread_system
     GIT_REPOSITORY https://github.com/kcenon/thread_system.git
-    GIT_TAG v0.3.0  # Pin to a specific release tag; do NOT use main
+    GIT_TAG v1.0.0  # Pin to a specific release tag; do NOT use main
 )
 FetchContent_MakeAvailable(thread_system)
 ```
@@ -1114,7 +1114,7 @@ Need help with migration?
 1. **Read Documentation**:
    - [README.md](README.md) - Feature overview
    - [ARCHITECTURE.md](ARCHITECTURE.md) - System design
-   - [examples/](examples/) - Code examples
+   - [examples/](../../examples/) - Code examples
 
 2. **Optimize Configuration**:
    - Review worker count

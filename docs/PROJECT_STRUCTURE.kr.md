@@ -12,7 +12,7 @@ category: "PROJ"
 
 > **SSOT**: This document is the single source of truth for **Thread System 프로젝트 구조**.
 
-**버전**: 0.3.0
+**버전**: 1.0.0
 **최종 업데이트**: 2026-01-11
 **언어**: [English](PROJECT_STRUCTURE.md) | **한국어**
 
@@ -529,8 +529,8 @@ utilities (의존성 없음)
 ### 외부 의존성
 
 **필수**:
-- C++20 컴파일러 (GCC 9+, Clang 10+, MSVC 2019+)
-- CMake 3.16+
+- C++20 컴파일러 (GCC 13+, Clang 17+, MSVC 2022+)
+- CMake 3.20+
 
 **선택적** (vcpkg 통해):
 - Google Test (유닛 테스트용)

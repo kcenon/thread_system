@@ -48,6 +48,7 @@ cmake -S . -B build -DBUILD_DOCUMENTATION=ON
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_ASAN=ON -DENABLE_UBSAN=ON
 ```
 
+<!-- TODO: target file does not exist -->
 플랫폼별 상세 빌드 지침은 [Platform Build Guide](./PLATFORM_BUILD_GUIDE.md)를 참조하세요.
 
 ## 모듈

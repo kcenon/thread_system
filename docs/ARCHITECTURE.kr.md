@@ -473,5 +473,5 @@ struct alignas(64) WorkerThread {
 ---
 
 **작성일**: 2026-02-08
-**버전**: 0.3.0
+**버전**: 1.0.0
 **작성자**: kcenon@naver.com

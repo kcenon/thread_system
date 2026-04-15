@@ -42,7 +42,7 @@ category: "GUID"
 - Better manageability through state tracking
 
 ### Q: How do I create a custom worker thread?
-**A:** Inherit from `thread_base` and override the virtual methods as needed. For detailed patterns and examples, see the [patterns documentation](PATTERNS.md#worker-thread-pattern).
+**A:** Inherit from `thread_base` and override the virtual methods as needed. For detailed patterns and examples, see the [patterns documentation](PATTERNS.md#1-worker-thread-pattern).
 
 ### Q: How do I make a worker thread wake up periodically?
 **A:** Use the `set_wake_interval` method. See the [patterns documentation](PATTERNS.md#wake-interval-optimization) for optimization guidelines.
@@ -82,7 +82,7 @@ category: "GUID"
 **A:** Yes, `typed_thread_pool` is a template class that can work with any type that provides comparison operators. You can define a custom enum or class that represents your application's type system.
 
 ### Q: How do I assign workers to specific type levels?
-**A:** When creating a worker, specify which type levels it should process. For complete type-based execution patterns, see the [patterns documentation](PATTERNS.md#type-based-job-execution-pattern).
+**A:** When creating a worker, specify which type levels it should process. For complete type-based execution patterns, see the [patterns documentation](PATTERNS.md#3-type-based-job-execution-pattern).
 
 ### Q: What happens if there are no workers for a specific type level?
 **A:** Jobs with that type level will remain in the queue until a worker that can process them becomes available, or until the thread pool is stopped.

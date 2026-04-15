@@ -750,8 +750,8 @@ This release completes the migration to **common_system-only** public contracts.
 ### Migration Guide
 
 See the following migration guides for detailed instructions:
-- [Error System Migration Guide](docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md)
-- [Logger Interface Migration Guide](docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE.md)
+- [Error System Migration Guide](advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md)
+- [Logger Interface Migration Guide](guides/LOGGER_INTERFACE_MIGRATION_GUIDE.md)
 
 **Quick Migration Summary:**
 

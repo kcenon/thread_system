@@ -455,8 +455,8 @@ category: "PROJ"
 ### 마이그레이션 가이드
 
 자세한 지침은 다음 마이그레이션 가이드를 참조하세요:
-- [에러 시스템 마이그레이션 가이드](docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md)
-- [로거 인터페이스 마이그레이션 가이드](docs/guides/LOGGER_INTERFACE_MIGRATION_GUIDE.kr.md)
+- [에러 시스템 마이그레이션 가이드](advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md)
+- [로거 인터페이스 마이그레이션 가이드](guides/LOGGER_INTERFACE_MIGRATION_GUIDE.kr.md)
 
 **빠른 마이그레이션 요약:**
 
