@@ -1,7 +1,8 @@
 [![CI](https://github.com/kcenon/thread_system/actions/workflows/ci.yml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/ci.yml)
 [![Code Coverage](https://github.com/kcenon/thread_system/actions/workflows/coverage.yml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/coverage.yml)
-[![Static Analysis](https://github.com/kcenon/thread_system/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/static-analysis.yml)
 [![codecov](https://codecov.io/gh/kcenon/thread_system/branch/main/graph/badge.svg)](https://codecov.io/gh/kcenon/thread_system)
+[![Coverage Status](https://img.shields.io/codecov/c/github/kcenon/thread_system/main?label=line%20coverage&logo=codecov)](https://codecov.io/gh/kcenon/thread_system)
+[![Static Analysis](https://github.com/kcenon/thread_system/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/static-analysis.yml)
 [![Documentation](https://github.com/kcenon/thread_system/actions/workflows/build-Doxygen.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-Doxygen.yaml)
 [![License](https://img.shields.io/github/license/kcenon/thread_system)](https://github.com/kcenon/thread_system/blob/main/LICENSE)
 
