@@ -63,46 +63,13 @@ endfunction()
 # Install libraries
 ##################################################
 function(install_thread_system_libraries)
-  if(USE_LEGACY_BUILD)
-    # Legacy targets
-    set(INSTALL_TARGETS "")
-    if(TARGET utilities)
-      list(APPEND INSTALL_TARGETS utilities)
-    endif()
-    if(TARGET interfaces)
-      list(APPEND INSTALL_TARGETS interfaces)
-    endif()
-    if(TARGET thread_base)
-      list(APPEND INSTALL_TARGETS thread_base)
-    endif()
-    if(TARGET thread_pool)
-      list(APPEND INSTALL_TARGETS thread_pool)
-    endif()
-    if(TARGET typed_thread_pool)
-      list(APPEND INSTALL_TARGETS typed_thread_pool)
-    endif()
-    if(TARGET lockfree)
-      list(APPEND INSTALL_TARGETS lockfree)
-    endif()
-
-    if(INSTALL_TARGETS)
-      install(TARGETS ${INSTALL_TARGETS}
-              EXPORT thread_system-targets
-              ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-              LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-              RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-      message(STATUS "Configured library installation (legacy targets)")
-    endif()
-  else()
-    # New structure - install thread_system library
-    if(TARGET thread_system)
-      install(TARGETS thread_system
-              EXPORT thread_system-targets
-              ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-              LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-              RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-      message(STATUS "Configured library installation (thread_system)")
-    endif()
+  if(TARGET thread_system)
+    install(TARGETS thread_system
+            EXPORT thread_system-targets
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    message(STATUS "Configured library installation (thread_system)")
   endif()
 endfunction()
 

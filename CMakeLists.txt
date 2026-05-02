@@ -149,11 +149,6 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     # Create targets
     create_thread_system_targets()
 
-    # Add subdirectories based on build structure
-    if(USE_LEGACY_BUILD)
-        add_legacy_subdirectories()
-    endif()
-
     # Add examples/samples
     add_examples_and_samples()
 
@@ -185,18 +180,8 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     endif()
 else()
     # Submodule build configuration
-    # Only build core library
-    add_subdirectory(interfaces)
-    add_subdirectory(utilities)
-    add_subdirectory(core)
-    # Provide unified aliases for parent projects when building as a submodule.
-    # This allows dependents to link against thread_system even
-    # though only the legacy targets (thread_base/utilities/interfaces) exist.
-    if(TARGET thread_base)
-        if(NOT TARGET thread_system)
-            add_library(thread_system ALIAS thread_base)
-        endif()
-    endif()
+    # Build the core library only (no samples, tests, or docs).
+    create_thread_system_targets()
     message(STATUS "thread_system building as submodule - samples and tests disabled")
 endif()
 
