@@ -27,12 +27,12 @@ category: "QUAL"
 
 | Feature ID | Feature | Test File(s) | Module/Directory | Status |
 |-----------|---------|-------------|-----------------|--------|
-| THR-FEAT-005 | Standard Job Queue | tests/unit/thread_base_test/job_queue_error_test.cpp, integration_tests/scenarios/job_queue_integration_test.cpp | include/kcenon/thread/core/, src/queue/ | Covered |
+| THR-FEAT-005 | Standard Job Queue | tests/unit/thread_base_test/job_queue_error_test.cpp, tests/integration_tests/scenarios/job_queue_integration_test.cpp | include/kcenon/thread/core/, src/queue/ | Covered |
 | THR-FEAT-006 | Lock-Free Job Queue | tests/unit/lockfree_test/lockfree_queue_test.cpp, tests/unit/thread_base_test/lockfree_job_queue_test.cpp | include/kcenon/thread/lockfree/, src/lockfree/ | Covered |
-| THR-FEAT-007 | Adaptive Job Queue | tests/unit/thread_base_test/adaptive_job_queue_test.cpp, tests/unit/thread_base_test/adaptive_queue_error_test.cpp, integration_tests/integration/adaptive_queue_integration_test.cpp | include/kcenon/thread/queue/, src/queue/ | Covered |
-| THR-FEAT-008 | Policy Queue | tests/unit/thread_base_test/policy_queue_test.cpp, integration_tests/integration/policy_queue_integration_test.cpp | include/kcenon/thread/policies/ | Covered |
-| THR-FEAT-009 | Queue Factory | tests/unit/thread_base_test/queue_factory_test.cpp, integration_tests/integration/queue_factory_integration_test.cpp | include/kcenon/thread/queue/ | Covered |
-| THR-FEAT-010 | Backpressure Queue | integration_tests/integration/backpressure_integration_test.cpp | include/kcenon/thread/core/ | Covered |
+| THR-FEAT-007 | Adaptive Job Queue | tests/unit/thread_base_test/adaptive_job_queue_test.cpp, tests/unit/thread_base_test/adaptive_queue_error_test.cpp, tests/integration_tests/integration/adaptive_queue_integration_test.cpp | include/kcenon/thread/queue/, src/queue/ | Covered |
+| THR-FEAT-008 | Policy Queue | tests/unit/thread_base_test/policy_queue_test.cpp, tests/integration_tests/integration/policy_queue_integration_test.cpp | include/kcenon/thread/policies/ | Covered |
+| THR-FEAT-009 | Queue Factory | tests/unit/thread_base_test/queue_factory_test.cpp, tests/integration_tests/integration/queue_factory_integration_test.cpp | include/kcenon/thread/queue/ | Covered |
+| THR-FEAT-010 | Backpressure Queue | tests/integration_tests/integration/backpressure_integration_test.cpp | include/kcenon/thread/core/ | Covered |
 | THR-FEAT-011 | MPMC Queue | tests/unit/thread_base_test/mpmc_queue_test.cpp, tests/unit/thread_base_test/simple_mpmc_test.cpp | include/kcenon/thread/core/ | Covered |
 
 ### Thread Pool
@@ -119,7 +119,7 @@ category: "QUAL"
 | THR-FEAT-044 | Configuration Manager | tests/unit/core_test/configuration_manager_test.cpp | include/kcenon/thread/config/ | Covered |
 | THR-FEAT-045 | Event Bus (Thread) | tests/unit/core_test/event_bus_test.cpp | include/kcenon/thread/core/ | Covered |
 | THR-FEAT-046 | NUMA Thread Pool | tests/unit/core_test/numa_thread_pool_test.cpp | include/kcenon/thread/core/ | Covered |
-| THR-FEAT-047 | Concurrency Testing | tests/unit/thread_base_test/concurrency_test.cpp, integration_tests/integration/job_queue_concurrency_test.cpp | (cross-cutting) | Covered |
+| THR-FEAT-047 | Concurrency Testing | tests/unit/thread_base_test/concurrency_test.cpp, tests/integration_tests/integration/job_queue_concurrency_test.cpp | (cross-cutting) | Covered |
 | THR-FEAT-048 | Batch Operations | tests/unit/utilities_test/batch_operations_test.cpp | include/kcenon/thread/utils/, src/utils/ | Covered |
 | THR-FEAT-049 | String Conversion Utils | tests/unit/utilities_test/convert_string_test.cpp | include/kcenon/thread/utils/ | Covered |
 | THR-FEAT-050 | Platform Specifics | tests/unit/platform_test/platform_specific_test.cpp, tests/unit/platform_test/platform_edge_case_test.cpp, tests/unit/platform_test/atomic_operations_test.cpp, tests/unit/platform_test/cache_performance_test.cpp | (cross-cutting) | Covered |

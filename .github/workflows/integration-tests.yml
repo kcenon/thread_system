@@ -379,7 +379,7 @@ jobs:
       with:
         path: |
           build/_deps
-        key: ${{ runner.os }}-gcc-Debug-fetchcontent-gtest-v1.14.0-${{ hashFiles('cmake/ThreadSystemDependencies.cmake', 'integration_tests/CMakeLists.txt') }}
+        key: ${{ runner.os }}-gcc-Debug-fetchcontent-gtest-v1.14.0-${{ hashFiles('cmake/ThreadSystemDependencies.cmake', 'tests/integration_tests/CMakeLists.txt') }}
         restore-keys: |
           ${{ runner.os }}-gcc-Debug-fetchcontent-gtest-v1.14.0-
           ${{ runner.os }}-fetchcontent-gtest-v1.14.0-
@@ -549,7 +549,7 @@ jobs:
       with:
         path: |
           build/_deps
-        key: ${{ runner.os }}-gcc-Release-fetchcontent-gtest-v1.14.0-${{ hashFiles('cmake/ThreadSystemDependencies.cmake', 'integration_tests/CMakeLists.txt') }}
+        key: ${{ runner.os }}-gcc-Release-fetchcontent-gtest-v1.14.0-${{ hashFiles('cmake/ThreadSystemDependencies.cmake', 'tests/integration_tests/CMakeLists.txt') }}
         restore-keys: |
           ${{ runner.os }}-gcc-Release-fetchcontent-gtest-v1.14.0-
           ${{ runner.os }}-fetchcontent-gtest-v1.14.0-
