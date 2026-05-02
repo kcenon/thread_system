@@ -44,7 +44,7 @@ run_unit_tests() {
 run_integration_tests() {
     echo "=== Running Valgrind on Integration Tests ==="
 
-    local test_path="${BUILD_DIR}/integration_tests/integration_tests"
+    local test_path="${BUILD_DIR}/tests/integration_tests/integration_tests"
     if [ -f "$test_path" ]; then
         valgrind $VALGRIND_OPTS \
             --xml=yes \
