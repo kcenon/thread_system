@@ -5,7 +5,53 @@ on:
     types: [published]
 
 jobs:
+  # Pre-flight verification: independently re-fetch the release archive and
+  # compute its SHA512 BEFORE delegating to the reusable sync workflow. This
+  # closes the detection gap where a portfile gets committed with a SHA that
+  # does not match the actual archive (kcenon/vcpkg-registry#87,
+  # microsoft/vcpkg#51511). File-based hashing is mandatory: piping
+  # `curl ... | sha512sum` masks fetch failures (a 404 still produces a
+  # valid-looking digest of empty input, cf83e1357...).
+  verify-archive:
+    name: Verify release archive SHA512
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      sha512: ${{ steps.compute.outputs.sha512 }}
+    steps:
+    - name: Download release archive and compute SHA512
+      id: compute
+      env:
+        TAG: ${{ github.event.release.tag_name }}
+      run: |
+        set -euo pipefail
+        REPO="kcenon/thread_system"
+        ARCHIVE_URL="https://github.com/${REPO}/archive/refs/tags/${TAG}.tar.gz"
+
+        echo "Re-fetching ${ARCHIVE_URL} for independent verification..."
+        TMP=$(mktemp)
+        # Download to file (not pipe) so a 404 surfaces as a curl failure
+        # instead of being masked by sha512sum hashing empty input.
+        if ! curl -fsSL --retry 3 "${ARCHIVE_URL}" -o "${TMP}"; then
+          rm -f "${TMP}"
+          echo "::error::Failed to download release archive: ${ARCHIVE_URL}"
+          exit 1
+        fi
+
+        ACTUAL_SHA=$(sha512sum "${TMP}" | awk '{print $1}')
+        rm -f "${TMP}"
+
+        if [ -z "${ACTUAL_SHA}" ]; then
+          echo "::error::Computed SHA512 is empty for ${ARCHIVE_URL}"
+          exit 1
+        fi
+
+        echo "sha512=${ACTUAL_SHA}" >> "$GITHUB_OUTPUT"
+        echo "Archive SHA512 verified for ${TAG}:"
+        echo "  ${ACTUAL_SHA}"
+
   sync:
+    needs: verify-archive
     uses: kcenon/common_system/.github/workflows/sync-vcpkg-registry.yml@main
     with:
       port-name: kcenon-thread-system
