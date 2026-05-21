@@ -161,6 +161,8 @@ Before submitting a PR, ensure:
 3. Address review comments
 4. Approved PR is merged (squash merge preferred)
 
+For the full CI verification gate matrix (sanitizer, stress, integration, and release-blocking gates), see [CI Verification Gates](docs/contributing/VERIFICATION_GATES.md).
+
 ## Getting Help
 
 - Check [existing issues](https://github.com/kcenon/thread_system/issues)
