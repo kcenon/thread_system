@@ -219,6 +219,8 @@ Before submitting:
 - [ ] Documentation is updated for public API changes
 - [ ] Performance impact is measured and acceptable
 
+For the full CI verification gate matrix (sanitizer, stress, integration, and release-blocking gates), see [CI Verification Gates](VERIFICATION_GATES.md).
+
 ### Review Criteria
 
 Reviewers evaluate:

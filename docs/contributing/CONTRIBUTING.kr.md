@@ -219,6 +219,8 @@ auto create_thread_pool(const thread_pool_configuration& config)
 - [ ] 공개 API 변경에 대해 문서가 업데이트됨
 - [ ] 성능 영향이 측정되고 허용 가능함
 
+전체 CI 검증 게이트 매트릭스(sanitizer, stress, integration 및 릴리스 차단 게이트)는 [CI Verification Gates](VERIFICATION_GATES.md) 문서를 참고하세요.
+
 ### 리뷰 기준
 
 리뷰어는 다음 사항을 평가합니다:
