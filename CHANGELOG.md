@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `VERSIONING.md` documenting the SemVer policy, version SSOT, and release process ([#698](https://github.com/kcenon/thread_system/issues/698))
+
+### Changed
+
+- Expand `README.kr.md` to mirror the full English `README.md` heading structure ([#698](https://github.com/kcenon/thread_system/issues/698))
+
+### Removed
+
+- Stray root files `ANALYSIS_README.md` and `README_KO_UPDATE_NOTES.md` ([#698](https://github.com/kcenon/thread_system/issues/698))
+
 ## [1.0.0] - 2026-04-15
 
 ### Added
