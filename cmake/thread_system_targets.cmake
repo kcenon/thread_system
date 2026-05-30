@@ -52,7 +52,16 @@ function(create_thread_system_targets)
   # tests) that still link against the legacy target names. The forwarding
   # header stubs in utilities/include/ and core/{sync,base}/include/ remain
   # in place for one release per the EPIC #683 deprecation policy.
+  # thread_pool / typed_thread_pool are included because in-tree tests and
+  # examples link against those names while only thread_base/utilities/
+  # interfaces were aliased before, so a clean configure with tests enabled
+  # failed with "target thread_pool not found". The installed package already
+  # exposes thread_system::thread_pool and thread_system::typed_thread_pool via
+  # thread_system-config.cmake.in, so these aliases make the in-tree target
+  # graph match the exported one (issue #696).
   add_library(thread_base ALIAS thread_system)
+  add_library(thread_pool ALIAS thread_system)
+  add_library(typed_thread_pool ALIAS thread_system)
   add_library(utilities ALIAS thread_system)
   add_library(interfaces ALIAS thread_system)
 
@@ -72,7 +81,7 @@ function(create_thread_system_targets)
     message(STATUS "thread_system: simdutf support enabled")
   endif()
 
-  message(STATUS "Created thread_system library target with legacy aliases (thread_base, utilities, interfaces)")
+  message(STATUS "Created thread_system library target with legacy aliases (thread_base, thread_pool, typed_thread_pool, utilities, interfaces)")
 endfunction()
 
 ##################################################
