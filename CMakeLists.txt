@@ -38,6 +38,10 @@ option(THREAD_BUILD_INTEGRATION_TESTS "Build integration tests" ON)
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
 
+# libFuzzer targets (requires Clang -fsanitize=fuzzer,address; off by default,
+# excluded from the default build and the regular CI matrix). See fuzz/.
+option(BUILD_FUZZERS "Build libFuzzer targets (requires Clang)" OFF)
+
 # Lock-free queue option (TICKET-001 RESOLVED - Now safe with Hazard Pointers)
 option(THREAD_ENABLE_LOCKFREE_QUEUE "Enable lock-free queue (safe with Hazard Pointers)" ON)
 
@@ -161,6 +165,11 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     # Add benchmarks
     add_benchmarks_subdirectory()
 
+    # Add fuzzers (libFuzzer; off by default, requires Clang)
+    if(BUILD_FUZZERS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/fuzz/CMakeLists.txt)
+        add_subdirectory(fuzz)
+    endif()
+
     # Setup documentation
     setup_documentation()
 
@@ -278,6 +287,7 @@ message(STATUS "  Submodule: ${BUILD_THREADSYSTEM_AS_SUBMODULE}")
 message(STATUS "  common_system: ${BUILD_WITH_COMMON_SYSTEM}")
 message(STATUS "  std::format: ${USE_STD_FORMAT}")
 message(STATUS "  Coverage: ${ENABLE_COVERAGE}")
+message(STATUS "  Fuzzers: ${BUILD_FUZZERS}")
 message(STATUS "  Lock-free queue: ${THREAD_ENABLE_LOCKFREE_QUEUE}")
 if(THREAD_ENABLE_LOCKFREE_QUEUE)
     message(STATUS "    TICKET-001 resolved: Safe with Hazard Pointers")

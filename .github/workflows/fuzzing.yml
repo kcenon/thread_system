@@ -1,0 +1,59 @@
+name: Fuzzing
+
+on:
+  schedule:
+    # Weekly, Mondays at 07:17 UTC (off the top-of-hour to spread CI load).
+    - cron: '17 7 * * 1'
+  workflow_dispatch:
+    inputs:
+      max_total_time:
+        description: 'Seconds to run each fuzz target'
+        required: false
+        default: '120'
+
+permissions:
+  contents: read
+
+jobs:
+  fuzz:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang
+
+      # The fuzz harness is header-only (it includes the queue headers directly
+      # and links nothing from the library), so we compile it directly with
+      # Clang + libFuzzer rather than configuring the whole project. This keeps
+      # the weekly job fast and independent of vcpkg / common_system.
+      - name: Build fuzz target
+        run: |
+          mkdir -p build-fuzz/bin
+          clang++ -std=c++20 -g -O1 \
+            -fsanitize=fuzzer,address -fno-omit-frame-pointer \
+            -I include \
+            fuzz/concurrent_queue_fuzzer.cpp \
+            -o build-fuzz/bin/concurrent_queue_fuzzer
+
+      - name: Run concurrent_queue fuzzer
+        run: |
+          MAX_TIME="${{ github.event.inputs.max_total_time || '120' }}"
+          ./build-fuzz/bin/concurrent_queue_fuzzer \
+            -max_total_time="${MAX_TIME}" \
+            -print_final_stats=1 \
+            fuzz/corpus
+
+      - name: Upload crash artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz-crashes
+          path: |
+            crash-*
+            oom-*
+            timeout-*
+          if-no-files-found: ignore
