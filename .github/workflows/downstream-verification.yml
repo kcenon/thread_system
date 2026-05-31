@@ -1,0 +1,61 @@
+name: Downstream Consumer Verification
+
+# Fans out Thread System's downstream verification to its consumers
+# (network_system, pacs_system) so a single manual dispatch exercises every
+# consumer sanitizer + integration gate, replacing the per-repo
+# `gh workflow run` commands documented in
+# docs/contributing/VERIFICATION_GATES.md ("Downstream Consumer Verification").
+#
+# Cross-repository workflow dispatch is not possible with the default
+# GITHUB_TOKEN, so this workflow uses the DOWNSTREAM_DISPATCH_TOKEN secret —
+# a PAT (classic: `repo` + `workflow`, or fine-grained: `actions: write`) that
+# can dispatch workflows in kcenon/network_system and kcenon/pacs_system.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Consumer branch/ref to run the gates on"
+        required: false
+        default: main
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch:
+    name: ${{ matrix.consumer }} · ${{ matrix.workflow }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        consumer: [network_system, pacs_system]
+        workflow: [sanitizers.yml, integration-tests.yml]
+    steps:
+      - name: Dispatch ${{ matrix.workflow }} in kcenon/${{ matrix.consumer }}
+        env:
+          GH_TOKEN: ${{ secrets.DOWNSTREAM_DISPATCH_TOKEN }}
+          TARGET_REF: ${{ inputs.ref || 'main' }}
+        run: |
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "::error::DOWNSTREAM_DISPATCH_TOKEN secret is not configured. Add a PAT with 'actions: write' on kcenon/network_system and kcenon/pacs_system to enable automated downstream verification."
+            exit 1
+          fi
+          echo "Dispatching ${{ matrix.workflow }} on kcenon/${{ matrix.consumer }}@${TARGET_REF}"
+          gh workflow run "${{ matrix.workflow }}" \
+            --repo "kcenon/${{ matrix.consumer }}" \
+            --ref "${TARGET_REF}"
+
+      - name: Record dispatch in job summary
+        if: always()
+        env:
+          TARGET_REF: ${{ inputs.ref || 'main' }}
+        run: |
+          {
+            echo "### Downstream dispatch — ${{ matrix.consumer }} / ${{ matrix.workflow }}"
+            echo ""
+            echo "- Consumer: \`kcenon/${{ matrix.consumer }}\`"
+            echo "- Workflow: \`${{ matrix.workflow }}\`"
+            echo "- Ref: \`${TARGET_REF}\`"
+            echo "- Result runs: https://github.com/kcenon/${{ matrix.consumer }}/actions/workflows/${{ matrix.workflow }}"
+          } >> "${GITHUB_STEP_SUMMARY}"
