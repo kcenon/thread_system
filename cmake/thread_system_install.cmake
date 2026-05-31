@@ -12,49 +12,48 @@ include(CMakePackageConfigHelpers)
 # Install headers
 ##################################################
 function(install_thread_system_headers)
-  # Install headers from new structure
+  # Canonical headers. The whole public API lives under
+  # include/kcenon/thread/... in the current layout, so a single recursive
+  # rule installs every header (core, interfaces, utils, lockfree,
+  # implementation details, etc.) to <prefix>/include/kcenon/thread/...
+  # *.tpp template implementation files are installed alongside the headers
+  # they back (e.g. typed_thread_pool), which the previous per-component
+  # rules only handled for one module.
   install(DIRECTORY include/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
           COMPONENT Development
-          FILES_MATCHING PATTERN "*.h")
+          FILES_MATCHING
+            PATTERN "*.h"
+            PATTERN "*.hpp"
+            PATTERN "*.tpp")
 
-  # Install legacy interfaces for backward compatibility
-  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces)
-    install(DIRECTORY interfaces/
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/interfaces
-            COMPONENT Development
-            FILES_MATCHING PATTERN "*.h")
-  endif()
-
-  # Utility headers
-  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/utilities/include)
-    install(DIRECTORY utilities/include/
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/utilities
-            COMPONENT Development
-            FILES_MATCHING PATTERN "*.h")
-  endif()
-
-  # Implementation headers
-  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/implementations/thread_pool/include)
-    install(DIRECTORY implementations/thread_pool/include/
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/thread_pool
-            COMPONENT Implementation
-            FILES_MATCHING PATTERN "*.h")
-  endif()
-
-  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/implementations/typed_thread_pool/include)
-    install(DIRECTORY implementations/typed_thread_pool/include/
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/typed_thread_pool
-            COMPONENT Implementation
-            FILES_MATCHING PATTERN "*.h" PATTERN "*.tpp")
-  endif()
-
-  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/implementations/lockfree/include)
-    install(DIRECTORY implementations/lockfree/include/
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/lockfree
-            COMPONENT Implementation
-            FILES_MATCHING PATTERN "*.h")
-  endif()
+  # Legacy forwarding-stub headers (EPIC #683 deprecation window). These are
+  # thin shims such as core/base/include/thread_base.h that #include the
+  # canonical <kcenon/thread/...> header, kept so that downstream code using
+  # the old flat include names keeps compiling for one release. They are
+  # installed flat into <prefix>/include so that #include "thread_base.h"
+  # style usage still resolves. Each rule is guarded by EXISTS so it becomes
+  # a no-op once the stubs are removed.
+  #
+  # NOTE: the previously referenced interfaces/ and
+  # implementations/{thread_pool,typed_thread_pool,lockfree}/include/
+  # directories do not exist in this tree. Those dangling install(DIRECTORY)
+  # entries are removed here because their canonical headers are already
+  # covered by the include/ rule above; leaving them broke the audit of the
+  # install/export surface (issue #696).
+  foreach(_legacy_inc
+          core/base/include
+          core/sync/include
+          utilities/include)
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${_legacy_inc})
+      install(DIRECTORY ${_legacy_inc}/
+              DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+              COMPONENT Development
+              FILES_MATCHING
+                PATTERN "*.h"
+                PATTERN "*.hpp")
+    endif()
+  endforeach()
 
   message(STATUS "Configured header installation")
 endfunction()
