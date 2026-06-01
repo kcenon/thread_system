@@ -61,10 +61,27 @@ recent nightly stress and benchmark runs but is not blocked by them.
 
 ## Downstream Consumer Verification
 
-Thread System is consumed by `network_system` and `pacs_system`. Thread System CI does
-not trigger downstream workflows automatically; consumer verification is a documented
-manual step performed when a change to Thread System could affect a consumer (public
-API, threading semantics, or build interface).
+Thread System is consumed by `network_system` and `pacs_system`. Consumer verification
+runs the downstream sanitizer and integration gates when a change to Thread System could
+affect a consumer (public API, threading semantics, or build interface). It can be
+triggered two ways: the automated fan-out workflow (preferred) or the per-repo manual
+commands below.
+
+### Automated fan-out
+
+The [`downstream-verification.yml`](../../.github/workflows/downstream-verification.yml)
+workflow dispatches every consumer gate from a single `workflow_dispatch`, so no per-repo
+commands are needed. Run it from the Actions tab, or:
+
+```bash
+gh workflow run downstream-verification.yml --repo kcenon/thread_system --field ref=main
+```
+
+It fans out across the matrix below (both consumers × both gates). The workflow requires a
+`DOWNSTREAM_DISPATCH_TOKEN` secret — a PAT that can dispatch workflows in the consumer
+repos (classic: `repo` + `workflow`; fine-grained: `actions: write` on `network_system`
+and `pacs_system`). Each dispatch and a link to its result runs are recorded in the
+workflow's job summary.
 
 Each consumer repository carries its own sanitizer and integration workflows:
 
@@ -73,7 +90,10 @@ Each consumer repository carries its own sanitizer and integration workflows:
 | `network_system` | `.github/workflows/sanitizers.yml` | `.github/workflows/integration-tests.yml` |
 | `pacs_system` | `.github/workflows/sanitizers.yml` | `.github/workflows/integration-tests.yml` |
 
-To verify a consumer against a Thread System change:
+### Manual fallback (per-repo / local)
+
+If the automated fan-out is unavailable (e.g. the dispatch token is not configured),
+verify a consumer against a Thread System change directly:
 
 ```bash
 # Remote: trigger the consumer's gates on its default branch
@@ -149,14 +169,14 @@ Thread System's own verification gates are fully wired: ASan, TSan, UBSan, stres
 integration, valgrind, static analysis, coverage, and performance benchmarks all exist
 as workflows and are listed above. There is no missing *self* gate.
 
-The one known gap is **automated downstream verification**. Thread System CI does not
-currently trigger `network_system` or `pacs_system` workflows when a Thread System
-change lands. Today this is covered by the documented manual procedure in the
-*Downstream Consumer Verification* section. A follow-up candidate is to add a
-`workflow_dispatch`-based fan-out (or a scheduled consumer-matrix job) so that a
-release PR to `main` automatically exercises downstream consumers. This is tracked as a
-follow-up rather than implemented here, to keep this change documentation-only.
+The previously open gap — **automated downstream verification** — is now closed. The
+[`downstream-verification.yml`](../../.github/workflows/downstream-verification.yml)
+workflow provides a `workflow_dispatch` fan-out that triggers the `network_system` and
+`pacs_system` sanitizer and integration gates from a single invocation (see the
+*Downstream Consumer Verification* section above), replacing the per-repo manual
+commands. It requires the `DOWNSTREAM_DISPATCH_TOKEN` secret to dispatch into the consumer
+repositories. No other verification gaps are known.
 
 ---
 
-*Last Updated: 2026-05-21*
+*Last Updated: 2026-05-31*
