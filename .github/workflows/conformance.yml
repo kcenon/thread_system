@@ -1,0 +1,37 @@
+name: Conformance
+
+# Cross-system conformance linter (scripts/conformance_lint.py), propagated from
+# common_system per the ecosystem gate-propagation epic (kcenon/common_system#701).
+#
+# ADVISORY (warning-only): the linter runs and reports any structural/metadata
+# deviations as a warning, but does NOT fail CI yet -- so this PR and existing
+# develop are not red-walled while the repo is remediated to green. Once this
+# repo's conformance deviations are resolved, make the gate enforcing by removing
+# the `|| echo` wrapper on the run step below and marking the check required.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  conformance:
+    name: cross-system conformance linter (advisory)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Run conformance linter (advisory)
+        run: |
+          python3 scripts/conformance_lint.py \
+            || echo "::warning title=Conformance::advisory conformance deviations found (non-blocking; see log above). Resolve them, then make this gate enforcing/required per kcenon/common_system#701."
