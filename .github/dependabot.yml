@@ -10,14 +10,3 @@ updates:
     labels:
       - "dependencies"
       - "github-actions"
-
-  # Enable version updates for git submodules
-  - package-ecosystem: "gitsubmodule"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    assignees:
-      - "kcenon"
-    labels:
-      - "dependencies"
-      - "submodules"
