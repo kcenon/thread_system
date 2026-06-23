@@ -54,16 +54,14 @@ jobs:
           script: |
             const fs = require('fs');
             const reportPath = 'audit-report.md';
-            if (\!fs.existsSync(reportPath)) return;
+            if (!fs.existsSync(reportPath)) return;
             const report = fs.readFileSync(reportPath, 'utf8');
-            if (\!report.trim()) return;
+            if (!report.trim()) return;
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `## Documentation Audit Report
-
-${report}`
+              body: `## Documentation Audit Report\n\n${report}`
             });
 
       - name: Fail on critical findings
