@@ -170,8 +170,8 @@ pool->start();
 1. 동일한 풀에서 다른 작업을 기다리는 작업 제출 피하기:
 ```cpp
 // 나쁨: 잠재적 데드락
-pool->submit_task([&pool]() {
-    auto future = pool->submit_task([]() { /* 내부 작업 */ });
+auto outer = pool->submit([&pool]() {
+    auto future = pool->submit([]() { /* 내부 작업 */ });
     future.get();  // 모든 워커가 바쁘면 데드락
 });
 ```
@@ -193,7 +193,7 @@ cmake -S . -B build -DENABLE_TSAN=ON
 
 1. 적절한 종료 확인:
 ```cpp
-pool->shutdown_pool(false);  // 완료 대기
+pool->stop(false);  // 워커가 현재 작업을 마친 뒤 종료
 ```
 
 2. AddressSanitizer로 실행:
