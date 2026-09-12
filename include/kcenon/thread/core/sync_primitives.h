@@ -15,6 +15,7 @@
 #include <atomic>
 #include <chrono>
 #include <memory>
+#include <shared_mutex>
 
 namespace kcenon::thread::sync {
     /**
