@@ -36,7 +36,7 @@ A modern C++20 multithreading framework designed to democratize concurrent progr
 Thread System is a comprehensive multithreading framework that provides intuitive abstractions and robust implementations for building high-performance, thread-safe applications.
 
 **Key Value Propositions**:
-- **Well-Tested**: 95%+ CI/CD success rate, zero ThreadSanitizer warnings, 49% code coverage
+- **Well-Tested**: 94% CI success rate over the last 100 ci.yml runs (2026-03-19 to 2026-04-15, measured 2026-09-13), 49% code coverage
 - **High Performance**: 1.16M jobs/second baseline, 4x faster lock-free queues, adaptive optimization
 - **Developer Friendly**: Intuitive API, comprehensive documentation, rich examples
 - **Flexible Architecture**: Modular design with optional logger/monitoring integration
@@ -47,7 +47,6 @@ Thread System is a comprehensive multithreading framework that provides intuitiv
 - ✅ Hazard Pointer implementation completed - lock-free queue safe for production
 - ✅ 4x performance improvement with lock-free queue (71 μs vs 291 μs)
 - ✅ Enhanced synchronization primitives and cancellation tokens
-- ✅ All CI/CD pipelines green (ThreadSanitizer & AddressSanitizer clean)
 
 ---
 
@@ -55,7 +54,7 @@ Thread System is a comprehensive multithreading framework that provides intuitiv
 
 ### Requirements
 
-- **C++20 Compiler**: GCC 13+ / Clang 17+ / MSVC 2022+
+- **C++20 Compiler**: GCC 13+ / Clang 17+ / MSVC 2022+ (`std::format` is required; configuration fails without it)
 - **CMake 3.20+**
 - **[common_system](https://github.com/kcenon/common_system)**: Required dependency (must be cloned alongside thread_system)
 
@@ -78,26 +77,67 @@ cd thread_system
 ./scripts/build.bat      # Windows
 
 # Run examples
-./build/bin/thread_pool_sample
+./build/bin/minimal_thread_pool
 ```
 
 ### Installation via vcpkg
 
+`kcenon-thread-system` is published in the [kcenon vcpkg registry](https://github.com/kcenon/vcpkg-registry), not in the official vcpkg registry. Use manifest mode and add the kcenon registry in `vcpkg-configuration.json`:
+
+```json
+{
+  "default-registry": {
+    "kind": "builtin",
+    "baseline": "d90a9b159c08169f39adcd1b0f1ac0ca12c4b96c"
+  },
+  "registries": [
+    {
+      "kind": "git",
+      "repository": "https://github.com/kcenon/vcpkg-registry.git",
+      "baseline": "40632164c62b2256579a27eda228c48b057cbee9",
+      "packages": ["kcenon-*"]
+    }
+  ]
+}
+```
+
+Declare the dependency in `vcpkg.json`:
+
+```json
+{
+  "dependencies": [
+    "kcenon-thread-system"
+  ]
+}
+```
+
+Configure with the vcpkg toolchain file:
+
 ```bash
-vcpkg install kcenon-thread-system
+cmake -B build -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+cmake --build build
 ```
 
 In your `CMakeLists.txt`:
 ```cmake
 find_package(thread_system CONFIG REQUIRED)
-target_link_libraries(your_target PRIVATE kcenon::thread_system)
+target_link_libraries(your_target PRIVATE thread_system::thread_system)
 ```
+
+The kcenon registry currently provides 0.3.2; v1.0.0 has not been published there yet. Use [FetchContent](#with-fetchcontent) to build against v1.0.0.
 
 ### Basic Usage
 
 ```cpp
 #include <kcenon/thread/core/thread_pool.h>
-#include <kcenon/thread/jobs/callback_job.h>
+#include <kcenon/thread/core/thread_worker.h>
+
+#include <algorithm>
+#include <future>
+#include <iostream>
+#include <memory>
+#include <thread>
+#include <vector>
 
 using namespace kcenon::thread;
 
@@ -107,23 +147,38 @@ int main() {
 
     // Add workers
     std::vector<std::unique_ptr<thread_worker>> workers;
-    for (size_t i = 0; i < std::thread::hardware_concurrency(); ++i) {
+    const unsigned worker_count = std::max(1u, std::thread::hardware_concurrency());
+    for (unsigned i = 0; i < worker_count; ++i) {
         workers.push_back(std::make_unique<thread_worker>());
     }
-    pool->enqueue_batch(std::move(workers));
-
-    // Start processing
-    pool->start();
-
-    // Submit jobs (convenience API)
-    for (int i = 0; i < 1000; ++i) {
-        pool->submit_task([i]() {
-            std::cout << "Processing job " << i << "\n";
-        });
+    if (auto r = pool->enqueue_batch(std::move(workers)); r.is_err()) {
+        std::cerr << "enqueue_batch failed: " << r.error().message << "\n";
+        return 1;
     }
 
-    // Clean shutdown
-    pool->shutdown_pool(false);  // Wait for completion
+    // Start processing
+    if (auto r = pool->start(); r.is_err()) {
+        std::cerr << "start failed: " << r.error().message << "\n";
+        return 1;
+    }
+
+    // Submit tasks; submit() returns a future for each result
+    std::vector<std::future<int>> results;
+    for (int i = 0; i < 1000; ++i) {
+        results.push_back(pool->submit([i] { return i * 2; }));
+    }
+
+    long long total = 0;
+    for (auto& f : results) {
+        total += f.get();
+    }
+    std::cout << "Sum of results: " << total << "\n";  // 999000
+
+    // Clean shutdown (immediately_stop = false waits for queued jobs)
+    if (auto r = pool->stop(); r.is_err()) {
+        std::cerr << "stop failed: " << r.error().message << "\n";
+        return 1;
+    }
     return 0;
 }
 ```
@@ -158,9 +213,9 @@ Following Kent Beck's Simple Design principle, we now offer only 2 public queue 
 - **Worker Policies**: Fine-grained control (scheduling, idle behavior, CPU affinity)
 
 ### Error Handling
-- `thread::result<T>` and `thread::result_void` wrap `common::Result` but keep thread-specific helpers (see `include/kcenon/thread/core/error_handling.h`).
-- Use `result.has_error()` / `result.get_error()` when working inside the thread_system repo, and convert to `common::error_info` via `detail::to_common_error(...)` when crossing module boundaries.
-- When updating shared documentation, call out that the thread-specific wrappers intentionally expose `.get_error()` for backward compatibility even though other systems rely on `.error()`.
+- Public APIs return `kcenon::common::Result<T>` or `kcenon::common::VoidResult`. Check `is_err()` and read `error().message`, as the Quick Start does.
+- Thread-specific error codes and helpers such as `get_error_code(...)` are in `include/kcenon/thread/core/error_handling.h`.
+- The former `thread::result<T>`, `thread::result_void`, and `thread::error` types have been removed.
 
 **📚 [Detailed Features →](docs/FEATURES.md)**
 
@@ -321,15 +376,13 @@ This project is part of a modular ecosystem:
 thread_system (core interfaces)
     ↑                    ↑
 logger_system    monitoring_system
-    ↑                    ↑
-    └── integrated_thread_system ──┘
 ```
 
 ### Optional Components
 
 - **[logger_system](https://github.com/kcenon/logger_system)**: High-performance asynchronous logging
 - **[monitoring_system](https://github.com/kcenon/monitoring_system)**: Real-time metrics and monitoring
-- **[integrated_thread_system](https://github.com/kcenon/integrated_thread_system)**: Complete integration examples
+- **[integration_example](examples/integration_example)**: Thread-pool integration example with mock ILogger/IMonitor services (built by default)
 
 ### Integration Benefits
 
@@ -393,20 +446,30 @@ int main() {
 ### Basic Integration
 
 ```cmake
-# Using as subdirectory
+# Using as subdirectory. Add common_system first: thread_system links
+# kcenon::common_system when that target exists.
+add_subdirectory(common_system)
 add_subdirectory(thread_system)
 
-target_link_libraries(your_target PRIVATE
-    thread_base
-    thread_pool
-    utilities
-)
+target_link_libraries(your_target PRIVATE thread_system)
 ```
+
+The common_system checkout must provide the `kcenon::common_system` target. Its `main` branch does; the v0.2.0 tag defines only `kcenon::common`.
 
 ### With FetchContent
 
+thread_system does not fetch common_system itself. Fetch common_system first and point `COMMON_SYSTEM_INCLUDE_DIR` at its headers. This example pins thread_system v1.0.0 with common_system v0.2.0:
+
 ```cmake
 include(FetchContent)
+FetchContent_Declare(
+    common_system
+    GIT_REPOSITORY https://github.com/kcenon/common_system.git
+    GIT_TAG v0.2.0
+)
+FetchContent_MakeAvailable(common_system)
+set(COMMON_SYSTEM_INCLUDE_DIR "${common_system_SOURCE_DIR}/include")
+
 FetchContent_Declare(
     thread_system
     GIT_REPOSITORY https://github.com/kcenon/thread_system.git
@@ -419,35 +482,11 @@ target_link_libraries(your_target PRIVATE thread_system)
 
 ### With vcpkg
 
-The package is available as `kcenon-thread-system` in the kcenon vcpkg registry:
+See [Installation via vcpkg](#installation-via-vcpkg) for the registry configuration, the manifest, and the CMake target.
 
-```json
-{
-  "dependencies": [
-    "kcenon-thread-system"
-  ]
-}
-```
+> **Note**: `kcenon-thread-system` depends on `kcenon-common-system`; vcpkg installs it automatically from the kcenon registry (the port is also in the official vcpkg registry). A vcpkg install needs no separate common_system checkout.
 
-> **Note**: This package requires [kcenon-common-system](https://github.com/kcenon/common_system)
-> which must be cloned alongside thread_system. The vcpkg integration for common_system
-> will be available once the kcenon vcpkg registry is established.
-
-Optional features:
-- `testing`: Includes gtest and benchmark for unit tests
-- `logging`: Enables spdlog integration
-- `development`: All testing and logging dependencies
-
-```json
-{
-  "dependencies": [
-    {
-      "name": "kcenon-thread-system",
-      "features": ["testing", "logging"]
-    }
-  ]
-}
-```
+The `testing`, `logging`, and `development` features in this repository's `vcpkg.json` apply only when building thread_system itself in manifest mode; the published port declares no features.
 
 ---
 
@@ -455,13 +494,13 @@ Optional features:
 
 ### Sample Applications
 
-- **[thread_pool_sample](examples/thread_pool_sample)**: Basic thread pool usage with adaptive queues
-- **[typed_thread_pool_sample](examples/typed_thread_pool_sample)**: Priority-based task scheduling
+- **[minimal_thread_pool](examples/minimal_thread_pool)**: Basic thread pool usage without a logger dependency
+- **[typed_thread_pool_sample](examples/typed_thread_pool_sample)**: Priority-based task scheduling (source only; not built by default)
 - **[adaptive_queue_sample](examples/adaptive_queue_sample)**: Queue performance comparison
 - **[queue_factory_sample](examples/queue_factory_sample)**: Requirements-based queue creation
 - **[queue_capabilities_sample](examples/queue_capabilities_sample)**: Runtime capability introspection
-- **[hazard_pointer_sample](examples/hazard_pointer_sample)**: Lock-free memory reclamation
-- **[integration_example](examples/integration_example)**: Full integration with logger/monitoring
+- **[hazard_pointer_sample](examples/hazard_pointer_sample)**: Lock-free memory reclamation (source only; not built by default)
+- **[integration_example](examples/integration_example)**: Thread-pool integration with mock ILogger/IMonitor services
 
 ### Running Examples
 
@@ -471,8 +510,8 @@ cmake -B build
 cmake --build build
 
 # Run specific example
-./build/bin/thread_pool_sample
-./build/bin/typed_thread_pool_sample
+./build/bin/minimal_thread_pool
+./build/bin/adaptive_queue_sample
 ```
 
 ---
@@ -481,12 +520,12 @@ cmake --build build
 
 ### Quality Metrics
 
-- ✅ **95%+ CI/CD Success Rate** across all platforms
+- ✅ **94% CI Success Rate** over the last 100 ci.yml runs (2026-03-19 to 2026-04-15, measured 2026-09-13)
 - ✅ **49% Code Coverage** with comprehensive test suite
 - ✅ **Zero ThreadSanitizer Warnings** in production code
 - ✅ **Zero AddressSanitizer Leaks** - 100% RAII compliance
 - ✅ **Multi-Platform Support**: Linux, macOS, Windows
-- ✅ **Multiple Compilers**: GCC 11+, Clang 14+, MSVC 2022+
+- ✅ **Multiple Compilers**: GCC 13+, Clang 17+, MSVC 2022+
 
 ### Thread Safety
 
@@ -496,10 +535,7 @@ cmake --build build
 - Adaptive queue mode switching
 - Edge cases (shutdown, overflow, underflow)
 
-**ThreadSanitizer Results**: ✅ CLEAN
-- Zero data races
-- Zero deadlocks
-- Safe memory access patterns
+**ThreadSanitizer**: The `Sanitizer / thread` job in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs the unit-test executables (`*_unit`) under ThreadSanitizer, with nine known-issue exclusions listed in the workflow; see [CI Verification Gates](docs/contributing/VERIFICATION_GATES.md).
 
 ### Resource Management
 
@@ -519,8 +555,8 @@ cmake --build build
 
 | Platform | Compilers | Status |
 |----------|-----------|--------|
-| **Linux** | GCC 11+, Clang 14+ | ✅ Fully supported |
-| **macOS** | Apple Clang 14+, GCC 11+ | ✅ Fully supported |
+| **Linux** | GCC 13+, Clang 17+ | ✅ Fully supported |
+| **macOS** | Apple Clang (Xcode with `std::format`; CI: `macos-latest`) | ✅ Fully supported |
 | **Windows** | MSVC 2022+ | ✅ Fully supported |
 
 ### Architecture Support
@@ -561,7 +597,6 @@ We welcome contributions! Please see our [Contributing Guide](docs/contributing/
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/kcenon/thread_system/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/kcenon/thread_system/discussions)
 - **Email**: kcenon@naver.com
 
 ---
@@ -575,7 +610,7 @@ This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICE
 ## Acknowledgments
 
 - Inspired by modern concurrent programming patterns and best practices
-- Built with C++20 features (GCC 11+, Clang 14+, MSVC 2022+) for maximum performance and safety
+- Built with C++20 features (GCC 13+, Clang 17+, MSVC 2022+) for maximum performance and safety
 - Maintained by kcenon@naver.com
 
 ---
