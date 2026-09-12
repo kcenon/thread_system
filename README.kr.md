@@ -36,7 +36,7 @@
 Thread System은 고성능 thread-safe 애플리케이션 구축을 위한 직관적인 추상화와 견고한 구현을 제공하는 포괄적인 멀티스레딩 프레임워크입니다.
 
 **핵심 가치(Key Value Propositions)**:
-- **검증된 품질**: 95%+ CI/CD 성공률, ThreadSanitizer 경고 제로, 49% 코드 커버리지
+- **검증된 품질**: 최근 100회 ci.yml 실행 기준 CI 성공률 94% (2026-03-19~2026-04-15, 2026-09-13 측정), 49% 코드 커버리지
 - **고성능**: 초당 1.16M 작업 처리(baseline), lock-free 큐 4배 성능 향상, 적응형 최적화
 - **개발자 친화적**: 직관적 API, 포괄적 문서, 풍부한 예제
 - **유연한 아키텍처**: 선택적 logger/monitoring 통합이 가능한 모듈식 설계
@@ -47,7 +47,6 @@ Thread System은 고성능 thread-safe 애플리케이션 구축을 위한 직�
 - ✅ Hazard Pointer 구현 완료 - lock-free 큐가 프로덕션에 안전
 - ✅ Lock-free 큐로 4배 성능 향상 (71 μs vs 291 μs)
 - ✅ 향상된 동기화 프리미티브 및 취소 토큰
-- ✅ 모든 CI/CD 파이프라인 정상 (ThreadSanitizer 및 AddressSanitizer 클린)
 
 ---
 
@@ -55,7 +54,7 @@ Thread System은 고성능 thread-safe 애플리케이션 구축을 위한 직�
 
 ### Requirements
 
-- **C++20 컴파일러**: GCC 13+ / Clang 17+ / MSVC 2022+
+- **C++20 컴파일러**: GCC 13+ / Clang 17+ / MSVC 2022+ (`std::format`이 필수이며, 사용할 수 없으면 CMake 구성(configure)이 실패합니다)
 - **CMake 3.20+**
 - **[common_system](https://github.com/kcenon/common_system)**: 필수 의존성 (thread_system과 나란히 클론해야 함)
 
@@ -78,26 +77,67 @@ cd thread_system
 ./scripts/build.bat      # Windows
 
 # Run examples
-./build/bin/thread_pool_sample
+./build/bin/minimal_thread_pool
 ```
 
 ### Installation via vcpkg
 
+`kcenon-thread-system`은 공식 vcpkg 레지스트리가 아닌 [kcenon vcpkg 레지스트리](https://github.com/kcenon/vcpkg-registry)에 게시되어 있습니다. 매니페스트 모드(manifest mode)를 사용하고 `vcpkg-configuration.json`에 kcenon 레지스트리를 추가하세요:
+
+```json
+{
+  "default-registry": {
+    "kind": "builtin",
+    "baseline": "d90a9b159c08169f39adcd1b0f1ac0ca12c4b96c"
+  },
+  "registries": [
+    {
+      "kind": "git",
+      "repository": "https://github.com/kcenon/vcpkg-registry.git",
+      "baseline": "40632164c62b2256579a27eda228c48b057cbee9",
+      "packages": ["kcenon-*"]
+    }
+  ]
+}
+```
+
+`vcpkg.json`에 의존성을 선언합니다:
+
+```json
+{
+  "dependencies": [
+    "kcenon-thread-system"
+  ]
+}
+```
+
+vcpkg 툴체인 파일로 구성(configure)합니다:
+
 ```bash
-vcpkg install kcenon-thread-system
+cmake -B build -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+cmake --build build
 ```
 
 `CMakeLists.txt`에서:
 ```cmake
 find_package(thread_system CONFIG REQUIRED)
-target_link_libraries(your_target PRIVATE kcenon::thread_system)
+target_link_libraries(your_target PRIVATE thread_system::thread_system)
 ```
+
+kcenon 레지스트리는 현재 0.3.2를 제공하며, v1.0.0은 아직 게시되지 않았습니다. v1.0.0으로 빌드하려면 [FetchContent](#with-fetchcontent)를 사용하세요.
 
 ### Basic Usage
 
 ```cpp
 #include <kcenon/thread/core/thread_pool.h>
-#include <kcenon/thread/jobs/callback_job.h>
+#include <kcenon/thread/core/thread_worker.h>
+
+#include <algorithm>
+#include <future>
+#include <iostream>
+#include <memory>
+#include <thread>
+#include <vector>
 
 using namespace kcenon::thread;
 
@@ -107,23 +147,38 @@ int main() {
 
     // Add workers
     std::vector<std::unique_ptr<thread_worker>> workers;
-    for (size_t i = 0; i < std::thread::hardware_concurrency(); ++i) {
+    const unsigned worker_count = std::max(1u, std::thread::hardware_concurrency());
+    for (unsigned i = 0; i < worker_count; ++i) {
         workers.push_back(std::make_unique<thread_worker>());
     }
-    pool->enqueue_batch(std::move(workers));
-
-    // Start processing
-    pool->start();
-
-    // Submit jobs (convenience API)
-    for (int i = 0; i < 1000; ++i) {
-        pool->submit_task([i]() {
-            std::cout << "Processing job " << i << "\n";
-        });
+    if (auto r = pool->enqueue_batch(std::move(workers)); r.is_err()) {
+        std::cerr << "enqueue_batch failed: " << r.error().message << "\n";
+        return 1;
     }
 
-    // Clean shutdown
-    pool->shutdown_pool(false);  // Wait for completion
+    // Start processing
+    if (auto r = pool->start(); r.is_err()) {
+        std::cerr << "start failed: " << r.error().message << "\n";
+        return 1;
+    }
+
+    // Submit tasks; submit() returns a future for each result
+    std::vector<std::future<int>> results;
+    for (int i = 0; i < 1000; ++i) {
+        results.push_back(pool->submit([i] { return i * 2; }));
+    }
+
+    long long total = 0;
+    for (auto& f : results) {
+        total += f.get();
+    }
+    std::cout << "Sum of results: " << total << "\n";  // 999000
+
+    // Clean shutdown (immediately_stop = false waits for queued jobs)
+    if (auto r = pool->stop(); r.is_err()) {
+        std::cerr << "stop failed: " << r.error().message << "\n";
+        return 1;
+    }
     return 0;
 }
 ```
@@ -158,9 +213,9 @@ Kent Beck의 Simple Design 원칙에 따라 이제 2개의 공개 큐 타입만 
 - **Worker Policies**: 세밀한 제어(스케줄링, 유휴 동작, CPU 친화성)
 
 ### Error Handling
-- `thread::result<T>`와 `thread::result_void`는 `common::Result`를 래핑하되 thread 전용 헬퍼를 유지합니다(`include/kcenon/thread/core/error_handling.h` 참조).
-- thread_system 리포지토리 내부에서 작업할 때는 `result.has_error()` / `result.get_error()`를 사용하고, 모듈 경계를 넘을 때는 `detail::to_common_error(...)`를 통해 `common::error_info`로 변환합니다.
-- 공유 문서를 갱신할 때는, 다른 시스템이 `.error()`에 의존하더라도 thread 전용 래퍼는 하위 호환성을 위해 의도적으로 `.get_error()`를 노출한다는 점을 명시하세요.
+- 공개 API는 `kcenon::common::Result<T>` 또는 `kcenon::common::VoidResult`를 반환합니다. Quick Start와 같이 `is_err()`로 확인하고 `error().message`를 읽습니다.
+- `get_error_code(...)` 같은 thread 전용 오류 코드와 헬퍼는 `include/kcenon/thread/core/error_handling.h`에 있습니다.
+- 이전의 `thread::result<T>`, `thread::result_void`, `thread::error` 타입은 제거되었습니다.
 
 **📚 [상세 기능 →](docs/FEATURES.md)**
 
@@ -321,15 +376,13 @@ graph TD
 thread_system (core interfaces)
     ↑                    ↑
 logger_system    monitoring_system
-    ↑                    ↑
-    └── integrated_thread_system ──┘
 ```
 
 ### Optional Components
 
 - **[logger_system](https://github.com/kcenon/logger_system)**: 고성능 비동기 로깅
 - **[monitoring_system](https://github.com/kcenon/monitoring_system)**: 실시간 메트릭 및 모니터링
-- **[integrated_thread_system](https://github.com/kcenon/integrated_thread_system)**: 완전한 통합 예제
+- **[integration_example](examples/integration_example)**: mock ILogger/IMonitor 서비스를 사용하는 스레드 풀 통합 예제 (기본 빌드에 포함)
 
 ### Integration Benefits
 
@@ -393,20 +446,30 @@ int main() {
 ### Basic Integration
 
 ```cmake
-# Using as subdirectory
+# Using as subdirectory. Add common_system first: thread_system links
+# kcenon::common_system when that target exists.
+add_subdirectory(common_system)
 add_subdirectory(thread_system)
 
-target_link_libraries(your_target PRIVATE
-    thread_base
-    thread_pool
-    utilities
-)
+target_link_libraries(your_target PRIVATE thread_system)
 ```
+
+common_system 체크아웃은 `kcenon::common_system` 타깃을 제공해야 합니다. common_system의 `main` 브랜치는 이 타깃을 제공하지만, v0.2.0 태그는 `kcenon::common`만 정의합니다.
 
 ### With FetchContent
 
+thread_system은 common_system을 직접 가져오지 않습니다. common_system을 먼저 가져온 뒤 `COMMON_SYSTEM_INCLUDE_DIR`이 그 헤더를 가리키도록 설정하세요. 아래 예시는 thread_system v1.0.0과 common_system v0.2.0을 고정(pin)합니다:
+
 ```cmake
 include(FetchContent)
+FetchContent_Declare(
+    common_system
+    GIT_REPOSITORY https://github.com/kcenon/common_system.git
+    GIT_TAG v0.2.0
+)
+FetchContent_MakeAvailable(common_system)
+set(COMMON_SYSTEM_INCLUDE_DIR "${common_system_SOURCE_DIR}/include")
+
 FetchContent_Declare(
     thread_system
     GIT_REPOSITORY https://github.com/kcenon/thread_system.git
@@ -419,35 +482,11 @@ target_link_libraries(your_target PRIVATE thread_system)
 
 ### With vcpkg
 
-이 패키지는 kcenon vcpkg 레지스트리에서 `kcenon-thread-system`으로 제공됩니다:
+레지스트리 구성, 매니페스트, CMake 타깃은 [Installation via vcpkg](#installation-via-vcpkg)를 참조하세요.
 
-```json
-{
-  "dependencies": [
-    "kcenon-thread-system"
-  ]
-}
-```
+> **참고**: `kcenon-thread-system`은 `kcenon-common-system`에 의존하며, vcpkg가 kcenon 레지스트리에서 자동으로 설치합니다(이 포트는 공식 vcpkg 레지스트리에도 있습니다). vcpkg로 설치할 때는 common_system을 별도로 체크아웃할 필요가 없습니다.
 
-> **참고**: 이 패키지는 thread_system과 나란히 클론해야 하는
-> [kcenon-common-system](https://github.com/kcenon/common_system)을 필요로 합니다.
-> common_system에 대한 vcpkg 통합은 kcenon vcpkg 레지스트리가 구축되면 제공될 예정입니다.
-
-선택적 기능(Optional features):
-- `testing`: 단위 테스트를 위한 gtest 및 benchmark 포함
-- `logging`: spdlog 통합 활성화
-- `development`: 모든 testing 및 logging 의존성
-
-```json
-{
-  "dependencies": [
-    {
-      "name": "kcenon-thread-system",
-      "features": ["testing", "logging"]
-    }
-  ]
-}
-```
+이 저장소의 `vcpkg.json`에 있는 `testing`, `logging`, `development` 기능(feature)은 thread_system 자체를 매니페스트 모드로 빌드할 때만 적용되며, 게시된 포트는 기능을 선언하지 않습니다.
 
 ---
 
@@ -455,13 +494,13 @@ target_link_libraries(your_target PRIVATE thread_system)
 
 ### Sample Applications
 
-- **[thread_pool_sample](examples/thread_pool_sample)**: 적응형 큐를 사용한 기본 스레드 풀 사용법
-- **[typed_thread_pool_sample](examples/typed_thread_pool_sample)**: 우선순위 기반 작업 스케줄링
+- **[minimal_thread_pool](examples/minimal_thread_pool)**: logger 의존성 없는 기본 스레드 풀 사용법
+- **[typed_thread_pool_sample](examples/typed_thread_pool_sample)**: 우선순위 기반 작업 스케줄링 (소스만 제공, 기본 빌드에서 제외)
 - **[adaptive_queue_sample](examples/adaptive_queue_sample)**: 큐 성능 비교
 - **[queue_factory_sample](examples/queue_factory_sample)**: 요구사항 기반 큐 생성
 - **[queue_capabilities_sample](examples/queue_capabilities_sample)**: 런타임 기능 인트로스펙션
-- **[hazard_pointer_sample](examples/hazard_pointer_sample)**: Lock-free 메모리 회수
-- **[integration_example](examples/integration_example)**: logger/monitoring과의 완전한 통합
+- **[hazard_pointer_sample](examples/hazard_pointer_sample)**: Lock-free 메모리 회수 (소스만 제공, 기본 빌드에서 제외)
+- **[integration_example](examples/integration_example)**: mock ILogger/IMonitor 서비스를 사용한 스레드 풀 통합
 
 ### Running Examples
 
@@ -471,8 +510,8 @@ cmake -B build
 cmake --build build
 
 # Run specific example
-./build/bin/thread_pool_sample
-./build/bin/typed_thread_pool_sample
+./build/bin/minimal_thread_pool
+./build/bin/adaptive_queue_sample
 ```
 
 ---
@@ -481,12 +520,12 @@ cmake --build build
 
 ### Quality Metrics
 
-- ✅ **95%+ CI/CD 성공률** (모든 플랫폼)
+- ✅ **CI 성공률 94%** (최근 100회 ci.yml 실행, 2026-03-19~2026-04-15, 2026-09-13 측정)
 - ✅ **49% 코드 커버리지** (포괄적인 테스트 스위트)
 - ✅ **ThreadSanitizer 경고 제로** (프로덕션 코드)
 - ✅ **AddressSanitizer 누수 제로** - 100% RAII 준수
 - ✅ **다중 플랫폼 지원**: Linux, macOS, Windows
-- ✅ **다중 컴파일러**: GCC 11+, Clang 14+, MSVC 2022+
+- ✅ **다중 컴파일러**: GCC 13+, Clang 17+, MSVC 2022+
 
 ### Thread Safety
 
@@ -496,10 +535,7 @@ cmake --build build
 - 적응형 큐 모드 전환
 - 엣지 케이스 (shutdown, overflow, underflow)
 
-**ThreadSanitizer 결과**: ✅ CLEAN
-- 데이터 레이스 제로
-- 데드락 제로
-- 안전한 메모리 접근 패턴
+**ThreadSanitizer**: [`.github/workflows/ci.yml`](.github/workflows/ci.yml)의 `Sanitizer / thread` 잡은 단위 테스트 실행 파일(`*_unit`)을 ThreadSanitizer로 실행하며, 워크플로에 나열된 알려진 문제 9건을 제외합니다. 자세한 내용은 [CI Verification Gates](docs/contributing/VERIFICATION_GATES.md)를 참조하세요.
 
 ### Resource Management
 
@@ -519,8 +555,8 @@ cmake --build build
 
 | 플랫폼 | 컴파일러 | 상태 |
 |----------|-----------|--------|
-| **Linux** | GCC 11+, Clang 14+ | ✅ 완전 지원 |
-| **macOS** | Apple Clang 14+, GCC 11+ | ✅ 완전 지원 |
+| **Linux** | GCC 13+, Clang 17+ | ✅ 완전 지원 |
+| **macOS** | Apple Clang (`std::format`을 지원하는 Xcode; CI: `macos-latest`) | ✅ 완전 지원 |
 | **Windows** | MSVC 2022+ | ✅ 완전 지원 |
 
 ### Architecture Support
@@ -561,7 +597,6 @@ cmake --build build
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/kcenon/thread_system/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/kcenon/thread_system/discussions)
 - **Email**: kcenon@naver.com
 
 ---
@@ -575,7 +610,7 @@ cmake --build build
 ## Acknowledgments
 
 - 현대 동시성 프로그래밍 패턴과 모범 사례에서 영감을 받았습니다
-- 최대 성능과 안전성을 위해 C++20 기능(GCC 11+, Clang 14+, MSVC 2022+)으로 구축되었습니다
+- 최대 성능과 안전성을 위해 C++20 기능(GCC 13+, Clang 17+, MSVC 2022+)으로 구축되었습니다
 - 관리자: kcenon@naver.com
 
 ---
