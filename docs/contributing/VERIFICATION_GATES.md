@@ -23,9 +23,9 @@ and reviewers a single map of *what runs, when, and what a failure means*.
 
 | Gate | Tool | Workflow file | Trigger | Scope | Release-blocking |
 |------|------|---------------|---------|-------|------------------|
-| ASan | AddressSanitizer (`-fsanitize=address`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `address`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit + integration tests, Debug build, clang + libc++ | Yes |
-| TSan | ThreadSanitizer (`-fsanitize=thread`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `thread`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit + integration tests, Debug build, clang + libc++ | Yes |
-| UBSan | UndefinedBehaviorSanitizer (`-fsanitize=undefined`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `undefined`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit + integration tests, Debug build, clang + libc++ | Yes |
+| ASan | AddressSanitizer (`-fsanitize=address`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `address`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
+| TSan | ThreadSanitizer (`-fsanitize=thread`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `thread`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
+| UBSan | UndefinedBehaviorSanitizer (`-fsanitize=undefined`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `undefined`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
 | Stress | Custom sustained/burst/memory stress scenarios | `.github/workflows/stress-tests.yml` | Nightly `schedule` (02:00 UTC), `workflow_dispatch` | Long-running concurrency stress, configurable duration/scenarios | No (nightly signal) |
 | Integration | GoogleTest integration suite (`BUILD_INTEGRATION_TESTS=ON`) | `.github/workflows/integration-tests.yml` | `push` to `main`, `pull_request` to `main`, `workflow_dispatch` | Cross-component integration, Debug + Release matrix | Yes |
 | Valgrind | Valgrind memcheck | `.github/workflows/valgrind.yml` | `push` to `main`, `pull_request` to `main`, nightly `schedule`, `workflow_dispatch` | Memory leak / invalid access detection | Yes |
@@ -119,7 +119,10 @@ Workflow references:
 The TSan gate (`ci.yml` `sanitizer` job, matrix `thread`) excludes a fixed set of tests
 via a `--gtest_filter` exclusion. These exclusions are intentional and documented inline
 in `ci.yml`; they are reproduced here so the rationale is discoverable without reading
-the workflow.
+the workflow. The filter applies to the unit-test executables, which the job runs when
+`bin/thread_base_unit` exists; otherwise the job runs `ctest` without the filter
+(`ci.yml` lines 357-370). The job builds the integration tests but does not run them;
+they run under the Integration gate.
 
 | Excluded test pattern | Reason |
 |-----------------------|--------|
@@ -137,7 +140,7 @@ Rules for this exclusion list:
   resolves a false positive.
 - Any change to the filter must update both `ci.yml` and the table above in the same PR.
 
-ASan and UBSan run the full test set with no exclusions. The sanitizer runtime options
+ASan and UBSan run every unit-test executable with no exclusions. The sanitizer runtime options
 applied by the job are `ASAN_OPTIONS=detect_leaks=1:alloc_dealloc_mismatch=0`,
 `UBSAN_OPTIONS=print_stacktrace=1`, and `TSAN_OPTIONS=second_deadlock_stack=1`.
 
@@ -179,4 +182,4 @@ repositories. No other verification gaps are known.
 
 ---
 
-*Last Updated: 2026-05-31*
+*Last Updated: 2026-09-13*
