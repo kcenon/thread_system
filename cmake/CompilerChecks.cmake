@@ -5,11 +5,14 @@
 # Minimum Compiler Version Requirements
 ##################################################
 
-# Define minimum compiler versions for C++20 support
-set(MIN_GCC_VERSION "10.0")
-set(MIN_CLANG_VERSION "11.0")
+# Define minimum compiler versions. They match the documented baseline
+# (README "Requirements"): C++20 std::format needs GCC 13+, Clang 17+, and
+# MSVC 19.30+ (Visual Studio 2022). Apple Clang has no documented minimum;
+# check_std_format_support() in thread_system_features.cmake decides there.
+set(MIN_GCC_VERSION "13.0")
+set(MIN_CLANG_VERSION "17.0")
 set(MIN_APPLECLANG_VERSION "12.0")
-set(MIN_MSVC_VERSION "19.26")  # Visual Studio 2019 16.6
+set(MIN_MSVC_VERSION "19.30")  # Visual Studio 2022 17.0
 
 # Check compiler version
 function(check_compiler_version)
@@ -40,8 +43,8 @@ function(check_compiler_version)
         message(STATUS "Apple Clang ${CMAKE_CXX_COMPILER_VERSION} - C++20 support verified")
         
     elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-        if(MSVC_VERSION LESS 1926)
-            message(FATAL_ERROR "MSVC version ${MSVC_VERSION} is not supported. Minimum required version is ${MIN_MSVC_VERSION} (Visual Studio 2019 16.6)")
+        if(MSVC_VERSION LESS 1930)
+            message(FATAL_ERROR "MSVC version ${MSVC_VERSION} is not supported. Minimum required version is ${MIN_MSVC_VERSION} (Visual Studio 2022)")
         endif()
         message(STATUS "MSVC ${MSVC_VERSION} - C++20 support verified")
         
