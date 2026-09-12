@@ -17,6 +17,23 @@ find_dependency(simdutf CONFIG REQUIRED)
 # Include the targets file
 include("${CMAKE_CURRENT_LIST_DIR}/thread_system-targets.cmake")
 
+# The public headers include common_system headers. A package built against a
+# common_system checkout found by path exports no link to common_system, so
+# attach the target that find_dependency(common_system) provided above.
+if(TARGET thread_system::thread_system)
+    get_target_property(_thread_system_links thread_system::thread_system INTERFACE_LINK_LIBRARIES)
+    if(NOT _thread_system_links MATCHES "kcenon::common")
+        if(TARGET kcenon::common_system)
+            set_property(TARGET thread_system::thread_system APPEND PROPERTY
+                INTERFACE_LINK_LIBRARIES kcenon::common_system)
+        elseif(TARGET kcenon::common)
+            set_property(TARGET thread_system::thread_system APPEND PROPERTY
+                INTERFACE_LINK_LIBRARIES kcenon::common)
+        endif()
+    endif()
+    unset(_thread_system_links)
+endif()
+
 # Determine available target structure
 # Unified build exports thread_system::thread_system as a single library
 # Legacy build exports individual component libraries
