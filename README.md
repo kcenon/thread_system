@@ -454,7 +454,7 @@ add_subdirectory(thread_system)
 target_link_libraries(your_target PRIVATE thread_system)
 ```
 
-The common_system checkout must provide the `kcenon::common_system` target. Its `main` branch does; the v0.2.0 tag defines only `kcenon::common`.
+thread_system links the `kcenon::common_system` target when it exists (common_system `main` defines it); otherwise it exports the include directory of the common_system headers it found, such as a sibling checkout.
 
 ### With FetchContent
 

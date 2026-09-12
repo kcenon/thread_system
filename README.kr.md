@@ -454,7 +454,7 @@ add_subdirectory(thread_system)
 target_link_libraries(your_target PRIVATE thread_system)
 ```
 
-common_system 체크아웃은 `kcenon::common_system` 타깃을 제공해야 합니다. common_system의 `main` 브랜치는 이 타깃을 제공하지만, v0.2.0 태그는 `kcenon::common`만 정의합니다.
+thread_system은 `kcenon::common_system` 타깃이 있으면 이를 링크하고(common_system `main`이 이 타깃을 정의합니다), 없으면 찾은 common_system 헤더의 include 디렉터리(예: 형제 체크아웃)를 소비자에게 내보냅니다.
 
 ### With FetchContent
 
