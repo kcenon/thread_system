@@ -74,7 +74,26 @@ function(create_thread_system_targets)
   if(TARGET kcenon::common_system)
     target_link_libraries(thread_system PUBLIC kcenon::common_system)
     message(STATUS "thread_system: linked kcenon::common_system target")
+  elseif(COMMON_SYSTEM_INCLUDE_DIR)
+    # common_system was found by path (a preset COMMON_SYSTEM_INCLUDE_DIR or a
+    # sibling checkout) and provides no target. Export its include directory so
+    # add_subdirectory() and FetchContent consumers can compile the public
+    # headers, which include kcenon/common headers.
+    target_include_directories(thread_system PUBLIC
+      $<BUILD_INTERFACE:${COMMON_SYSTEM_INCLUDE_DIR}>
+    )
+    message(STATUS "thread_system: exporting common_system include directory ${COMMON_SYSTEM_INCLUDE_DIR}")
   endif()
+
+  # Public headers read these definitions: di/service_registration.h is empty
+  # without BUILD_WITH_COMMON_SYSTEM, and typed_thread_pool_t derives from
+  # common::interfaces::IExecutor only when KCENON_HAS_COMMON_EXECUTOR is 1.
+  # The library is always compiled with both (thread_system_dependencies.cmake),
+  # so consumers must see the same values.
+  target_compile_definitions(thread_system PUBLIC
+    BUILD_WITH_COMMON_SYSTEM
+    KCENON_HAS_COMMON_EXECUTOR=1
+  )
 
   if(DEFINED THREAD_SYSTEM_SIMDUTF_FOUND AND THREAD_SYSTEM_SIMDUTF_FOUND)
     target_link_libraries(thread_system PUBLIC ${THREAD_SYSTEM_SIMDUTF_TARGET})
