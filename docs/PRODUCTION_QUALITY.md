@@ -23,7 +23,7 @@ category: "QUAL"
 The thread_system includes comprehensive quality assurance, rigorous testing, and proven reliability across multiple platforms and compilers.
 
 **Quality Highlights**:
-- ✅ 95%+ CI/CD success rate across all platforms
+- ✅ 94% CI success rate over the last 100 ci.yml runs (2026-03-19 to 2026-04-15, measured 2026-09-13)
 - ✅ 50%+ code coverage with comprehensive test suite
 - ✅ Zero ThreadSanitizer warnings in production code
 - ✅ Zero AddressSanitizer memory leaks
@@ -197,7 +197,7 @@ cmake --build build-ubsan
 4. **Coverage**: Generate coverage reports
 5. **Benchmark**: Performance regression checks
 
-**Success Rate**: 95%+ (tracked over last 100 builds)
+**Success Rate**: 94% over the last 100 ci.yml runs (2026-03-19 to 2026-04-15, measured 2026-09-13)
 
 ---
 
@@ -859,24 +859,29 @@ For complete performance baselines and regression detection thresholds, see [BAS
 
 ### Build Success Rate
 
-**Last 100 Builds** (tracked over 3 months):
+**Last 100 ci.yml runs** (2026-03-19 to 2026-04-15, measured 2026-09-13):
 
 ```
-Platform          Success Rate    Failed Builds
+Job                           Succeeded   Failed
 ─────────────────────────────────────────────────
-Ubuntu (GCC)      98% (98/100)    2 (flaky tests)
-Ubuntu (Clang)    97% (97/100)    3 (CI timeout)
-macOS             96% (96/100)    4 (test disabled)
-Windows (MSVC)    95% (95/100)    5 (path issues)
-Windows (MSYS2)   94% (94/100)    6 (CI issues)
+ubuntu-24.04 / gcc            99/100      1
+ubuntu-24.04 / clang          99/100      1
+macos-latest / clang          99/100      1
+windows-2022 / msvc           100/100     0
+Sanitizer / address           100/100     0
+Sanitizer / thread            97/100      3
+Sanitizer / undefined         98/100      2
+API Guard - No Legacy Types   100/100     0
 ─────────────────────────────────────────────────
-Overall           96% (480/500)   20 failures
+Runs with every job passing   94/100      6
 ```
 
-**Failure Analysis**:
-- 60% CI infrastructure issues (timeouts, flaky network)
-- 30% Test environment issues (macOS test compatibility)
-- 10% Actual bugs (all fixed)
+The build jobs continue after test failures (ci.yml:243, 248, 259-264), so a successful build job does not mean that every test passed.
+
+**Failure Analysis** (the 6 failed runs):
+- 3 runs: `Sanitizer / thread` (pushes to main on 2026-04-05 and 2026-04-09, a pull request on 2026-04-04)
+- 2 runs: `Sanitizer / undefined` (pushes to main on 2026-03-19 and 2026-04-15)
+- 1 run: the Linux and macOS build jobs (a pull request on 2026-03-24)
 
 ---
 
@@ -898,7 +903,7 @@ Overall           96% (480/500)   20 failures
 - Test coverage (72.5%)
 - Static analysis (100% passing)
 - Sanitizer results (100% clean)
-- CI success rate (96%)
+- CI success rate (94%, last 100 ci.yml runs)
 - Documentation completeness (100%)
 
 **Overall Score**: **92 / 100** (Grade: A)
@@ -964,7 +969,7 @@ Overall           96% (480/500)   20 failures
 - ✅ **Performance**: Baselines established, regression detection active
 - ✅ **Multi-Platform**: Linux, macOS, Windows fully supported
 - ✅ **Multi-Compiler**: GCC, Clang, MSVC support
-- ✅ **CI/CD**: 96% success rate, automated quality checks
+- ✅ **CI/CD**: 94% success rate over the last 100 ci.yml runs, automated quality checks
 - ✅ **Downstream Verification**: Automated fan-out triggers `network_system` / `pacs_system` sanitizer + integration gates via [`downstream-verification.yml`](contributing/VERIFICATION_GATES.md#downstream-consumer-verification) — no per-repo commands
 - ✅ **Documentation**: Comprehensive docs and examples
 
