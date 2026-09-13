@@ -68,7 +68,7 @@ cmake --build build -j
 
 ```bash
 # Run the sample application
-./build/bin/thread_pool_sample
+./build/bin/minimal_thread_pool
 ```
 
 ---
@@ -79,10 +79,13 @@ Create a simple thread pool application:
 
 ```cpp
 #include <kcenon/thread/core/thread_pool.h>
-#include <kcenon/thread/jobs/callback_job.h>
+#include <kcenon/thread/core/thread_worker.h>
 
+#include <algorithm>
+#include <future>
 #include <iostream>
 #include <memory>
+#include <thread>
 #include <vector>
 
 using namespace kcenon::thread;
@@ -93,7 +96,8 @@ int main() {
 
     // 2. Add workers (one per CPU core)
     std::vector<std::unique_ptr<thread_worker>> workers;
-    for (size_t i = 0; i < std::thread::hardware_concurrency(); ++i) {
+    const unsigned worker_count = std::max(1u, std::thread::hardware_concurrency());
+    for (unsigned i = 0; i < worker_count; ++i) {
         workers.push_back(std::make_unique<thread_worker>());
     }
     pool->enqueue_batch(std::move(workers));
@@ -101,15 +105,19 @@ int main() {
     // 3. Start the pool
     pool->start();
 
-    // 4. Submit tasks
+    // 4. Submit tasks; submit() returns a std::future for each one
+    std::vector<std::future<void>> tasks;
     for (int i = 0; i < 10; ++i) {
-        pool->submit_task([i]() {
+        tasks.push_back(pool->submit([i]() {
             std::cout << "Processing task " << i << "\n";
-        });
+        }));
+    }
+    for (auto& task : tasks) {
+        task.get();  // Wait for each task to complete
     }
 
-    // 5. Clean shutdown (wait for all tasks to complete)
-    pool->shutdown_pool(false);
+    // 5. Clean shutdown
+    pool->stop(false);
 
     std::cout << "All tasks completed!\n";
     return 0;
@@ -121,8 +129,16 @@ int main() {
 Add to your `CMakeLists.txt`:
 
 ```cmake
-# Using FetchContent
+# Using FetchContent: thread_system does not fetch common_system itself
 include(FetchContent)
+FetchContent_Declare(
+    common_system
+    GIT_REPOSITORY https://github.com/kcenon/common_system.git
+    GIT_TAG v0.2.0
+)
+FetchContent_MakeAvailable(common_system)
+set(COMMON_SYSTEM_INCLUDE_DIR "${common_system_SOURCE_DIR}/include")
+
 FetchContent_Declare(
     thread_system
     GIT_REPOSITORY https://github.com/kcenon/thread_system.git
@@ -131,11 +147,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(thread_system)
 
 add_executable(my_app main.cpp)
-target_link_libraries(my_app PRIVATE
-    thread_base
-    thread_pool
-    utilities
-)
+target_link_libraries(my_app PRIVATE thread_system)
 ```
 
 ---
@@ -149,7 +161,7 @@ The core component for managing worker threads and executing jobs.
 auto pool = std::make_shared<thread_pool>("PoolName");
 pool->start();
 // ... submit tasks ...
-pool->shutdown_pool(false);  // false = wait for completion
+pool->stop(false);  // false = let workers finish their current job
 ```
 
 ### Workers
@@ -166,13 +178,13 @@ pool->enqueue_batch(std::move(workers));
 Units of work to be executed.
 
 ```cpp
-// Using convenience API
-pool->submit_task([]() {
+// Using submit(), which returns a std::future
+auto future = pool->submit([]() {
     // Your work here
 });
 
 // Using callback_job for more control
-pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+pool->enqueue(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
     // Your work here
     return kcenon::common::ok();
 }));
@@ -186,19 +198,23 @@ pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult 
 
 ```cpp
 std::atomic<int> counter{0};
+std::vector<std::future<void>> futures;
 for (int i = 0; i < 1000; ++i) {
-    pool->submit_task([&counter]() {
+    futures.push_back(pool->submit([&counter]() {
         counter++;
-    });
+    }));
+}
+for (auto& f : futures) {
+    f.get();  // Wait until every task has run
 }
 ```
 
 ### Error Handling
 
 ```cpp
-pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+pool->enqueue(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
     if (some_error_condition) {
-        return kcenon::thread::make_error_result(kcenon::thread::error_code::operation_failed, "Task failed");
+        return kcenon::thread::make_error_result(kcenon::thread::error_code::job_execution_failed, "Task failed");
     }
     return kcenon::common::ok();
 }));
@@ -207,11 +223,12 @@ pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult 
 ### Graceful Shutdown
 
 ```cpp
-// Wait for all tasks to complete
-pool->shutdown_pool(false);
+// Wait on the futures of submitted tasks first; stop(false) then lets
+// each worker finish its current job (queued jobs are not drained)
+pool->stop(false);
 
-// Or force immediate stop
-pool->shutdown_pool(true);
+// Or stop immediately; ongoing jobs may be interrupted
+pool->stop(true);
 ```
 
 ---

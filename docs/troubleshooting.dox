@@ -30,14 +30,14 @@ complete.
    test. TSan detects most lock-order inversions automatically.
 
 **Fix**: Use the DAG scheduler for in-pool dependencies. Adopt @c std::scoped_lock
-to lock multiple mutexes atomically. Never hold a mutex across @c submit_task.
+to lock multiple mutexes atomically. Never hold a mutex across @c submit.
 
 @section ts_leak 2. Memory leak with futures
 
 **Symptoms**: RSS grows steadily under load even though jobs complete.
 
 **Common causes**:
-- The pool returns a future from @c submit_task and the caller never reads or
+- The pool returns a future from @c submit and the caller never reads or
   drops it. The shared state stays alive until the future is destroyed.
 - Lambdas capture large objects by value; the lambda lives until the job
   finishes, pinning the captures.

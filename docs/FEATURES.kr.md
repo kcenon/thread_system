@@ -256,27 +256,28 @@ thread_system은 서로 다른 사용 사례에 최적화된 두 가지 스레�
 ```cpp
 class thread_pool {
 public:
-    thread_pool(const std::string& name = "ThreadPool");
+    thread_pool(const std::string& thread_title = "thread_pool",
+                const thread_context& context = thread_context());
 
-    auto start() -> result_void;
-    auto stop(bool immediately = false) -> result_void;
+    auto start() -> common::VoidResult;
+    auto stop(const bool& immediately_stop = false) -> common::VoidResult;
 
     // 작업 제출
-    auto enqueue(std::unique_ptr<job>&& job) -> result_void;
-    auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
-    bool submit_task(std::function<void()> task);  // 편의 API
+    auto enqueue(std::unique_ptr<job>&& job) -> common::VoidResult;
+    auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> common::VoidResult;
+    template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+    auto submit(F&& callable, const submit_options& opts = {}) -> std::future<R>;
 
     // 워커 관리
-    auto add_worker(std::unique_ptr<thread_worker>&& worker) -> result_void;
-    auto add_workers(size_t count) -> result_void;
+    auto enqueue(std::unique_ptr<thread_worker>&& worker) -> common::VoidResult;
+    auto enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
+        -> common::VoidResult;
 
     // 모니터링
-    auto get_thread_count() const -> size_t;
-    auto get_pending_task_count() const -> size_t;
-    auto get_idle_worker_count() const -> size_t;
-
-    // 종료
-    bool shutdown_pool(bool immediately = false);
+    auto is_running() const -> bool;
+    auto get_pending_task_count() const -> std::size_t;
+    auto get_active_worker_count() const -> std::size_t;
+    std::size_t get_idle_worker_count() const;
 };
 ```
 
@@ -293,8 +294,8 @@ public:
    - 배치 처리 기능
 
 3. **듀얼 API 설계**
-   - 상세한 에러 처리를 위한 Result 기반 API
-   - 단순성을 위한 편의 API (`submit_task`, `shutdown_pool`)
+   - 상세한 에러 처리를 위한 Result 기반 API (`start()`, `enqueue()`, `stop()`은 `common::VoidResult` 반환)
+   - 값을 반환하는 호출 가능 객체를 위한 future 기반 `submit()`
 
 4. **포괄적인 모니터링**
    - 워커 수 추적
@@ -479,7 +480,7 @@ public:
 auto token = std::make_shared<cancellation_token>();
 
 // 워커 스레드에서
-pool->submit_task([token]() {
+auto work = pool->submit([token]() {
     for (int i = 0; i < 1000000; ++i) {
         if (token->is_cancelled()) {
             return;  // 조기 종료

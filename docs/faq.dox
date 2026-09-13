@@ -20,7 +20,7 @@ based on queue depth and observed latency.
 @section faq_cancel How do I handle task cancellation?
 
 Use a @c kcenon::thread::cancellation_token. Pass the token to long-running
-jobs and check @c is_cancellation_requested() between work units. Cancellation
+jobs and check @c is_cancelled() between work units. Cancellation
 is cooperative — the runtime cannot interrupt arbitrary code, so jobs must poll
 periodically. Tokens form a hierarchy: cancelling a parent cancels all linked
 children, which is useful for shutting down a request and all of its background
@@ -28,14 +28,14 @@ fan-out.
 
 @code{.cpp}
 auto token = kcenon::thread::cancellation_token::create();
-pool->submit_task([token]() -> kcenon::thread::result_void {
-    while (!token->is_cancellation_requested()) {
+auto work = pool->submit([token]() {
+    while (!token.is_cancelled()) {
         // do a chunk of work
     }
-    return {};
 });
 // later
-token->cancel();
+token.cancel();
+work.get();
 @endcode
 
 @section faq_async Thread pool vs. std::async — which is better?
@@ -68,7 +68,7 @@ A few rules prevent the most common cases:
   pool. Use the DAG scheduler for in-pool dependencies instead.
 - Acquire locks in a consistent global order across jobs.
 - Prefer @c std::scoped_lock to lock multiple mutexes atomically.
-- Avoid holding a mutex across @c submit_task — release first, then submit.
+- Avoid holding a mutex across @c submit — release first, then submit.
 - Watch for hidden blocking inside callbacks (logging, allocators, mutexes
   used by other threads). The thread pool diagnostics can flag long-running
   jobs that point at hidden contention.
@@ -100,25 +100,27 @@ Thread System works on Linux, macOS, and Windows. Notable differences:
 Jobs are heap-allocated by the queue (typically as @c std::unique_ptr nodes).
 Lock-free queues defer node deletion until hazard pointer scanning confirms
 no thread is reading them. As a user you do not need to manage queue node
-lifetimes; just pass a callable into @c submit_task or build a typed job and
+lifetimes; just pass a callable into @c submit or build a typed job and
 the framework owns it from there. Avoid capturing very large objects by value
 in the lambda — capture by @c std::shared_ptr or move into the job.
 
 @section faq_errors How are errors propagated from jobs?
 
-Jobs return @c kcenon::thread::result_void or @c result<T>, which wrap the
-@c common_system Result type. Failures surface through the future returned by
-@c submit_task — calling @c .get() rethrows nothing; instead inspect the
-result and call @c get_error() (note: not @c error()) to read the failure
-detail. The DAG scheduler aggregates failures across nodes and exposes them
-through the run result.
+Pool operations such as @c start(), @c enqueue(), and @c stop() return
+@c kcenon::common::VoidResult; check @c is_err() and read @c error().message.
+Jobs enqueued as job objects return @c kcenon::common::VoidResult as well. A
+callable passed to @c submit() returns a plain value, and the returned
+@c std::future rethrows an exception thrown by the callable (or a
+@c std::runtime_error when the pool rejects the job) when you call @c get().
+The DAG scheduler aggregates failures across nodes and exposes them through
+the run result.
 
 @section faq_testing How do I test code that uses the thread pool?
 
 - For unit tests, prefer the @c minimal_thread_pool example as a lightweight
   fixture: it has predictable startup and shutdown costs.
 - Use a small worker count (1 or 2) so concurrency bugs surface deterministically.
-- Wait on futures returned from @c submit_task; never sleep-and-hope.
+- Wait on futures returned from @c submit; never sleep-and-hope.
 - For races, run the test under TSan (@c cmake --preset tsan) and inside
   Valgrind on Linux (@c valgrind --tool=helgrind).
 - The repository includes stress and sanitizer presets — use them in CI to

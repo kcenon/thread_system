@@ -170,8 +170,8 @@ pool->start();
 1. Avoid submitting jobs that wait for other jobs from the same pool:
 ```cpp
 // BAD: Potential deadlock
-pool->submit_task([&pool]() {
-    auto future = pool->submit_task([]() { /* inner job */ });
+auto outer = pool->submit([&pool]() {
+    auto future = pool->submit([]() { /* inner job */ });
     future.get();  // Deadlock if all workers are busy
 });
 ```
@@ -193,7 +193,7 @@ cmake -S . -B build -DENABLE_TSAN=ON
 
 1. Ensure proper shutdown:
 ```cpp
-pool->shutdown_pool(false);  // Wait for completion
+pool->stop(false);  // Let workers finish their current job
 ```
 
 2. Run with AddressSanitizer:
