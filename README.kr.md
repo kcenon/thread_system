@@ -174,7 +174,8 @@ int main() {
     }
     std::cout << "Sum of results: " << total << "\n";  // 999000
 
-    // Clean shutdown (immediately_stop = false waits for queued jobs)
+    // Clean shutdown: stop(false) lets running jobs finish but does not run
+    // jobs that are still queued, so the results are collected first (above).
     if (auto r = pool->stop(); r.is_err()) {
         std::cerr << "stop failed: " << r.error().message << "\n";
         return 1;
