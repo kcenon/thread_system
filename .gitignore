@@ -75,3 +75,10 @@ EOF < /dev/nulldocs/api/
 
 # cache
 .cache/
+coherence-results/
+
+__pycache__/
+
+*.pyc
+
+!ci/*.json
