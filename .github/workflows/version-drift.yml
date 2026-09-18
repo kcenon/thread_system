@@ -1,4 +1,4 @@
-name: Conformance
+name: SOUP Version Drift Check
 on:
   push:
     branches: [main, develop, 'phase-*']
@@ -8,8 +8,8 @@ on:
 permissions:
   contents: read
 jobs:
-  conformance:
-    name: cross-system conformance linter
+  version_drift:
+    name: SOUP Version Drift Detection
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -17,12 +17,12 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
-      - name: Run conformance with recorded policy and raw results
-        run: python3 scripts/run_coherence.py conformance
+      - name: Run version-drift with recorded policy and raw results
+        run: python3 scripts/run_coherence.py version-drift -- --no-color --verbose --no-matrix
 
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: conformance-results
+          name: version-drift-results
           path: coherence-results/
           if-no-files-found: error
