@@ -11,6 +11,10 @@
 
 A modern C++20 multithreading framework designed to democratize concurrent programming.
 
+Latest stable release: [v1.0.0](https://github.com/kcenon/thread_system/releases/tag/v1.0.0).
+Release tags use `vMAJOR.MINOR.PATCH`; the v1.0.0 root package manifest and CMake project both declare `1.0.0`.
+See the [release metadata notes](docs/RELEASE_METADATA.md) for historical version discrepancies and the source-local vcpkg port version.
+
 ## Table of Contents
 
 - [Overview](#overview)
