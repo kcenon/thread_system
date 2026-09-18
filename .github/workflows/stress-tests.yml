@@ -48,7 +48,7 @@ jobs:
 
           cmake -B build \
             -DCMAKE_BUILD_TYPE=Release \
-            -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+            -DKCENON_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
             -DBUILD_STRESS_TESTS=ON \
             -DCMAKE_CXX_FLAGS="-O2"
 
@@ -121,7 +121,7 @@ jobs:
 
           cmake -B build \
             -DCMAKE_BUILD_TYPE=Release \
-            -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+            -DKCENON_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
             -DBUILD_STRESS_TESTS=ON
 
       - name: Build

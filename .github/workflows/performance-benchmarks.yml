@@ -50,7 +50,7 @@ jobs:
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_CXX_FLAGS="-O3 -DNDEBUG -march=native" \
-          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DKCENON_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DBUILD_TESTING=OFF \
           -DBUILD_INTEGRATION_TESTS=OFF
 

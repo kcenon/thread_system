@@ -1,3 +1,5 @@
+include("${CMAKE_CURRENT_LIST_DIR}/KcenonDependencyOptions.cmake")
+
 ##################################################
 # thread_system_dependencies.cmake
 #
@@ -9,9 +11,8 @@
 # DEPRECATED: logger_system integration (Issue #336)
 # Use common_system ILogger interface instead
 ##################################################
-option(BUILD_WITH_LOGGER_SYSTEM
-    "DEPRECATED: Direct logger_system integration. Use common_system ILogger instead."
-    OFF)
+kcenon_dependency_option(KCENON_WITH_LOGGER_SYSTEM BUILD_WITH_LOGGER_SYSTEM
+    "DEPRECATED: Direct logger_system integration. Use common_system ILogger instead." OFF)
 
 function(check_logger_system_deprecation)
     if(BUILD_WITH_LOGGER_SYSTEM)
@@ -375,7 +376,7 @@ function(find_or_fetch_gtest)
   FetchContent_Declare(
     googletest
     GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG v1.14.0
+    GIT_TAG v1.17.0
     GIT_SHALLOW TRUE
     GIT_PROGRESS TRUE
   )
@@ -389,7 +390,7 @@ function(find_or_fetch_gtest)
   # Make GTest available
   FetchContent_MakeAvailable(googletest)
 
-  message(STATUS "✅ GTest fetched and configured (v1.14.0)")
+  message(STATUS "✅ GTest fetched and configured (v1.17.0)")
   set(GTEST_FOUND TRUE PARENT_SCOPE)
   set(GTEST_FROM_SOURCE TRUE PARENT_SCOPE)
 endfunction()

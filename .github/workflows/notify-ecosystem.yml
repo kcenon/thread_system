@@ -1,0 +1,36 @@
+name: Notify Ecosystem Coherence
+on:
+  push:
+    branches: [main, develop]
+    paths: ['CMakeLists.txt', 'cmake/**', 'include/**', 'src/**', 'vcpkg*.json', 'vcpkg-ports/**', 'ci/**', 'scripts/**', '.github/workflows/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  notify:
+    name: Notify common and await raw ecosystem results
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Dispatch only from trusted branch events
+        env:
+          GH_TOKEN: ${{ secrets.ECOSYSTEM_DISPATCH_TOKEN }}
+          REPOSITORY: ${{ github.event.repository.name }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::Configure ECOSYSTEM_DISPATCH_TOKEN with common_system contents write and actions read permissions"
+            exit 1
+          fi
+          python3 scripts/coherence_dispatch.py notify --repository "$REPOSITORY" --sha "$GITHUB_SHA" --timeout 4200 --output dispatch-runs.json
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: ecosystem-dispatch-runs
+          path: dispatch-runs.json

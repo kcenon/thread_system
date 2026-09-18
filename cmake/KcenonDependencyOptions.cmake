@@ -1,0 +1,48 @@
+# Shared by the eight ecosystem repositories. Source: common_system, issue #701.
+# Canonical values deliberately remain normal variables unless the caller
+# supplied a cache entry. This prevents an inferred default from masking a
+# later -D<legacy>=OFF when reconfiguring an existing build directory.
+include_guard(GLOBAL)
+
+function(kcenon_dependency_option canonical legacy description default_value)
+    if(DEFINED ${canonical})
+        set(_value "${${canonical}}")
+        if(DEFINED ${legacy})
+            if(${canonical})
+                set(_canonical_bool ON)
+            else()
+                set(_canonical_bool OFF)
+            endif()
+            if(${legacy})
+                set(_legacy_bool ON)
+            else()
+                set(_legacy_bool OFF)
+            endif()
+            if(NOT _canonical_bool STREQUAL _legacy_bool)
+                message(WARNING "Conflicting ${canonical} and legacy ${legacy}; ${canonical} takes precedence")
+            endif()
+        endif()
+    elseif(DEFINED ${legacy})
+        set(_value "${${legacy}}")
+    else()
+        set(_value "${default_value}")
+    endif()
+
+    if(_value)
+        set(_value ON)
+    else()
+        set(_value OFF)
+    endif()
+    # Preserve existing cache entries and any parent-supplied normal variables.
+    # Only the effective values in this directory are mirrored for old code.
+    if(NOT DEFINED ${legacy})
+        set(${legacy} "${_value}" CACHE BOOL "${description} (alias of ${canonical})")
+    endif()
+    if(DEFINED CACHE{${canonical}})
+        set_property(CACHE ${canonical} PROPERTY TYPE BOOL)
+        set_property(CACHE ${canonical} PROPERTY HELPSTRING "${description}")
+    endif()
+    set(${canonical} "${_value}" PARENT_SCOPE)
+    set(${legacy} "${_value}" PARENT_SCOPE)
+    message(STATUS "${canonical}=${_value} (legacy ${legacy})")
+endfunction()
