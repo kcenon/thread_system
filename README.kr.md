@@ -11,6 +11,10 @@
 
 동시성 프로그래밍의 민주화를 위해 설계된 현대적인 C++20 멀티스레딩 프레임워크입니다.
 
+최신 안정 릴리스: [v1.0.0](https://github.com/kcenon/thread_system/releases/tag/v1.0.0).
+릴리스 태그는 `vMAJOR.MINOR.PATCH` 형식을 사용하며, v1.0.0의 루트 패키지 매니페스트와 CMake 프로젝트 버전은 모두 `1.0.0`입니다.
+이전 릴리스의 버전 불일치와 소스 트리에 포함된 vcpkg 포트 버전은 [릴리스 메타데이터 참고 사항](docs/RELEASE_METADATA.md)에 정리되어 있습니다.
+
 ## 목차
 
 - [개요](#개요)
