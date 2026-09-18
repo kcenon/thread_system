@@ -50,6 +50,7 @@ FetchContent_Declare(googletest GIT_TAG "${TEST_TAG}")''')
         self.source('FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.tar.gz)')
         self.assertEqual(self.run_check()["findings"], [])
         self.assertEqual(drift.normalize_version("asio-1-30-2"), "1.30.2")
+        self.assertEqual(drift.normalize_version("sqlite-amalgamation-3450300"), "3.45.3")
 
     def test_invalid_manifests(self):
         for text in ["{bad", "[]", '{"overrides": {}}', '{"overrides":[{}]}',

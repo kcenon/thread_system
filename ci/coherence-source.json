@@ -1,14 +1,51 @@
 {
+  "schema_version": 1,
+  "source_repository": "kcenon/common_system",
+  "source_revision": "6f76d9b9480d0dffc9167dc4a2ca564cde708b4b",
   "files": {
-    "cmake/KcenonDependencyOptions.cmake": "f2685707f78ad10e43e4ba884bd30dbaf4c3fbf9550b077d1539f5512a4be0f6",
-    "scripts/check_tag_reality.py": "3067354328dffce0ef059512e54406593ac9e2087b9ba821318596a7a07914f6",
-    "scripts/check_version_drift.py": "a391c01accc5d0a8ad4a7eccbf513fcdb3ccc4300a75693b1a2126b41e5b6ca7",
-    "scripts/run_coherence.py": "bdd63c05ebdd52d0009dee810b5dd190cb8d63c6962e6e5caf953c1b44c22585",
-    "scripts/tests/test_dependency_options.py": "7c3f5db9b99cf745c0bd652ad89706943b7eaa012015736b06ab345967b868b6",
-    "scripts/tests/test_gate_policy.py": "a96501c832481876824012225da97b7287c913cd590c22019040bbc0c91a22fa",
-    "scripts/tests/test_tag_reality.py": "5ebb899fcd4e366d3101fb2cdc76ff78d74307e76f0f7f9b06aba7cb3142bf92",
-    "scripts/tests/test_version_drift.py": "78ac2522c7893ecb7b6e3f96a3d59bb4e4e522c068e8ded949aadd646bc1f16a"
-  },
-  "source_commit": "eefc5c577ac1dbb9bc25bbd56be8ddf5ee7269b4",
-  "source_repository": "kcenon/common_system"
+    "scripts/conformance_lint.py": {
+      "source": "scripts/conformance_lint.py",
+      "sha256": "6c46e31b95476144d90b530206ea2427b352b9cffe0ef69dd582bb5c7b3031b7"
+    },
+    "scripts/check_version_drift.py": {
+      "source": "scripts/check_version_drift.py",
+      "sha256": "b1b0848f8ac920e508489bec4c6be3c8c373f38dc1d44d57aa0e29754d982573"
+    },
+    "scripts/run_coherence.py": {
+      "source": "scripts/run_coherence.py",
+      "sha256": "94eff0a7614bd4157aba9051ccc9de0d9e5f210b87c0ff8b4512747caf8b146e"
+    },
+    "scripts/check_tag_reality.py": {
+      "source": "scripts/check_tag_reality.py",
+      "sha256": "b6f4d4ef994e7c384725400f97de3c0c9746218a948b8254ceb2124821526671"
+    },
+    "scripts/coherence_dispatch.py": {
+      "source": "scripts/coherence_dispatch.py",
+      "sha256": "bf08874ae1a8c84f7b2fba00599c2330d361b3f9a7161bdb0d2f967c0563c69e"
+    },
+    "scripts/tests/test_version_drift.py": {
+      "source": "scripts/tests/test_version_drift.py",
+      "sha256": "5c5e128bc48c0ca9bd3980b73545f66f1e43202dba6e84ae3963eec9610ef144"
+    },
+    "scripts/tests/test_gate_policy.py": {
+      "source": "scripts/tests/test_gate_policy.py",
+      "sha256": "470ee487fae62a66b8ffa25a9d5e84e35de29b1ed4d03177ebe7cfda7a1a068b"
+    },
+    "scripts/tests/test_tag_reality.py": {
+      "source": "scripts/tests/test_tag_reality.py",
+      "sha256": "42a52f42094fc317f080a5629839b7f93cc2051f5653de78296fa45f5ca9ae36"
+    },
+    "scripts/tests/test_dependency_options.py": {
+      "source": "scripts/tests/test_dependency_options.py",
+      "sha256": "7c3f5db9b99cf745c0bd652ad89706943b7eaa012015736b06ab345967b868b6"
+    },
+    "scripts/tests/test_coherence_dispatch.py": {
+      "source": "scripts/tests/test_coherence_dispatch.py",
+      "sha256": "f31ac3216a70f29347d2ade1e7727aaa7c0f7a05c56c5304418247bc0ced4de3"
+    },
+    "cmake/KcenonDependencyOptions.cmake": {
+      "source": "cmake/template/dependency_options.cmake",
+      "sha256": "f2685707f78ad10e43e4ba884bd30dbaf4c3fbf9550b077d1539f5512a4be0f6"
+    }
+  }
 }

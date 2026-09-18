@@ -1,9 +1,12 @@
 import importlib.util
 import json
+import io
+import hashlib
 from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+import urllib.error
 from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location("tag", Path(__file__).parents[1] / "check_tag_reality.py")
@@ -92,6 +95,28 @@ class TagRealityTests(unittest.TestCase):
         with patch.object(tag, "archive_hash", return_value="a"*128), patch.object(tag.subprocess, "check_output", side_effect=command):
             result = tag.verify(self.root, self.repo, "v1.2.3", self.release, self.port)
             self.assertEqual(result["stage"], "identity-and-port")
+
+    def test_bad_downloads_are_not_hashed_as_valid_archives(self):
+        class Response(io.BytesIO):
+            status = 200
+        destination = self.root / "archive.tar.gz"
+        for data in (b"", b"not a gzip archive"):
+            with patch.object(tag.urllib.request,"urlopen",return_value=Response(data)):
+                with self.assertRaisesRegex(ValueError,"gzip"): tag.archive_hash("https://example.invalid",destination)
+        with patch.object(tag.urllib.request,"urlopen",side_effect=urllib.error.HTTPError("url",404,"missing",{},None)):
+            with self.assertRaises(urllib.error.HTTPError): tag.archive_hash("https://example.invalid",destination)
+        with patch.object(tag.urllib.request,"urlopen",return_value=Response(b"\x1f\x8babcdef")), patch.object(tag,"MAX_ARCHIVE_BYTES",4):
+            with self.assertRaisesRegex(ValueError,"limit"): tag.archive_hash("https://example.invalid",destination)
+
+    def test_moved_remote_tag_is_rejected_after_matching_hash(self):
+        self.git("tag","v1.2.3")
+        original = tag.subprocess.check_output
+        def command(args, **kwargs):
+            if args[1] == "ls-remote": return "b"*40 + "\trefs/tags/v1.2.3\n"
+            return original(args, **kwargs)
+        with patch.object(tag,"archive_hash",return_value="a"*128), patch.object(tag.subprocess,"check_output",side_effect=command):
+            with self.assertRaisesRegex(ValueError,"changed during"):
+                tag.verify(self.root,self.repo,"v1.2.3",self.release,self.port)
 
 
 if __name__ == "__main__":

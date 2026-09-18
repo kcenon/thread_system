@@ -47,3 +47,44 @@ pass on current `develop` HEAD. Promotion is a separate change: remove advisory
 handling via policy, verify negative fixtures fail, then add the exact emitted
 check names to required-check settings. Preserve existing protections. YAML
 changes alone do not apply repository settings.
+
+## Dependency option migration
+
+- `BUILD_WITH_COMMON_SYSTEM` → `KCENON_WITH_COMMON_SYSTEM`.
+- `BUILD_WITH_LOGGER_SYSTEM` → `KCENON_WITH_LOGGER_SYSTEM`.
+
+Canonical inputs take precedence with a warning on conflicts. Legacy-only inputs
+remain supported, including changing OFF/ON in an existing cache. Defaults and
+required-dependency guards are preserved. Effective values are mirrored in normal
+CMake scope; parent inputs and existing cache values are not forcibly overwritten.
+Remove an explicitly cached canonical choice with `cmake -U KCENON_WITH_<DEP>`
+before returning control to a legacy alias. Source compile definitions keep their
+existing names for compatibility. Overlay ports pass both spellings while their
+release references may predate the shim; they must retain the legacy flag until
+the selected published source supports the canonical one.
+
+## Dispatch delivery
+
+Deliver `coherence-receiver.yml` and its shared validation script on the default
+`main` branch before common sends `coherence-check-v1`. The receiver validates
+an accepted common lock revision and checks out the selected candidate/locked
+SHA, then records strict raw results. `notify-ecosystem.yml` runs on trusted
+main/develop pushes and uses `ECOSYSTEM_DISPATCH_TOKEN` to notify common and wait
+for correlated cross-build and port-audit artifacts. Missing credentials or
+receivers remain failures, not successful delivery evidence.
+
+The common-owned [operations guide](https://github.com/kcenon/common_system/blob/ci/701-coherence-gates/ci/ECOSYSTEM_COHERENCE.md)
+describes the routes, credential permissions, profiles, lock bootstrap, staged
+release boundary and guarded promotion procedure. Refresh shared files from a
+complete common checkout, using a reviewed immutable revision:
+
+```sh
+python3 ../common_system/scripts/sync_coherence.py --target . --source-revision FULL_COMMON_SHA
+python3 ../common_system/scripts/sync_coherence.py --target . --source-revision FULL_COMMON_SHA --check
+```
+
+Release sync must reference the reviewed reusable workflow and validator commit.
+`tag-reality-mode: advisory` records release identity/hash failures during rollout.
+Promote it separately only after real release provenance and port hashes pass.
+The release-triggered workflow checks an already published tag; its enforcing
+prepublication boundary is the registry sync.

@@ -14,11 +14,13 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 import urllib.error
 import urllib.request
 
 REPOS = {f"kcenon/{name}_system" for name in
          ("common", "thread", "container", "logger", "monitoring", "database", "network", "pacs")}
+MAX_ARCHIVE_BYTES = 512 * 1024 * 1024
 
 
 def git(root, *args):
@@ -92,6 +94,7 @@ def port_metadata(port_dir, repo, tag):
 
 def archive_hash(url, destination):
     request = urllib.request.Request(url, headers={"User-Agent": "kcenon-tag-reality"})
+    deadline = time.monotonic() + 120
     with urllib.request.urlopen(request, timeout=60) as response, destination.open("wb") as stream:
         if response.status != 200:
             raise ValueError(f"archive download returned HTTP {response.status}")
@@ -99,7 +102,9 @@ def archive_hash(url, destination):
         digest = hashlib.sha512()
         while block := response.read(1024 * 1024):
             total += len(block)
-            if total > 512 * 1024 * 1024:
+            if time.monotonic() > deadline:
+                raise ValueError("archive download exceeded total time budget")
+            if total > MAX_ARCHIVE_BYTES:
                 raise ValueError("archive exceeds 512 MiB validation limit")
             stream.write(block)
             digest.update(block)

@@ -17,6 +17,9 @@ VERSION_FIELDS = ("version", "version-semver", "version-string", "version-date")
 
 def normalize_version(tag):
     tag = tag.strip().strip('"')
+    sqlite = re.fullmatch(r"sqlite-amalgamation-(\d)(\d{2})(\d{2})00", tag)
+    if sqlite:
+        return ".".join(str(int(n)) for n in sqlite.groups())
     if re.fullmatch(r"asio-\d+(?:-\d+)+", tag):
         return tag[5:].replace("-", ".")
     return re.sub(r"^(?:release-|v)", "", tag)

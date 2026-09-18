@@ -33,6 +33,16 @@ class GatePolicyTests(unittest.TestCase):
                 self.assertFalse(raw["passed"])
                 self.assertTrue(raw["worktree_changes"])
                 self.assertIn("fixture violation", raw["stdout"])
+            # Historical source tags need neither the new policy file nor the
+            # new validator. The trusted release workflow pins both separately.
+            config.unlink()
+            trusted = root / "reviewed-tools"
+            (trusted / "scripts").mkdir(parents=True)
+            (trusted / "scripts/conformance_lint.py").write_text('raise SystemExit(3)\n')
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(gate.run_check(root,"conformance",report,mode_override="advisory",script_root=trusted),0)
+                self.assertEqual(gate.run_check(root,"conformance",report,mode_override="enforcing",script_root=trusted),1)
+            self.assertEqual(json.loads(report.read_text())["exit_code"],3)
 
 
 if __name__ == "__main__":

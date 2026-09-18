@@ -10,16 +10,19 @@ CHECKS = {"conformance": "conformance_lint.py", "version-drift": "check_version_
           "tag-reality": "check_tag_reality.py"}
 
 
-def run_check(root, name, output, extra=(), strict=False):
-    config = json.loads((root / "ci/coherence.json").read_text())
-    if config.get("schema_version") != 1:
-        raise ValueError("unsupported coherence schema")
-    mode = config["modes"][name]
+def run_check(root, name, output, extra=(), strict=False, mode_override=None, script_root=None):
+    if mode_override:
+        mode = mode_override
+    else:
+        config = json.loads((root / "ci/coherence.json").read_text())
+        if config.get("schema_version") != 1:
+            raise ValueError("unsupported coherence schema")
+        mode = config["modes"][name]
     if mode not in ("advisory", "enforcing"):
         raise ValueError(f"invalid gate mode: {mode}")
     if strict:
         mode = "enforcing"
-    command = [sys.executable, str(root / "scripts" / CHECKS[name]), *extra]
+    command = [sys.executable, str((script_root or root) / "scripts" / CHECKS[name]), *extra]
     result = subprocess.run(command, cwd=root, text=True, capture_output=True)
     sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     dirty = bool(subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=all"],
@@ -43,13 +46,15 @@ def main(argv=None):
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--output", type=Path)
     parser.add_argument("--strict", action="store_true")
+    parser.add_argument("--mode", choices=("advisory", "enforcing"), help="trusted release workflow policy for historical tags")
+    parser.add_argument("--script-root", type=Path, help="independently pinned validator checkout (historical release support)")
     args, extra = parser.parse_known_args(argv)
     if extra[:1] == ["--"]:
         extra = extra[1:]
     try:
         root = args.root.resolve()
         return run_check(root, args.check, args.output or root / f"coherence-results/{args.check}.json",
-                         extra, args.strict)
+                         extra, args.strict, args.mode, args.script_root.resolve() if args.script_root else None)
     except (OSError, ValueError, KeyError, subprocess.SubprocessError) as exc:
         print(f"ERROR: gate configuration/execution failed: {exc}", file=sys.stderr)
         return 2
