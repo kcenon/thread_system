@@ -33,7 +33,10 @@ endif()
 # Options
 ##################################################
 
-option(BUILD_WITH_COMMON_SYSTEM "Build with common_system for standard interfaces" ON)
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/KcenonDependencyOptions.cmake")
+
+kcenon_dependency_option(KCENON_WITH_COMMON_SYSTEM BUILD_WITH_COMMON_SYSTEM
+    "Build with common_system for standard interfaces" ON)
 option(THREAD_BUILD_INTEGRATION_TESTS "Build integration tests" ON)
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
