@@ -1,0 +1,56 @@
+name: Coherence Dispatch Receiver
+run-name: "coherence/${{ github.event.client_payload.correlation }}"
+on:
+  repository_dispatch:
+    types: [coherence-check-v1]
+permissions:
+  contents: read
+concurrency:
+  group: coherence-receiver-${{ github.event.client_payload.correlation }}
+  cancel-in-progress: false
+jobs:
+  checks:
+    name: Correlated raw coherence checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: policy
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Validate origin, lock revision and candidate selection
+        id: request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.event.repository.name }}
+        run: python3 policy/scripts/coherence_dispatch.py receive --event "$GITHUB_EVENT_PATH" --repository "$REPOSITORY"
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.request.outputs.sha }}
+          path: candidate
+          persist-credentials: false
+      - name: Raw conformance
+        run: python3 candidate/scripts/run_coherence.py conformance --root candidate --strict
+      - name: Raw local version drift
+        if: always() && steps.request.outcome == 'success'
+        run: python3 candidate/scripts/run_coherence.py version-drift --root candidate --strict -- --no-matrix --no-color --verbose
+      - name: Bind the result to the checked commit
+        if: always() && steps.request.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.event.repository.name }}
+        run: python3 policy/scripts/coherence_dispatch.py result --event "$GITHUB_EVENT_PATH" --repository "$REPOSITORY" --source-root candidate
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: coherence-result
+          path: dispatch-result.json
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: coherence-raw-reports
+          path: candidate/coherence-results/
