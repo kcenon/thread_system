@@ -1,0 +1,21 @@
+name: Coherence Tool Tests
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tools:
+    name: Coherence tool tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Test executable coherence policies
+        run: python3 -m unittest discover -s scripts/tests -p 'test_*.py'

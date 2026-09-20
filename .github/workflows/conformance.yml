@@ -1,0 +1,28 @@
+name: Conformance
+on:
+  push:
+    branches: [main, develop, 'phase-*']
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conformance:
+    name: cross-system conformance linter
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Run conformance with recorded policy and raw results
+        run: python3 scripts/run_coherence.py conformance
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: conformance-results
+          path: coherence-results/
+          if-no-files-found: error
