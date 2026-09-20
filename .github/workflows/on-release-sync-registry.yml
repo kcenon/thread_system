@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   # Pre-flight verification: independently re-fetch the release archive and
   # compute its SHA512 BEFORE delegating to the reusable sync workflow. This
@@ -52,9 +56,11 @@ jobs:
 
   sync:
     needs: verify-archive
-    uses: kcenon/common_system/.github/workflows/sync-vcpkg-registry.yml@main
+    uses: kcenon/common_system/.github/workflows/sync-vcpkg-registry.yml@852fd616ebc9a67cd953f52c9a533da7f230c16e
     with:
       port-name: kcenon-thread-system
       version: ${{ github.event.release.tag_name }}
+      coherence-tools-ref: 6f76d9b9480d0dffc9167dc4a2ca564cde708b4b
+      tag-reality-mode: advisory
     secrets:
       REGISTRY_PAT: ${{ secrets.VCPKG_REGISTRY_PAT }}
