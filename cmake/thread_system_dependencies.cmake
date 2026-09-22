@@ -375,7 +375,7 @@ function(find_or_fetch_gtest)
   FetchContent_Declare(
     googletest
     GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG v1.14.0
+    GIT_TAG v1.17.0
     GIT_SHALLOW TRUE
     GIT_PROGRESS TRUE
   )
@@ -389,7 +389,7 @@ function(find_or_fetch_gtest)
   # Make GTest available
   FetchContent_MakeAvailable(googletest)
 
-  message(STATUS "✅ GTest fetched and configured (v1.14.0)")
+  message(STATUS "✅ GTest fetched and configured (v1.17.0)")
   set(GTEST_FOUND TRUE PARENT_SCOPE)
   set(GTEST_FROM_SOURCE TRUE PARENT_SCOPE)
 endfunction()
