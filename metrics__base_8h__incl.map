@@ -1,0 +1,7 @@
+<map id="include/kcenon/thread/metrics/metrics_base.h" name="include/kcenon/thread/metrics/metrics_base.h">
+<area shape="rect" id="Node000001" title="Thread pool metrics collection, histograms, and observability." alt="" coords="5,5,184,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="16,93,83,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,47,65,83,61,80,81,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="107,93,173,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="108,44,129,80,124,83,103,47"/>
+</map>

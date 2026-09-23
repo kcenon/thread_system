@@ -1,0 +1,53 @@
+<map id="kcenon::thread::result::value" name="kcenon::thread::result::value">
+<area shape="rect" id="Node000001" title="Gets the value." alt="" coords="527,478,691,518"/>
+<area shape="rect" id="Node000002" href="$adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="266,347,473,372"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="580,470,535,426,507,404,477,386,449,375,451,370,480,381,510,399,538,422,584,466"/>
+<area shape="rect" id="Node000004" href="$mpmc__queue__sample_8cpp.html#a2eae948c8b6adfa8552c3ed50ddba103" title=" " alt="" coords="291,5,447,31"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="600,465,583,367,556,240,539,177,520,121,499,75,477,44,463,34,447,27,449,22,466,29,481,40,504,72,525,119,544,176,561,239,588,366,605,464"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1aging__typed__job__queue__t.html#a4b453e86b43a959c2ac73fdf311b0749" title="Dequeues a job with one of the specified types." alt="" coords="261,105,477,145"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="602,465,592,400,570,317,554,274,533,232,508,193,477,159,461,147,464,143,480,155,512,190,538,229,559,272,575,316,597,399,607,464"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1aging__typed__job__queue__t.html#adccb7277105b0c2eca3f0d6b0459da63" title="Dequeues a job with one of the specified types using span." alt="" coords="261,169,477,209"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="599,465,585,412,561,346,526,280,503,249,477,223,460,211,463,207,480,219,507,246,530,277,566,344,590,410,604,464"/>
+<area shape="rect" id="Node000008" href="$adaptive__queue__sample_8cpp.html#ad3807da4331da23479052ba772a377f0" title=" " alt="" coords="302,446,437,486"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="513,488,437,478,437,472,513,483"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a6c536751bf7fb6678071fd067c4db339" title=" " alt="" coords="260,510,479,550"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="513,513,479,518,478,513,513,508"/>
+<area shape="rect" id="Node000011" href="$mpmc__queue__sample_8cpp.html#a8d76c423bb645996fcbb1e72c8f1cdda" title=" " alt="" coords="306,55,433,80"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="605,465,599,388,580,288,564,235,542,184,513,136,477,95,456,81,432,73,434,68,459,76,480,91,518,133,547,181,569,233,586,287,604,387,610,464"/>
+<area shape="rect" id="Node000012" href="$queue__factory__sample_8cpp.html#a08e67e684e1f48c1c236f7db7cca9e6f" title="Example 3: Optimal queue selection." alt="" coords="300,961,439,987"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="611,532,608,617,603,671,592,730,576,791,553,849,521,904,480,952,461,965,440,973,438,968,459,960,477,948,517,901,548,847,571,789,587,729,597,671,603,616,606,532"/>
+<area shape="rect" id="Node000014" href="$adaptive__queue__sample_8cpp.html#a21793bcc15486980f337c12b1567fba3" title=" " alt="" coords="278,233,461,273"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="594,466,577,425,552,376,518,328,477,287,458,275,461,271,480,283,522,324,556,374,581,422,599,464"/>
+<area shape="rect" id="Node000015" href="$adaptive__queue__sample_8cpp.html#aff6943b24f1669731fdb15ab93341ef9" title=" " alt="" coords="265,297,473,323"/>
+<area shape="poly" id="edge17_Node000001_Node000015" title=" " alt="" coords="589,467,544,400,513,365,477,336,454,325,457,320,480,332,517,361,549,396,593,464"/>
+<area shape="rect" id="Node000016" href="$queue__factory__sample_8cpp.html#a8ffcedced988fc0c2482f387f6ae2498" title="Example 5: Practical use cases." alt="" coords="293,575,445,600"/>
+<area shape="poly" id="edge19_Node000001_Node000016" title=" " alt="" coords="561,527,480,564,437,577,435,572,478,560,559,522"/>
+<area shape="rect" id="Node000017" href="$namespacekcenon_1_1thread.html#ae74d16b31132be9b2a85893c0f5e0203" title=" " alt="" coords="287,625,451,665"/>
+<area shape="poly" id="edge21_Node000001_Node000017" title=" " alt="" coords="582,530,537,573,480,614,451,627,448,622,477,609,534,569,579,526"/>
+<area shape="rect" id="Node000018" href="$classkcenon_1_1thread_1_1dag__job.html#a3189df15bf57155044cd4a18815b4b78" title="Sets the work function with result." alt="" coords="294,689,445,744"/>
+<area shape="poly" id="edge22_Node000001_Node000018" title=" " alt="" coords="594,532,549,605,517,644,480,679,446,698,444,693,477,675,513,641,545,602,589,529"/>
+<area shape="rect" id="Node000019" href="$classkcenon_1_1thread_1_1numa__work__stealer.html#ae03c4f547605ddd1b75df46cff846f0d" title="Attempt to steal work for a worker." alt="" coords="280,769,459,809"/>
+<area shape="poly" id="edge23_Node000001_Node000019" title=" " alt="" coords="602,532,588,582,563,643,528,705,506,734,480,759,460,772,457,767,477,755,502,730,524,702,559,641,583,580,597,531"/>
+<area shape="rect" id="Node000020" href="$typed__job__queue__sample_8cpp.html#aceb31b2947f66758e30c046021ca2be4" title=" " alt="" coords="274,833,465,859"/>
+<area shape="poly" id="edge24_Node000001_Node000020" title=" " alt="" coords="607,532,596,595,574,673,558,714,537,754,511,791,480,823,460,836,457,831,477,819,507,787,532,751,553,712,569,672,591,594,601,531"/>
+<area shape="rect" id="Node000021" href="$classkcenon_1_1thread_1_1aging__typed__job__queue__t.html#a2150ed7af555cfeb8a9ed9064116d649" title="Attempts to dequeue a single job from the queue for a given priority." alt="" coords="280,883,459,937"/>
+<area shape="poly" id="edge25_Node000001_Node000021" title=" " alt="" coords="608,532,599,602,578,693,562,741,540,789,513,833,481,873,461,888,457,884,477,869,509,830,536,786,557,739,573,691,594,601,603,531"/>
+<area shape="rect" id="Node000022" href="$adaptive__queue__sample_8cpp.html#a01b6774eb0da092cdcda2a8084f6b3a5" title=" " alt="" coords="283,396,456,421"/>
+<area shape="poly" id="edge26_Node000001_Node000022" title=" " alt="" coords="559,474,478,436,435,424,437,419,480,432,561,469"/>
+<area shape="rect" id="Node000023" href="$classkcenon_1_1thread_1_1dag__job__builder.html#abb5ba001fd574d4f21785736e4357c75" title="Sets the work function with result." alt="" coords="281,1011,457,1065"/>
+<area shape="poly" id="edge28_Node000001_Node000023" title=" " alt="" coords="605,532,589,638,562,778,545,848,526,912,504,964,481,1001,459,1018,456,1014,477,998,499,962,521,910,540,846,557,776,584,637,600,531"/>
+<area shape="rect" id="Node000003" href="$adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="81,347,136,372"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="252,362,136,362,136,357,252,357"/>
+<area shape="rect" id="Node000005" href="$mpmc__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="81,31,136,56"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="278,30,136,43,136,38,277,24"/>
+<area shape="poly" id="edge8_Node000008_Node000003" title=" " alt="" coords="288,446,259,435,189,404,132,375,135,370,191,399,261,430,289,441"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1adaptive__job__queue_1_1accuracy__guard.html#aa9ec0f290ad251cd16e2377938e8cce4" title="Construct guard and switch queue to mutex mode." alt="" coords="5,503,212,557"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="246,533,212,533,212,527,246,527"/>
+<area shape="poly" id="edge12_Node000011_Node000005" title=" " alt="" coords="292,63,136,48,137,43,292,58"/>
+<area shape="rect" id="Node000013" href="$queue__factory__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="81,771,136,796"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="286,964,259,952,210,916,168,872,136,830,115,798,120,795,141,826,172,868,213,912,261,948,288,959"/>
+<area shape="poly" id="edge16_Node000014_Node000003" title=" " alt="" coords="282,280,261,287,191,319,134,349,132,344,189,314,259,282,280,275"/>
+<area shape="poly" id="edge18_Node000015_Node000003" title=" " alt="" coords="288,328,137,357,136,352,287,323"/>
+<area shape="poly" id="edge20_Node000016_Node000013" title=" " alt="" coords="281,605,261,615,213,652,172,697,140,740,119,772,115,769,136,737,168,694,209,648,259,610,279,601"/>
+<area shape="poly" id="edge27_Node000022_Node000003" title=" " alt="" coords="287,396,136,367,137,362,288,391"/>
+</map>

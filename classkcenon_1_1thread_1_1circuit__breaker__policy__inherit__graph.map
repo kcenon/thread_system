@@ -1,0 +1,5 @@
+<map id="kcenon::thread::circuit_breaker_policy" name="kcenon::thread::circuit_breaker_policy">
+<area shape="rect" id="Node000001" title="Pool policy that implements circuit breaker pattern for failure protection." alt="" coords="5,253,197,553"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1pool__policy.html" title="Base interface for thread pool policies." alt="" coords="27,5,176,205"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,219,104,253,99,253,99,219"/>
+</map>

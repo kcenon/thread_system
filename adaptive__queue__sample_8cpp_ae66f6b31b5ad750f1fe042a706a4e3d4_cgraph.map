@@ -1,0 +1,54 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,349,60,374"/>
+<area shape="rect" id="Node000002" href="$adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="109,291,315,317"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,346,107,327,138,318,140,323,109,332,61,351"/>
+<area shape="rect" id="Node000009" href="$adaptive__queue__sample_8cpp.html#ad3807da4331da23479052ba772a377f0" title=" " alt="" coords="145,224,279,264"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="40,347,67,312,106,276,131,263,133,268,110,281,71,316,45,350"/>
+<area shape="rect" id="Node000011" href="$adaptive__queue__sample_8cpp.html#a21793bcc15486980f337c12b1567fba3" title=" " alt="" coords="121,341,303,381"/>
+<area shape="poly" id="edge18_Node000001_Node000011" title=" " alt="" coords="60,359,107,359,107,364,60,364"/>
+<area shape="rect" id="Node000013" href="$adaptive__queue__sample_8cpp.html#aff6943b24f1669731fdb15ab93341ef9" title=" " alt="" coords="108,465,316,490"/>
+<area shape="poly" id="edge26_Node000001_Node000013" title=" " alt="" coords="43,373,70,410,88,430,109,447,130,457,127,462,107,452,84,434,65,413,39,376"/>
+<area shape="rect" id="Node000015" href="$adaptive__queue__sample_8cpp.html#a01b6774eb0da092cdcda2a8084f6b3a5" title=" " alt="" coords="125,411,299,437"/>
+<area shape="poly" id="edge32_Node000001_Node000015" title=" " alt="" coords="61,371,109,391,151,405,150,410,107,396,59,376"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#afaf53bb542a3bc84905263fe7a8ecab2" title="Get current operating mode." alt="" coords="364,221,559,261"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="263,289,367,262,368,267,264,294"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a575742ca11fe9522d2da36c5dcb0e206" title="Dequeues a job from the current active queue." alt="" coords="369,400,553,440"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="290,314,317,327,334,342,343,357,351,372,366,386,375,392,372,396,362,390,347,375,338,360,330,345,315,332,288,319"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="607,400,771,440"/>
+<area shape="poly" id="edge7_Node000002_Node000005" title=" " alt="" coords="284,289,314,274,329,258,337,240,345,222,363,207,416,184,462,176,508,183,560,207,584,224,606,244,640,292,665,342,681,386,676,388,660,345,636,295,602,248,581,228,557,212,506,188,462,181,417,189,365,212,349,225,342,242,334,261,318,278,286,294"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a586cab78d0bb73cac4c7fff9c644cceb" title="Enqueues a job into the current active queue." alt="" coords="369,464,553,504"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="298,315,318,327,331,343,339,358,343,390,347,421,354,435,366,450,370,454,367,458,362,454,349,438,342,422,338,390,334,360,327,345,314,331,295,319"/>
+<area shape="rect" id="Node000007" href="$adaptive__queue__sample_8cpp.html#a69b0926a5d57c054e334865c63324613" title=" " alt="" coords="400,121,523,146"/>
+<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="289,289,314,274,326,261,333,248,338,221,343,192,350,178,362,163,386,148,389,152,366,167,354,181,348,194,343,222,338,250,330,264,318,278,292,293"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="379,336,543,376"/>
+<area shape="poly" id="edge9_Node000002_Node000008" title=" " alt="" coords="274,314,367,334,366,339,273,319"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="553,417,593,417,593,423,553,423"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="532,461,603,441,604,446,534,466"/>
+<area shape="poly" id="edge11_Node000009_Node000003" title=" " alt="" coords="279,241,350,240,350,245,279,246"/>
+<area shape="poly" id="edge12_Node000009_Node000004" title=" " alt="" coords="281,255,300,264,318,277,330,291,337,305,343,333,348,360,355,373,366,386,371,390,368,395,362,390,350,376,343,362,337,334,332,307,325,294,314,281,298,269,279,260"/>
+<area shape="poly" id="edge15_Node000009_Node000005" title=" " alt="" coords="226,222,248,194,280,161,319,129,363,106,418,86,464,76,487,76,510,81,534,91,560,106,593,134,620,167,641,205,658,245,679,323,688,386,682,387,673,324,653,247,636,208,615,170,589,137,557,110,532,95,508,86,486,81,465,81,419,91,365,110,322,134,284,165,252,197,230,225"/>
+<area shape="poly" id="edge14_Node000009_Node000006" title=" " alt="" coords="281,254,301,263,318,277,334,299,342,322,343,365,344,408,351,429,366,450,370,454,366,458,362,454,346,432,338,409,337,365,336,323,329,302,314,281,298,268,278,258"/>
+<area shape="poly" id="edge16_Node000009_Node000007" title=" " alt="" coords="247,222,301,192,363,163,403,148,405,153,365,168,303,197,249,226"/>
+<area shape="poly" id="edge17_Node000009_Node000008" title=" " alt="" coords="279,262,317,276,416,327,413,332,315,281,277,266"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a2db2e9a6d16f7b9a9da6ba3c2176d4ac" title="Checks if the queue is empty." alt="" coords="369,5,553,45"/>
+<area shape="poly" id="edge13_Node000009_Node000010" title=" " alt="" coords="223,222,278,146,317,101,362,62,383,49,386,54,366,66,321,105,282,149,228,225"/>
+<area shape="poly" id="edge19_Node000011_Node000003" title=" " alt="" coords="288,339,315,326,329,314,338,303,348,290,362,278,385,265,388,270,366,282,351,294,342,306,333,318,317,330,290,344"/>
+<area shape="poly" id="edge20_Node000011_Node000004" title=" " alt="" coords="298,379,363,394,362,399,297,384"/>
+<area shape="poly" id="edge23_Node000011_Node000005" title=" " alt="" coords="269,339,329,322,403,309,482,307,521,312,560,321,589,334,616,351,661,388,658,392,613,356,586,339,558,327,520,317,482,313,404,315,331,327,270,344"/>
+<area shape="poly" id="edge21_Node000011_Node000006" title=" " alt="" coords="284,379,318,396,333,410,342,424,351,437,366,450,375,456,373,460,362,454,347,441,338,427,329,414,314,401,282,384"/>
+<area shape="poly" id="edge24_Node000011_Node000007" title=" " alt="" coords="296,339,314,326,326,312,334,299,340,271,345,241,362,208,392,176,425,151,428,156,396,180,366,211,351,242,345,272,339,300,331,315,318,330,299,343"/>
+<area shape="poly" id="edge25_Node000011_Node000008" title=" " alt="" coords="303,357,365,355,365,361,303,362"/>
+<area shape="rect" id="Node000012" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#ac490e300f2f57e1ca7879f5104491c67" title="Get statistics about queue usage." alt="" coords="369,528,553,568"/>
+<area shape="poly" id="edge22_Node000011_Node000012" title=" " alt="" coords="292,379,318,397,330,412,337,427,342,457,347,486,354,500,366,514,370,518,367,522,362,518,350,503,342,488,337,458,332,429,326,415,314,401,289,384"/>
+<area shape="poly" id="edge27_Node000013_Node000004" title=" " alt="" coords="267,462,360,441,361,446,269,467"/>
+<area shape="poly" id="edge30_Node000013_Node000005" title=" " alt="" coords="224,489,245,517,277,553,318,588,365,615,418,634,463,642,507,637,557,615,580,600,600,582,634,538,658,492,674,452,679,454,663,495,638,541,604,585,583,604,560,620,508,642,463,647,417,639,363,620,315,593,274,557,241,521,220,492"/>
+<area shape="poly" id="edge29_Node000013_Node000006" title=" " alt="" coords="316,477,356,479,356,484,316,483"/>
+<area shape="poly" id="edge31_Node000013_Node000008" title=" " alt="" coords="283,462,314,447,330,433,338,418,346,402,362,386,371,380,374,385,366,390,351,405,343,420,334,436,318,452,285,467"/>
+<area shape="rect" id="Node000014" href="$classkcenon_1_1thread_1_1job.html#abb0aab22ba1692b557b8138afcd99894" title="The core task execution method to be overridden by derived classes." alt="" coords="388,693,535,733"/>
+<area shape="poly" id="edge28_Node000013_Node000014" title=" " alt="" coords="222,489,243,525,274,574,316,626,366,673,385,685,383,690,362,677,312,630,270,577,238,528,218,492"/>
+<area shape="poly" id="edge33_Node000015_Node000004" title=" " alt="" coords="299,420,355,419,356,424,299,425"/>
+<area shape="poly" id="edge36_Node000015_Node000005" title=" " alt="" coords="291,435,318,451,331,468,338,485,341,519,344,551,352,565,366,578,414,603,437,609,459,610,505,600,557,578,595,552,627,519,652,483,670,451,675,453,656,486,631,522,599,556,560,582,506,605,459,615,436,614,413,608,362,582,347,568,339,552,335,519,333,486,326,470,314,455,288,439"/>
+<area shape="poly" id="edge34_Node000015_Node000006" title=" " alt="" coords="266,434,365,458,364,463,265,439"/>
+<area shape="poly" id="edge37_Node000015_Node000008" title=" " alt="" coords="259,409,373,377,375,382,260,414"/>
+<area shape="poly" id="edge35_Node000015_Node000012" title=" " alt="" coords="282,434,318,451,334,467,343,483,351,499,366,514,374,519,371,524,362,518,346,502,338,486,330,470,314,456,280,439"/>
+</map>

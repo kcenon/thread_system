@@ -1,0 +1,5 @@
+<map id="utility_module::convert_string::base64_decode" name="utility_module::convert_string::base64_decode">
+<area shape="rect" id="Node000001" title="Decodes a Base64 string into a byte array." alt="" coords="227,5,401,45"/>
+<area shape="rect" id="Node000002" href="$classutility__module_1_1convert__string.html#a2f1b425cd5ad74ce2645c637a1b4652a" title="Adds a UTF&#45;8 BOM to a string if it doesn&#39;t already have one." alt="" coords="5,5,179,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,28,179,28,179,23,213,23"/>
+</map>

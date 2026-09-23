@@ -1,0 +1,7 @@
+<map id="include/kcenon/thread/impl/typed_pool/callback_typed_job.h" name="include/kcenon/thread/impl/typed_pool/callback_typed_job.h">
+<area shape="rect" id="Node000001" title="Callback&#45;based typed job for priority&#45;aware lambda execution." alt="" coords="100,5,289,60"/>
+<area shape="rect" id="Node000002" href="$callback__typed__job_8cpp.html" title=" " alt="" coords="5,108,184,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,72,117,110,113,106,154,68"/>
+<area shape="rect" id="Node000003" href="$typed__thread__pool_8cpp.html" title=" " alt="" coords="209,108,383,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="235,68,277,106,274,110,232,72"/>
+</map>

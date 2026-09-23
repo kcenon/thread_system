@@ -1,0 +1,5 @@
+<map id="kcenon::thread::numa_work_stealer::get_stats_snapshot" name="kcenon::thread::numa_work_stealer::get_stats_snapshot">
+<area shape="rect" id="Node000001" title="Get a snapshot of current statistics." alt="" coords="5,5,187,60"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1work__stealing__stats.html#a58dc61ee7410343548064d5723507e4b" title="Create a snapshot of current statistics." alt="" coords="235,13,421,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,30,221,30,221,35,187,35"/>
+</map>

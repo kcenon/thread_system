@@ -1,0 +1,9 @@
+<map id="kcenon::thread::diagnostics::health_status::to_string" name="kcenon::thread::diagnostics::health_status::to_string">
+<area shape="rect" id="Node000001" title="Converts health status to human&#45;readable string." alt="" coords="5,37,207,77"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread_1_1diagnostics.html#afde8923eb434436293f74ba0f706827d" title="Converts health_state to human&#45;readable string." alt="" coords="273,5,474,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,43,258,36,259,42,207,48"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1diagnostics_1_1health__status.html#a4f9838bb20361421bc8761823ebc93f5" title="Gets HTTP status code for this health status." alt="" coords="255,69,492,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="207,67,241,71,241,76,207,72"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread_1_1diagnostics.html#abb38dc1e957b302cdf23aae6235343a5" title="Gets HTTP status code for health state." alt="" coords="540,69,743,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="492,87,526,87,526,92,492,92"/>
+</map>

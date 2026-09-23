@@ -1,0 +1,7 @@
+<map id="kcenon::thread::utils::enum_formatter::do_format" name="kcenon::thread::utils::enum_formatter::do_format">
+<area shape="rect" id="Node000001" title="Internal helper that dispatches to std::format based on character type." alt="" coords="241,30,401,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1utils_1_1enum__formatter.html#afcd84dfffcc6e135c7625ba6d6ea676c" title="Formats the enum value into a provided format context." alt="" coords="5,5,193,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="227,46,193,42,194,36,228,41"/>
+<area shape="rect" id="Node000003" href="$classutility__module_1_1enum__formatter.html#ac48cf9e06d61ac58964e78c472d4cae4" title="Formats the enum value into a provided format context." alt="" coords="19,69,180,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="228,74,180,80,180,75,227,68"/>
+</map>

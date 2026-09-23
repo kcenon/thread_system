@@ -1,0 +1,13 @@
+<map id="kcenon::thread::thread_base::start" name="kcenon::thread::thread_base::start">
+<area shape="rect" id="Node000001" title="Starts the worker thread." alt="" coords="5,101,175,141"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__logger.html#a29a93f52a063a570744b8602d161533a" title="Get singleton instance." alt="" coords="223,69,392,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,106,209,101,210,106,175,112"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__logger.html#a85bc1649f6ee37d8b808c8d6b747bbbe" title="Log a message with context." alt="" coords="223,133,392,173"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="175,131,210,136,209,142,175,136"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__logger.html#a60ae04003cdadc81e0d1803ec547fe4e" title="Prepare for process shutdown." alt="" coords="440,5,639,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="380,67,453,46,454,52,381,72"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__logger.html#a9024471fb89c3e96dd472ce5edc186d3" title=" " alt="" coords="455,69,624,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="392,87,441,87,441,92,392,92"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1thread__logger.html#a2165bc11b774d39c13bedb7e17999fa4" title=" " alt="" coords="452,133,627,173"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="392,151,438,151,438,156,392,156"/>
+</map>

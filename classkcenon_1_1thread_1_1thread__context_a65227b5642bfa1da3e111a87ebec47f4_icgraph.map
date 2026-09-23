@@ -1,0 +1,11 @@
+<map id="kcenon::thread::thread_context::monitoring" name="kcenon::thread::thread_context::monitoring">
+<area shape="rect" id="Node000001" title="Get the monitoring service." alt="" coords="223,101,392,141"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#a1c0caf3f3a17f2d1bcd07d480c3657f7" title="Collect and report current thread pool metrics." alt="" coords="5,5,175,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="254,97,174,60,145,48,147,43,176,55,256,93"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__pool.html#a2a727c72b08754a3f0847b458ba0a19d" title="Constructs a new thread_pool instance with a custom job queue." alt="" coords="5,69,175,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="209,110,174,104,175,99,209,104"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__pool.html#ab335f2dc5de4605ba2d370f2557e40d1" title="Constructs a new thread_pool instance with a policy_queue adapter." alt="" coords="5,133,175,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="209,138,175,144,174,138,209,133"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__pool.html#a24ad3e06d7e33519e98df73c6e8a3085" title="Constructs a new thread_pool instance." alt="" coords="5,197,175,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="256,150,176,188,147,200,145,195,174,183,254,145"/>
+</map>

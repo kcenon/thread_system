@@ -1,0 +1,7 @@
+<map id="kcenon::thread::make_error_result" name="kcenon::thread::make_error_result">
+<area shape="rect" id="Node000001" title="Create a common::VoidResult error from a thread::error_code." alt="" coords="5,5,168,45"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread.html#a899d6d797fc353567761b0d4ed2637e6" title="Convert a thread::error_code to common::error_info." alt="" coords="216,5,356,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,23,202,23,202,28,169,28"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="404,5,563,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="357,23,390,23,390,28,357,28"/>
+</map>

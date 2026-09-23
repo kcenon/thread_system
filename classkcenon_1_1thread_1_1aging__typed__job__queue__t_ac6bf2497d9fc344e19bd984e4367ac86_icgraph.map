@@ -1,0 +1,5 @@
+<map id="kcenon::thread::aging_typed_job_queue_t::enqueue" name="kcenon::thread::aging_typed_job_queue_t::enqueue">
+<area shape="rect" id="Node000001" title="Enqueues an aging typed job." alt="" coords="269,5,485,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1aging__typed__job__queue__t.html#aeea3ec7399cc1d2be6de603bb9f848cf" title="Enqueues a derived typed job." alt="" coords="5,5,221,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,28,221,28,221,23,256,23"/>
+</map>

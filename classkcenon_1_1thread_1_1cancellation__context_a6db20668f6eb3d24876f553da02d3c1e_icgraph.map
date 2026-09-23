@@ -1,0 +1,5 @@
+<map id="kcenon::thread::cancellation_context::push" name="kcenon::thread::cancellation_context::push">
+<area shape="rect" id="Node000001" title="Pushes a token to the thread&#45;local stack." alt="" coords="260,5,467,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1cancellation__context_1_1guard.html#a4ed604e5997082a044e3738b908ee52c" title="Constructs a guard and pushes the token." alt="" coords="5,5,212,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,28,212,28,212,23,247,23"/>
+</map>

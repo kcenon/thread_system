@@ -1,0 +1,20 @@
+<map id="include/kcenon/thread/stealing/enhanced_work_stealing_config.h" name="include/kcenon/thread/stealing/enhanced_work_stealing_config.h">
+<area shape="rect" id="Node000001" title="Configuration for enhanced work&#45;stealing with NUMA awareness." alt="" coords="270,5,454,60"/>
+<area shape="rect" id="Node000002" href="$enhanced__steal__policy_8h.html" title="Enhanced policies for selecting work&#45;stealing victims." alt="" coords="5,108,185,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="281,63,144,106,143,101,280,58"/>
+<area shape="rect" id="Node000004" href="$steal__backoff__strategy_8h.html" title="Backoff strategies for work&#45;stealing operations." alt="" coords="210,108,389,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="345,62,318,98,314,95,341,58"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="363,181,430,207"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="382,59,394,82,403,107,406,139,404,168,399,168,401,139,398,109,389,84,377,61"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="455,181,525,207"/>
+<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="385,59,474,169,470,172,381,62"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="66,181,133,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="99,134,101,168,95,168,93,134"/>
+<area shape="poly" id="edge7_Node000004_Node000003" title=" " alt="" coords="268,136,146,179,144,174,266,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="254,181,339,207"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="302,134,300,168,295,168,296,134"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="317,131,371,171,368,175,313,136"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="331,131,447,174,445,179,329,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="158,181,230,207"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="284,136,224,176,221,171,281,131"/>
+</map>

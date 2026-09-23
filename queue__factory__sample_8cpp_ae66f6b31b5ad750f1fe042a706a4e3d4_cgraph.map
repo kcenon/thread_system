@@ -1,0 +1,29 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,173,60,198"/>
+<area shape="rect" id="Node000002" href="$queue__factory__sample_8cpp.html#af3e0656c39605970df3b32c041111f54" title="Example 4: Compile&#45;time selection." alt="" coords="108,74,285,99"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="41,170,68,139,107,108,119,102,122,107,109,113,72,143,45,174"/>
+<area shape="rect" id="Node000003" href="$queue__factory__sample_8cpp.html#a08e67e684e1f48c1c236f7db7cca9e6f" title="Example 3: Optimal queue selection." alt="" coords="127,123,266,149"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="59,173,107,157,133,150,134,155,109,163,61,178"/>
+<area shape="rect" id="Node000007" href="$queue__factory__sample_8cpp.html#a8ffcedced988fc0c2482f387f6ae2498" title="Example 5: Practical use cases." alt="" coords="121,173,273,198"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="60,183,107,183,107,188,60,188"/>
+<area shape="rect" id="Node000010" href="$queue__factory__sample_8cpp.html#a5b028dee0584fbb4628c0f1b936655a3" title="Example 2: Requirements&#45;based selection." alt="" coords="119,293,274,333"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="47,196,75,225,110,257,149,284,146,288,106,261,71,229,43,200"/>
+<area shape="rect" id="Node000012" href="$queue__factory__sample_8cpp.html#a8b2eea4d80cd88bd056753c035751940" title="Example 1: Simple factory usage." alt="" coords="114,222,279,247"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="61,192,109,207,138,216,137,221,107,212,59,197"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1queue__factory.html#a025369c76bfdf6ca2ad2337179f044c9" title="Create optimal queue for current environment." alt="" coords="361,5,541,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="257,121,284,108,298,96,307,82,316,69,332,55,346,47,349,52,335,60,320,72,312,85,302,99,287,113,260,126"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="369,69,533,109"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="266,121,354,104,355,109,267,126"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="369,133,533,173"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="266,138,355,144,355,149,266,143"/>
+<area shape="poly" id="edge9_Node000007_Node000005" title=" " alt="" coords="253,170,284,158,298,148,307,139,317,129,332,119,354,109,357,114,335,124,321,133,311,142,301,152,287,162,255,175"/>
+<area shape="poly" id="edge10_Node000007_Node000006" title=" " alt="" coords="272,173,354,163,355,168,273,178"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1queue__factory.html#a8265741f74ebf4cf825be54fe7412006" title="Create adaptive queue (RECOMMENDED for most use cases)" alt="" coords="333,197,568,237"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="273,192,320,198,319,203,272,197"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1queue__factory.html#a18c052cbe5654bb536063d626aea8a93" title="Create standard job_queue." alt="" coords="333,261,568,301"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="259,196,287,207,301,217,311,227,321,237,335,247,349,254,347,259,332,252,317,241,307,231,298,221,284,212,257,200"/>
+<area shape="rect" id="Node000011" href="$classkcenon_1_1thread_1_1queue__factory.html#af75dc41ac75b7a30352c9c9e6a54fbb0" title="Create queue based on requirements." alt="" coords="367,326,534,381"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="275,323,354,335,353,341,274,328"/>
+<area shape="poly" id="edge14_Node000012_Node000008" title=" " alt="" coords="279,226,319,224,320,229,280,232"/>
+<area shape="poly" id="edge15_Node000012_Node000009" title=" " alt="" coords="267,245,329,256,328,261,266,250"/>
+</map>

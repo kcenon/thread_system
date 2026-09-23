@@ -1,0 +1,7 @@
+<map id="batch_operations_example" name="batch_operations_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,204,70"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html#abb0aab22ba1692b557b8138afcd99894" title="The core task execution method to be overridden by derived classes." alt="" coords="261,5,407,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,42,246,35,247,40,197,47"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="252,69,416,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="197,67,239,73,238,79,196,73"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="kcenon::thread::cancellation_token::cancel" name="kcenon::thread::cancellation_token::cancel">
+<area shape="rect" id="Node000001" title="Cancels the operation." alt="" coords="472,69,679,109"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1cancellable__future.html#ad0198b2cce8dda2238ddd14755d46507" title="Request cancellation of the operation." alt="" coords="223,5,424,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="482,68,402,48,403,43,483,63"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1cancellable__future_3_01void_01_4.html#a63a2b02d4cecb4ba83851f6b2addb8c8" title=" " alt="" coords="223,69,424,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="458,92,424,92,424,87,458,87"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__pool.html#ab948469d264780e391b33077cc66f3b2" title="Stops the thread pool without logging (for use during static destruction)." alt="" coords="239,133,408,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="483,115,403,136,402,131,482,110"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__pool.html#a0e06c5be9b580cef250bb6053630755f" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="5,133,175,173"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="224,156,175,156,175,151,224,151"/>
+</map>

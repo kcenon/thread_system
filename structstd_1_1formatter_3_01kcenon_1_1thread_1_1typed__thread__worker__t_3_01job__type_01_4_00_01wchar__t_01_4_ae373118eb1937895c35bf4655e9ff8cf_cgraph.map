@@ -1,0 +1,9 @@
+<map id="std::formatter&lt; kcenon::thread::typed_thread_worker_t&lt; job_type &gt;, wchar_t &gt;::format" name="std::formatter&lt; kcenon::thread::typed_thread_worker_t&lt; job_type &gt;, wchar_t &gt;::format">
+<area shape="rect" id="Node000001" title="Formats a typed_thread_worker_t&lt;job_type&gt; instance to a wide string." alt="" coords="5,23,180,92"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__base.html#a1130c1076dfd5fec14bb0453ff0dbc9e" title="Returns a string representation of this thread_base object." alt="" coords="230,5,399,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,42,216,37,217,42,180,47"/>
+<area shape="rect" id="Node000004" href="$classutility__module_1_1convert__string.html#ae6e54e98a95c9788c88cbafb6ab14cc4" title="Converts a std::string (system&#45;encoded) to a std::wstring." alt="" coords="228,69,401,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="180,67,215,72,214,78,180,73"/>
+<area shape="rect" id="Node000003" href="$classutility__module_1_1formatter.html#a1b5ec167f6e47412edd77a4ea658e339" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="449,5,636,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="400,23,436,23,436,28,400,28"/>
+</map>

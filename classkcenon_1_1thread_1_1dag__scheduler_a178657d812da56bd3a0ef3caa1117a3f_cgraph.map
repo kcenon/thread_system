@@ -1,0 +1,9 @@
+<map id="kcenon::thread::dag_scheduler::on_job_failed" name="kcenon::thread::dag_scheduler::on_job_failed">
+<area shape="rect" id="Node000001" title="Called when a job fails." alt="" coords="5,37,192,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="240,5,404,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,41,226,36,227,42,193,47"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread.html#a899d6d797fc353567761b0d4ed2637e6" title="Convert a thread::error_code to common::error_info." alt="" coords="252,69,392,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="193,68,239,75,238,80,192,73"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="452,69,611,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="392,87,438,87,438,92,392,92"/>
+</map>

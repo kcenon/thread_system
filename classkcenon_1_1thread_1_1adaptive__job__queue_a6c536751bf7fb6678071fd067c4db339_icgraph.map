@@ -1,0 +1,5 @@
+<map id="kcenon::thread::adaptive_job_queue::migrate_to_mode" name="kcenon::thread::adaptive_job_queue::migrate_to_mode">
+<area shape="rect" id="Node000001" title=" " alt="" coords="260,13,479,53"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue_1_1accuracy__guard.html#aa9ec0f290ad251cd16e2377938e8cce4" title="Construct guard and switch queue to mutex mode." alt="" coords="5,5,212,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="246,35,212,35,212,30,246,30"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="std::formatter&lt; kcenon::thread::thread_pool, wchar_t &gt;::format" name="std::formatter&lt; kcenon::thread::thread_pool, wchar_t &gt;::format">
+<area shape="rect" id="Node000001" title="Formats a thread_pool object as a wide string." alt="" coords="5,30,180,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#a3548c068b3f0f369dd09af0df56383c0" title="Provides a string representation of this thread_pool." alt="" coords="230,5,399,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,42,216,37,217,42,180,47"/>
+<area shape="rect" id="Node000004" href="$classutility__module_1_1convert__string.html#ae6e54e98a95c9788c88cbafb6ab14cc4" title="Converts a std::string (system&#45;encoded) to a std::wstring." alt="" coords="228,69,401,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="180,67,215,72,214,78,180,73"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#a8f00efcd854ecca1c3d3f8a29d81e580" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="449,5,613,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="399,23,436,23,436,28,399,28"/>
+</map>

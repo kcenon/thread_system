@@ -1,0 +1,19 @@
+<map id="kcenon::thread::result::has_value" name="kcenon::thread::result::has_value">
+<area shape="rect" id="Node000001" title="Checks if the result contains a value." alt="" coords="372,149,536,189"/>
+<area shape="rect" id="Node000002" href="$mpmc__queue__sample_8cpp.html#a2eae948c8b6adfa8552c3ed50ddba103" title=" " alt="" coords="138,5,294,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="427,139,382,90,354,66,323,46,293,33,295,28,325,41,357,62,386,87,431,136"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1aging__typed__job__queue__t.html#a4b453e86b43a959c2ac73fdf311b0749" title="Dequeues a job with one of the specified types." alt="" coords="108,55,324,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="401,145,323,110,289,98,290,93,325,105,403,140"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1aging__typed__job__queue__t.html#adccb7277105b0c2eca3f0d6b0459da63" title="Dequeues a job with one of the specified types using span." alt="" coords="108,119,324,159"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="358,160,324,155,325,150,359,154"/>
+<area shape="rect" id="Node000006" href="$mpmc__queue__sample_8cpp.html#a8d76c423bb645996fcbb1e72c8f1cdda" title=" " alt="" coords="153,184,279,209"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="359,183,280,192,279,187,358,177"/>
+<area shape="rect" id="Node000007" href="$mpmc__queue__sample_8cpp.html#a86233f9bdfa543063cc95c88d9f6da6d" title=" " alt="" coords="131,233,301,259"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="396,197,325,223,279,236,277,231,323,218,394,192"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1numa__work__stealer.html#ae03c4f547605ddd1b75df46cff846f0d" title="Attempt to steal work for a worker." alt="" coords="127,283,305,323"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="424,200,379,237,325,272,295,286,293,281,323,268,376,233,421,196"/>
+<area shape="rect" id="Node000003" href="$mpmc__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,184,60,209"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="127,35,110,45,80,78,60,117,46,155,39,184,34,183,41,154,55,115,76,75,106,41,124,30"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="139,199,60,199,60,194,139,194"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="144,233,107,223,59,208,61,203,109,218,145,228"/>
+</map>

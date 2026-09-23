@@ -1,0 +1,5 @@
+<map id="include/kcenon/thread/core/backpressure_job_queue.h" name="include/kcenon/thread/core/backpressure_job_queue.h">
+<area shape="rect" id="Node000001" title="Job queue with backpressure mechanisms for overflow and rate limiting." alt="" coords="5,5,177,60"/>
+<area shape="rect" id="Node000002" href="$backpressure__job__queue_8cpp.html" title="Implementation of backpressure&#45;aware job queue." alt="" coords="9,108,173,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,74,94,108,89,108,89,74"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="demonstrate_composition" name="demonstrate_composition">
+<area shape="rect" id="Node000001" title="Demonstrate composition&#45;based design." alt="" coords="5,13,197,38"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1service__container.html#a8be7271c31c2b1efed81c5bcb56c5502" title="Get the global service container instance." alt="" coords="245,5,420,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,23,231,23,231,28,198,28"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="optimal_selection" name="optimal_selection">
+<area shape="rect" id="Node000001" title="Example 3: Optimal queue selection." alt="" coords="5,77,144,102"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1queue__factory.html#a025369c76bfdf6ca2ad2337179f044c9" title="Create optimal queue for current environment." alt="" coords="192,5,372,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,74,203,47,204,52,118,79"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="200,69,364,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="144,87,186,87,186,92,144,92"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="200,133,364,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="118,100,204,127,203,132,116,105"/>
+</map>

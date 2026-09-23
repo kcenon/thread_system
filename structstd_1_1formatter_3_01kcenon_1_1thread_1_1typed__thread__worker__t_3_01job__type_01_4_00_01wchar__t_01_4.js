@@ -1,0 +1,4 @@
+var structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_00_01wchar__t_01_4 =
+[
+    [ "format", "structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_00_01wchar__t_01_4.html#ae373118eb1937895c35bf4655e9ff8cf", null ]
+];

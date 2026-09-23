@@ -1,0 +1,39 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,633,124,658"/>
+<area shape="rect" id="Node000001" href="$structkcenon_1_1thread_1_1concepts_1_1has__get__method.html" title="SFINAE helper to detect if a type has a get() method." alt="" coords="175,5,426,45"/>
+<area shape="poly" id="edge54_Node000000_Node000001" title=" " alt="" coords="64,619,72,499,89,330,103,244,121,165,143,100,156,75,170,56,184,44,188,48,174,59,160,78,148,102,126,166,108,245,95,331,77,500,70,619"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1concepts_1_1has__wait__method.html" title="SFINAE helper to detect if a type has a wait() method." alt="" coords="172,69,429,109"/>
+<area shape="poly" id="edge55_Node000000_Node000002" title=" " alt="" coords="65,619,74,511,94,361,107,285,125,216,145,159,170,120,184,108,188,112,174,123,150,161,130,217,113,286,99,362,80,511,70,619"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1concepts_1_1is__duration.html" title="Type trait to detect if a type is a std::chrono::duration." alt="" coords="208,133,393,173"/>
+<area shape="poly" id="edge56_Node000000_Node000003" title=" " alt="" coords="66,618,77,522,98,392,112,326,129,266,148,217,170,184,187,170,207,161,209,166,190,175,174,187,153,220,134,268,117,327,103,393,82,523,71,619"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1concepts_1_1is__valid__job__type.html" title="SFINAE helper for JobType validation." alt="" coords="208,198,393,253"/>
+<area shape="poly" id="edge57_Node000000_Node000004" title=" " alt="" coords="63,619,65,549,79,453,92,402,111,351,137,304,170,262,187,249,206,239,209,243,190,253,174,266,141,307,116,354,97,404,84,454,70,549,68,619"/>
+<area shape="rect" id="Node000005" href="$structkcenon_1_1thread_1_1detail_1_1has__bound__policy__tag.html" title="Detect if type has bound_policy_tag." alt="" coords="213,277,388,331"/>
+<area shape="poly" id="edge58_Node000000_Node000005" title=" " alt="" coords="65,618,72,561,89,487,103,447,120,409,143,373,170,341,190,326,212,316,214,321,193,331,174,345,147,376,125,411,107,449,94,488,77,562,70,619"/>
+<area shape="rect" id="Node000006" href="$structkcenon_1_1thread_1_1detail_1_1has__bound__policy__type.html" title="Detect if type has bound_policy_type member." alt="" coords="209,355,392,410"/>
+<area shape="poly" id="edge59_Node000000_Node000006" title=" " alt="" coords="69,619,80,575,100,522,129,467,148,442,170,419,207,397,210,402,174,423,152,445,134,470,105,524,85,577,74,620"/>
+<area shape="rect" id="Node000007" href="$structkcenon_1_1thread_1_1detail_1_1has__do__work__method.html" title="SFINAE helper to detect if a type has a do_work method." alt="" coords="209,434,392,489"/>
+<area shape="poly" id="edge60_Node000000_Node000007" title=" " alt="" coords="76,619,113,559,139,527,170,499,208,479,210,484,174,504,143,530,117,562,80,622"/>
+<area shape="rect" id="Node000008" href="$structkcenon_1_1thread_1_1detail_1_1has__get__method.html" title="SFINAE helper to detect if a type has a specific member." alt="" coords="175,513,426,553"/>
+<area shape="poly" id="edge61_Node000000_Node000008" title=" " alt="" coords="88,621,125,591,171,563,201,551,203,556,173,568,128,595,91,625"/>
+<area shape="rect" id="Node000009" href="$structkcenon_1_1thread_1_1detail_1_1has__overflow__policy__tag.html" title="Detect if type has overflow_policy_tag." alt="" coords="219,578,383,633"/>
+<area shape="poly" id="edge62_Node000000_Node000009" title=" " alt="" coords="137,630,218,617,219,622,138,636"/>
+<area shape="rect" id="Node000010" href="$structkcenon_1_1thread_1_1detail_1_1has__overflow__policy__type.html" title="Detect if type has overflow_policy_type member." alt="" coords="215,657,386,711"/>
+<area shape="poly" id="edge63_Node000000_Node000010" title=" " alt="" coords="138,655,215,667,215,673,137,660"/>
+<area shape="rect" id="Node000011" href="$structkcenon_1_1thread_1_1detail_1_1has__priority__method.html" title="SFINAE helper to detect if a type has a specific member function." alt="" coords="219,735,383,790"/>
+<area shape="poly" id="edge64_Node000000_Node000011" title=" " alt="" coords="92,665,129,693,173,720,220,739,218,744,171,725,126,698,89,669"/>
+<area shape="rect" id="Node000012" href="$structkcenon_1_1thread_1_1detail_1_1has__sync__policy__tag.html" title="Detect if type has sync_policy_tag." alt="" coords="219,814,383,869"/>
+<area shape="poly" id="edge65_Node000000_Node000012" title=" " alt="" coords="79,670,115,735,142,769,174,799,196,812,220,822,218,827,193,817,170,803,138,773,111,738,75,672"/>
+<area shape="rect" id="Node000013" href="$structkcenon_1_1thread_1_1detail_1_1has__sync__policy__type.html" title="Detect if type has sync_policy_type member." alt="" coords="215,893,387,947"/>
+<area shape="poly" id="edge66_Node000000_Node000013" title=" " alt="" coords="73,671,84,716,103,772,133,829,152,855,174,878,193,892,216,902,213,907,191,896,170,882,148,858,128,832,99,774,79,718,68,672"/>
+<area shape="rect" id="Node000014" href="$structkcenon_1_1thread_1_1detail_1_1is__compatible__job.html" title="Compile&#45;time job validation." alt="" coords="207,971,394,1026"/>
+<area shape="poly" id="edge67_Node000000_Node000014" title=" " alt="" coords="70,671,76,730,93,807,106,847,124,887,146,924,174,957,190,969,208,979,206,984,187,974,170,961,142,927,119,889,101,849,88,808,71,731,65,672"/>
+<area shape="rect" id="Node000015" href="$structkcenon_1_1thread_1_1detail_1_1is__policy__queue__impl.html" title="Primary template: not a policy_queue." alt="" coords="197,1051,405,1091"/>
+<area shape="poly" id="edge68_Node000000_Node000015" title=" " alt="" coords="72,671,86,754,108,864,138,968,155,1008,174,1035,198,1052,195,1056,170,1039,151,1011,133,970,103,865,80,755,67,672"/>
+<area shape="rect" id="Node000016" href="$structkcenon_1_1thread_1_1has__blocking__overflow.html" title="Compile&#45;time detection of blocking overflow policy." alt="" coords="221,1115,380,1170"/>
+<area shape="poly" id="edge69_Node000000_Node000016" title=" " alt="" coords="71,671,83,767,104,895,118,961,135,1020,153,1068,174,1101,196,1118,222,1129,220,1134,193,1122,170,1104,148,1070,130,1021,113,962,99,896,78,767,66,672"/>
+<area shape="rect" id="Node000017" href="$structkcenon_1_1thread_1_1is__bounded__queue.html" title="Compile&#45;time detection of bounded queue." alt="" coords="179,1195,423,1235"/>
+<area shape="poly" id="edge70_Node000000_Node000017" title=" " alt="" coords="70,672,79,782,98,934,112,1012,129,1083,150,1141,174,1180,190,1193,187,1197,170,1183,145,1143,124,1084,107,1013,93,935,74,782,65,672"/>
+<area shape="rect" id="Node000018" href="$structkcenon_1_1thread_1_1is__lockfree__queue.html" title="Compile&#45;time detection of lock&#45;free capability." alt="" coords="223,1259,379,1314"/>
+<area shape="poly" id="edge71_Node000000_Node000018" title=" " alt="" coords="70,672,77,794,95,966,109,1054,126,1134,148,1200,160,1226,174,1245,196,1263,223,1274,221,1279,194,1267,170,1248,156,1228,143,1202,121,1135,104,1055,90,966,72,794,64,672"/>
+</map>

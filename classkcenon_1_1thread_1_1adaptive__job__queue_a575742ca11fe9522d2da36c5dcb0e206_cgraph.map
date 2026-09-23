@@ -1,0 +1,5 @@
+<map id="kcenon::thread::adaptive_job_queue::dequeue" name="kcenon::thread::adaptive_job_queue::dequeue">
+<area shape="rect" id="Node000001" title="Dequeues a job from the current active queue." alt="" coords="5,5,189,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="237,5,401,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,23,224,23,224,28,190,28"/>
+</map>

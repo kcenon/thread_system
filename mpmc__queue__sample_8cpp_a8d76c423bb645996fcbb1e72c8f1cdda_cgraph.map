@@ -1,0 +1,9 @@
+<map id="mpmc_example" name="mpmc_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,77,132,102"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html#abb0aab22ba1692b557b8138afcd99894" title="The core task execution method to be overridden by derived classes." alt="" coords="189,5,335,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,74,187,47,189,52,109,79"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1result.html#a8e25bd72212bd159e41c1c153bc73785" title="Checks if the result contains a value." alt="" coords="180,69,344,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="132,87,166,87,166,92,132,92"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="180,133,344,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="109,100,189,126,187,132,107,105"/>
+</map>

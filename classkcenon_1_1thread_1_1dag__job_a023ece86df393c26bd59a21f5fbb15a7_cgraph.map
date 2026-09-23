@@ -1,0 +1,9 @@
+<map id="kcenon::thread::dag_job::get_info" name="kcenon::thread::dag_job::get_info">
+<area shape="rect" id="Node000001" title="Creates a dag_job_info snapshot." alt="" coords="5,69,156,109"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html#ac4d4e155b7951df7721ec40de03d40f4" title="Retrieves the name of this job." alt="" coords="206,5,353,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,67,203,47,205,52,144,72"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1dag__job.html#a2ad3425bc234f324809b48b51f473d11" title="Gets the current state of the job." alt="" coords="204,69,355,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,87,190,87,190,92,156,92"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1dag__job.html#a637c23b020a318390f167a5f51d892ad" title="Checks if the job has a result." alt="" coords="204,133,355,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="144,107,205,127,203,132,143,112"/>
+</map>

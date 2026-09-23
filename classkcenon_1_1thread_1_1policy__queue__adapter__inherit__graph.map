@@ -1,0 +1,5 @@
+<map id="kcenon::thread::policy_queue_adapter&lt; SyncPolicy, BoundPolicy, OverflowPolicy &gt;" name="kcenon::thread::policy_queue_adapter&lt; SyncPolicy, BoundPolicy, OverflowPolicy &gt;">
+<area shape="rect" id="Node000001" title="Adapter for policy_queue to pool_queue_adapter_interface." alt="" coords="5,428,224,723"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1pool__queue__adapter__interface.html" title="Abstract interface for queue adapters used by thread_pool." alt="" coords="23,5,206,380"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,394,117,428,112,428,112,394"/>
+</map>

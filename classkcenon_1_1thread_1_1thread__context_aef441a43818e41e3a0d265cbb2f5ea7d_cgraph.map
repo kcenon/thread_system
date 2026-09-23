@@ -1,0 +1,5 @@
+<map id="kcenon::thread::thread_context::create_child" name="kcenon::thread::thread_context::create_child">
+<area shape="rect" id="Node000001" title="Create a child context with the same services." alt="" coords="5,5,175,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__context.html#aaf162324ab7667a14976264aa5ab7521" title="Default constructor &#45; resolves services from global registry." alt="" coords="223,5,407,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,23,209,23,209,28,175,28"/>
+</map>

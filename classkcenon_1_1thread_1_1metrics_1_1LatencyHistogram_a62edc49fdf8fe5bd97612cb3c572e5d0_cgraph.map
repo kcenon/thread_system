@@ -1,0 +1,13 @@
+<map id="kcenon::thread::metrics::LatencyHistogram::p90" name="kcenon::thread::metrics::LatencyHistogram::p90">
+<area shape="rect" id="Node000001" title="Get the 90th percentile." alt="" coords="5,65,187,105"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a7a7305a970b312aef6d97a652709a0ca" title="Calculate the value at a given percentile." alt="" coords="235,65,457,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,82,221,82,221,87,187,87"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a65c2f0cfc8b1e9c061fd4898bc3feaee" title="Get the lower bound of a bucket." alt="" coords="753,5,953,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="413,62,505,42,626,31,740,28,740,33,626,36,506,47,414,67"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#abd3b39f8b7fdd52010d08ff0dcd338e6" title="Get the midpoint value of a bucket for estimation." alt="" coords="505,57,705,112"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="458,82,491,82,491,87,458,87"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a89866428f9fd1b7712077896582c35e9" title="Get the upper bound of a bucket." alt="" coords="753,97,953,152"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="412,102,458,114,506,122,626,130,740,129,740,134,626,135,505,127,457,119,411,107"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="705,61,739,54,740,59,706,66"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="706,98,740,104,739,109,705,103"/>
+</map>

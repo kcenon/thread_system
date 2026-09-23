@@ -1,0 +1,15 @@
+<map id="web_server_simulation" name="web_server_simulation">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,127,179,153"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a575742ca11fe9522d2da36c5dcb0e206" title="Dequeues a job from the current active queue." alt="" coords="227,5,411,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,125,225,62,254,49,256,53,228,66,115,129"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="459,63,623,103"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="138,125,226,105,340,92,445,84,445,89,340,97,227,111,139,130"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a586cab78d0bb73cac4c7fff9c644cceb" title="Enqueues a job into the current active queue." alt="" coords="227,120,411,160"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="179,137,213,137,213,143,179,143"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#ac490e300f2f57e1ca7879f5104491c67" title="Get statistics about queue usage." alt="" coords="227,184,411,224"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="139,150,235,178,233,183,137,155"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="237,248,401,288"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="110,151,160,191,228,234,242,240,239,245,225,238,157,195,106,155"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="397,43,450,57,449,62,396,48"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="396,117,449,104,450,109,397,123"/>
+</map>

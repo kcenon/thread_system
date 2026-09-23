@@ -1,0 +1,5 @@
+<map id="std::formatter&lt; kcenon::thread::typed_thread_pool_t&lt; job_type &gt; &gt;::format" name="std::formatter&lt; kcenon::thread::typed_thread_pool_t&lt; job_type &gt; &gt;::format">
+<area shape="rect" id="Node000001" title="Formats a typed_thread_pool_t&lt;job_type&gt; object as a string." alt="" coords="5,5,228,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1typed__thread__pool__t.html#ad27945c3e03870cb960b34bf1cd7c9d6" title="Generates a string representation of the thread pool&#39;s internal state." alt="" coords="276,13,459,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="228,30,262,30,262,35,228,35"/>
+</map>

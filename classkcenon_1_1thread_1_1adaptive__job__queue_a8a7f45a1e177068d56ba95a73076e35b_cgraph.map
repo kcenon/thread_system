@@ -1,0 +1,7 @@
+<map id="kcenon::thread::adaptive_job_queue::enqueue" name="kcenon::thread::adaptive_job_queue::enqueue">
+<area shape="rect" id="Node000001" title="Type&#45;safe enqueue for job subclasses." alt="" coords="5,5,189,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a586cab78d0bb73cac4c7fff9c644cceb" title="Enqueues a job into the current active queue." alt="" coords="237,5,421,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,23,223,23,223,28,190,28"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="469,5,633,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="422,23,456,23,456,28,422,28"/>
+</map>

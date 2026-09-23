@@ -1,0 +1,17 @@
+<map id="kcenon::thread::metrics::EnhancedThreadPoolMetrics::record_execution" name="kcenon::thread::metrics::EnhancedThreadPoolMetrics::record_execution">
+<area shape="rect" id="Node000001" title="Record task execution completion." alt="" coords="5,160,220,215"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a7380ee4f04fdcff9a93790d3cb4ef2fc" title="Increment the counter." alt="" coords="279,104,456,159"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,161,264,151,265,156,221,166"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a0ea635577a50e41efa2fa2f540b4a7a8" title="Record a latency value." alt="" coords="268,203,467,243"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="221,200,255,205,254,210,220,205"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#af8365e3e2ad444977388e2f4809a0a90" title="Advance bucket to current time period if needed." alt="" coords="536,5,713,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="432,101,514,69,531,62,533,67,516,74,434,106"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#abaa9feb9891a7a224a2ed062904596f3" title="Get the bucket index for a specific timestamp." alt="" coords="535,84,714,139"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="456,122,522,117,522,122,457,127"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#afae0624b08953afcee66b62fe892d07a" title="Get current time in milliseconds since epoch." alt="" coords="536,163,713,217"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="457,149,523,164,522,169,456,154"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#acebf5a20dc245be8ab3f01d18b680ca6" title="Record a raw nanosecond value." alt="" coords="515,242,735,282"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="467,236,501,241,500,246,466,241"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a3b39aa0514608d33fe38aed94c4afaa3" title="Compute the bucket index for a given value." alt="" coords="783,235,997,289"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="735,259,769,259,769,265,735,265"/>
+</map>

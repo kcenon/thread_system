@@ -1,0 +1,5 @@
+<map id="kcenon::thread::job_queue::enqueue_batch" name="kcenon::thread::job_queue::enqueue_batch">
+<area shape="rect" id="Node000001" title="Enqueues a batch of jobs into the queue." alt="" coords="268,5,444,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#a9537ef88cad03ae7efbd5fbc316a3f31" title="Enqueues a batch of jobs with backpressure handling." alt="" coords="5,5,220,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="254,28,220,28,220,23,254,23"/>
+</map>

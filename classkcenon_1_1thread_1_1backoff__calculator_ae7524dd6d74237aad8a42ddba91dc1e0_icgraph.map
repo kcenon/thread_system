@@ -1,0 +1,5 @@
+<map id="kcenon::thread::backoff_calculator::calculate_base_delay" name="kcenon::thread::backoff_calculator::calculate_base_delay">
+<area shape="rect" id="Node000001" title="Calculate base delay without jitter or capping." alt="" coords="228,5,403,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1backoff__calculator.html#a6fc4b4f36b6d1b131ef8010ed689057f" title="Calculate backoff delay for a given attempt number." alt="" coords="5,13,180,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,35,180,35,180,30,214,30"/>
+</map>

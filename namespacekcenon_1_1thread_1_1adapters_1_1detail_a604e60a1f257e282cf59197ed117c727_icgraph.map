@@ -1,0 +1,24 @@
+<map id="kcenon::thread::adapters::detail::make_error" name="kcenon::thread::adapters::detail::make_error">
+<area shape="rect" id="Node000001" title=" " alt="" coords="744,142,928,182"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread_1_1adapters_1_1detail.html#a14fcc1d53e2b903cbe9a3b5f2f5fadf0" title=" " alt="" coords="512,142,696,182"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="730,165,696,165,696,159,730,159"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1adapters_1_1thread__pool__executor__adapter.html#ab36ef6147f83487bbca1a3625f376504" title=" " alt="" coords="12,5,196,60"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="774,139,695,111,581,79,464,59,323,45,196,38,196,32,324,39,464,54,582,74,697,106,776,134"/>
+<area shape="rect" id="Node000006" href="$namespacekcenon_1_1thread_1_1adapters_1_1detail.html#a8fd0f59d3e456b89da3083d60bf4b68f" title=" " alt="" coords="251,197,464,237"/>
+<area shape="poly" id="edge10_Node000001_Node000006" title=" " alt="" coords="745,188,696,197,577,210,465,217,464,211,576,205,696,191,744,182"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1adapters_1_1thread__pool__executor__adapter.html#a41243d9c0c6ec9ec37feacac6192b9f5" title=" " alt="" coords="5,244,203,299"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="781,190,697,221,565,248,430,264,306,272,203,275,203,270,306,267,430,259,564,243,695,215,779,185"/>
+<area shape="rect" id="Node000009" href="$namespacekcenon_1_1thread_1_1adapters_1_1detail.html#a35468731f4cc99782328a4ce8c3fe2a1" title=" " alt="" coords="265,133,449,173"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="748,142,696,133,604,127,512,133,450,140,449,134,512,127,604,122,696,127,749,136"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread_1_1adapters_1_1detail.html#aa503e11d811f758f5afef0290df9ffa1" title=" " alt="" coords="265,69,449,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="522,141,424,111,426,106,524,136"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="501,188,449,199,448,194,500,182"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="252,68,196,56,197,50,253,63"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1adapters_1_1thread__pool__executor__adapter.html#a3e603c72a601f86c29d6435473438e7e" title=" " alt="" coords="12,84,196,139"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="252,101,197,106,196,100,252,95"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="251,242,203,253,202,247,250,237"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1adapters_1_1thread__pool__executor__adapter.html#a45c752933d6cd948d4f6169ab4d9e79b" title=" " alt="" coords="9,164,199,219"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="237,207,199,204,200,198,237,202"/>
+<area shape="poly" id="edge12_Node000009_Node000005" title=" " alt="" coords="251,138,196,129,197,124,252,133"/>
+<area shape="poly" id="edge13_Node000009_Node000008" title=" " alt="" coords="252,171,200,179,199,174,251,166"/>
+</map>

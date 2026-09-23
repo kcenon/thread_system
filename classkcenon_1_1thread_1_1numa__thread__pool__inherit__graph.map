@@ -1,0 +1,7 @@
+<map id="kcenon::thread::numa_thread_pool" name="kcenon::thread::numa_thread_pool">
+<area shape="rect" id="Node000001" title="A NUMA&#45;aware thread pool optimized for Non&#45;Uniform Memory Access architectures." alt="" coords="5,781,233,1240"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="17,133,221,733"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,747,122,781,117,781,117,747"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="24,5,215,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="122,99,122,133,117,133,117,99"/>
+</map>

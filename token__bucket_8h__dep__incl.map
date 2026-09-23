@@ -1,0 +1,9 @@
+<map id="include/kcenon/thread/core/token_bucket.h" name="include/kcenon/thread/core/token_bucket.h">
+<area shape="rect" id="Node000001" title="Lock&#45;free token bucket rate limiter for controlling throughput." alt="" coords="111,5,277,45"/>
+<area shape="rect" id="Node000002" href="$backpressure__job__queue_8h.html" title="Job queue with backpressure mechanisms for overflow and rate limiting." alt="" coords="5,93,177,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,56,122,95,118,91,162,52"/>
+<area shape="rect" id="Node000004" href="$token__bucket_8cpp.html" title="Implementation of lock&#45;free token bucket rate limiter." alt="" coords="201,108,392,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="227,53,286,106,282,110,223,57"/>
+<area shape="rect" id="Node000003" href="$backpressure__job__queue_8cpp.html" title="Implementation of backpressure&#45;aware job queue." alt="" coords="9,196,173,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,162,94,196,89,196,89,162"/>
+</map>

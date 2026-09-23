@@ -1,0 +1,7 @@
+<map id="include/kcenon/thread/config/thread_system_config.h" name="include/kcenon/thread/config/thread_system_config.h">
+<area shape="rect" id="Node000001" title="Unified configuration structure for thread_system." alt="" coords="19,5,185,60"/>
+<area shape="rect" id="Node000002" href="$thread__config_8h.html" title="Public facade for thread_system configuration." alt="" coords="19,108,185,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,74,105,108,99,108,99,74"/>
+<area shape="rect" id="Node000003" href="$config__example_8cpp.html" title="Unified configuration system examples using the builder pattern." alt="" coords="5,196,199,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,162,105,196,99,196,99,162"/>
+</map>

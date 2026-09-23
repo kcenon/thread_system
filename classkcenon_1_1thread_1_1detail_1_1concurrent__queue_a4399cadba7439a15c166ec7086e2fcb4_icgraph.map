@@ -1,0 +1,5 @@
+<map id="kcenon::thread::detail::concurrent_queue::shutdown" name="kcenon::thread::detail::concurrent_queue::shutdown">
+<area shape="rect" id="Node000001" title="Signals shutdown and wakes all waiters." alt="" coords="335,5,552,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1concurrent__queue.html#a66233e4a0978ec01b9cd9625ec63c51d" title="Destructor &#45; signals shutdown and drains the queue." alt="" coords="5,5,287,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="321,28,287,28,287,23,321,23"/>
+</map>

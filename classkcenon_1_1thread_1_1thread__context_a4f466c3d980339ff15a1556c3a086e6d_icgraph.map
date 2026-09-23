@@ -1,0 +1,5 @@
+<map id="kcenon::thread::thread_context::to_common_level" name="kcenon::thread::thread_context::to_common_level">
+<area shape="rect" id="Node000001" title="Convert log_level_v2 to common::interfaces::log_level." alt="" coords="223,5,425,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__context.html#a76c3af1a58369a88a3a3061d0b023865" title="Log a message if logger is available (v2 API with conversion)" alt="" coords="5,5,175,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,28,175,28,175,23,209,23"/>
+</map>

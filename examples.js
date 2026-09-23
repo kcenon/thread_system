@@ -1,0 +1,27 @@
+var examples =
+[
+    [ "/home/runner/work/thread_system/thread_system/include/kcenon/thread/core/atomic_shared_ptr.h", "_2home_2runner_2work_2thread_system_2thread_system_2include_2kcenon_2thread_2core_2atomic_shared_ptr_8h-example.html", null ],
+    [ "/home/runner/work/thread_system/thread_system/include/kcenon/thread/core/job_builder.h", "_2home_2runner_2work_2thread_system_2thread_system_2include_2kcenon_2thread_2core_2job_builder_8h-example.html", null ],
+    [ "/home/runner/work/thread_system/thread_system/include/kcenon/thread/core/safe_hazard_pointer.h", "_2home_2runner_2work_2thread_system_2thread_system_2include_2kcenon_2thread_2core_2safe_hazard_pointer_8h-example.html", null ],
+    [ "/home/runner/work/thread_system/thread_system/include/kcenon/thread/core/service_registry.h", "_2home_2runner_2work_2thread_system_2thread_system_2include_2kcenon_2thread_2core_2service_registry_8h-example.html", null ],
+    [ "/home/runner/work/thread_system/thread_system/include/kcenon/thread/core/thread_pool.h", "_2home_2runner_2work_2thread_system_2thread_system_2include_2kcenon_2thread_2core_2thread_pool_8h-example.html", null ],
+    [ "adaptive_queue_sample.cpp", "adaptive_queue_sample_8cpp-example.html", null ],
+    [ "composition_example.cpp", "composition_example_8cpp-example.html", null ],
+    [ "config_example.cpp", "config_example_8cpp-example.html", null ],
+    [ "crash_protection/main.cpp", "crash_protection_2main_8cpp-example.html", null ],
+    [ "hazard_pointer_sample.cpp", "hazard_pointer_sample_8cpp-example.html", null ],
+    [ "integration_example.cpp", "integration_example_8cpp-example.html", null ],
+    [ "job_cancellation_example.cpp", "job_cancellation_example_8cpp-example.html", null ],
+    [ "logger_sample.cpp", "logger_sample_8cpp-example.html", null ],
+    [ "minimal_thread_pool.cpp", "minimal_thread_pool_8cpp-example.html", null ],
+    [ "mpmc_queue_sample.cpp", "mpmc_queue_sample_8cpp-example.html", null ],
+    [ "multi_process_monitoring_integration.cpp", "multi_process_monitoring_integration_8cpp-example.html", null ],
+    [ "node_pool_sample.cpp", "node_pool_sample_8cpp-example.html", null ],
+    [ "queue_capabilities_sample.cpp", "queue_capabilities_sample_8cpp-example.html", null ],
+    [ "queue_factory_sample.cpp", "queue_factory_sample_8cpp-example.html", null ],
+    [ "service_registry_sample/main.cpp", "service_registry_sample_2main_8cpp-example.html", null ],
+    [ "thread_pool_sample.cpp", "thread_pool_sample_8cpp-example.html", null ],
+    [ "typed_job_queue_sample.cpp", "typed_job_queue_sample_8cpp-example.html", null ],
+    [ "typed_thread_pool_sample.cpp", "typed_thread_pool_sample_8cpp-example.html", null ],
+    [ "typed_thread_pool_sample_2.cpp", "typed_thread_pool_sample_2_8cpp-example.html", null ]
+];

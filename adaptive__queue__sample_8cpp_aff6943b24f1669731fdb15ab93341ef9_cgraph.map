@@ -1,0 +1,15 @@
+<map id="policy_comparison_example" name="policy_comparison_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,127,213,153"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a575742ca11fe9522d2da36c5dcb0e206" title="Dequeues a job from the current active queue." alt="" coords="261,5,445,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,125,260,62,290,48,292,53,262,66,136,130"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1result.html#abaca0a73803bbc9f7d4dfc29e40b4f5b" title="Checks if the result is successful." alt="" coords="493,63,657,103"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="162,125,261,105,374,92,479,85,480,90,375,98,262,111,163,130"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1job.html#abb0aab22ba1692b557b8138afcd99894" title="The core task execution method to be overridden by derived classes." alt="" coords="280,120,427,160"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="213,137,266,137,266,143,213,143"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a586cab78d0bb73cac4c7fff9c644cceb" title="Enqueues a job into the current active queue." alt="" coords="261,184,445,224"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="160,150,264,178,262,183,158,155"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="271,248,435,288"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="129,151,187,190,263,234,278,241,276,245,260,238,184,195,126,155"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="432,43,485,57,483,62,431,48"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="417,181,444,170,494,140,537,109,540,113,496,145,447,174,420,186"/>
+</map>

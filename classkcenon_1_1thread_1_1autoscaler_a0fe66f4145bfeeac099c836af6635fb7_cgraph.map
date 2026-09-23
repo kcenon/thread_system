@@ -1,0 +1,5 @@
+<map id="kcenon::thread::autoscaler::can_scale_down" name="kcenon::thread::autoscaler::can_scale_down">
+<area shape="rect" id="Node000001" title="Checks if scale&#45;down cooldown has elapsed." alt="" coords="5,5,200,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#a51dc6391d2b7be450f353b8d775bdc56" title="Get the current number of active (running) workers." alt="" coords="248,5,475,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,23,234,23,234,28,200,28"/>
+</map>

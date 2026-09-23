@@ -1,0 +1,13 @@
+<map id="kcenon::thread::adaptive_job_queue::current_mode" name="kcenon::thread::adaptive_job_queue::current_mode">
+<area shape="rect" id="Node000001" title="Get current operating mode." alt="" coords="363,55,557,95"/>
+<area shape="rect" id="Node000002" href="$adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="108,5,315,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="359,55,267,33,268,28,360,50"/>
+<area shape="rect" id="Node000004" href="$adaptive__queue__sample_8cpp.html#ad3807da4331da23479052ba772a377f0" title=" " alt="" coords="144,55,279,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="349,78,279,78,279,73,349,73"/>
+<area shape="rect" id="Node000005" href="$adaptive__queue__sample_8cpp.html#a21793bcc15486980f337c12b1567fba3" title=" " alt="" coords="120,119,303,159"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="369,101,290,122,289,117,368,96"/>
+<area shape="rect" id="Node000003" href="$adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,63,60,88"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="140,37,109,46,61,65,59,60,107,41,138,32"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="130,78,60,78,60,73,130,73"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="129,117,107,110,59,90,61,85,109,105,130,112"/>
+</map>

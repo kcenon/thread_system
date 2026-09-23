@@ -1,0 +1,9 @@
+<map id="include/kcenon/thread/core/job_types.h" name="include/kcenon/thread/core/job_types.h">
+<area shape="rect" id="Node000001" title="Job priority levels and type definitions for type&#45;based scheduling." alt="" coords="67,5,234,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,83,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,48,73,87,70,83,123,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="107,93,194,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,46,153,79,148,79,148,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="219,93,277,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="176,43,225,82,221,87,173,48"/>
+</map>

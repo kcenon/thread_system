@@ -1,0 +1,9 @@
+<map id="kcenon::thread::detail::concurrent_queue::~concurrent_queue" name="kcenon::thread::detail::concurrent_queue::~concurrent_queue">
+<area shape="rect" id="Node000001" title="Destructor &#45; signals shutdown and drains the queue." alt="" coords="5,41,287,81"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1concurrent__queue.html#a4399cadba7439a15c166ec7086e2fcb4" title="Signals shutdown and wakes all waiters." alt="" coords="335,5,552,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="287,42,320,37,321,43,287,47"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1detail_1_1concurrent__queue.html#a7adf9ffeacd4f5f47a599008587494b8" title="Tries to dequeue a value (non&#45;blocking)" alt="" coords="357,70,529,125"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="287,76,344,83,343,88,287,81"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1detail_1_1concurrent__queue.html#a0ae1b9e12c6d286286dff3cc8e2e8e13" title="Wakes all waiting consumers." alt="" coords="600,5,815,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="552,23,586,23,586,28,552,28"/>
+</map>

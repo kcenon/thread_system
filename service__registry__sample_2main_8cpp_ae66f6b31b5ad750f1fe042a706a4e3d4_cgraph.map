@@ -1,0 +1,7 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,60,70"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1service__registry.html#a45cafb766f41ca18e22ab2be8f5cce91" title=" " alt="" coords="116,5,291,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,50,102,42,103,47,61,55"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1service__registry.html#ae4c7d0fe8c4c6cf2d6f32f19adfdccfd" title="Register a service implementation for the given interface type." alt="" coords="108,69,299,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="61,60,95,66,94,71,60,65"/>
+</map>

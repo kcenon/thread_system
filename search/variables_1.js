@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['backends_5f_0',['backends_',['../classkcenon_1_1thread_1_1metrics_1_1BackendRegistry.html#a232768f5e27552151d202e8957e4bd51',1,'kcenon::thread::metrics::BackendRegistry']]],
+  ['backoff_5fcalculator_5f_1',['backoff_calculator_',['../classkcenon_1_1thread_1_1numa__work__stealer.html#afcde64275d0a96d2fd12527685f4dda7',1,'kcenon::thread::numa_work_stealer']]],
+  ['backoff_5fmultiplier_2',['backoff_multiplier',['../structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#aa41a0df20b5496e2d040d8ea5e054e85',1,'kcenon::thread::enhanced_work_stealing_config']]],
+  ['backoff_5fstrategy_3',['backoff_strategy',['../structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a281f82291b8fabbd2662d0312ce8817f',1,'kcenon::thread::enhanced_work_stealing_config']]],
+  ['backpressure_4',['backpressure',['../structkcenon_1_1thread_1_1thread__system__config_1_1pool__config.html#a062027bd296a3633a378135a4a3beb0c',1,'kcenon::thread::thread_system_config::pool_config']]],
+  ['base_5fpriority_5',['base_priority',['../structkcenon_1_1thread_1_1aged__priority.html#ad742da03383c7126683496cffceeb978',1,'kcenon::thread::aged_priority']]],
+  ['base_5freclaim_5fthreshold_6',['BASE_RECLAIM_THRESHOLD',['../structkcenon_1_1thread_1_1hazard__pointer__domain_1_1thread__retire__list.html#a8230e7b82342f4fdd5f31f3ee4052992',1,'kcenon::thread::hazard_pointer_domain::thread_retire_list']]],
+  ['basic_5fmetrics_5f_7',['basic_metrics_',['../classkcenon_1_1thread_1_1metrics_1_1metrics__service.html#a76e3bc894034063f2dd61907126d64fe',1,'kcenon::thread::metrics::metrics_service']]],
+  ['batch_5fsteals_8',['batch_steals',['../structkcenon_1_1thread_1_1work__stealing__stats__snapshot.html#ae7ef701ba668211f9127fba2c17d9bf9',1,'kcenon::thread::work_stealing_stats_snapshot::batch_steals'],['../structkcenon_1_1thread_1_1work__stealing__stats.html#a9462dacf9f86f95a28d75eab1dd3d8c4',1,'kcenon::thread::work_stealing_stats::batch_steals']]],
+  ['block_5ftimeout_9',['block_timeout',['../structkcenon_1_1thread_1_1backpressure__config.html#aceca7a06fc674a9990c4f1d4eb3136b0',1,'kcenon::thread::backpressure_config']]],
+  ['boost_10',['boost',['../structkcenon_1_1thread_1_1aged__priority.html#a8326d78e41c1f6e5c773fbab1de6d074',1,'kcenon::thread::aged_priority']]],
+  ['boost_5frate_11',['boost_rate',['../structkcenon_1_1thread_1_1aging__stats.html#ab7d9e6110f85a33fca54cbf24be47746',1,'kcenon::thread::aging_stats']]],
+  ['bottom_5f_12',['bottom_',['../classkcenon_1_1thread_1_1lockfree_1_1work__stealing__deque.html#a34450c3c89cdf5514f48cd1ed77d0286',1,'kcenon::thread::lockfree::work_stealing_deque']]],
+  ['bottom_5fpriority_5fworkers_5f_13',['bottom_priority_workers_',['../typed__thread__pool__sample__2_8cpp.html#a77bf62c88607230eb7d09c3533421c80',1,'typed_thread_pool_sample_2.cpp']]],
+  ['bound_5fpolicy_5f_14',['bound_policy_',['../classkcenon_1_1thread_1_1policy__queue.html#ac656477f3139d26a7704c44bc3e1bbd0',1,'kcenon::thread::policy_queue']]],
+  ['bucket_5fcount_15',['BUCKET_COUNT',['../classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a2212916b508132fb044f107de2112705',1,'kcenon::thread::metrics::LatencyHistogram']]],
+  ['bucket_5fduration_5f_16',['bucket_duration_',['../classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#aeaccb00d44fc77d1c38480360326ae0c',1,'kcenon::thread::metrics::SlidingWindowCounter']]],
+  ['buckets_5f_17',['buckets_',['../classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a553f02271f134897dfc1a505638157c9',1,'kcenon::thread::metrics::LatencyHistogram::buckets_'],['../classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#aabe7a0d84d34a6c559c7500e0db8fd44',1,'kcenon::thread::metrics::SlidingWindowCounter::buckets_']]],
+  ['buffer_5f_18',['buffer_',['../classkcenon_1_1thread_1_1lockfree_1_1circular__array.html#a6f547241471293e71acb6a192e6cd3b2',1,'kcenon::thread::lockfree::circular_array']]],
+  ['bus_5f_19',['bus_',['../classkcenon_1_1thread_1_1event__bus_1_1subscription.html#a240d394c858dc897253e640417493f31',1,'kcenon::thread::event_bus::subscription']]],
+  ['busy_5ftime_5fns_20',['busy_time_ns',['../structkcenon_1_1thread_1_1metrics_1_1WorkerMetrics.html#aac407b4879cf19f5a0477debd4f11a0f',1,'kcenon::thread::metrics::WorkerMetrics']]]
+];

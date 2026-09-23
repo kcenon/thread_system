@@ -1,0 +1,9 @@
+<map id="kcenon::thread::hazard_pointer_domain::acquire" name="kcenon::thread::hazard_pointer_domain::acquire">
+<area shape="rect" id="Node000001" title="Acquire a hazard pointer for this domain." alt="" coords="5,53,192,93"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1hazard__pointer.html#af794178c3cf655a54f792fc7f114d7a6" title="Default constructor &#45; acquires a hazard pointer slot." alt="" coords="240,53,420,93"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,70,226,70,226,75,192,75"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1detail_1_1hazard__pointer__registry.html#a6c8f58091a85986b40e7228e073ad199" title="Get or create thread&#45;local hazard list." alt="" coords="468,5,652,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="420,54,454,48,455,54,421,60"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1detail_1_1hazard__pointer__registry.html#a03102a801418cf5ccc4d7cac49305527" title=" " alt="" coords="468,84,652,139"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="421,85,455,91,454,96,420,90"/>
+</map>

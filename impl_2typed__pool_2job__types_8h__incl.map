@@ -1,0 +1,32 @@
+<map id="include/kcenon/thread/impl/typed_pool/job_types.h" name="include/kcenon/thread/impl/typed_pool/job_types.h">
+<area shape="rect" id="Node000001" title="Job type definitions for the typed thread pool." alt="" coords="346,5,513,60"/>
+<area shape="rect" id="Node000002" href="$include_2kcenon_2thread_2utils_2formatter_8h.html" title="Generic formatter for enum types using user&#45;provided converter functors." alt="" coords="140,108,287,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="370,63,270,105,268,100,368,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="213,196,272,221"/>
+<area shape="poly" id="edge14_Node000001_Node000004" title=" " alt="" coords="403,62,267,189,263,185,399,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="297,196,394,221"/>
+<area shape="poly" id="edge17_Node000001_Node000005" title=" " alt="" coords="419,61,359,185,354,183,414,59"/>
+<area shape="rect" id="Node000007" href="$include_2kcenon_2thread_2utils_2convert__string_8h.html" title="String encoding conversion, Base64 encoding/decoding utilities." alt="" coords="412,108,559,148"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="448,59,469,95,465,98,443,62"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="792,196,859,221"/>
+<area shape="poly" id="edge16_Node000001_Node000010" title=" " alt="" coords="486,58,572,106,597,127,623,146,685,166,779,192,778,197,684,171,620,150,594,131,569,110,484,62"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="633,115,689,141"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="496,58,616,106,621,108,619,113,614,110,494,62"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,196,72,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="173,150,78,193,76,188,170,146"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="223,147,236,182,231,184,218,149"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="246,146,315,186,312,191,244,150"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="97,196,189,221"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="198,150,164,188,160,184,194,146"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="428,151,286,196,285,191,426,145"/>
+<area shape="poly" id="edge13_Node000007_Node000005" title=" " alt="" coords="453,150,379,191,377,187,451,146"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="418,196,473,221"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="478,149,460,185,455,182,473,147"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="497,196,559,221"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="498,147,518,183,513,185,493,149"/>
+<area shape="poly" id="edge10_Node000007_Node000010" title=" " alt="" coords="559,143,779,193,778,198,558,148"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="584,196,659,221"/>
+<area shape="poly" id="edge11_Node000007_Node000011" title=" " alt="" coords="519,146,591,187,588,191,517,150"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="683,196,768,221"/>
+<area shape="poly" id="edge12_Node000007_Node000012" title=" " alt="" coords="544,145,678,189,676,194,542,151"/>
+</map>

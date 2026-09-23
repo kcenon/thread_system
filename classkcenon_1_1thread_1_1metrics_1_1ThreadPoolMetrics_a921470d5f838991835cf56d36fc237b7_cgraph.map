@@ -1,0 +1,13 @@
+<map id="kcenon::thread::metrics::ThreadPoolMetrics::snapshot" name="kcenon::thread::metrics::ThreadPoolMetrics::snapshot">
+<area shape="rect" id="Node000001" title="Get a snapshot of all metrics." alt="" coords="5,133,224,173"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a3741f9aaf9790c6da5f4bc70f5224ce4" title="Get the total number of tasks successfully executed." alt="" coords="276,5,495,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="142,131,200,93,271,55,289,47,291,52,273,60,203,97,145,135"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a824bee8bb995f8294725ae0e550ec840" title="Get the total number of failed tasks." alt="" coords="287,69,484,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="199,131,286,110,288,115,201,136"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a5cc9b46e7234c95c2f56dcf3c9fe1d83" title="Get the total number of tasks submitted." alt="" coords="272,133,499,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="224,151,258,151,258,156,224,156"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a1b30e693bd0b1a295fc6a4fed9bab38c" title="Get the total busy time in nanoseconds." alt="" coords="292,198,479,253"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="191,171,279,194,278,200,190,176"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#ad8eec6c5037bebfd0b5887ff41ba07f7" title="Get the total idle time in nanoseconds." alt="" coords="296,277,475,331"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="142,171,200,216,273,262,288,269,285,273,271,266,197,220,138,176"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::lifecycle_controller::set_state" name="kcenon::thread::lifecycle_controller::set_state">
+<area shape="rect" id="Node000001" title="Sets the thread condition/state." alt="" coords="236,5,419,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1lifecycle__controller.html#a68962e6d03d9178285396e6f4a5bc4dd" title="Marks the thread as stopped." alt="" coords="5,5,188,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="223,28,188,28,188,23,223,23"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::thread_system_config::scaling_config" name="kcenon::thread::thread_system_config::scaling_config">
+<area shape="rect" id="Node000001" title="Configuration for dynamic scaling features." alt="" coords="5,323,175,417"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1priority__aging__config.html" title="Configuration for priority aging behavior." alt="" coords="7,5,173,260"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,260,93,306,87,306,87,260"/>
+</map>

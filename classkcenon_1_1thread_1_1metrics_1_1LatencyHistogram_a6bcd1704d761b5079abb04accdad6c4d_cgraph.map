@@ -1,0 +1,11 @@
+<map id="kcenon::thread::metrics::LatencyHistogram::stddev" name="kcenon::thread::metrics::LatencyHistogram::stddev">
+<area shape="rect" id="Node000001" title="Calculate the standard deviation." alt="" coords="5,89,207,129"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#abd3b39f8b7fdd52010d08ff0dcd338e6" title="Get the midpoint value of a bucket for estimation." alt="" coords="255,45,455,100"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,91,241,86,241,92,207,97"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a0eae77b535eb00a82b10cb75f261a4e8" title="Calculate the arithmetic mean." alt="" coords="257,125,452,165"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="207,121,244,126,243,131,206,126"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a65c2f0cfc8b1e9c061fd4898bc3feaee" title="Get the lower bound of a bucket." alt="" coords="503,5,703,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="454,54,489,48,489,54,455,59"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a89866428f9fd1b7712077896582c35e9" title="Get the upper bound of a bucket." alt="" coords="503,84,703,139"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="455,86,489,91,489,96,454,91"/>
+</map>

@@ -1,0 +1,20 @@
+<map id="include/kcenon/thread/scaling/autoscaler.h" name="include/kcenon/thread/scaling/autoscaler.h">
+<area shape="rect" id="Node000001" title="Automatic scaling of thread pool workers based on load metrics." alt="" coords="423,5,590,45"/>
+<area shape="rect" id="Node000002" href="$autoscaling__pool__policy_8h.html" title="Pool policy implementing automatic worker scaling based on load." alt="" coords="305,93,495,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="477,56,432,95,428,91,473,52"/>
+<area shape="rect" id="Node000009" href="$autoscaler_8cpp.html" title=" " alt="" coords="520,108,709,133"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="541,52,603,106,599,110,537,56"/>
+<area shape="rect" id="Node000003" href="$thread__pool__builder_8h.html" title="Fluent builder for creating and configuring thread pools." alt="" coords="187,196,386,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="359,159,311,198,308,194,356,155"/>
+<area shape="rect" id="Node000008" href="$autoscaling__pool__policy_8cpp.html" title=" " alt="" coords="410,196,619,236"/>
+<area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="445,155,493,194,490,198,441,159"/>
+<area shape="rect" id="Node000004" href="$event__bus_8h.html" title="Type&#45;safe publish&#45;subscribe event bus for thread system events." alt="" coords="105,284,271,324"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="256,247,212,286,208,282,253,243"/>
+<area shape="rect" id="Node000007" href="$thread__pool__builder_8cpp.html" title=" " alt="" coords="296,284,477,324"/>
+<area shape="poly" id="edge7_Node000003_Node000007" title=" " alt="" coords="321,243,366,282,363,286,317,247"/>
+<area shape="rect" id="Node000005" href="$configuration__manager_8h.html" title="Runtime configuration management with typed key&#45;value storage." alt="" coords="5,372,224,412"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="165,336,133,374,129,370,161,333"/>
+<area shape="rect" id="Node000006" href="$core_8cppm.html" title="C++20 module partition for thread_system core components." alt="" coords="101,460,275,485"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="218,333,230,351,239,371,243,392,238,413,223,441,204,462,200,458,218,437,234,411,238,392,233,373,225,354,213,336"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="144,420,179,458,175,461,140,424"/>
+</map>

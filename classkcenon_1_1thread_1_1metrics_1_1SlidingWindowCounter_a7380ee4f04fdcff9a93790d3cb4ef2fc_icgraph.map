@@ -1,0 +1,5 @@
+<map id="kcenon::thread::metrics::SlidingWindowCounter::increment" name="kcenon::thread::metrics::SlidingWindowCounter::increment">
+<area shape="rect" id="Node000001" title="Increment the counter." alt="" coords="268,5,445,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a55561eeac969ea283f09a06a93392d4a" title="Record task execution completion." alt="" coords="5,5,220,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="254,35,220,35,220,30,254,30"/>
+</map>

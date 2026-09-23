@@ -1,0 +1,9 @@
+<map id="kcenon::thread::diagnostics::health_state_to_string" name="kcenon::thread::diagnostics::health_state_to_string">
+<area shape="rect" id="Node000001" title="Converts health_state to human&#45;readable string." alt="" coords="255,77,456,117"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1diagnostics_1_1health__status.html#aadbe13a0a7b424071d8db8e5a175bb49" title="Converts health status to JSON string." alt="" coords="5,5,207,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="271,76,175,48,177,43,273,71"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a228383967039855596df136bcd696ab7" title="Exports diagnostics as JSON." alt="" coords="5,70,207,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="241,100,207,100,207,95,241,95"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1diagnostics_1_1health__status.html#a7a2e4d1f791d4836764f6b78ac7354a0" title="Converts health status to human&#45;readable string." alt="" coords="5,149,207,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="273,124,177,152,175,147,271,119"/>
+</map>

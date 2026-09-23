@@ -1,0 +1,13 @@
+<map id="kcenon::thread::safe_hazard_pointer_domain::get_adaptive_threshold" name="kcenon::thread::safe_hazard_pointer_domain::get_adaptive_threshold">
+<area shape="rect" id="Node000001" title="Get adaptive threshold based on active thread count." alt="" coords="669,45,852,100"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a5dbea55217b9dbb8bf8dfe167e548ca7" title="Retire a pointer for later reclamation." alt="" coords="439,45,621,100"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="656,75,622,75,622,70,656,70"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#aa9a793d873420afd653f02a860e5cab4" title="Retire a node through hazard pointers, recycling via pool on reclamation." alt="" coords="225,8,391,63"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="424,58,390,52,391,47,425,52"/>
+<area shape="rect" id="Node000005" href="$namespacekcenon_1_1thread.html#abbef4c71250bf88a52b80313ec1db89d" title=" " alt="" coords="231,89,385,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="425,92,386,99,385,94,425,87"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#a0358cd30749f36d3f3e00570b20d46e0" title="Destructor." alt="" coords="9,5,174,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="212,37,174,36,174,31,212,31"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1typed__safe__hazard__domain.html#aa81f5a9cbeb6d72a8ed6e9cf78bd298e" title=" " alt="" coords="5,84,177,139"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="217,112,178,113,178,108,217,107"/>
+</map>

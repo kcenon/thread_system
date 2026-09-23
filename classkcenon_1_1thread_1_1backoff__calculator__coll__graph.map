@@ -1,0 +1,5 @@
+<map id="kcenon::thread::backoff_calculator" name="kcenon::thread::backoff_calculator">
+<area shape="rect" id="Node000001" title="Calculates backoff delays for work&#45;stealing operations." alt="" coords="5,228,184,428"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1steal__backoff__config.html" title="Configuration for backoff behavior." alt="" coords="19,5,170,165"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,166,97,212,92,212,92,166"/>
+</map>

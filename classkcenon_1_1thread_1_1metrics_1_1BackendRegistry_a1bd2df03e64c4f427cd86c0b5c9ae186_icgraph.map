@@ -1,0 +1,5 @@
+<map id="kcenon::thread::metrics::BackendRegistry::instance" name="kcenon::thread::metrics::BackendRegistry::instance">
+<area shape="rect" id="Node000001" title="Get the singleton instance." alt="" coords="268,13,469,53"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a955158e389ad1adbe7ac30c30efb637e" title="Export metrics as JSON string." alt="" coords="5,5,220,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="254,35,220,35,220,30,254,30"/>
+</map>

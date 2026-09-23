@@ -1,0 +1,9 @@
+<map id="kcenon::thread::adaptive_job_queue::accuracy_guard::accuracy_guard" name="kcenon::thread::adaptive_job_queue::accuracy_guard::accuracy_guard">
+<area shape="rect" id="Node000001" title="Construct guard and switch queue to mutex mode." alt="" coords="5,30,212,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a6c536751bf7fb6678071fd067c4db339" title=" " alt="" coords="260,37,479,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,55,246,55,246,60,212,60"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a7cac7090605cce3bf0beff1bf9d36e04" title=" " alt="" coords="527,5,757,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="479,42,513,38,514,43,479,47"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1result.html#a6eef58a71fe0672d5a3c428e0a7c3f31" title="Gets the value." alt="" coords="560,69,724,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="479,68,547,76,546,81,479,73"/>
+</map>

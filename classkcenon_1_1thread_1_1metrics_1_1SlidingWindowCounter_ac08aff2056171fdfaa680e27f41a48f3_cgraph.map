@@ -1,0 +1,9 @@
+<map id="kcenon::thread::metrics::SlidingWindowCounter::rate_per_second" name="kcenon::thread::metrics::SlidingWindowCounter::rate_per_second">
+<area shape="rect" id="Node000001" title="Get the current rate per second." alt="" coords="5,45,183,100"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a8e32ae89603462b68593811e567c136e" title="Get the total count within the current window." alt="" coords="231,45,408,100"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,70,217,70,217,75,183,75"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#afae0624b08953afcee66b62fe892d07a" title="Get current time in milliseconds since epoch." alt="" coords="456,5,633,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="408,54,442,48,443,53,409,60"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a0cbadfc08636391446a80070b4be314f" title="Check if a bucket is within the current window." alt="" coords="456,84,633,139"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="408,85,443,91,442,96,408,90"/>
+</map>

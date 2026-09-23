@@ -1,0 +1,9 @@
+<map id="kcenon::thread::adaptive_job_queue::update_mode_time" name="kcenon::thread::adaptive_job_queue::update_mode_time">
+<area shape="rect" id="Node000001" title=" " alt="" coords="555,45,785,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a6c536751bf7fb6678071fd067c4db339" title=" " alt="" coords="274,13,493,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="541,53,492,47,493,42,541,48"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a9dc98b8235d4945dac95ba674c16f7b4" title="Destructor &#45; cleans up both queue implementations." alt="" coords="260,77,507,117"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="541,82,507,86,507,80,540,76"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1adaptive__job__queue_1_1accuracy__guard.html#aa9ec0f290ad251cd16e2377938e8cce4" title="Construct guard and switch queue to mutex mode." alt="" coords="5,5,212,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="260,35,212,35,212,30,260,30"/>
+</map>

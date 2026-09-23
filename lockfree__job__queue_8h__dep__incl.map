@@ -1,0 +1,25 @@
+<map id="include/kcenon/thread/lockfree/lockfree_job_queue.h" name="include/kcenon/thread/lockfree/lockfree_job_queue.h">
+<area shape="rect" id="Node000001" title="Lock&#45;free MPMC job queue using Michael&#45;Scott algorithm with hazard pointers." alt="" coords="453,5,620,60"/>
+<area shape="rect" id="Node000002" href="$queue__capabilities__sample_8cpp.html" title="Runtime queue capability introspection and adaptive queue selection." alt="" coords="5,196,217,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="466,68,171,198,169,193,464,63"/>
+<area shape="rect" id="Node000003" href="$adaptive__job__queue_8h.html" title="Adaptive queue that auto&#45;switches between mutex and lock&#45;free modes." alt="" coords="430,108,643,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="539,74,539,108,534,108,534,74"/>
+<area shape="rect" id="Node000005" href="$queue__factory_8h.html" title="Factory for creating queue instances based on configuration." alt="" coords="242,203,415,243"/>
+<area shape="poly" id="edge11_Node000001_Node000005" title=" " alt="" coords="476,69,420,110,375,159,343,205,338,201,371,156,416,106,473,65"/>
+<area shape="rect" id="Node000007" href="$queue_8cppm.html" title="C++20 module partition for thread_system queue implementations." alt="" coords="749,313,935,339"/>
+<area shape="poly" id="edge13_Node000001_Node000007" title=" " alt="" coords="634,53,692,73,752,103,807,143,831,167,851,195,862,226,862,260,856,291,849,314,844,313,851,290,857,260,857,227,846,197,827,171,804,147,749,107,690,78,632,58"/>
+<area shape="rect" id="Node000010" href="$lockfree__job__queue_8cpp.html" title=" " alt="" coords="930,108,1085,148"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="634,50,930,109,929,114,633,56"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="437,154,231,199,218,201,217,196,229,193,436,148"/>
+<area shape="rect" id="Node000004" href="$adaptive__queue__sample_8cpp.html" title="Adaptive job queue sample comparing policies and demonstrating mode switching." alt="" coords="439,196,634,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="539,161,539,196,534,196,534,161"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="483,156,372,206,370,201,481,151"/>
+<area shape="poly" id="edge9_Node000003_Node000007" title=" " alt="" coords="658,142,754,163,793,177,819,194,837,224,845,257,847,289,846,313,841,313,842,289,840,258,832,226,815,198,790,182,752,168,656,147"/>
+<area shape="rect" id="Node000009" href="$adaptive__job__queue_8cpp.html" title=" " alt="" coords="658,203,805,243"/>
+<area shape="poly" id="edge10_Node000003_Node000009" title=" " alt="" coords="590,152,693,201,691,206,587,156"/>
+<area shape="rect" id="Node000006" href="$queue__factory__sample_8cpp.html" title="Queue factory for requirements&#45;based and compile&#45;time queue selection." alt="" coords="347,299,529,353"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="361,251,411,296,407,300,358,255"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="411,244,428,248,611,284,768,311,767,316,610,289,427,253,410,249"/>
+<area shape="rect" id="Node000008" href="$queue__factory_8cpp.html" title=" " alt="" coords="116,313,323,339"/>
+<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="300,255,234,315,230,311,296,251"/>
+</map>

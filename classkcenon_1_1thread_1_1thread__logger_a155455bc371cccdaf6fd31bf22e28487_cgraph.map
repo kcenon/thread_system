@@ -1,0 +1,11 @@
+<map id="kcenon::thread::thread_logger::log_error" name="kcenon::thread::thread_logger::log_error">
+<area shape="rect" id="Node000001" title="Log error with error code." alt="" coords="5,69,175,109"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1error.html#a25fa1496e3d87a20c450d04fddb50ed1" title="Gets the error code." alt="" coords="228,5,387,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,67,225,47,227,52,159,72"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__logger.html#a85bc1649f6ee37d8b808c8d6b747bbbe" title="Log a message with context." alt="" coords="223,69,392,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,87,209,87,209,92,175,92"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1error.html#a686e68c40873013cd92d275178380879" title="Gets the error message." alt="" coords="228,133,387,173"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="159,107,227,127,225,132,158,112"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__logger.html#a2165bc11b774d39c13bedb7e17999fa4" title=" " alt="" coords="440,69,615,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="392,87,427,87,427,92,392,92"/>
+</map>

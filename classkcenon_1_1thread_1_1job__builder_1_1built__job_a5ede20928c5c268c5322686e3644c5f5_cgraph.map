@@ -1,0 +1,13 @@
+<map id="kcenon::thread::job_builder::built_job::do_work" name="kcenon::thread::job_builder::built_job::do_work">
+<area shape="rect" id="Node000001" title="The core task execution method to be overridden by derived classes." alt="" coords="5,62,152,117"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html#a885899d916591edb4a9662f830044b96" title="Invokes the completion callbacks if they are set." alt="" coords="230,5,377,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,66,219,46,220,52,153,71"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1cancellation__token.html#ae6f752c51fe6a2a735313550812edbfc" title="Checks if the token has been canceled." alt="" coords="200,69,407,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="152,87,186,87,186,92,152,92"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread.html#a13f75c13dd33420c01a704c8bd09a79e" title="Create a common::VoidResult error from a thread::error_code." alt="" coords="222,133,385,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="153,108,220,127,219,132,151,113"/>
+<area shape="rect" id="Node000005" href="$namespacekcenon_1_1thread.html#a899d6d797fc353567761b0d4ed2637e6" title="Convert a thread::error_code to common::error_info." alt="" coords="455,133,595,173"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="385,151,441,151,441,156,385,156"/>
+<area shape="rect" id="Node000006" href="$namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="643,133,801,173"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="595,151,629,151,629,156,595,156"/>
+</map>

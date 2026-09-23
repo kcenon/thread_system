@@ -1,0 +1,7 @@
+<map id="kcenon::thread::error::message" name="kcenon::thread::error::message">
+<area shape="rect" id="Node000001" title="Gets the error message." alt="" coords="223,49,381,89"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1typed__thread__pool__builder.html#aef76dceb2211826180d070153f5770c1" title="Build the typed thread pool with current configuration." alt="" coords="8,5,172,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,56,172,49,173,44,209,50"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__logger.html#a155455bc371cccdaf6fd31bf22e28487" title="Log error with error code." alt="" coords="5,85,175,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="209,87,175,93,174,88,208,82"/>
+</map>

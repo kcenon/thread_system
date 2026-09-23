@@ -1,0 +1,11 @@
+<map id="kcenon::thread::job_queue::enqueue" name="kcenon::thread::job_queue::enqueue">
+<area shape="rect" id="Node000001" title="Enqueues a new job into the queue." alt="" coords="308,101,455,141"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#ac07353027660d92c3745a904c5b5c48d" title="Directly enqueues without backpressure (internal use)." alt="" coords="25,5,240,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="335,97,259,60,223,48,225,43,261,55,337,92"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1job__queue.html#afee5fef64127873280c795e4e4e12bf3" title="Type&#45;safe enqueue for job subclasses." alt="" coords="59,69,206,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="294,113,206,101,207,96,295,108"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#aef44e5a3b2392bb33919506fbd160d56" title="Handles callback policy." alt="" coords="5,133,260,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="294,135,261,140,260,134,294,130"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1job__queue.html#a026a82d17553f8a12a8f35f3998bd54d" title="scheduler_interface implementation: schedule a job" alt="" coords="59,197,206,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="337,151,261,188,207,205,205,200,259,183,335,146"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::detail::concurrent_queue::wait_dequeue" name="kcenon::thread::detail::concurrent_queue::wait_dequeue">
+<area shape="rect" id="Node000001" title="Dequeues a value with blocking wait." alt="" coords="5,5,188,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1concurrent__queue.html#a7adf9ffeacd4f5f47a599008587494b8" title="Tries to dequeue a value (non&#45;blocking)" alt="" coords="236,5,408,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,30,222,30,222,35,189,35"/>
+</map>
