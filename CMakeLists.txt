@@ -37,6 +37,7 @@ option(BUILD_WITH_COMMON_SYSTEM "Build with common_system for standard interface
 option(THREAD_BUILD_INTEGRATION_TESTS "Build integration tests" ON)
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
+option(BUILD_FUZZERS "Build libFuzzer targets (requires Clang)" OFF)
 
 # Lock-free queue option (TICKET-001 RESOLVED - Now safe with Hazard Pointers)
 option(THREAD_ENABLE_LOCKFREE_QUEUE "Enable lock-free queue (safe with Hazard Pointers)" ON)
@@ -165,6 +166,11 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
 
     # Add benchmarks
     add_benchmarks_subdirectory()
+
+    # Fuzz targets are opt-in and require Clang's libFuzzer runtime.
+    if(BUILD_FUZZERS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/fuzz/CMakeLists.txt)
+        add_subdirectory(fuzz)
+    endif()
 
     # Setup documentation
     setup_documentation()
