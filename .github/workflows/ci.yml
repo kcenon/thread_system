@@ -422,9 +422,4 @@ jobs:
 
     - name: Run thread_base_unit
       timeout-minutes: 15
-      run: |
-        # Excluded because it can livelock on develop in both lifecycle paths:
-        # develop still has the unbounded producer that #721 replaced on main.
-        # Drop this exclusion once develop carries that change.
-        EXCLUDE="AdaptiveQueueErrorTest.DataIntegrityDuringModeSwitch"
-        ./build/bin/thread_base_unit --gtest_brief=1 "--gtest_filter=-$EXCLUDE"
+      run: ./build/bin/thread_base_unit --gtest_brief=1
