@@ -168,7 +168,7 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     # Add benchmarks
     add_benchmarks_subdirectory()
 
-    # Add fuzzers (libFuzzer; off by default, requires Clang)
+    # Fuzz targets are opt-in and require Clang's libFuzzer runtime.
     if(BUILD_FUZZERS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/fuzz/CMakeLists.txt)
         add_subdirectory(fuzz)
     endif()

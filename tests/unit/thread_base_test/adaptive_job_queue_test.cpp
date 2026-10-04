@@ -7,6 +7,7 @@
 #include <kcenon/thread/queue/adaptive_job_queue.h>
 
 #include <atomic>
+#include <barrier>
 #include <chrono>
 #include <latch>
 #include <thread>
@@ -448,19 +449,22 @@ TEST_F(AdaptiveJobQueueTest, ConcurrentModeSwitchWithOperations) {
     adaptive_job_queue queue(adaptive_job_queue::policy::manual);
     constexpr int num_ops = 1000;
 
-    std::atomic<bool> stop{false};
-    std::atomic<int> successful_ops{0};
+    std::atomic<int> enqueued{0};
+    std::atomic<int> dequeued{0};
+    std::barrier operation_phase(2);
 
-    // Worker thread doing enqueue/dequeue
+    // Start each enqueue/dequeue round alongside a mode switch. A faster
+    // switcher must not finish and stop the worker before it is scheduled.
     std::thread worker([&]() {
-        while (!stop.load(std::memory_order_acquire)) {
+        for (int i = 0; i < num_ops; ++i) {
+            operation_phase.arrive_and_wait();
             auto job =
                 std::make_unique<callback_job>([]() -> kcenon::common::VoidResult { return kcenon::common::ok(); });
             if (!queue.enqueue(std::move(job)).is_err()) {
-                successful_ops.fetch_add(1, std::memory_order_relaxed);
+                enqueued.fetch_add(1, std::memory_order_relaxed);
             }
             if (auto result = queue.try_dequeue(); result.is_ok()) {
-                successful_ops.fetch_add(1, std::memory_order_relaxed);
+                dequeued.fetch_add(1, std::memory_order_relaxed);
             }
         }
     });
@@ -468,24 +472,30 @@ TEST_F(AdaptiveJobQueueTest, ConcurrentModeSwitchWithOperations) {
     // Mode switching thread
     std::thread switcher([&]() {
         for (int i = 0; i < num_ops; ++i) {
-            if (i % 2 == 0) {
-                queue.switch_mode(adaptive_job_queue::mode::lock_free);
-            } else {
-                queue.switch_mode(adaptive_job_queue::mode::mutex);
-            }
+            operation_phase.arrive_and_wait();
+            auto target = i % 2 == 0 ? adaptive_job_queue::mode::lock_free
+                                     : adaptive_job_queue::mode::mutex;
+            EXPECT_TRUE(queue.switch_mode(target).is_ok());
         }
-        stop.store(true, std::memory_order_release);
     });
 
     switcher.join();
     worker.join();
 
-    // Verify no data corruption - just check we got some operations done
-    EXPECT_GT(successful_ops.load(), 0);
+    // A concurrent dequeue can miss a job while it is being migrated.
+    // Account for any remaining jobs once both threads have finished.
+    while (queue.try_dequeue().is_ok()) {
+        dequeued.fetch_add(1, std::memory_order_relaxed);
+    }
 
-    // Stats should show mode switches
+    EXPECT_EQ(enqueued.load(), num_ops);
+    EXPECT_EQ(dequeued.load(), num_ops);
+    EXPECT_TRUE(queue.empty());
+
     auto stats = queue.get_stats();
-    EXPECT_GT(stats.mode_switches, 0);
+    EXPECT_EQ(stats.enqueue_count, num_ops);
+    EXPECT_EQ(stats.dequeue_count, num_ops);
+    EXPECT_EQ(stats.mode_switches, num_ops);
 }
 
 TEST_F(AdaptiveJobQueueTest, ConcurrentAccuracyGuards) {
