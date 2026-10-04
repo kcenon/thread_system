@@ -177,14 +177,9 @@ namespace kcenon::thread
 			{
 				// Drop enough jobs to make room
 				std::size_t to_drop = jobs.size() - available_space;
-				{
-					std::scoped_lock<std::mutex> lock(mutex_);
-					for (std::size_t i = 0; i < to_drop && !empty(); ++i)
-					{
-						auto batch = dequeue_batch_limited(1);
-						stats_.jobs_dropped.fetch_add(batch.size(), std::memory_order_relaxed);
-					}
-				}
+				// dequeue_batch_limited() locks mutex_ itself
+				auto dropped = dequeue_batch_limited(to_drop);
+				stats_.jobs_dropped.fetch_add(dropped.size(), std::memory_order_relaxed);
 				auto result = job_queue::enqueue_batch(std::move(jobs));
 				if (result.is_ok())
 				{
@@ -491,7 +486,7 @@ namespace kcenon::thread
 		{
 			case backpressure_decision::accept:
 				// Force accept (may exceed max_size temporarily)
-				return job_queue::enqueue(std::move(value));
+				return enqueue_ignoring_limit(std::move(value));
 
 			case backpressure_decision::reject:
 				stats_.jobs_rejected.fetch_add(1, std::memory_order_relaxed);

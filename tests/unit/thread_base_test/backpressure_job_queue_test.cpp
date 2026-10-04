@@ -306,7 +306,7 @@ TEST(BackpressureJobQueueTest, CallbackPolicyAcceptDecisionForcesAccept) {
     // Accept decision forces enqueue despite queue being full.
     auto result = q.enqueue(make_noop_job());
     EXPECT_TRUE(result.is_ok());
-    EXPECT_GE(q.size(), 1u);
+    EXPECT_EQ(q.size(), 2u);
 }
 
 TEST(BackpressureJobQueueTest, CallbackPolicyDropAndAcceptEvictsOldest) {
