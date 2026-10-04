@@ -91,3 +91,5 @@ archive hash passed for v1.0.0 in
 release identity or the generated port archive hash fails validation.
 The release-triggered workflow checks an already published tag; its enforcing
 prepublication boundary is the registry sync.
+
+<!-- Temporary docs-only input for common_system#701 required-check visibility verification. -->
