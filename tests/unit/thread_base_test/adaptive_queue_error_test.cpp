@@ -8,6 +8,7 @@
 #include <kcenon/thread/core/callback_job.h>
 
 #include <atomic>
+#include <barrier>
 #include <chrono>
 #include <thread>
 #include <vector>
@@ -192,20 +193,28 @@ TEST_F(AdaptiveQueueErrorTest, AccuracyGuardWithManualPolicy) {
 
 TEST_F(AdaptiveQueueErrorTest, DataIntegrityDuringModeSwitch) {
     adaptive_job_queue queue(adaptive_job_queue::policy::manual);
+    constexpr int num_mode_switches = 40;
+    constexpr int jobs_per_switch = 250;
     std::atomic<int> enqueued{0};
     std::atomic<int> dequeued{0};
     std::atomic<bool> stop{false};
+    std::barrier mode_phase(2);
 
-    // Producer
+    // Bound the workload for each mode change so sanitizer overhead cannot
+    // cause an ever-growing backlog while the switcher migrates queued jobs.
     std::thread producer([&]() {
-        while (!stop.load(std::memory_order_acquire)) {
-            auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
-                return kcenon::common::ok();
-            });
-            if (!queue.enqueue(std::move(job)).is_err()) {
-                enqueued.fetch_add(1, std::memory_order_relaxed);
+        for (int phase = 0; phase < num_mode_switches; ++phase) {
+            mode_phase.arrive_and_wait();
+            for (int i = 0; i < jobs_per_switch; ++i) {
+                auto job = std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+                    return kcenon::common::ok();
+                });
+                if (!queue.enqueue(std::move(job)).is_err()) {
+                    enqueued.fetch_add(1, std::memory_order_relaxed);
+                }
+                std::this_thread::yield();
             }
-            std::this_thread::yield();
+            mode_phase.arrive_and_wait();
         }
     });
 
@@ -220,21 +229,22 @@ TEST_F(AdaptiveQueueErrorTest, DataIntegrityDuringModeSwitch) {
         }
     });
 
-    // Mode switcher — 20 iterations is sufficient to verify data integrity
-    // while staying within sanitizer timeout budgets (UBSan/ASan add heavy
-    // instrumentation overhead on the tight producer/consumer loops)
+    // Start a fresh producer batch alongside every mode change, rather than
+    // allowing the producer to finish before later switches are exercised.
     std::thread switcher([&]() {
-        for (int i = 0; i < 20; ++i) {
-            queue.switch_mode(adaptive_job_queue::mode::lock_free);
+        for (int phase = 0; phase < num_mode_switches; ++phase) {
+            mode_phase.arrive_and_wait();
+            auto target = phase % 2 == 0 ? adaptive_job_queue::mode::lock_free
+                                         : adaptive_job_queue::mode::mutex;
+            EXPECT_TRUE(queue.switch_mode(target).is_ok());
             std::this_thread::sleep_for(std::chrono::milliseconds(5));
-            queue.switch_mode(adaptive_job_queue::mode::mutex);
-            std::this_thread::sleep_for(std::chrono::milliseconds(5));
+            mode_phase.arrive_and_wait();
         }
     });
 
     switcher.join();
-    stop.store(true, std::memory_order_release);
     producer.join();
+    stop.store(true, std::memory_order_release);
     consumer.join();
 
     // Drain remaining jobs
@@ -243,7 +253,9 @@ TEST_F(AdaptiveQueueErrorTest, DataIntegrityDuringModeSwitch) {
     }
 
     // Verify no data loss
+    EXPECT_EQ(enqueued.load(), num_mode_switches * jobs_per_switch);
     EXPECT_EQ(enqueued.load(), dequeued.load());
+    EXPECT_EQ(queue.get_stats().mode_switches, num_mode_switches);
     EXPECT_TRUE(queue.empty());
 }
 
