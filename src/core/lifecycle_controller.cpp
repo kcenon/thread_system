@@ -8,10 +8,9 @@ namespace kcenon::thread
 {
 	lifecycle_controller::lifecycle_controller()
 		: state_(thread_conditions::Created)
+		, stop_requested_(false)
 #ifdef USE_STD_JTHREAD
 		, stop_source_(std::nullopt)
-#else
-		, stop_requested_(false)
 #endif
 	{
 	}
@@ -40,37 +39,29 @@ namespace kcenon::thread
 
 	auto lifecycle_controller::initialize_for_start() -> void
 	{
+		stop_requested_.store(false, std::memory_order_release);
 #ifdef USE_STD_JTHREAD
 		stop_source_ = std::stop_source();
-#else
-		stop_requested_.store(false, std::memory_order_release);
 #endif
 		set_state(thread_conditions::Created);
 	}
 
 	auto lifecycle_controller::request_stop() noexcept -> void
 	{
+		stop_requested_.store(true, std::memory_order_release);
 #ifdef USE_STD_JTHREAD
 		if (stop_source_.has_value())
 		{
 			stop_source_.value().request_stop();
 		}
-#else
-		stop_requested_.store(true, std::memory_order_release);
 #endif
 	}
 
 	auto lifecycle_controller::is_stop_requested() const noexcept -> bool
 	{
-#ifdef USE_STD_JTHREAD
-		if (stop_source_.has_value())
-		{
-			return stop_source_.value().stop_requested();
-		}
-		return true;
-#else
+		// Both modes report the same flag. A missing stop_source (before the
+		// first start, or after reset_stop_source()) is not a stop request.
 		return stop_requested_.load(std::memory_order_acquire);
-#endif
 	}
 
 	auto lifecycle_controller::has_active_source() const noexcept -> bool

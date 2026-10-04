@@ -377,3 +377,59 @@ jobs:
         path: |
           build/Testing/Temporary/
           build/**/*.log
+
+  # std::jthread lifecycle path (#727). The build matrix above never builds
+  # the unit tests (BUILD_TESTING is unset there), and the sanitizer jobs use
+  # Clang with libc++, where the std::jthread probe fails. This is the only
+  # job that runs thread_base_unit with USE_STD_JTHREAD defined.
+  jthread-unit:
+    name: Unit tests / std::jthread (gcc)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build g++
+
+    - name: Checkout common_system
+      uses: actions/checkout@v6
+      with:
+        repository: kcenon/common_system
+        path: common_system
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Configure CMake (std::jthread path)
+      run: |
+        set -o pipefail
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_CXX_COMPILER=g++ \
+          -DCMAKE_C_COMPILER=gcc \
+          -DBUILD_TESTING=ON \
+          -DCMAKE_PREFIX_PATH="/usr" 2>&1 | tee configure.log
+        if ! grep -q "Using std::jthread" configure.log; then
+          echo "::error::std::jthread was not selected, so this job would not test that path"
+          exit 1
+        fi
+
+    - name: Build thread_base_unit
+      run: cmake --build build --target thread_base_unit
+
+    - name: Run thread_base_unit
+      timeout-minutes: 15
+      run: |
+        # Excluded because they fail or hang on develop in both lifecycle
+        # paths; drop each exclusion when its cause is fixed:
+        # - DataIntegrityDuringModeSwitch: develop still has the unbounded
+        #   producer that #721 replaced on main, and it can livelock.
+        # - BatchDropOldestMakesRoom (hangs) and
+        #   CallbackPolicyAcceptDecisionForcesAccept (fails): #728.
+        EXCLUDE="AdaptiveQueueErrorTest.DataIntegrityDuringModeSwitch"
+        EXCLUDE="$EXCLUDE:BackpressureJobQueueTest.BatchDropOldestMakesRoom"
+        EXCLUDE="$EXCLUDE:BackpressureJobQueueTest.CallbackPolicyAcceptDecisionForcesAccept"
+        ./build/bin/thread_base_unit --gtest_brief=1 "--gtest_filter=-$EXCLUDE"
