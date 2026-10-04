@@ -3,6 +3,6 @@
   "modes": {
     "conformance": "enforcing",
     "version-drift": "enforcing",
-    "tag-reality": "advisory"
+    "tag-reality": "enforcing"
   }
 }

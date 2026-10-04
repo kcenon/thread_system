@@ -61,6 +61,6 @@ jobs:
       port-name: kcenon-thread-system
       version: ${{ github.event.release.tag_name }}
       coherence-tools-ref: 6f76d9b9480d0dffc9167dc4a2ca564cde708b4b
-      tag-reality-mode: advisory
+      tag-reality-mode: enforcing
     secrets:
       REGISTRY_PAT: ${{ secrets.VCPKG_REGISTRY_PAT }}

@@ -84,7 +84,10 @@ python3 ../common_system/scripts/sync_coherence.py --target . --source-revision 
 ```
 
 Release sync must reference the reviewed reusable workflow and validator commit.
-`tag-reality-mode: advisory` records release identity/hash failures during rollout.
-Promote it separately only after real release provenance and port hashes pass.
+Tag reality is enforcing after independent release provenance and the stored port
+archive hash passed for v1.0.0 in
+[run 37200045351](https://github.com/kcenon/thread_system/actions/runs/37200045351).
+`tag-reality-mode: enforcing` also blocks registry sync before its commit when
+release identity or the generated port archive hash fails validation.
 The release-triggered workflow checks an already published tag; its enforcing
 prepublication boundary is the registry sync.
