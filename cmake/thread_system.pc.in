@@ -19,9 +19,5 @@ Libs: -L${libdir} -lthread_system
 # Additional system libraries required
 Libs.private: -pthread @SIMDUTF_LIBRARIES@
 
-# Include paths
-Cflags: -I${includedir} -I${includedir}/thread_system
-
-# Feature flags that may be needed by client projects
-# These are set based on the build configuration
-@PKG_CONFIG_FEATURE_FLAGS@
+# Include paths and public feature flags selected by this build
+Cflags: -I${includedir} -I${includedir}/thread_system @PKG_CONFIG_FEATURE_FLAGS@
