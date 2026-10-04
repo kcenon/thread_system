@@ -304,3 +304,56 @@ TEST_F(LifecycleControllerTest, MultipleInitializeCycles)
 		EXPECT_FALSE(controller_->has_active_source());
 	}
 }
+
+// The tests below pin the stop state (is_stop_requested() and wait_for()) to
+// the same answer in the std::jthread and legacy paths (#727).
+
+TEST_F(LifecycleControllerTest, ResetWithoutStopRequestIsNotStopRequested)
+{
+	// thread_base::start() takes this path when creating the worker fails
+	controller_->initialize_for_start();
+	controller_->reset_stop_source();
+
+	EXPECT_FALSE(controller_->is_stop_requested());
+	EXPECT_FALSE(controller_->has_active_source());
+}
+
+TEST_F(LifecycleControllerTest, StopRequestPersistsAfterResetUntilNextStart)
+{
+	controller_->initialize_for_start();
+	controller_->request_stop();
+	controller_->reset_stop_source();
+	controller_->set_stopped();
+
+	EXPECT_TRUE(controller_->is_stop_requested());
+
+	controller_->initialize_for_start();
+	EXPECT_FALSE(controller_->is_stop_requested());
+}
+
+TEST_F(LifecycleControllerTest, StopRequestBeforeStartIsClearedByInitialize)
+{
+	controller_->request_stop();
+	EXPECT_TRUE(controller_->is_stop_requested());
+
+	controller_->initialize_for_start();
+	EXPECT_FALSE(controller_->is_stop_requested());
+}
+
+TEST_F(LifecycleControllerTest, WaitForHonorsStopRequestWithoutStart)
+{
+	// No initialize_for_start(): the std::jthread path has no stop_source here
+	auto start = std::chrono::steady_clock::now();
+
+	std::thread waiter([this]() {
+		auto lock = controller_->acquire_lock();
+		controller_->wait_for(lock, std::chrono::seconds(5), []() { return false; });
+	});
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	controller_->request_stop();
+	controller_->notify_all();
+	waiter.join();
+
+	EXPECT_LT(std::chrono::steady_clock::now() - start, std::chrono::seconds(2));
+}

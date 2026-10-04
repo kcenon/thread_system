@@ -148,8 +148,8 @@ namespace kcenon::thread
 		/**
 		 * @brief Requests the thread to stop.
 		 *
-		 * In C++20 mode, calls request_stop() on the stop_source.
-		 * In legacy mode, sets the atomic stop_requested_ flag to true.
+		 * Sets the stop request flag in both modes. In C++20 mode, also calls
+		 * request_stop() on the active stop_source, if any.
 		 *
 		 * Thread Safety:
 		 * - Safe to call from any thread
@@ -159,7 +159,12 @@ namespace kcenon::thread
 
 		/**
 		 * @brief Checks if a stop has been requested.
-		 * @return true if stop has been requested, false otherwise.
+		 * @return true if request_stop() was called since the last
+		 *         initialize_for_start() (or since construction), false otherwise.
+		 *
+		 * The result is the same in C++20 and legacy mode. A controller that has
+		 * no stop_source (never started, or after reset_stop_source()) reports
+		 * false unless a stop was requested.
 		 *
 		 * Thread Safety:
 		 * - Safe to call from any thread
@@ -177,7 +182,8 @@ namespace kcenon::thread
 		/**
 		 * @brief Resets the stop control mechanism after thread completion.
 		 *
-		 * In C++20 mode, resets the stop_source.
+		 * In C++20 mode, resets the stop_source. The stop request flag is kept
+		 * until the next initialize_for_start().
 		 * Should be called after thread join to clean up resources.
 		 */
 		auto reset_stop_source() noexcept -> void;
@@ -205,23 +211,9 @@ namespace kcenon::thread
 		template<typename Predicate>
 		auto wait(std::unique_lock<std::mutex>& lock, Predicate pred) -> void
 		{
-#ifdef USE_STD_JTHREAD
-			if (stop_source_.has_value())
-			{
-				auto stop_token = stop_source_.value().get_token();
-				condition_.wait(lock, [this, &stop_token, &pred]() {
-					return stop_token.stop_requested() || pred();
-				});
-			}
-			else
-			{
-				condition_.wait(lock, pred);
-			}
-#else
 			condition_.wait(lock, [this, &pred]() {
 				return stop_requested_.load(std::memory_order_acquire) || pred();
 			});
-#endif
 		}
 
 		/**
@@ -232,30 +224,17 @@ namespace kcenon::thread
 		 * @param lock The unique_lock (must be holding cv_mutex_).
 		 * @param timeout The maximum duration to wait.
 		 * @param pred The predicate to check.
-		 * @return true if pred() is satisfied, false if timed out.
+		 * @return true if pred() is satisfied or a stop was requested,
+		 *         false if timed out.
 		 */
 		template<typename Rep, typename Period, typename Predicate>
 		auto wait_for(std::unique_lock<std::mutex>& lock,
 		              const std::chrono::duration<Rep, Period>& timeout,
 		              Predicate pred) -> bool
 		{
-#ifdef USE_STD_JTHREAD
-			if (stop_source_.has_value())
-			{
-				auto stop_token = stop_source_.value().get_token();
-				return condition_.wait_for(lock, timeout, [this, &stop_token, &pred]() {
-					return stop_token.stop_requested() || pred();
-				});
-			}
-			else
-			{
-				return condition_.wait_for(lock, timeout, pred);
-			}
-#else
 			return condition_.wait_for(lock, timeout, [this, &pred]() {
 				return stop_requested_.load(std::memory_order_acquire) || pred();
 			});
-#endif
 		}
 
 		/**
@@ -284,12 +263,14 @@ namespace kcenon::thread
 		/// Current thread state.
 		std::atomic<thread_conditions> state_{thread_conditions::Created};
 
+		/// Stop request flag for the current lifecycle (both modes).
+		/// Set by request_stop(), cleared by initialize_for_start(), and kept
+		/// by reset_stop_source().
+		std::atomic<bool> stop_requested_{false};
+
 #ifdef USE_STD_JTHREAD
 		/// Stop source for cooperative cancellation (C++20).
 		std::optional<std::stop_source> stop_source_;
-#else
-		/// Atomic flag for stop request (legacy mode).
-		std::atomic<bool> stop_requested_{false};
 #endif
 	};
 
