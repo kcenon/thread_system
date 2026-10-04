@@ -50,7 +50,7 @@ jobs:
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
           -DCMAKE_CXX_FLAGS="-g -O0" \
-          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DKCENON_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DBUILD_TESTS=ON \
           -DBUILD_EXAMPLES=OFF \
           -DBUILD_BENCHMARKS=OFF
@@ -128,7 +128,7 @@ jobs:
         cmake -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
           -DCMAKE_CXX_FLAGS="-g -O0" \
-          -DBUILD_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
+          -DKCENON_WITH_COMMON_SYSTEM=$BUILD_WITH_COMMON \
           -DBUILD_TESTS=ON
         cmake --build build --parallel
 

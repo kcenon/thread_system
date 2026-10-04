@@ -262,30 +262,31 @@ public:
 **Purpose**: Standard thread pool with mutex-based job queue
 
 ```cpp
-class thread_pool : public executor_interface {
+// IExecutor integration: adapters/common_executor_adapter.h
+class thread_pool : public std::enable_shared_from_this<thread_pool> {
 public:
-    thread_pool(const std::string& pool_name = "thread_pool");
+    thread_pool(const std::string& thread_title = "thread_pool",
+                const thread_context& context = thread_context());
 
     // Lifecycle
-    auto start() -> result_void;
-    auto stop(bool immediately = false) -> result_void;
-    auto shutdown() -> result_void;
+    auto start() -> common::VoidResult;
+    auto stop(const bool& immediately_stop = false) -> common::VoidResult;
 
     // Job submission
-    auto execute(std::unique_ptr<job>&& job) -> result_void;  // executor_interface
-    auto enqueue(std::unique_ptr<job>&& job) -> result_void;
-    auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
-
-    // Convenience wrapper
-    bool submit_task(std::function<void()> task);
+    auto enqueue(std::unique_ptr<job>&& job) -> common::VoidResult;
+    auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> common::VoidResult;
+    template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+    auto submit(F&& callable, const submit_options& opts = {}) -> std::future<R>;
 
     // Worker management
-    auto add_worker(std::unique_ptr<thread_worker>&& worker) -> result_void;
-    auto get_thread_count() const -> size_t;
-    auto get_idle_worker_count() const -> size_t;
+    auto enqueue(std::unique_ptr<thread_worker>&& worker) -> common::VoidResult;
+    auto enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
+        -> common::VoidResult;
+    auto get_active_worker_count() const -> std::size_t;
+    std::size_t get_idle_worker_count() const;
 
     // Status
-    auto get_pending_task_count() const -> size_t;
+    auto get_pending_task_count() const -> std::size_t;
     auto is_running() const -> bool;
 };
 ```

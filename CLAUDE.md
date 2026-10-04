@@ -26,7 +26,7 @@ include/kcenon/thread/
 ```
 
 Key abstractions:
-- `thread_pool` — Multi-worker pool with adaptive queue and submit_task API
+- `thread_pool` — Multi-worker pool with adaptive queue and future-based `submit()` API
 - `typed_thread_pool` — Priority-based scheduling with job type routing and aging
 - `adaptive_job_queue` — Auto-switches between mutex and lock-free modes (recommended)
 - `job_queue` — Mutex-based FIFO with optional bounded size
@@ -63,13 +63,13 @@ sanitizers, stress tests, benchmarks, Valgrind (Linux), CVE scan.
 
 ## Key Patterns
 
-- **Thread pool** — Workers enqueued via `enqueue_batch()`, lifecycle: `start()` -> `submit_task()` -> `shutdown_pool()`
+- **Thread pool** — Workers enqueued via `enqueue_batch()`, lifecycle: `start()` -> `submit()` / `enqueue()` -> `stop()`
 - **Queue strategies** — 2 public types: `adaptive_job_queue` (auto mutex/lockfree), `job_queue` (mutex FIFO)
 - **Priority scheduling** — `typed_thread_pool` with `job_types` enum routing and priority aging
 - **Hazard pointers** — Thread-local hazard arrays (4 slots), automatic reclamation, used by lockfree queue
 - **Lock-free queue** — Michael-Scott algorithm with hazard pointer memory reclamation
 - **DAG scheduling** — Dependency graph-based job execution with `dag_job_builder`
-- **Result wrappers** — `thread::result<T>` / `thread::result_void` wrap `common::Result`
+- **Results** — Public APIs return `common::Result<T>` / `common::VoidResult`; the `thread::result<T>` / `thread::result_void` wrappers were removed
 
 ## Ecosystem Position
 
@@ -93,5 +93,5 @@ sanitizers, stress tests, benchmarks, Valgrind (Linux), CVE scan.
 - C++20 required; **higher compiler baseline**: GCC 13+, Clang 17+, MSVC 2022+ (due to `std::format`)
 - C++20 modules experimental (CMake 3.28+, Clang 16+/GCC 14+)
 - ARMv7 and RISC-V untested; UWP/Xbox unsupported
-- `thread::result<T>` uses `.get_error()` (not `.error()`) for backward compatibility
+- Legacy `thread::result<T>` / `thread::result_void` / `thread::error` were removed; use `common::Result<T>` / `common::VoidResult` / `common::error_info`
 - Work-stealing scheduler OFF by default (experimental)

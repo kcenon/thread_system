@@ -68,7 +68,7 @@ cmake --build build -j
 
 ```bash
 # 샘플 애플리케이션 실행
-./build/bin/thread_pool_sample
+./build/bin/minimal_thread_pool
 ```
 
 ---
@@ -79,10 +79,13 @@ cmake --build build -j
 
 ```cpp
 #include <kcenon/thread/core/thread_pool.h>
-#include <kcenon/thread/jobs/callback_job.h>
+#include <kcenon/thread/core/thread_worker.h>
 
+#include <algorithm>
+#include <future>
 #include <iostream>
 #include <memory>
+#include <thread>
 #include <vector>
 
 using namespace kcenon::thread;
@@ -93,7 +96,8 @@ int main() {
 
     // 2. 워커 추가 (CPU 코어 수만큼)
     std::vector<std::unique_ptr<thread_worker>> workers;
-    for (size_t i = 0; i < std::thread::hardware_concurrency(); ++i) {
+    const unsigned worker_count = std::max(1u, std::thread::hardware_concurrency());
+    for (unsigned i = 0; i < worker_count; ++i) {
         workers.push_back(std::make_unique<thread_worker>());
     }
     pool->enqueue_batch(std::move(workers));
@@ -101,15 +105,19 @@ int main() {
     // 3. 풀 시작
     pool->start();
 
-    // 4. 태스크 제출
+    // 4. 태스크 제출 (submit()은 태스크마다 std::future를 반환)
+    std::vector<std::future<void>> tasks;
     for (int i = 0; i < 10; ++i) {
-        pool->submit_task([i]() {
+        tasks.push_back(pool->submit([i]() {
             std::cout << "태스크 " << i << " 처리 중\n";
-        });
+        }));
+    }
+    for (auto& task : tasks) {
+        task.get();  // 각 태스크 완료 대기
     }
 
-    // 5. 정상 종료 (모든 태스크 완료 대기)
-    pool->shutdown_pool(false);
+    // 5. 정상 종료
+    pool->stop(false);
 
     std::cout << "모든 태스크 완료!\n";
     return 0;
@@ -121,8 +129,16 @@ int main() {
 `CMakeLists.txt`에 추가:
 
 ```cmake
-# FetchContent 사용
+# FetchContent 사용: thread_system은 common_system을 직접 가져오지 않음
 include(FetchContent)
+FetchContent_Declare(
+    common_system
+    GIT_REPOSITORY https://github.com/kcenon/common_system.git
+    GIT_TAG v0.2.0
+)
+FetchContent_MakeAvailable(common_system)
+set(COMMON_SYSTEM_INCLUDE_DIR "${common_system_SOURCE_DIR}/include")
+
 FetchContent_Declare(
     thread_system
     GIT_REPOSITORY https://github.com/kcenon/thread_system.git
@@ -131,11 +147,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(thread_system)
 
 add_executable(my_app main.cpp)
-target_link_libraries(my_app PRIVATE
-    thread_base
-    thread_pool
-    utilities
-)
+target_link_libraries(my_app PRIVATE thread_system)
 ```
 
 ---
@@ -149,7 +161,7 @@ target_link_libraries(my_app PRIVATE
 auto pool = std::make_shared<thread_pool>("PoolName");
 pool->start();
 // ... 태스크 제출 ...
-pool->shutdown_pool(false);  // false = 완료 대기
+pool->stop(false);  // false = 워커가 현재 작업을 마친 뒤 종료
 ```
 
 ### 워커
@@ -166,13 +178,13 @@ pool->enqueue_batch(std::move(workers));
 실행할 작업 단위입니다.
 
 ```cpp
-// 편의 API 사용
-pool->submit_task([]() {
+// submit() 사용: std::future를 반환
+auto future = pool->submit([]() {
     // 작업 내용
 });
 
 // callback_job을 사용하여 더 세밀한 제어
-pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+pool->enqueue(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
     // 작업 내용
     return kcenon::common::ok();
 }));
@@ -186,19 +198,23 @@ pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult 
 
 ```cpp
 std::atomic<int> counter{0};
+std::vector<std::future<void>> futures;
 for (int i = 0; i < 1000; ++i) {
-    pool->submit_task([&counter]() {
+    futures.push_back(pool->submit([&counter]() {
         counter++;
-    });
+    }));
+}
+for (auto& f : futures) {
+    f.get();  // 모든 태스크가 실행될 때까지 대기
 }
 ```
 
 ### 오류 처리
 
 ```cpp
-pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
+pool->enqueue(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult {
     if (some_error_condition) {
-        return kcenon::thread::make_error_result(kcenon::thread::error_code::operation_failed, "태스크 실패");
+        return kcenon::thread::make_error_result(kcenon::thread::error_code::job_execution_failed, "태스크 실패");
     }
     return kcenon::common::ok();
 }));
@@ -207,11 +223,12 @@ pool->execute(std::make_unique<callback_job>([]() -> kcenon::common::VoidResult 
 ### 정상 종료
 
 ```cpp
-// 모든 태스크 완료 대기
-pool->shutdown_pool(false);
+// 제출한 태스크의 future를 먼저 기다린 뒤 종료; stop(false)는
+// 각 워커가 현재 작업을 마치게 함 (대기 중인 작업은 비우지 않음)
+pool->stop(false);
 
-// 또는 즉시 강제 종료
-pool->shutdown_pool(true);
+// 또는 즉시 종료 (진행 중인 작업이 중단될 수 있음)
+pool->stop(true);
 ```
 
 ---

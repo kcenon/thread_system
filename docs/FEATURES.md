@@ -269,27 +269,28 @@ Multi-worker thread pool with adaptive queue support.
 ```cpp
 class thread_pool {
 public:
-    thread_pool(const std::string& name = "ThreadPool");
+    thread_pool(const std::string& thread_title = "thread_pool",
+                const thread_context& context = thread_context());
 
-    auto start() -> result_void;
-    auto stop(bool immediately = false) -> result_void;
+    auto start() -> common::VoidResult;
+    auto stop(const bool& immediately_stop = false) -> common::VoidResult;
 
     // Job submission
-    auto enqueue(std::unique_ptr<job>&& job) -> result_void;
-    auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
-    bool submit_task(std::function<void()> task);  // Convenience API
+    auto enqueue(std::unique_ptr<job>&& job) -> common::VoidResult;
+    auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> common::VoidResult;
+    template<typename F, typename R = std::invoke_result_t<std::decay_t<F>>>
+    auto submit(F&& callable, const submit_options& opts = {}) -> std::future<R>;
 
     // Worker management
-    auto add_worker(std::unique_ptr<thread_worker>&& worker) -> result_void;
-    auto add_workers(size_t count) -> result_void;
+    auto enqueue(std::unique_ptr<thread_worker>&& worker) -> common::VoidResult;
+    auto enqueue_batch(std::vector<std::unique_ptr<thread_worker>>&& workers)
+        -> common::VoidResult;
 
     // Monitoring
-    auto get_thread_count() const -> size_t;
-    auto get_pending_task_count() const -> size_t;
-    auto get_idle_worker_count() const -> size_t;
-
-    // Shutdown
-    bool shutdown_pool(bool immediately = false);
+    auto is_running() const -> bool;
+    auto get_pending_task_count() const -> std::size_t;
+    auto get_active_worker_count() const -> std::size_t;
+    std::size_t get_idle_worker_count() const;
 };
 ```
 
@@ -306,8 +307,8 @@ public:
    - Batch processing capabilities
 
 3. **Dual API Design**
-   - Result-based API for detailed error handling
-   - Convenience API (`submit_task`, `shutdown_pool`) for simplicity
+   - Result-based API (`start()`, `enqueue()`, `stop()` return `common::VoidResult`) for detailed error handling
+   - Future-based `submit()` for callables that return a value
 
 4. **Comprehensive Monitoring**
    - Worker count tracking
@@ -740,7 +741,7 @@ public:
 auto token = std::make_shared<cancellation_token>();
 
 // In worker thread
-pool->submit_task([token]() {
+auto work = pool->submit([token]() {
     for (int i = 0; i < 1000000; ++i) {
         if (token->is_cancelled()) {
             return;  // Exit early

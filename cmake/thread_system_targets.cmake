@@ -21,99 +21,86 @@ endfunction()
 # Create thread_system library targets
 ##################################################
 function(create_thread_system_targets)
-  # Set up include directories
+  # Set up include directories for the standard layout
   set(THREAD_SYSTEM_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
   set(THREAD_SYSTEM_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-  # Add include directories
   include_directories(${THREAD_SYSTEM_INCLUDE_DIR})
-  include_directories(${CMAKE_CURRENT_SOURCE_DIR})  # For legacy structure
 
-  # Check for new structure
-  if(EXISTS ${THREAD_SYSTEM_INCLUDE_DIR}/kcenon/thread AND EXISTS ${THREAD_SYSTEM_SOURCE_DIR})
-    message(STATUS "Using new directory structure")
+  # Collect source files from the standard layout
+  file(GLOB_RECURSE THREAD_SYSTEM_HEADERS
+    ${THREAD_SYSTEM_INCLUDE_DIR}/kcenon/thread/*.h
+  )
 
-    # Collect source files
-    file(GLOB_RECURSE THREAD_SYSTEM_HEADERS
-      ${THREAD_SYSTEM_INCLUDE_DIR}/kcenon/thread/*.h
+  file(GLOB_RECURSE THREAD_SYSTEM_SOURCES
+    ${THREAD_SYSTEM_SOURCE_DIR}/*.cpp
+  )
+
+  # Create the main library
+  add_library(thread_system STATIC
+    ${THREAD_SYSTEM_SOURCES}
+    ${THREAD_SYSTEM_HEADERS}
+  )
+
+  target_include_directories(thread_system
+    PUBLIC
+      $<BUILD_INTERFACE:${THREAD_SYSTEM_INCLUDE_DIR}>
+      $<INSTALL_INTERFACE:include>
+  )
+
+  # Aliases retained for downstream consumers (samples, benchmarks, integration
+  # tests) that still link against the legacy target names. The forwarding
+  # header stubs in utilities/include/ and core/{sync,base}/include/ remain
+  # in place for one release per the EPIC #683 deprecation policy.
+  # thread_pool / typed_thread_pool are included because in-tree tests and
+  # examples link against those names while only thread_base/utilities/
+  # interfaces were aliased before, so a clean configure with tests enabled
+  # failed with "target thread_pool not found". The installed package already
+  # exposes thread_system::thread_pool and thread_system::typed_thread_pool via
+  # thread_system-config.cmake.in, so these aliases make the in-tree target
+  # graph match the exported one (issue #696).
+  add_library(thread_base ALIAS thread_system)
+  add_library(thread_pool ALIAS thread_system)
+  add_library(typed_thread_pool ALIAS thread_system)
+  add_library(utilities ALIAS thread_system)
+  add_library(interfaces ALIAS thread_system)
+
+  # Note: fmt library is no longer used - using C++20 std::format exclusively
+  # The HAS_FMT_LIBRARY definition and fmt linking have been removed
+
+  # Link common_system when found via find_package(common_system CONFIG)
+  # This is required for vcpkg/find_package consumers to get transitive
+  # include directories and dependencies from the kcenon::common_system target
+  if(TARGET kcenon::common_system)
+    target_link_libraries(thread_system PUBLIC kcenon::common_system)
+    message(STATUS "thread_system: linked kcenon::common_system target")
+  elseif(COMMON_SYSTEM_INCLUDE_DIR)
+    # common_system was found by path (a preset COMMON_SYSTEM_INCLUDE_DIR or a
+    # sibling checkout) and provides no target. Export its include directory so
+    # add_subdirectory() and FetchContent consumers can compile the public
+    # headers, which include kcenon/common headers.
+    target_include_directories(thread_system PUBLIC
+      $<BUILD_INTERFACE:${COMMON_SYSTEM_INCLUDE_DIR}>
     )
-
-    file(GLOB_RECURSE THREAD_SYSTEM_SOURCES
-      ${THREAD_SYSTEM_SOURCE_DIR}/*.cpp
-    )
-
-    # Check if we have enough sources
-    list(LENGTH THREAD_SYSTEM_SOURCES SOURCE_COUNT)
-    if(SOURCE_COUNT LESS 10)
-      message(STATUS "Limited sources in new structure, using hybrid approach")
-      set(USE_LEGACY_BUILD TRUE PARENT_SCOPE)
-    else()
-      # Create the main library
-      add_library(thread_system STATIC
-        ${THREAD_SYSTEM_SOURCES}
-        ${THREAD_SYSTEM_HEADERS}
-      )
-
-      target_include_directories(thread_system
-        PUBLIC
-          $<BUILD_INTERFACE:${THREAD_SYSTEM_INCLUDE_DIR}>
-          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-          $<INSTALL_INTERFACE:include>
-      )
-
-      # Create aliases for backward compatibility with legacy code
-      add_library(thread_base ALIAS thread_system)
-      add_library(utilities ALIAS thread_system)
-      add_library(interfaces ALIAS thread_system)
-
-      # Note: fmt library is no longer used - using C++20 std::format exclusively
-      # The HAS_FMT_LIBRARY definition and fmt linking have been removed
-
-      # Link common_system when found via find_package(common_system CONFIG)
-      # This is required for vcpkg/find_package consumers to get transitive
-      # include directories and dependencies from the kcenon::common_system target
-      if(TARGET kcenon::common_system)
-        target_link_libraries(thread_system PUBLIC kcenon::common_system)
-        message(STATUS "thread_system: linked kcenon::common_system target")
-      endif()
-
-      if(DEFINED THREAD_SYSTEM_SIMDUTF_FOUND AND THREAD_SYSTEM_SIMDUTF_FOUND)
-        target_link_libraries(thread_system PUBLIC ${THREAD_SYSTEM_SIMDUTF_TARGET})
-        message(STATUS "thread_system: simdutf support enabled")
-      endif()
-
-      set(USE_LEGACY_BUILD FALSE PARENT_SCOPE)
-      message(STATUS "Created thread_system library target with legacy aliases (thread_base, utilities, interfaces)")
-    endif()
-  else()
-    message(STATUS "New structure not complete, using legacy build")
-    set(USE_LEGACY_BUILD TRUE PARENT_SCOPE)
-  endif()
-endfunction()
-
-##################################################
-# Add legacy subdirectories
-##################################################
-function(add_legacy_subdirectories)
-  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/utilities)
-    add_subdirectory(utilities)
-    message(STATUS "Added utilities subdirectory")
+    message(STATUS "thread_system: exporting common_system include directory ${COMMON_SYSTEM_INCLUDE_DIR}")
   endif()
 
-  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces)
-    add_subdirectory(interfaces)
-    message(STATUS "Added interfaces subdirectory")
+  # Public headers read these definitions: di/service_registration.h is empty
+  # without BUILD_WITH_COMMON_SYSTEM, and typed_thread_pool_t derives from
+  # common::interfaces::IExecutor only when KCENON_HAS_COMMON_EXECUTOR is 1.
+  # The library is always compiled with both (thread_system_dependencies.cmake),
+  # so consumers must see the same values.
+  target_compile_definitions(thread_system PUBLIC
+    BUILD_WITH_COMMON_SYSTEM
+    KCENON_HAS_COMMON_EXECUTOR=1
+  )
+
+  if(DEFINED THREAD_SYSTEM_SIMDUTF_FOUND AND THREAD_SYSTEM_SIMDUTF_FOUND)
+    target_link_libraries(thread_system PUBLIC ${THREAD_SYSTEM_SIMDUTF_TARGET})
+    message(STATUS "thread_system: simdutf support enabled")
   endif()
 
-  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/core)
-    add_subdirectory(core)
-    message(STATUS "Added core subdirectory")
-  endif()
-
-  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/implementations)
-    add_subdirectory(implementations)
-    message(STATUS "Added implementations subdirectory")
-  endif()
+  message(STATUS "Created thread_system library target with legacy aliases (thread_base, thread_pool, typed_thread_pool, utilities, interfaces)")
 endfunction()
 
 ##################################################
@@ -141,13 +128,6 @@ function(add_tests_subdirectory)
   elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest)
     add_subdirectory(unittest)
     message(STATUS "Added unittest subdirectory (legacy)")
-  endif()
-
-  # Add integration tests if they exist
-  # Note: THREAD_BUILD_INTEGRATION_TESTS is defined in top-level CMakeLists.txt
-  if(THREAD_BUILD_INTEGRATION_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests/CMakeLists.txt)
-    add_subdirectory(integration_tests)
-    message(STATUS "Added integration_tests subdirectory")
   endif()
 endfunction()
 

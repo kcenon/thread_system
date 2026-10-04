@@ -33,10 +33,16 @@ endif()
 # Options
 ##################################################
 
-option(BUILD_WITH_COMMON_SYSTEM "Build with common_system for standard interfaces" ON)
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/KcenonDependencyOptions.cmake")
+
+kcenon_dependency_option(KCENON_WITH_COMMON_SYSTEM BUILD_WITH_COMMON_SYSTEM
+    "Build with common_system for standard interfaces" ON)
 option(THREAD_BUILD_INTEGRATION_TESTS "Build integration tests" ON)
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
+
+# libFuzzer targets (requires Clang -fsanitize=fuzzer,address; off by default,
+# excluded from the default build and the regular CI matrix). See fuzz/.
 option(BUILD_FUZZERS "Build libFuzzer targets (requires Clang)" OFF)
 
 # Lock-free queue option (TICKET-001 RESOLVED - Now safe with Hazard Pointers)
@@ -150,11 +156,6 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     # Create targets
     create_thread_system_targets()
 
-    # Add subdirectories based on build structure
-    if(USE_LEGACY_BUILD)
-        add_legacy_subdirectories()
-    endif()
-
     # Add examples/samples
     add_examples_and_samples()
 
@@ -191,18 +192,8 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     endif()
 else()
     # Submodule build configuration
-    # Only build core library
-    add_subdirectory(interfaces)
-    add_subdirectory(utilities)
-    add_subdirectory(core)
-    # Provide unified aliases for parent projects when building as a submodule.
-    # This allows dependents to link against thread_system even
-    # though only the legacy targets (thread_base/utilities/interfaces) exist.
-    if(TARGET thread_base)
-        if(NOT TARGET thread_system)
-            add_library(thread_system ALIAS thread_base)
-        endif()
-    endif()
+    # Build the core library only (no samples, tests, or docs).
+    create_thread_system_targets()
     message(STATUS "thread_system building as submodule - samples and tests disabled")
 endif()
 
@@ -299,6 +290,7 @@ message(STATUS "  Submodule: ${BUILD_THREADSYSTEM_AS_SUBMODULE}")
 message(STATUS "  common_system: ${BUILD_WITH_COMMON_SYSTEM}")
 message(STATUS "  std::format: ${USE_STD_FORMAT}")
 message(STATUS "  Coverage: ${ENABLE_COVERAGE}")
+message(STATUS "  Fuzzers: ${BUILD_FUZZERS}")
 message(STATUS "  Lock-free queue: ${THREAD_ENABLE_LOCKFREE_QUEUE}")
 if(THREAD_ENABLE_LOCKFREE_QUEUE)
     message(STATUS "    TICKET-001 resolved: Safe with Hazard Pointers")

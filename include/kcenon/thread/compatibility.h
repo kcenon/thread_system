@@ -38,7 +38,13 @@ namespace thread_module = kcenon::thread;
 namespace thread_namespace = kcenon::thread;
 
 // Legacy utility namespace names still expected by some consumers.
-namespace utility_module = kcenon::thread::utils;
+// utils/convert_string.h, utils/formatter.h, and utils/span.h declare a
+// global namespace utility_module, so an alias with the same name is a
+// redefinition in any translation unit that includes one of them. Extend
+// that namespace instead.
+namespace utility_module {
+using namespace kcenon::thread::utils;
+} // namespace utility_module
 
 #if !defined(THREAD_SUPPRESS_LEGACY_NAMESPACE_WARNING) \
     && !defined(KCENON_THREAD_COMPATIBILITY_H_WARNED)

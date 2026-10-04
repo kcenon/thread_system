@@ -41,14 +41,14 @@ endfunction()
 ##################################################
 function(check_std_format_support)
   # C++20 std::format is required - no fallback to fmt library
-  # This project requires C++20 compliant compilers (GCC 13+, Clang 14+, MSVC 19.29+)
+  # This project requires C++20 compliant compilers (GCC 13+, Clang 17+, MSVC 19.30+)
 
   # MSVC: Use version-based detection instead of compile tests
   # Reason: CMake's check_cxx_source_compiles has issues with Ninja generator
   # because MSVC flags like /Zc:__cplusplus aren't properly propagated
-  # MSVC 19.29+ (VS 2019 16.10+) has full std::format support
+  # The documented minimum is MSVC 19.30 (Visual Studio 2022)
   if(MSVC)
-    if(MSVC_VERSION GREATER_EQUAL 1929)
+    if(MSVC_VERSION GREATER_EQUAL 1930)
       message(STATUS "MSVC ${MSVC_VERSION} detected - using version-based std::format detection")
       add_definitions(-DUSE_STD_FORMAT)
       set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format (C++20)" FORCE)
@@ -56,8 +56,8 @@ function(check_std_format_support)
       set(USE_STD_FORMAT TRUE PARENT_SCOPE)
       return()
     else()
-      message(FATAL_ERROR "❌ MSVC ${MSVC_VERSION} does not support std::format.\n"
-        "Please use MSVC 19.29 or later (Visual Studio 2019 16.10+)")
+      message(FATAL_ERROR "❌ MSVC ${MSVC_VERSION} is not supported.\n"
+        "Please use MSVC 19.30 or later (Visual Studio 2022)")
     endif()
   endif()
 
@@ -117,16 +117,16 @@ function(check_std_format_support)
       message(FATAL_ERROR "❌ std::format compile test failed. This project requires C++20 std::format support.\n"
         "Please use a compatible compiler:\n"
         "  - GCC 13 or later\n"
-        "  - Clang 14 or later\n"
-        "  - MSVC 19.29 or later (Visual Studio 2019 16.10+)\n"
+        "  - Clang 17 or later\n"
+        "  - MSVC 19.30 or later (Visual Studio 2022)\n"
         "Compile output: ${COMPILE_OUTPUT}")
     endif()
   else()
     message(FATAL_ERROR "❌ std::format is not available. This project requires C++20 std::format support.\n"
       "Please use a compatible compiler:\n"
       "  - GCC 13 or later\n"
-      "  - Clang 14 or later\n"
-      "  - MSVC 19.29 or later (Visual Studio 2019 16.10+)")
+      "  - Clang 17 or later\n"
+      "  - MSVC 19.30 or later (Visual Studio 2022)")
   endif()
 
   # Export result to parent scope

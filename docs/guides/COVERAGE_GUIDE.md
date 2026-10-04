@@ -16,7 +16,7 @@ category: "QUAL"
 
 - **Overall Coverage**: 72% (Target: 80%)
 - **Unit Tests**: `unittest/` directory
-- **Integration Tests**: `integration_tests/` directory
+- **Integration Tests**: `tests/integration_tests/` directory
 - **Benchmarks**: `tests/benchmarks/` directory
 
 ## Running Coverage Locally

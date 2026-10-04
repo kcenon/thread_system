@@ -25,7 +25,7 @@ Key goals:
 
 | Category | Feature | Description |
 |----------|---------|-------------|
-| **Core** | Thread Pool | Multi-worker pool with adaptive queue and submit_task API |
+| **Core** | Thread Pool | Multi-worker pool with adaptive queue and future-based submit() API |
 | **Core** | Typed Thread Pool | Priority-based scheduling with job type routing and aging |
 | **Queue** | Adaptive Job Queue | Auto-switches between mutex and lock-free modes |
 | **Queue** | Policy Queue | Configurable sync, overflow, and bounded policies |
@@ -110,18 +110,20 @@ Create a thread pool and submit jobs in a few lines:
 
 @code{.cpp}
 #include <kcenon/thread/thread_pool.h>
+#include <kcenon/thread/core/thread_pool_builder.h>
+#include <kcenon/thread/typed_thread_pool.h>
+#include <kcenon/thread/impl/typed_pool/callback_typed_job.h>
 #include <iostream>
 #include <future>
 
 int main() {
     // Create a thread pool with hardware concurrency workers
-    auto pool = kcenon::thread::thread_pool::create();
+    auto pool = kcenon::thread::thread_pool_builder().build();
     pool->start();
 
     // Submit a job and get a future
-    auto future = pool->submit_task([]() -> kcenon::thread::result_void {
+    auto future = pool->submit([]() {
         std::cout << "Hello from thread pool!\n";
-        return {};
     });
 
     // Wait for completion
@@ -132,16 +134,18 @@ int main() {
     auto typed_pool = std::make_shared<
         kcenon::thread::typed_thread_pool_t<job_types>>();
 
-    typed_pool->add_worker(job_types::High);
-    typed_pool->add_worker({job_types::High, job_types::Normal});
+    typed_pool->enqueue(std::make_unique<kcenon::thread::typed_thread_worker_t<job_types>>(
+        std::vector<job_types>{job_types::RealTime}));
+    typed_pool->enqueue(std::make_unique<kcenon::thread::typed_thread_worker_t<job_types>>(
+        std::vector<job_types>{job_types::RealTime, job_types::Batch}));
     typed_pool->start();
 
     typed_pool->enqueue(
         std::make_unique<kcenon::thread::callback_typed_job_t<job_types>>(
-            []() -> kcenon::thread::result_void {
+            []() -> kcenon::common::VoidResult {
                 std::cout << "High-priority task executed\n";
-                return {};
-            }, job_types::High));
+                return kcenon::common::ok();
+            }, job_types::RealTime));
 
     typed_pool->stop();
     pool->stop();
@@ -153,27 +157,39 @@ int main() {
 
 @subsection install_fetchcontent CMake FetchContent (Recommended)
 
+thread_system does not fetch common_system itself; fetch it first and point
+@c COMMON_SYSTEM_INCLUDE_DIR at its headers.
+
 @code{.cmake}
 include(FetchContent)
 FetchContent_Declare(
+    common_system
+    GIT_REPOSITORY https://github.com/kcenon/common_system.git
+    GIT_TAG v0.2.0
+)
+FetchContent_MakeAvailable(common_system)
+set(COMMON_SYSTEM_INCLUDE_DIR "${common_system_SOURCE_DIR}/include")
+
+FetchContent_Declare(
     thread_system
     GIT_REPOSITORY https://github.com/kcenon/thread_system.git
-    GIT_TAG        v0.3.1
+    GIT_TAG v1.0.0  # Pin to a specific release tag; do NOT use main
 )
 FetchContent_MakeAvailable(thread_system)
 
-target_link_libraries(your_target PRIVATE kcenon::thread_core)
+target_link_libraries(your_target PRIVATE thread_system)
 @endcode
 
 @subsection install_vcpkg vcpkg
 
-@code{.bash}
-vcpkg install kcenon-thread-system
-@endcode
+The port is published in the kcenon vcpkg registry, not in the official vcpkg
+registry. Add the registry to @c vcpkg-configuration.json and
+@c kcenon-thread-system to @c vcpkg.json (see "Installation via vcpkg" in the
+README), then:
 
 @code{.cmake}
 find_package(thread_system CONFIG REQUIRED)
-target_link_libraries(your_target PRIVATE kcenon::thread_core)
+target_link_libraries(your_target PRIVATE thread_system::thread_system)
 @endcode
 
 @subsection install_manual Build from Source

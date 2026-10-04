@@ -1,10 +1,5 @@
 # Coherence gates
 
-This default-branch delivery installs the gate and dispatch tooling. The canonical
-option migration and source remediation described below are being reviewed on
-`ci/701-coherence-gates` for `develop`; this delivery does not change the release
-branch's C++ sources or dependency option behavior.
-
 Tracked by [common_system #701](https://github.com/kcenon/common_system/issues/701).
 
 `ci/coherence.json` selects advisory or enforcing policy. The underlying validators

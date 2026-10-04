@@ -3,9 +3,10 @@
 #
 # Unified test directory structure:
 #   tests/
-#   ├── unit/          - Unit tests
-#   ├── benchmarks/    - Performance benchmarks
-#   └── stress/        - Stress tests (optional)
+#   ├── unit/              - Unit tests
+#   ├── benchmarks/        - Performance benchmarks
+#   ├── stress/            - Stress tests (optional)
+#   └── integration_tests/ - Integration / scenario tests (optional)
 ##################################################
 
 # Add unit tests only when testing is enabled and GTest is available
@@ -27,4 +28,11 @@ endif()
 if(BUILD_STRESS_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/stress AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/stress/CMakeLists.txt)
     add_subdirectory(stress)
     message(STATUS "Added tests/stress subdirectory")
+endif()
+
+# Add integration tests if enabled
+# Note: THREAD_BUILD_INTEGRATION_TESTS is defined in top-level CMakeLists.txt
+if(THREAD_BUILD_INTEGRATION_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests/CMakeLists.txt)
+    add_subdirectory(integration_tests)
+    message(STATUS "Added tests/integration_tests subdirectory")
 endif()

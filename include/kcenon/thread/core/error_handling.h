@@ -13,8 +13,8 @@
  *
  * @note As of v3.0, all result types have been unified to use kcenon::common::Result<T>
  *       and kcenon::common::VoidResult. The legacy thread::result<T>, thread::result_void,
- *       and thread::error types have been removed. See docs/ERROR_SYSTEM_MIGRATION_GUIDE.md
- *       for migration instructions.
+ *       and thread::error types have been removed. See
+ *       docs/advanced/ERROR_SYSTEM_MIGRATION_GUIDE.md for migration instructions.
  */
 
 #include <string>
