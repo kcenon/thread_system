@@ -3,6 +3,9 @@ updates:
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
+    # Version updates follow feature -> develop -> main. Security updates
+    # ignore this setting and always target the default branch (main).
+    target-branch: "develop"
     schedule:
       interval: "weekly"
     assignees:
