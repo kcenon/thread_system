@@ -1,0 +1,7 @@
+<map id="practical_use_cases" name="practical_use_cases">
+<area shape="rect" id="Node000001" title="Example 5: Practical use cases." alt="" coords="5,45,157,70"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1queue__factory.html#a8265741f74ebf4cf825be54fe7412006" title="Create adaptive queue (RECOMMENDED for most use cases)" alt="" coords="205,5,440,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,45,192,40,192,45,158,50"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1queue__factory.html#a18c052cbe5654bb536063d626aea8a93" title="Create standard job_queue." alt="" coords="205,69,440,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="158,65,192,69,192,75,157,70"/>
+</map>

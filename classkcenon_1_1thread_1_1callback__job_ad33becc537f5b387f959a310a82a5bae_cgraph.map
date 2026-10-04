@@ -1,0 +1,5 @@
+<map id="kcenon::thread::callback_job::do_work" name="kcenon::thread::callback_job::do_work">
+<area shape="rect" id="Node000001" title="Executes the appropriate callback function to perform the job&#39;s work." alt="" coords="5,5,187,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html#abb0aab22ba1692b557b8138afcd99894" title="The core task execution method to be overridden by derived classes." alt="" coords="235,5,381,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,23,221,23,221,28,187,28"/>
+</map>

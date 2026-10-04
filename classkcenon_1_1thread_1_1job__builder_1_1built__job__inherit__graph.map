@@ -1,0 +1,5 @@
+<map id="kcenon::thread::job_builder::built_job" name="kcenon::thread::job_builder::built_job">
+<area shape="rect" id="Node000001" title="Internal job implementation created by the builder." alt="" coords="31,499,169,619"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="5,5,195,451"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,464,103,498,97,498,97,464"/>
+</map>

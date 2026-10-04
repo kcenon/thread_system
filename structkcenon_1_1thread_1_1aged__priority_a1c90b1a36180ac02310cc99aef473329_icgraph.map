@@ -1,0 +1,5 @@
+<map id="kcenon::thread::aged_priority::is_max_boosted" name="kcenon::thread::aged_priority::is_max_boosted">
+<area shape="rect" id="Node000001" title="Checks if this job has reached max boost." alt="" coords="216,13,405,53"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1aging__typed__job__t.html#a7dc1ddc220b88606bff0a9e38eb32e3c" title="Checks if this job has reached maximum boost." alt="" coords="5,5,168,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,35,168,35,168,30,202,30"/>
+</map>

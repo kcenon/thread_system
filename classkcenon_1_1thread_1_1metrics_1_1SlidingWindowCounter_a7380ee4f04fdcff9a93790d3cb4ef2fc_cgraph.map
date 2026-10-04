@@ -1,0 +1,9 @@
+<map id="kcenon::thread::metrics::SlidingWindowCounter::increment" name="kcenon::thread::metrics::SlidingWindowCounter::increment">
+<area shape="rect" id="Node000001" title="Increment the counter." alt="" coords="5,84,183,139"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#af8365e3e2ad444977388e2f4809a0a90" title="Advance bucket to current time period if needed." alt="" coords="231,5,409,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="173,81,227,62,229,67,174,86"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#abaa9feb9891a7a224a2ed062904596f3" title="Get the bucket index for a specific timestamp." alt="" coords="231,84,409,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="183,109,217,109,217,114,183,114"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#afae0624b08953afcee66b62fe892d07a" title="Get current time in milliseconds since epoch." alt="" coords="231,163,409,217"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="174,136,229,156,227,161,173,141"/>
+</map>

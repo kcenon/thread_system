@@ -1,0 +1,13 @@
+<map id="kcenon::thread::detail::hazard_pointer_registry::instance" name="kcenon::thread::detail::hazard_pointer_registry::instance">
+<area shape="rect" id="Node000001" title=" " alt="" coords="487,94,671,149"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1hazard__pointer__domain.html#ad212b2dab041c715723e45fca6c6c231" title=" " alt="" coords="240,5,439,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="509,91,438,60,405,48,407,43,440,55,511,86"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1hazard__pointer.html#af794178c3cf655a54f792fc7f114d7a6" title="Default constructor &#45; acquires a hazard pointer slot." alt="" coords="249,69,429,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="473,110,429,104,430,99,474,105"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1hazard__pointer__domain.html#a355743ba0f8bcd7c2ccbedfc8d32ee75" title="Force reclamation scan (optional, for testing)" alt="" coords="245,133,433,173"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="473,138,434,143,433,138,473,133"/>
+<area shape="rect" id="Node000006" href="$structkcenon_1_1thread_1_1hazard__pointer__domain_1_1thread__retire__list.html#ac1061275af42bb7c7103fe498fad0aa0" title=" " alt="" coords="249,198,430,253"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="508,157,440,188,410,200,408,196,438,183,506,152"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1hazard__pointer__domain.html#a0bfa7cacaa96529bdece3b54c0b77a12" title="Acquire a hazard pointer for this domain." alt="" coords="5,69,192,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="235,92,192,92,192,87,235,87"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::dag_scheduler::cancel_all" name="kcenon::thread::dag_scheduler::cancel_all">
+<area shape="rect" id="Node000001" title="Cancels all pending jobs." alt="" coords="259,5,424,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1dag__scheduler.html#ae8c1ea19307b9b99a3cde4def0ae5054" title="Destructor &#45; cancels any pending jobs." alt="" coords="5,5,211,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="245,28,211,28,211,23,245,23"/>
+</map>

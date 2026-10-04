@@ -1,0 +1,17 @@
+<map id="core/sync/include/sync_primitives.h" name="core/sync/include/sync_primitives.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="255,5,425,45"/>
+<area shape="rect" id="Node000002" href="$include_2kcenon_2thread_2core_2sync__primitives_8h.html" title="RAII&#45;based synchronization primitives including scoped lock with timeout." alt="" coords="267,93,413,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="343,46,343,79,337,79,337,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,181,69,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="268,136,83,184,82,178,267,131"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="94,181,237,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="299,136,205,178,202,173,297,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="261,181,328,207"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="331,135,311,171,306,168,327,132"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="352,181,419,207"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="353,132,374,168,369,171,349,135"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="443,181,520,207"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="375,131,449,172,447,177,373,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="544,181,659,207"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="403,131,551,175,549,180,402,136"/>
+</map>

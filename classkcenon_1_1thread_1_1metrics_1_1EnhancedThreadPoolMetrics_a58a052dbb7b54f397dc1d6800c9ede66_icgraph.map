@@ -1,0 +1,7 @@
+<map id="kcenon::thread::metrics::EnhancedThreadPoolMetrics::snapshot" name="kcenon::thread::metrics::EnhancedThreadPoolMetrics::snapshot">
+<area shape="rect" id="Node000001" title="Get a comprehensive snapshot of all metrics." alt="" coords="268,45,483,100"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a955158e389ad1adbe7ac30c30efb637e" title="Export metrics as JSON string." alt="" coords="5,5,220,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="254,57,220,52,221,46,255,52"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a6fe360a58406f871be147c2e96e8214e" title="Export metrics in Prometheus/OpenMetrics format." alt="" coords="5,84,220,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="255,93,221,98,220,93,254,88"/>
+</map>

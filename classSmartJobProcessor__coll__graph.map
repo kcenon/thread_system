@@ -1,0 +1,11 @@
+<map id="SmartJobProcessor" name="SmartJobProcessor">
+<area shape="rect" id="Node000001" title="Smart job processor that adapts to queue capabilities." alt="" coords="31,473,226,599"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="21,331,236,411"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,411,131,457,126,457,126,411"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,133,188,253"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="110,253,121,314,116,315,105,254"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="213,161,362,226"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="251,238,166,332,162,329,247,235"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="276,5,299,71"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="290,71,290,144,285,144,285,71"/>
+</map>

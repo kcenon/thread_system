@@ -1,0 +1,5 @@
+<map id="kcenon::thread::callback_job" name="kcenon::thread::callback_job">
+<area shape="rect" id="Node000001" title="A specialized job class that encapsulates user&#45;defined callbacks." alt="" coords="5,499,205,724"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="11,5,200,451"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,464,108,498,103,498,103,464"/>
+</map>

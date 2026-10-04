@@ -1,0 +1,7 @@
+<map id="kcenon::thread::callback_typed_job_t&lt; job_type &gt;" name="kcenon::thread::callback_typed_job_t&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title="Callback&#45;based typed job template." alt="" coords="7,667,193,787"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1typed__job__t.html" title="Typed job template." alt="" coords="22,499,178,619"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,632,103,666,97,666,97,632"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="5,5,195,451"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,464,103,498,97,498,97,464"/>
+</map>

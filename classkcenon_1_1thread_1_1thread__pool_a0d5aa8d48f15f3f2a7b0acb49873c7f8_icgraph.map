@@ -1,0 +1,7 @@
+<map id="kcenon::thread::thread_pool::is_enhanced_metrics_enabled" name="kcenon::thread::thread_pool::is_enhanced_metrics_enabled">
+<area shape="rect" id="Node000001" title="Check if enhanced metrics is enabled." alt="" coords="491,5,693,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1autoscaler.html#a08f555cbe2d05f8ee9f38364fc5e4d75" title="Collects current metrics from the pool." alt="" coords="248,13,443,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="477,35,443,35,443,30,477,30"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1autoscaler.html#ad2b36a4db012690def3c1fbe2f001472" title="Collects current metrics from the thread pool." alt="" coords="5,13,200,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="234,35,200,35,200,30,234,30"/>
+</map>

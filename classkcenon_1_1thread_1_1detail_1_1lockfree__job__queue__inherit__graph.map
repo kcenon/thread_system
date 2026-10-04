@@ -1,0 +1,7 @@
+<map id="kcenon::thread::detail::lockfree_job_queue" name="kcenon::thread::detail::lockfree_job_queue">
+<area shape="rect" id="Node000001" title="Lock&#45;free Multi&#45;Producer Multi&#45;Consumer (MPMC) job queue (Internal implementation)" alt="" coords="113,308,291,748"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,73,188,193"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,205,146,307,141,309,113,207"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html" title="Mixin interface for queue capability introspection." alt="" coords="213,5,405,260"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="273,274,264,309,259,307,268,273"/>
+</map>

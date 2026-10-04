@@ -1,0 +1,5 @@
+<map id="kcenon::thread::detail::global_reclamation_manager::reclaim" name="kcenon::thread::detail::global_reclamation_manager::reclaim">
+<area shape="rect" id="Node000001" title="Reclaim orphaned nodes that are no longer protected." alt="" coords="241,5,461,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1hazard__pointer__domain.html#a355743ba0f8bcd7c2ccbedfc8d32ee75" title="Force reclamation scan (optional, for testing)" alt="" coords="5,13,193,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="228,35,193,35,193,30,228,30"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::detail::collect_all" name="kcenon::thread::detail::collect_all">
+<area shape="rect" id="Node000001" title="Collect all results from a vector of futures." alt="" coords="223,5,387,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#a9686b3e539de75b5062edf8a0a2a6eb2" title="Submit a batch and wait for all results." alt="" coords="5,5,175,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,28,175,28,175,23,209,23"/>
+</map>

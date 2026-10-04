@@ -1,0 +1,17 @@
+<map id="kcenon::thread::utils::formatter::format_to" name="kcenon::thread::utils::formatter::format_to">
+<area shape="rect" id="Node000001" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="721,170,885,210"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#a3548c068b3f0f369dd09af0df56383c0" title="Provides a string representation of this thread_pool." alt="" coords="504,170,673,210"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="708,193,673,193,673,187,708,187"/>
+<area shape="rect" id="Node000003" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_01_4.html#a5cb0a269c9fac22bcb80c3c480ddda85" title="Formats a thread_pool object as a string." alt="" coords="268,5,443,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="559,162,512,117,455,74,434,63,437,58,457,69,516,113,562,158"/>
+<area shape="rect" id="Node000004" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_00_01wchar__t_01_4.html#a6f75514ab296d1346317f10649a457ac" title="Formats a thread_pool object as a wide string." alt="" coords="268,84,443,139"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="515,168,436,141,438,136,517,163"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a69b90d07833c496c1b40d9b8598a61af" title="Gets formatted thread dump (human&#45;readable)." alt="" coords="255,163,456,217"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="490,193,456,193,456,187,490,187"/>
+<area shape="rect" id="Node000007" href="$thread__pool__sample_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="328,241,383,267"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="509,216,457,231,384,250,382,245,455,226,507,211"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a3869a283fd860d747c4cf485242103c1" title="Exports diagnostics as Prometheus&#45;compatible metrics." alt="" coords="255,291,456,345"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="551,221,507,251,457,280,431,293,428,288,455,276,504,246,548,216"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a71f94d5b940569ff48478a43af04441d" title="Exports diagnostics as formatted string." alt="" coords="5,163,207,217"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="241,193,207,193,207,187,241,187"/>
+</map>

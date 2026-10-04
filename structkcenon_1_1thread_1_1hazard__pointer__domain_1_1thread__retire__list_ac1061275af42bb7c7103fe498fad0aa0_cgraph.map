@@ -1,0 +1,9 @@
+<map id="kcenon::thread::hazard_pointer_domain::thread_retire_list::reclaim_all" name="kcenon::thread::hazard_pointer_domain::thread_retire_list::reclaim_all">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,84,187,139"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1global__reclamation__manager.html#a3f4feb38de44fa202c9a12791e4d38d9" title="Add a list of retired nodes to the global orphanage." alt="" coords="235,5,455,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,81,244,62,245,67,184,86"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1detail_1_1global__reclamation__manager.html#a9dedf5d6a4430e6e315d19b0e7821fb8" title=" " alt="" coords="235,84,455,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="187,109,221,109,221,114,187,114"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1detail_1_1hazard__pointer__registry.html#a03102a801418cf5ccc4d7cac49305527" title=" " alt="" coords="253,163,437,217"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="184,136,245,156,244,161,182,141"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="kcenon::thread::typed_job_interface::has_higher_priority" name="kcenon::thread::typed_job_interface::has_higher_priority">
+<area shape="rect" id="Node000001" title="Check if this job has higher priority than another job." alt="" coords="5,30,199,85"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread_1_1detail.html#a8c137f514010c397abe2fd608e684582" title="Compile&#45;time priority comparison." alt="" coords="247,5,411,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,41,233,36,233,41,199,46"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1typed__job__interface.html#a5de6db19ca8f53f145fa1d4a3ea6187b" title="Get the type/priority of this job." alt="" coords="247,69,411,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="199,68,233,73,233,78,199,74"/>
+</map>

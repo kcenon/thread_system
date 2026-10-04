@@ -1,0 +1,5 @@
+<map id="kcenon::thread::queue_capabilities_interface::supports_batch" name="kcenon::thread::queue_capabilities_interface::supports_batch">
+<area shape="rect" id="Node000001" title="Check if batch operations are supported." alt="" coords="5,5,175,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html#a0cfc60da6e6793582ba4f484012258e2" title="Get capabilities of this queue implementation." alt="" coords="223,5,392,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,30,209,30,209,35,175,35"/>
+</map>

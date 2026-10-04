@@ -1,0 +1,19 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,104,60,129"/>
+<area shape="rect" id="Node000002" href="$queue__capabilities__sample_8cpp.html#a24c2f8d2248256305fb8b0a5f2e10224" title="Example 1: Basic capability query." alt="" coords="123,5,293,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="41,102,68,71,107,40,120,33,123,38,109,44,72,75,45,106"/>
+<area shape="rect" id="Node000003" href="$queue__capabilities__sample_8cpp.html#a793cb9b331e7242c899bc21d796fa8b8" title="Example 5: Capability comparison table." alt="" coords="123,55,293,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="59,105,107,90,141,81,142,86,109,95,61,110"/>
+<area shape="rect" id="Node000004" href="$queue__capabilities__sample_8cpp.html#a48b39632460d83345640d2902c2f9fda" title="Example 4: Capability&#45;driven queue selection." alt="" coords="108,104,308,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="60,114,94,114,94,119,60,119"/>
+<area shape="rect" id="Node000008" href="$queue__capabilities__sample_8cpp.html#abbac3a123c46c57886d5f621fb0fa53f" title="Example 2: Convenience methods." alt="" coords="124,153,292,179"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="61,124,109,139,138,147,137,153,107,145,59,129"/>
+<area shape="rect" id="Node000009" href="$queue__capabilities__sample_8cpp.html#aa18b1c8f9edc66070349736b3dc92553" title="Example 3: Dynamic capability check (polymorphic)" alt="" coords="133,203,283,243"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="46,128,72,159,109,189,122,196,120,201,107,194,69,162,42,131"/>
+<area shape="rect" id="Node000005" href="$classSmartJobProcessor.html#a46d01514ec73fd087ef4b50109a1b97b" title=" " alt="" coords="356,65,508,105"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="297,101,342,95,343,100,298,107"/>
+<area shape="rect" id="Node000006" href="$classSmartJobProcessor.html#afeb3196aa07767b344347745e3645036" title=" " alt="" coords="356,129,508,169"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="298,127,343,133,342,139,297,132"/>
+<area shape="rect" id="Node000007" href="$classSmartJobProcessor.html#a916204072b7b646fc8d31c5d37765264" title=" " alt="" coords="556,129,708,169"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="508,146,542,146,542,151,508,151"/>
+</map>

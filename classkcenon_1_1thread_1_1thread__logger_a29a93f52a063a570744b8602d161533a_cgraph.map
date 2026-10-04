@@ -1,0 +1,7 @@
+<map id="kcenon::thread::thread_logger::instance" name="kcenon::thread::thread_logger::instance">
+<area shape="rect" id="Node000001" title="Get singleton instance." alt="" coords="5,37,175,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__logger.html#a60ae04003cdadc81e0d1803ec547fe4e" title="Prepare for process shutdown." alt="" coords="223,5,421,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,43,209,38,209,44,175,48"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__logger.html#a9024471fb89c3e96dd472ce5edc186d3" title=" " alt="" coords="237,69,407,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,66,224,73,223,78,174,72"/>
+</map>

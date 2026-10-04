@@ -1,0 +1,11 @@
+<map id="include/kcenon/thread/interfaces/queue_traits.h" name="include/kcenon/thread/interfaces/queue_traits.h">
+<area shape="rect" id="Node000001" title="Type traits for detecting queue synchronization policy tags." alt="" coords="211,5,399,45"/>
+<area shape="rect" id="Node000002" href="$queue__factory_8h.html" title="Factory for creating queue instances based on configuration." alt="" coords="218,93,391,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="307,59,307,93,302,93,302,59"/>
+<area shape="rect" id="Node000003" href="$queue__factory__sample_8cpp.html" title="Queue factory for requirements&#45;based and compile&#45;time queue selection." alt="" coords="5,181,188,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="251,141,156,184,154,179,249,137"/>
+<area shape="rect" id="Node000004" href="$queue_8cppm.html" title="C++20 module partition for thread_system queue implementations." alt="" coords="212,196,397,221"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="307,147,307,196,302,196,302,147"/>
+<area shape="rect" id="Node000005" href="$queue__factory_8cpp.html" title=" " alt="" coords="421,196,628,221"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="363,136,499,193,497,198,361,141"/>
+</map>

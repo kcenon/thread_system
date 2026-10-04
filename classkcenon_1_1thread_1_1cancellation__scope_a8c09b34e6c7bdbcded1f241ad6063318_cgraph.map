@@ -1,0 +1,16 @@
+<map id="kcenon::thread::cancellation_scope::check_cancelled" name="kcenon::thread::cancellation_scope::check_cancelled">
+<area shape="rect" id="Node000001" title="Checks if the token is cancelled and returns an error result." alt="" coords="5,101,212,141"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1enhanced__cancellation__token.html#affd76e91fe16e5c8914f243e98f263c2" title="Checks if the token has been cancelled and returns an error result." alt="" coords="260,94,457,149"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,119,247,119,247,124,212,124"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1enhanced__cancellation__token.html#ae129c9226358cfee666ff9e9e079efc9" title="Gets the cancellation reason." alt="" coords="505,5,736,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="416,91,504,55,529,47,530,52,506,60,418,96"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1enhanced__cancellation__token.html#a77756ddbe3aa4c18d88ca4b3e1fa0695" title="Checks if the token has been cancelled." alt="" coords="525,94,716,149"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="458,119,512,119,512,124,458,124"/>
+<area shape="rect" id="Node000005" href="$namespacekcenon_1_1thread.html#a13f75c13dd33420c01a704c8bd09a79e" title="Create a common::VoidResult error from a thread::error_code." alt="" coords="539,173,702,213"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="458,146,535,167,534,172,457,151"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="575,94,576,84,584,75,599,69,621,67,647,70,662,78,659,83,645,76,621,73,600,75,587,79,581,86,581,94"/>
+<area shape="rect" id="Node000006" href="$namespacekcenon_1_1thread.html#a899d6d797fc353567761b0d4ed2637e6" title="Convert a thread::error_code to common::error_info." alt="" coords="784,173,924,213"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="702,191,770,191,770,196,702,196"/>
+<area shape="rect" id="Node000007" href="$namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="972,173,1131,213"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="925,191,958,191,958,196,925,196"/>
+</map>

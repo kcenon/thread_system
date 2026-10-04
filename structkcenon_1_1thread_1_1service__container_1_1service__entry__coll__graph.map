@@ -1,0 +1,9 @@
+<map id="kcenon::thread::service_container::service_entry" name="kcenon::thread::service_container::service_entry">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,389,184,489"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="10,261,179,327"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,327,97,373,92,373,92,327"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="20,133,169,199"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,213,97,261,92,261,92,213"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="83,5,106,71"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="97,71,97,117,92,117,92,71"/>
+</map>

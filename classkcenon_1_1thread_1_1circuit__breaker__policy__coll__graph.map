@@ -1,0 +1,18 @@
+<map id="kcenon::thread::circuit_breaker_policy" name="kcenon::thread::circuit_breaker_policy">
+<area shape="rect" id="Node000001" title="Pool policy that implements circuit breaker pattern for failure protection." alt="" coords="167,524,359,804"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1pool__policy.html" title="Base interface for thread pool policies." alt="" coords="5,261,155,461"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,472,180,522,176,525,145,475"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="179,321,346,401"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="265,402,265,508,260,508,260,402"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="71,133,182,199"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="151,197,228,306,224,310,147,200"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="207,133,356,199"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="280,212,269,322,264,321,274,212"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="350,5,373,71"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="352,59,312,121,308,118,348,56"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="380,133,505,199"/>
+<area shape="poly" id="edge8_Node000008_Node000006" title=" " alt="" coords="375,56,416,118,411,121,371,59"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="370,329,515,394"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="433,395,412,446,384,501,370,524,365,521,379,499,407,444,428,393"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="445,212,445,329,440,329,440,212"/>
+</map>

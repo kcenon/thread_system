@@ -1,0 +1,7 @@
+<map id="kcenon::thread::detail::global_reclamation_manager::instance" name="kcenon::thread::detail::global_reclamation_manager::instance">
+<area shape="rect" id="Node000001" title=" " alt="" coords="241,34,461,89"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1hazard__pointer__domain.html#a355743ba0f8bcd7c2ccbedfc8d32ee75" title="Force reclamation scan (optional, for testing)" alt="" coords="5,5,193,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="227,46,193,41,194,36,228,41"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1hazard__pointer__domain_1_1thread__retire__list.html#ac1061275af42bb7c7103fe498fad0aa0" title=" " alt="" coords="9,70,190,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="228,82,190,87,190,82,227,76"/>
+</map>

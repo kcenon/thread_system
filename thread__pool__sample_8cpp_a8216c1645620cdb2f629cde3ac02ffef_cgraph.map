@@ -1,0 +1,27 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,164,60,189"/>
+<area shape="rect" id="Node000002" href="$thread__pool__sample_8cpp.html#aea6a873d976a6b18350bbd54df65bccb" title=" " alt="" coords="135,5,251,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="36,163,60,108,80,76,106,48,128,34,131,38,110,52,84,79,65,111,41,165"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#aec5fe973e44efa3d1040ff7bec85f822" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="351,99,506,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="39,162,65,125,84,106,107,92,138,80,171,74,238,71,303,79,359,93,358,98,302,85,238,77,172,79,140,86,109,96,87,110,69,129,43,165"/>
+<area shape="rect" id="Node000004" href="$thread__pool__sample_8cpp.html#a8d986ee76ac0cece6635815924ac089f" title=" " alt="" coords="129,107,256,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="59,162,107,142,132,134,134,139,109,147,61,167"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__pool.html#af7d8c0189c9b08f50b369df16040a0e8" title="Starts the thread pool and all associated workers." alt="" coords="108,221,277,261"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="61,186,109,206,126,213,124,218,107,211,59,191"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1thread__pool.html#af0d13085ca8af0504a4b4a82630fc18d" title="Stops the thread pool and all worker threads." alt="" coords="108,157,277,197"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="60,174,94,174,94,179,60,179"/>
+<area shape="rect" id="Node000009" href="$thread__pool__sample_8cpp.html#a427de6fadf68fa91976ba54b302b274e" title=" " alt="" coords="151,285,234,311"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="43,189,69,229,88,251,109,270,139,285,137,290,107,275,84,255,64,232,38,191"/>
+<area shape="rect" id="Node000011" href="$classkcenon_1_1thread_1_1thread__pool.html#a3548c068b3f0f369dd09af0df56383c0" title="Provides a string representation of this thread_pool." alt="" coords="108,338,277,378"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="40,189,62,251,83,289,110,321,119,329,116,333,106,325,78,292,57,254,35,190"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="257,117,338,117,338,122,257,122"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1cancellation__token.html#a96d31c388122def979393ed4b19a3061" title="Creates a new cancellation token." alt="" coords="325,214,532,254"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="278,236,312,235,312,240,278,241"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1cancellation__token.html#a43cb9007fd321a0e234353ea7b6f252b" title=" " alt="" coords="580,214,787,254"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="532,231,566,231,566,237,532,237"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="275,154,337,139,339,144,276,159"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1thread__pool.html#aadb01256dae22254645858d28bc7d593" title="Enqueues a batch of jobs into the shared job_queue." alt="" coords="344,278,513,318"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="234,295,330,295,330,301,234,301"/>
+<area shape="rect" id="Node000012" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#a8f00efcd854ecca1c3d3f8a29d81e580" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="347,342,511,382"/>
+<area shape="poly" id="edge13_Node000011_Node000012" title=" " alt="" coords="278,357,333,358,332,363,278,362"/>
+</map>

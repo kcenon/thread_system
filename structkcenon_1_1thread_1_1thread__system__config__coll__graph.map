@@ -1,0 +1,17 @@
+<map id="kcenon::thread::thread_system_config" name="kcenon::thread::thread_system_config">
+<area shape="rect" id="Node000001" title="Unified configuration for thread_system." alt="" coords="390,665,551,765"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1thread__system__config_1_1pool__config.html" title="Configuration for thread pool behavior." alt="" coords="13,363,211,603"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,591,224,600,299,645,376,679,374,684,297,650,221,605,209,596"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1backpressure__config.html" title="Configuration for backpressure mechanisms." alt="" coords="5,5,219,300"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="115,300,115,346,109,346,109,300"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1thread__system__config_1_1resilience__config.html" title="Configuration for resilience features." alt="" coords="235,435,421,530"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="349,529,375,583,408,640,415,651,411,654,403,643,370,586,344,531"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="250,120,406,185"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="331,185,331,419,325,419,325,185"/>
+<area shape="rect" id="Node000006" href="$structkcenon_1_1thread_1_1dag__config.html" title="Configuration options for the DAG scheduler." alt="" coords="445,373,608,593"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="503,594,489,650,484,649,498,592"/>
+<area shape="rect" id="Node000007" href="$structkcenon_1_1thread_1_1thread__system__config_1_1scaling__config.html" title="Configuration for dynamic scaling features." alt="" coords="633,435,802,530"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="686,532,656,569,622,605,558,658,555,653,618,601,652,565,682,529"/>
+<area shape="rect" id="Node000008" href="$structkcenon_1_1thread_1_1priority__aging__config.html" title="Configuration for priority aging behavior." alt="" coords="634,25,801,280"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="720,280,720,418,715,418,715,280"/>
+</map>

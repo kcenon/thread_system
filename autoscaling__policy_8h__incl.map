@@ -1,0 +1,17 @@
+<map id="include/kcenon/thread/scaling/autoscaling_policy.h" name="include/kcenon/thread/scaling/autoscaling_policy.h">
+<area shape="rect" id="Node000001" title="Configuration for autoscaling behavior and thresholds." alt="" coords="158,5,325,60"/>
+<area shape="rect" id="Node000002" href="$scaling__metrics_8h.html" title="Scaling direction and metrics for autoscaling decisions." alt="" coords="68,108,204,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,62,163,101,159,97,207,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,181,72,207"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="159,51,104,73,79,89,58,110,45,138,40,167,35,167,39,136,54,106,76,85,102,69,157,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="199,181,270,207"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="243,60,238,168,233,168,238,60"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="279,108,366,133"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="268,58,304,96,300,100,264,62"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="391,108,455,133"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="298,58,387,100,385,105,296,62"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="122,136,67,175,64,171,119,131"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="153,131,209,171,206,175,150,136"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="103,181,169,207"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="139,134,139,168,133,168,133,134"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="utilities/include/formatter.h" name="utilities/include/formatter.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="77,5,275,31"/>
+<area shape="rect" id="Node000002" href="$include_2kcenon_2thread_2utils_2formatter_8h.html" title="Generic formatter for enum types using user&#45;provided converter functors." alt="" coords="103,79,249,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,31,179,65,173,65,173,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,72,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="144,121,72,162,70,157,142,116"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="96,167,155,192"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="166,120,143,156,138,154,161,117"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="179,167,277,192"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="191,117,215,153,210,156,186,120"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="301,167,393,192"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="218,116,310,158,308,163,216,121"/>
+</map>

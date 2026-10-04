@@ -1,0 +1,5 @@
+<map id="kcenon::thread::future_job&lt; R &gt;" name="kcenon::thread::future_job&lt; R &gt;">
+<area shape="rect" id="Node000001" title="A job that wraps a callable and provides a future for its result." alt="" coords="21,499,179,639"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="5,5,195,451"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,465,103,499,97,499,97,465"/>
+</map>

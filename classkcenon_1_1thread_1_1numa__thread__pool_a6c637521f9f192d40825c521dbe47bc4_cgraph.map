@@ -1,0 +1,9 @@
+<map id="kcenon::thread::numa_thread_pool::is_numa_system" name="kcenon::thread::numa_thread_pool::is_numa_system">
+<area shape="rect" id="Node000001" title="Check if the system has NUMA architecture." alt="" coords="5,41,175,96"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1numa__thread__pool.html#af0f9477008f58825594f3e07105e20de" title="Ensure topology is detected." alt="" coords="248,5,412,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,53,234,44,235,50,175,59"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1numa__topology.html#aa7c4f90a64089aa8fd1c0b52c53a7c9d" title="Check if NUMA is available on this system." alt="" coords="223,85,437,125"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="175,79,210,84,209,89,174,84"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1numa__topology.html#a394d1c43d0b95b4d3cfd5b6caec4ce83" title="Detect and return the system&#39;s NUMA topology." alt="" coords="485,13,649,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="412,30,472,30,472,35,412,35"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="kcenon::thread::configuration_manager::load_from_file" name="kcenon::thread::configuration_manager::load_from_file">
+<area shape="rect" id="Node000001" title="Load configuration from file." alt="" coords="5,37,217,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1configuration__manager.html#a534e96100979a9b8318d8ef16377719c" title="Parse a configuration line." alt="" coords="265,37,477,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,55,252,55,252,60,217,60"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1configuration__manager.html#ac075abcd7b2efa9f47e013c928d06bca" title="Set a configuration value." alt="" coords="525,37,737,77"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="477,55,512,55,512,60,477,60"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1configuration__manager.html#a0839d1a2bfd6738f89a9c904c8e0f04a" title="Notify change callbacks." alt="" coords="785,5,997,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="737,42,771,37,772,43,738,47"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1configuration__manager.html#aae4e0f3a49bdd84670a9db4a811b1c38" title="Check if two values are equal." alt="" coords="785,69,997,109"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="738,68,772,72,771,77,737,73"/>
+</map>

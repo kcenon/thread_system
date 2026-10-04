@@ -1,0 +1,4 @@
+var structkcenon_1_1thread_1_1is__bounded__queue_3_01T_00_01std_1_1enable__if__t_3_01policy__queue__6d81250e1ad6a165a566bf9432592958 =
+[
+    [ "value", "structkcenon_1_1thread_1_1is__bounded__queue_3_01T_00_01std_1_1enable__if__t_3_01policy__queue__6d81250e1ad6a165a566bf9432592958.html#a243d3635a123ef84d74358ecff3e76ae", null ]
+];

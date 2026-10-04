@@ -1,0 +1,11 @@
+<map id="kcenon::thread::hazard_pointer_domain::reclaim" name="kcenon::thread::hazard_pointer_domain::reclaim">
+<area shape="rect" id="Node000001" title="Force reclamation scan (optional, for testing)" alt="" coords="5,91,193,131"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1global__reclamation__manager.html#a9dedf5d6a4430e6e315d19b0e7821fb8" title=" " alt="" coords="241,5,461,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,89,249,62,251,67,165,94"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1detail_1_1hazard__pointer__registry.html#a03102a801418cf5ccc4d7cac49305527" title=" " alt="" coords="259,84,443,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="194,109,245,109,245,114,194,114"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1detail_1_1global__reclamation__manager.html#ae1ad17e8685fbb6c78676e228b08d91e" title="Reclaim orphaned nodes that are no longer protected." alt="" coords="241,163,461,217"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="165,129,251,156,249,161,163,134"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1detail_1_1global__reclamation__manager.html#a3f4feb38de44fa202c9a12791e4d38d9" title="Add a list of retired nodes to the global orphanage." alt="" coords="509,163,729,217"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="461,187,496,187,496,193,461,193"/>
+</map>

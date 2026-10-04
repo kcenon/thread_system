@@ -1,0 +1,11 @@
+<map id="kcenon::thread::thread_pool::stop" name="kcenon::thread::thread_pool::stop">
+<area shape="rect" id="Node000001" title="Stops the thread pool and all worker threads." alt="" coords="237,79,407,119"/>
+<area shape="rect" id="Node000002" href="$crash__protection_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="70,5,125,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="265,76,188,45,124,26,126,21,190,39,267,71"/>
+<area shape="rect" id="Node000003" href="$thread__pool__sample_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="70,55,125,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="223,88,124,74,125,68,224,83"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1adapters_1_1thread__pool__executor__adapter.html#ad65bc53369a40c0ef3578346fe8008e4" title=" " alt="" coords="5,104,189,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="224,116,190,121,189,116,223,111"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__pool.html#a0e06c5be9b580cef250bb6053630755f" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="13,183,182,223"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="276,129,190,172,158,186,156,181,188,168,273,124"/>
+</map>

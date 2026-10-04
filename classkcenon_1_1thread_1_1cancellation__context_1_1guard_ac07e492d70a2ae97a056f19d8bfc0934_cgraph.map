@@ -1,0 +1,5 @@
+<map id="kcenon::thread::cancellation_context::guard::~guard" name="kcenon::thread::cancellation_context::guard::~guard">
+<area shape="rect" id="Node000001" title="Destructor pops the token." alt="" coords="5,5,212,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1cancellation__context.html#ae2163b559f3721ed82b58d5120474b32" title="Pops a token from the thread&#45;local stack." alt="" coords="260,5,467,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,23,246,23,246,28,212,28"/>
+</map>

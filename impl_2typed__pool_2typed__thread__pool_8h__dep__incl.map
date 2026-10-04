@@ -1,0 +1,13 @@
+<map id="include/kcenon/thread/impl/typed_pool/typed_thread_pool.h" name="include/kcenon/thread/impl/typed_pool/typed_thread_pool.h">
+<area shape="rect" id="Node000001" title="Type&#45;based thread pool with priority scheduling and job type routing." alt="" coords="358,5,530,60"/>
+<area shape="rect" id="Node000002" href="$typed__thread__pool__sample_8cpp.html" title="Typed thread pool with priority&#45;based job routing using built&#45;in job_types." alt="" coords="5,108,208,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="345,66,195,110,194,105,344,61"/>
+<area shape="rect" id="Node000003" href="$typed__thread__pool__sample__2_8cpp.html" title="Typed thread pool with a custom priority enum (test_priority)" alt="" coords="232,108,435,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="407,71,364,110,360,106,403,67"/>
+<area shape="rect" id="Node000004" href="$core_2typed__thread__pool_8h.html" title="Public forwarding header for type&#45;safe thread pool." alt="" coords="459,115,650,155"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="485,68,536,113,532,117,482,72"/>
+<area shape="rect" id="Node000006" href="$typed__thread__pool_8cpp.html" title=" " alt="" coords="674,115,849,155"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="540,62,703,113,701,118,539,67"/>
+<area shape="rect" id="Node000005" href="$typed__thread__pool_8h.html" title="Stable public include for typed_thread_pool_t." alt="" coords="471,211,638,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="557,169,557,211,552,211,552,169"/>
+</map>

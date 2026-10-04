@@ -1,0 +1,7 @@
+<map id="kcenon::thread::diagnostics::job_info::execution_time_ms" name="kcenon::thread::diagnostics::job_info::execution_time_ms">
+<area shape="rect" id="Node000001" title="Converts execution_time to milliseconds." alt="" coords="255,37,472,77"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1diagnostics_1_1job__info.html#a4d9c1056413f3818b9ed84a491aed633" title="Converts the job info to a JSON string." alt="" coords="5,5,207,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="241,45,207,40,207,35,241,39"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1diagnostics_1_1job__info.html#ac4642d0e973a72bedbe3f55377a376ca" title="Converts the job info to a human&#45;readable string." alt="" coords="5,69,207,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="241,75,207,79,207,74,241,70"/>
+</map>

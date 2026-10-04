@@ -1,0 +1,15 @@
+<map id="utilities/include/span.h" name="utilities/include/span.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="131,5,301,31"/>
+<area shape="rect" id="Node000002" href="$include_2kcenon_2thread_2utils_2span_8h.html" title="Polyfill for std::span on pre&#45;C++20 compilers." alt="" coords="143,79,289,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,31,219,65,213,65,213,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,61,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="173,121,74,164,72,159,171,116"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="86,167,157,192"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="195,121,148,160,145,155,191,117"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="181,167,251,192"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="219,119,219,153,213,153,213,119"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="275,167,367,192"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="243,117,296,156,293,160,240,121"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="391,167,454,192"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="266,116,381,159,379,164,265,121"/>
+</map>

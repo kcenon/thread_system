@@ -1,0 +1,5 @@
+<map id="kcenon::thread::autoscaler::collect_metrics" name="kcenon::thread::autoscaler::collect_metrics">
+<area shape="rect" id="Node000001" title="Collects current metrics from the pool." alt="" coords="248,5,443,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1autoscaler.html#ad2b36a4db012690def3c1fbe2f001472" title="Collects current metrics from the thread pool." alt="" coords="5,5,200,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="234,28,200,28,200,23,234,23"/>
+</map>

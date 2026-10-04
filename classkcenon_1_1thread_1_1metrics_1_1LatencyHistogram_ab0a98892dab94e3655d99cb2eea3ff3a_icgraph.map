@@ -1,0 +1,5 @@
+<map id="kcenon::thread::metrics::LatencyHistogram::reset" name="kcenon::thread::metrics::LatencyHistogram::reset">
+<area shape="rect" id="Node000001" title="Reset all buckets and counters to zero." alt="" coords="268,13,459,53"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#ab02ff45d14797b2d6b1699a577d1ec72" title="Reset all metrics to initial state." alt="" coords="5,5,220,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="254,35,220,35,220,30,254,30"/>
+</map>

@@ -1,0 +1,27 @@
+var classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter =
+[
+    [ "Bucket", "structkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter_1_1Bucket.html", "structkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter_1_1Bucket" ],
+    [ "SlidingWindowCounter", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a82f5c33b444860910e3e4e25417b87f9", null ],
+    [ "SlidingWindowCounter", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a0c91b33ff925890c88b624a936e62773", null ],
+    [ "SlidingWindowCounter", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a7425200698db836f7ed6f2a1b6d512d1", null ],
+    [ "~SlidingWindowCounter", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#ae0ae8beab7ca80ede41f37f3fb45c4b5", null ],
+    [ "advance_bucket", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#af8365e3e2ad444977388e2f4809a0a90", null ],
+    [ "all_time_total", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a861d6651392862664ff3dedf11c6376b", null ],
+    [ "bucket_count", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a28cb004b473c96bd4b4d199daf6fd42e", null ],
+    [ "bucket_index_for_time", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#abaa9feb9891a7a224a2ed062904596f3", null ],
+    [ "current_bucket_index", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a63752d36dead7bb560dbf77f1018d8b4", null ],
+    [ "current_time_ms", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#afae0624b08953afcee66b62fe892d07a", null ],
+    [ "increment", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a7380ee4f04fdcff9a93790d3cb4ef2fc", null ],
+    [ "is_bucket_valid", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a0cbadfc08636391446a80070b4be314f", null ],
+    [ "operator=", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a0ca621f7d7db07b63052e44f3d51d55f", null ],
+    [ "operator=", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a5aef0ac9318ab1124b2168dbe6f015b6", null ],
+    [ "rate_per_second", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#ac08aff2056171fdfaa680e27f41a48f3", null ],
+    [ "reset", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a298c39b22baf415e893c9630a3bb84a4", null ],
+    [ "total_in_window", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a8e32ae89603462b68593811e567c136e", null ],
+    [ "window_size", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a6a5f33d19f4dac7237c3c8d01c0b3ff2", null ],
+    [ "all_time_total_", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#ac9141f5e9c7093e63532265167f7d617", null ],
+    [ "bucket_duration_", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#aeaccb00d44fc77d1c38480360326ae0c", null ],
+    [ "buckets_", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#aabe7a0d84d34a6c559c7500e0db8fd44", null ],
+    [ "DEFAULT_BUCKETS_PER_SECOND", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#afa4ff64e35ee3737ee52859d6d31b050", null ],
+    [ "window_size_", "classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a32dfdf0dcfd6b2b50ce80f4e7c23fbeb", null ]
+];

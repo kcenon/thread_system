@@ -1,0 +1,7 @@
+<map id="kcenon::thread::thread_category" name="kcenon::thread::thread_category">
+<area shape="rect" id="Node000001" title="Gets the singleton instance of thread_error_category." alt="" coords="216,37,385,77"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread.html#a689b9be0c1545de0e42ba6bb6b5c0fa1" title="Creates a std::error_code from a thread_system error_code." alt="" coords="5,5,168,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,45,168,40,169,35,203,40"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread.html#a526a95a1615329bdb82e349ebefca2ac" title="Creates a std::error_condition from a thread_system error_code." alt="" coords="5,69,168,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,75,169,80,168,75,202,69"/>
+</map>

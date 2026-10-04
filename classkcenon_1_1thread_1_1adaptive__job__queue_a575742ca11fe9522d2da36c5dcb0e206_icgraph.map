@@ -1,0 +1,19 @@
+<map id="kcenon::thread::adaptive_job_queue::dequeue" name="kcenon::thread::adaptive_job_queue::dequeue">
+<area shape="rect" id="Node000001" title="Dequeues a job from the current active queue." alt="" coords="364,119,548,159"/>
+<area shape="rect" id="Node000002" href="$adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="109,5,315,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="419,113,371,78,315,46,279,33,281,28,317,41,374,73,422,108"/>
+<area shape="rect" id="Node000004" href="$adaptive__queue__sample_8cpp.html#ad3807da4331da23479052ba772a377f0" title=" " alt="" coords="145,55,279,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="365,118,279,95,280,90,367,113"/>
+<area shape="rect" id="Node000005" href="$adaptive__queue__sample_8cpp.html#a21793bcc15486980f337c12b1567fba3" title=" " alt="" coords="121,119,303,159"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="350,142,303,142,303,137,350,137"/>
+<area shape="rect" id="Node000006" href="$adaptive__queue__sample_8cpp.html#aff6943b24f1669731fdb15ab93341ef9" title=" " alt="" coords="108,184,316,209"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="358,165,267,187,266,181,357,160"/>
+<area shape="rect" id="Node000007" href="$adaptive__queue__sample_8cpp.html#a01b6774eb0da092cdcda2a8084f6b3a5" title=" " alt="" coords="125,233,299,259"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="416,169,370,197,317,223,278,236,276,231,315,218,367,193,414,165"/>
+<area shape="rect" id="Node000003" href="$adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,127,60,152"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,38,110,46,87,64,68,87,42,128,38,125,64,84,83,61,106,41,120,34"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="133,101,109,110,61,130,59,125,107,105,131,96"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="107,142,60,142,60,137,107,137"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="138,183,107,174,59,154,61,150,109,169,140,178"/>
+<area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="122,231,107,223,85,207,67,189,40,154,44,151,71,185,89,203,109,218,125,226"/>
+</map>

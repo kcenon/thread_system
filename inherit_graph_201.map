@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,45,147,70"/>
+<area shape="rect" id="Node000001" href="$structkcenon_1_1thread_1_1concepts_1_1is__future__like.html" title="Type trait to detect future&#45;like types (has get() and wait() methods)" alt="" coords="201,5,386,45"/>
+<area shape="poly" id="edge37_Node000000_Node000001" title=" " alt="" coords="160,42,200,36,201,42,161,48"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1concepts_1_1is__nothrow__callable.html" title="Helper to check if a callable is noexcept." alt="" coords="195,69,392,109"/>
+<area shape="poly" id="edge38_Node000000_Node000002" title=" " alt="" coords="161,67,195,72,194,77,160,72"/>
+</map>

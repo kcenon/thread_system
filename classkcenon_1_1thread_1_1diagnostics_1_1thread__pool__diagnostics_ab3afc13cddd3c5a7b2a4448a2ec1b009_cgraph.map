@@ -1,0 +1,5 @@
+<map id="kcenon::thread::diagnostics::thread_pool_diagnostics::record_event" name="kcenon::thread::diagnostics::thread_pool_diagnostics::record_event">
+<area shape="rect" id="Node000001" title="Records a job execution event." alt="" coords="5,5,207,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a6f24bc0e790ae013eba44748014543d1" title="Notifies all event listeners." alt="" coords="255,5,456,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,30,241,30,241,35,207,35"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="include/kcenon/thread/core/backpressure_config.h" name="include/kcenon/thread/core/backpressure_config.h">
+<area shape="rect" id="Node000001" title="Configuration for backpressure and queue overflow policies." alt="" coords="97,5,299,45"/>
+<area shape="rect" id="Node000002" href="$thread__system__config_8h.html" title="Unified configuration structure for thread_system." alt="" coords="19,93,185,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,57,131,95,127,91,167,53"/>
+<area shape="rect" id="Node000005" href="$backpressure__job__queue_8h.html" title="Job queue with backpressure mechanisms for overflow and rate limiting." alt="" coords="209,93,381,148"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="229,53,270,91,266,95,226,57"/>
+<area shape="rect" id="Node000003" href="$thread__config_8h.html" title="Public facade for thread_system configuration." alt="" coords="19,196,185,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,162,105,196,99,196,99,162"/>
+<area shape="rect" id="Node000004" href="$config__example_8cpp.html" title="Unified configuration system examples using the builder pattern." alt="" coords="5,284,199,324"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="105,250,105,284,99,284,99,250"/>
+<area shape="rect" id="Node000006" href="$backpressure__job__queue_8cpp.html" title="Implementation of backpressure&#45;aware job queue." alt="" coords="213,196,377,236"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="298,162,298,196,293,196,293,162"/>
+</map>

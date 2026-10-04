@@ -1,0 +1,9 @@
+<map id="kcenon::thread::metrics::SlidingWindowCounter::bucket_index_for_time" name="kcenon::thread::metrics::SlidingWindowCounter::bucket_index_for_time">
+<area shape="rect" id="Node000001" title="Get the bucket index for a specific timestamp." alt="" coords="493,45,672,100"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a63752d36dead7bb560dbf77f1018d8b4" title="Get the current bucket index based on current time." alt="" coords="268,5,445,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="479,57,445,51,446,46,480,52"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a7380ee4f04fdcff9a93790d3cb4ef2fc" title="Increment the counter." alt="" coords="268,84,445,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="480,93,446,99,445,94,479,88"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a55561eeac969ea283f09a06a93392d4a" title="Record task execution completion." alt="" coords="5,84,220,139"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="254,114,220,114,220,109,254,109"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="kcenon::thread::metrics::MetricsBackend::prefix" name="kcenon::thread::metrics::MetricsBackend::prefix">
+<area shape="rect" id="Node000001" title="Get current metric name prefix." alt="" coords="492,13,671,53"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBackend.html#a65c62f953cdfd337cd678a0397b220cd" title="Set metric name prefix." alt="" coords="268,5,444,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="479,35,444,35,444,30,479,30"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a6fe360a58406f871be147c2e96e8214e" title="Export metrics in Prometheus/OpenMetrics format." alt="" coords="5,5,220,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="254,35,220,35,220,30,254,30"/>
+</map>

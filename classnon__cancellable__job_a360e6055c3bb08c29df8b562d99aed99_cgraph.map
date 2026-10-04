@@ -1,0 +1,5 @@
+<map id="non_cancellable_job::do_work" name="non_cancellable_job::do_work">
+<area shape="rect" id="Node000001" title="The core task execution method to be overridden by derived classes." alt="" coords="5,5,160,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html#ac4d4e155b7951df7721ec40de03d40f4" title="Retrieves the name of this job." alt="" coords="208,5,355,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,23,194,23,194,28,160,28"/>
+</map>

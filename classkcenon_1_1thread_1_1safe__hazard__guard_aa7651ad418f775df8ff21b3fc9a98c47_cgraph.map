@@ -1,0 +1,7 @@
+<map id="kcenon::thread::safe_hazard_guard::operator=" name="kcenon::thread::safe_hazard_guard::operator=">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,53,196,93"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a489ed9f947f27820791f237e1ed3576f" title="Get singleton instance." alt="" coords="244,5,427,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,54,230,48,231,53,196,59"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#abba15c440f28d02f1c168dee8ba67f88" title="Release a hazard pointer record." alt="" coords="244,84,427,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,86,231,91,230,97,196,91"/>
+</map>

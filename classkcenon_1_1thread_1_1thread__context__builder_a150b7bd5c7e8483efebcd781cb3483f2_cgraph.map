@@ -1,0 +1,7 @@
+<map id="kcenon::thread::thread_context_builder::from_global_registry" name="kcenon::thread::thread_context_builder::from_global_registry">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,30,175,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1service__container.html#a8be7271c31c2b1efed81c5bcb56c5502" title="Get the global service container instance." alt="" coords="223,5,397,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,42,209,37,210,43,175,48"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1service__container.html#abb3c30e8f587cf69723b0adda9ea1e3e" title="Resolve a service." alt="" coords="223,69,397,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,67,210,72,209,77,174,72"/>
+</map>

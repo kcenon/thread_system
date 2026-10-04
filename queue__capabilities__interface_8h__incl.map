@@ -1,0 +1,5 @@
+<map id="include/kcenon/thread/interfaces/queue_capabilities_interface.h" name="include/kcenon/thread/interfaces/queue_capabilities_interface.h">
+<area shape="rect" id="Node000001" title="Mixin interface for queue capability introspection." alt="" coords="5,5,223,60"/>
+<area shape="rect" id="Node000002" href="$queue__capabilities_8h.html" title="Runtime&#45;queryable queue capabilities descriptor." alt="" coords="22,108,206,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,60,117,94,111,94,111,60"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="kcenon::thread::safe_hazard_pointer_record::clear" name="kcenon::thread::safe_hazard_pointer_record::clear">
+<area shape="rect" id="Node000001" title="Clear hazard pointer protection." alt="" coords="236,41,411,96"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#ad0c5fca33178bf0b6a516df1e0c95b76" title="Acquire a hazard pointer record for current thread." alt="" coords="5,5,188,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,55,188,50,189,45,223,50"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__guard.html#aa46e4984691fdb0bee24ba46515cbdba" title="Clear protection." alt="" coords="18,85,175,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,87,176,95,175,90,221,82"/>
+</map>

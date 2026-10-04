@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,23,212,63"/>
+<area shape="rect" id="Node000001" href="$classconsole__logger.html" title="Simple console logger implementation using common_system ILogger." alt="" coords="260,5,380,31"/>
+<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="226,27,260,22,260,28,226,32"/>
+<area shape="rect" id="Node000002" href="$classmock__logger.html" title="Mock logger implementation for demonstration." alt="" coords="267,55,373,80"/>
+<area shape="poly" id="edge3_Node000000_Node000002" title=" " alt="" coords="226,54,267,59,266,64,226,59"/>
+</map>

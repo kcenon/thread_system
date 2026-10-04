@@ -1,0 +1,7 @@
+<map id="include/kcenon/thread/interfaces/crash_handler.h" name="include/kcenon/thread/interfaces/crash_handler.h">
+<area shape="rect" id="Node000001" title="Crash safety levels and handler interface for thread failure recovery." alt="" coords="111,5,309,45"/>
+<area shape="rect" id="Node000002" href="$crash__protection_2main_8cpp.html" title="Crash protection demonstration for thread system." alt="" coords="5,93,204,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,56,130,95,126,91,175,52"/>
+<area shape="rect" id="Node000003" href="$core_8cppm.html" title="C++20 module partition for thread_system core components." alt="" coords="229,101,402,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="246,52,302,98,299,102,242,56"/>
+</map>

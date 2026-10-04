@@ -1,0 +1,5 @@
+<map id="kcenon::thread::thread_context::log" name="kcenon::thread::thread_context::log">
+<area shape="rect" id="Node000001" title="Log a message if logger is available." alt="" coords="5,5,175,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__logger.html#aa82a04c11d0645cbd22bb8f0c5a58b57" title="Check if shutdown is in progress." alt="" coords="223,5,413,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,23,209,23,209,28,175,28"/>
+</map>

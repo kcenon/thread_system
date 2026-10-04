@@ -1,0 +1,16 @@
+<map id="kcenon::thread::diagnostics::component_health" name="kcenon::thread::diagnostics::component_health">
+<area shape="rect" id="Node000001" title="Health status of a single component." alt="" coords="151,433,344,513"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="200,148,279,213"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="279,212,294,236,304,255,310,277,306,323,285,410,281,419,276,417,279,409,301,322,305,278,299,257,289,239,274,215"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="107,291,262,371"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="226,215,216,238,203,276,198,274,212,236,221,213"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="174,5,305,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="242,99,242,148,237,148,237,99"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="205,370,226,417,221,420,200,372"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,148,132,213"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="74,226,79,247,88,265,110,288,107,292,84,268,74,249,69,228"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="29,13,52,78"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="41,78,45,124,47,132,42,133,39,124,36,79"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="105,13,128,78"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="108,79,88,133,83,132,103,77"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="include/kcenon/thread/core/event_bus.h" name="include/kcenon/thread/core/event_bus.h">
+<area shape="rect" id="Node000001" title="Type&#45;safe publish&#45;subscribe event bus for thread system events." alt="" coords="105,5,271,45"/>
+<area shape="rect" id="Node000002" href="$configuration__manager_8h.html" title="Runtime configuration management with typed key&#45;value storage." alt="" coords="5,93,224,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,58,133,95,129,91,161,54"/>
+<area shape="rect" id="Node000003" href="$core_8cppm.html" title="C++20 module partition for thread_system core components." alt="" coords="101,181,275,207"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="218,55,230,73,239,93,243,113,238,134,223,162,204,183,200,179,218,159,234,132,238,113,233,94,225,75,213,58"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="144,142,179,179,175,183,140,145"/>
+</map>

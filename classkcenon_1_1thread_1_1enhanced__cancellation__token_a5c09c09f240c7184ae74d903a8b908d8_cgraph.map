@@ -1,0 +1,5 @@
+<map id="kcenon::thread::enhanced_cancellation_token::remaining_time" name="kcenon::thread::enhanced_cancellation_token::remaining_time">
+<area shape="rect" id="Node000001" title="Gets the remaining time before timeout/deadline." alt="" coords="5,13,268,53"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1enhanced__cancellation__token.html#a3f47b04cf32c156646ae6f128116804d" title="Checks if the token has a timeout or deadline." alt="" coords="316,5,507,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="268,30,302,30,302,35,268,35"/>
+</map>

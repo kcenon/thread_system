@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html" title="Abstract base class for thread pool metrics." alt="" coords="5,37,181,77"/>
+<area shape="rect" id="Node000001" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html" title="Enhanced thread pool metrics with histograms and percentiles." alt="" coords="229,5,444,45"/>
+<area shape="poly" id="edge27_Node000000_Node000001" title=" " alt="" coords="194,41,229,37,230,42,195,47"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1ThreadPoolMetrics.html" title="Lightweight metrics container shared between thread_pool and workers." alt="" coords="249,69,425,109"/>
+<area shape="poly" id="edge28_Node000000_Node000002" title=" " alt="" coords="195,68,249,75,248,80,195,73"/>
+</map>
