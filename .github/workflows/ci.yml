@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - name: Checkout code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Check for legacy types in public headers
       run: |
@@ -53,7 +53,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         submodules: recursive
 
@@ -105,7 +105,7 @@ jobs:
         echo "CXX=clang++" >> $GITHUB_ENV
 
     - name: Checkout common_system
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: kcenon/common_system
         path: common_system
@@ -285,7 +285,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         submodules: recursive
 
@@ -297,7 +297,7 @@ jobs:
         # GTest is now fetched via CMake FetchContent
 
     - name: Checkout common_system
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: kcenon/common_system
         path: common_system
@@ -389,7 +389,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Install dependencies
       run: |
@@ -397,7 +397,7 @@ jobs:
         sudo apt-get install -y cmake ninja-build g++
 
     - name: Checkout common_system
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: kcenon/common_system
         path: common_system

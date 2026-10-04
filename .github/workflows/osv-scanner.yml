@@ -37,7 +37,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Run OSV-Scanner on vcpkg manifest
         uses: google/osv-scanner-action/osv-scanner-action@v2.3.5
