@@ -109,7 +109,8 @@ endfunction()
 # Install pkg-config file
 ##################################################
 function(install_pkgconfig_file)
-  set(PKG_CONFIG_FEATURE_FLAGS "")
+  # Match the public ABI definitions on the exported CMake target.
+  set(PKG_CONFIG_FEATURE_FLAGS "-DBUILD_WITH_COMMON_SYSTEM -DKCENON_HAS_COMMON_EXECUTOR=1")
   if(USE_STD_FORMAT)
     set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_FORMAT")
   endif()
