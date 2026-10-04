@@ -95,6 +95,13 @@ function(create_thread_system_targets)
     KCENON_HAS_COMMON_EXECUTOR=1
   )
 
+  # lifecycle_controller and thread_base have a different public layout in
+  # jthread mode. Installed consumers must allocate the same object sizes as
+  # the library; directory-scoped add_definitions() does not reach them.
+  if(HAS_STD_JTHREAD AND SET_STD_JTHREAD)
+    target_compile_definitions(thread_system PUBLIC USE_STD_JTHREAD)
+  endif()
+
   if(DEFINED THREAD_SYSTEM_SIMDUTF_FOUND AND THREAD_SYSTEM_SIMDUTF_FOUND)
     target_link_libraries(thread_system PUBLIC ${THREAD_SYSTEM_SIMDUTF_TARGET})
     message(STATUS "thread_system: simdutf support enabled")
