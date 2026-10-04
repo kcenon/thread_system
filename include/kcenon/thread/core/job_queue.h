@@ -348,6 +348,16 @@ namespace kcenon::thread
 
 	protected:
 		/**
+		 * @brief Enqueues a job without checking the size limit.
+		 *
+		 * For subclasses whose policy accepts a job into a full queue, such as
+		 * backpressure_job_queue with backpressure_decision::accept.
+		 * @param value Unique pointer to job (moved into queue)
+		 * @return Empty result on success, error if stopped or the job is null
+		 */
+		auto enqueue_ignoring_limit(std::unique_ptr<job>&& value) -> common::VoidResult;
+
+		/**
 		 * @brief If @c true, threads waiting for new jobs are notified when a new job
 		 *        is enqueued. If @c false, enqueuing does not automatically trigger
 		 *        a notification.

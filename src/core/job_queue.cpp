@@ -139,6 +139,37 @@ namespace kcenon::thread
 	}
 
 	/**
+	 * @brief Adds a job to the queue without checking the size limit.
+	 *
+	 * Same as enqueue() except that a bounded queue accepts the job even when
+	 * it is full. Used by subclasses whose policy explicitly accepts a job into
+	 * a full queue (backpressure_decision::accept).
+	 *
+	 * @param value Unique pointer to job (moved into queue)
+	 * @return Empty result on success, error if stopped or the job is null
+	 */
+	auto job_queue::enqueue_ignoring_limit(std::unique_ptr<job>&& value) -> common::VoidResult
+	{
+		if (stop_.load())
+		{
+			return common::error_info{static_cast<int>(error_code::queue_stopped), "Job queue is stopped", "thread_system"};
+		}
+		if (value == nullptr)
+		{
+			return common::error_info{static_cast<int>(error_code::invalid_argument), "cannot enqueue null job", "thread_system"};
+		}
+
+		std::scoped_lock<std::mutex> lock(mutex_);
+		queue_.push_back(std::move(value));
+		atomic_size_.fetch_add(1, std::memory_order_relaxed);
+		if (notify_)
+		{
+			condition_.notify_one();
+		}
+		return common::ok();
+	}
+
+	/**
 	 * @brief Adds multiple jobs to the queue in a single operation.
 	 * 
 	 * Implementation details:
