@@ -1,0 +1,77 @@
+name: Installed ABI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  installed-abi:
+    name: Installed ABI / ${{ matrix.os }} / jthread-${{ matrix.jthread }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-latest, windows-2022]
+        jthread: ['ON', 'OFF']
+    steps:
+      - uses: actions/checkout@v7
+      - name: Checkout common worker consumer contract
+        uses: actions/checkout@v7
+        with:
+          repository: kcenon/common_system
+          ref: 4aa24d2650c1d3d8446f7e9f681824bec12b5112
+          path: common_system
+      - name: Install tools (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build g++ pkg-config
+          echo 'CXX=g++' >> "$GITHUB_ENV"
+          echo 'CXXFLAGS=-fsanitize=address -fno-omit-frame-pointer' >> "$GITHUB_ENV"
+      - name: Install tools (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install ninja llvm pkgconf
+          echo "CXX=$(brew --prefix llvm)/bin/clang++" >> "$GITHUB_ENV"
+          echo 'CXXFLAGS=-fsanitize=address -fno-omit-frame-pointer' >> "$GITHUB_ENV"
+      - name: Install tools (Windows)
+        if: runner.os == 'Windows'
+        run: choco install ninja pkgconfiglite -y
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+      - name: Configure Windows sanitizer
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          echo 'CXX=cl' >> "$GITHUB_ENV"
+          echo 'CXXFLAGS=/fsanitize=address /Zi' >> "$GITHUB_ENV"
+      - name: Install and verify CMake and pkg-config consumers
+        shell: bash
+        run: |
+          python scripts/verify_installed_abi.py \
+            --common "$GITHUB_WORKSPACE/common_system" \
+            --work "$RUNNER_TEMP/thread-abi-${{ matrix.jthread }}" \
+            --jthread '${{ matrix.jthread }}' 2>&1 | tee installed-abi.log
+      - name: Upload raw ABI evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: abi-${{ matrix.os }}-${{ matrix.jthread }}
+          path: |
+            installed-abi.log
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/result.json
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/library-build/compile_commands.json
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/prefix/lib/pkgconfig/thread_system.pc
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/prefix/lib/cmake/thread_system/
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/cmake-consumer/Testing/Temporary/

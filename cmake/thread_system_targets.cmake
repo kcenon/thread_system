@@ -95,11 +95,19 @@ function(create_thread_system_targets)
     KCENON_HAS_COMMON_EXECUTOR=1
   )
 
-  # lifecycle_controller and thread_base have a different public layout in
-  # jthread mode. Installed consumers must allocate the same object sizes as
-  # the library; directory-scoped add_definitions() does not reach them.
-  if(HAS_STD_JTHREAD AND SET_STD_JTHREAD)
-    target_compile_definitions(thread_system PUBLIC USE_STD_JTHREAD)
+  # Every selected public-header feature is applied to both the archive and
+  # consumers. pkg-config reads this target property rather than redoing probes.
+  get_property(_public_features DIRECTORY PROPERTY THREAD_SYSTEM_PUBLIC_FEATURES)
+  target_compile_definitions(thread_system PUBLIC ${_public_features})
+  if(THREAD_ENABLE_WORK_STEALING)
+    target_compile_definitions(thread_system PUBLIC THREAD_WORK_STEALING_ENABLED=1)
+  endif()
+
+  # Test-only symbols are compiled into the actual library with its own flags.
+  # Installed consumers compare their layout/feature snapshot with these symbols.
+  if(THREAD_BUILD_ABI_TESTS)
+    target_sources(thread_system PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR}/tests/installed_consumer/library_probe.cpp)
   endif()
 
   if(DEFINED THREAD_SYSTEM_SIMDUTF_FOUND AND THREAD_SYSTEM_SIMDUTF_FOUND)

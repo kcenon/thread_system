@@ -109,16 +109,17 @@ endfunction()
 # Install pkg-config file
 ##################################################
 function(install_pkgconfig_file)
-  # Match the public ABI definitions on the exported CMake target.
-  set(PKG_CONFIG_FEATURE_FLAGS "-DBUILD_WITH_COMMON_SYSTEM -DKCENON_HAS_COMMON_EXECUTOR=1")
-  if(USE_STD_FORMAT)
-    set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_FORMAT")
-  endif()
-  if(HAS_STD_JTHREAD AND SET_STD_JTHREAD)
-    set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_JTHREAD")
-  endif()
-  if(USE_STD_CHRONO_CURRENT_ZONE)
-    set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_CHRONO_CURRENT_ZONE")
+  # Use precisely the definitions exported by the installed CMake target.
+  get_target_property(_public_definitions thread_system INTERFACE_COMPILE_DEFINITIONS)
+  set(PKG_CONFIG_FEATURE_FLAGS "")
+  foreach(_definition IN LISTS _public_definitions)
+    string(APPEND PKG_CONFIG_FEATURE_FLAGS " -D${_definition}")
+  endforeach()
+  string(STRIP "${PKG_CONFIG_FEATURE_FLAGS}" PKG_CONFIG_FEATURE_FLAGS)
+
+  set(PKG_CONFIG_THREAD_FLAGS "")
+  if(NOT WIN32)
+    set(PKG_CONFIG_THREAD_FLAGS "-pthread")
   endif()
 
   # Get simdutf libraries for pkg-config
