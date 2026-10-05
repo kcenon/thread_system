@@ -160,10 +160,12 @@ public:
     }
 
     /**
-     * @brief Destructor - cleans up the circular array
+     * @brief Destructor - reclaims current and retired arrays after users stop
+     * @note The owner and all thieves must have finished before destruction.
      */
     ~work_stealing_deque() {
         delete array_.load(std::memory_order_relaxed);
+        cleanup_old_arrays();
     }
 
     // Non-copyable and non-movable
@@ -189,12 +191,13 @@ public:
         // Check if array needs to grow
         if (b - t > static_cast<std::int64_t>(a->size()) - 1) {
             // Grow the array
-            circular_array<T>* new_array = a->grow(b, t);
-            // Store old array for cleanup (in a real implementation,
-            // you would use hazard pointers or epoch-based reclamation)
+            std::unique_ptr<circular_array<T>> new_array(a->grow(b, t));
+            // Thieves can still hold the old array. Retain it until quiescent
+            // cleanup/destruction; also keep growth exception-safe if the
+            // retired-array vector allocation fails.
             old_arrays_.push_back(a);
-            array_.store(new_array, std::memory_order_release);
-            a = new_array;
+            a = new_array.release();
+            array_.store(a, std::memory_order_release);
         }
 
         a->put(b, item);
@@ -279,66 +282,28 @@ public:
      *
      * Time Complexity: O(max_count)
      *
-     * This method attempts to steal up to max_count elements atomically.
-     * The batch steal uses a CAS loop to claim a range of elements from the top.
+     * Each returned element is claimed independently using steal(). A range
+     * CAS on top is unsafe: the owner can pop from bottom without changing top,
+     * so a range based on an earlier bottom can include already-popped items.
+     * Reading slots after advancing top also permits reuse before they are read.
      *
-     * Key behaviors:
-     * - Returns empty vector if deque is empty or contention prevents stealing
-     * - May return fewer elements than requested if deque has fewer elements
-     * - All returned elements are guaranteed to have been successfully claimed
-     * - Uses FIFO order (oldest elements first)
-     *
-     * Memory Ordering:
-     * - Uses seq_cst for top CAS to ensure proper synchronization
-     * - Uses acquire/release for reading bottom and array
+     * - Returns a FIFO batch, possibly smaller than requested on contention
+     * - Preserves steal()'s read-before-claim and last-item arbitration
+     * - Remains lock-free, with one claim per item rather than per range
      *
      * @note This method can be called concurrently by multiple thief threads.
-     *       Batch stealing is more efficient than repeated single steals when
-     *       multiple items need to be transferred.
      */
     [[nodiscard]] std::vector<T> steal_batch(std::size_t max_count) {
-        if (max_count == 0) {
-            return {};
-        }
-
-        std::int64_t t = top_.load(std::memory_order_acquire);
-        std::atomic_thread_fence(std::memory_order_seq_cst);
-        std::int64_t b = bottom_.load(std::memory_order_acquire);
-
-        if (t >= b) {
-            // Empty queue
-            return {};
-        }
-
-        // Calculate how many we can actually steal
-        std::int64_t available = b - t;
-        std::size_t to_steal = std::min(
-            max_count,
-            static_cast<std::size_t>(available)
-        );
-
-        // Try to atomically claim the range [t, t + to_steal)
-        std::int64_t new_top = t + static_cast<std::int64_t>(to_steal);
-
-        if (!top_.compare_exchange_strong(
-                t, new_top,
-                std::memory_order_seq_cst,
-                std::memory_order_relaxed)) {
-            // Lost race with another thief or owner
-            // Return empty and let caller retry if needed
-            return {};
-        }
-
-        // Successfully claimed the range - now read the elements
-        // The CAS already ensured we have exclusive access to [t, new_top)
-        circular_array<T>* a = array_.load(std::memory_order_consume);
+        const auto limit = std::min(max_count, size());
         std::vector<T> result;
-        result.reserve(to_steal);
-
-        for (std::int64_t i = t; i < new_top; ++i) {
-            result.push_back(a->get(i));
+        result.reserve(limit);
+        for (std::size_t i = 0; i < limit; ++i) {
+            auto item = steal();
+            if (!item) {
+                break;
+            }
+            result.push_back(*item);
         }
-
         return result;
     }
 

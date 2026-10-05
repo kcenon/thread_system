@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for full license information.
 
 #include <gtest/gtest.h>
+#include <future>
 #include <kcenon/thread/core/error_handling.h>
 #include <kcenon/thread/core/job_queue.h>
 #include <kcenon/thread/core/callback_job.h>
@@ -161,12 +162,15 @@ TEST_F(ErrorHandlingTest, ThreadBaseStartStop) {
         test_thread() : thread_base("test_thread") {}
         std::atomic<int> work_count{0};
         std::atomic<bool> error_occurred{false};
+        std::promise<void> error_ready;
 
     protected:
         common::VoidResult do_work() override {
             work_count.fetch_add(1);
             if (work_count.load() >= 3) {
-                error_occurred.store(true);
+                if (!error_occurred.exchange(true)) {
+                    error_ready.set_value();
+                }
                 return make_error_result(error_code::unknown_error, "Test error");
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(5));
@@ -178,13 +182,14 @@ TEST_F(ErrorHandlingTest, ThreadBaseStartStop) {
     worker->set_wake_interval(std::chrono::milliseconds(10));
 
     // Start the thread
-    worker->start();
+    auto error_ready = worker->error_ready.get_future();
+    ASSERT_TRUE(worker->start().is_ok());
 
-    // Let it run for a bit - ensure enough time for at least 3 iterations
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    // Stop the thread
-    worker->stop();
+    // Wait for the behavior under test, rather than assuming three cycles fit
+    // in a fixed scheduler delay. Stop before asserting to join the worker.
+    const auto status = error_ready.wait_for(std::chrono::seconds(5));
+    EXPECT_TRUE(worker->stop().is_ok());
+    ASSERT_EQ(status, std::future_status::ready);
 
     // Verify it executed multiple times
     EXPECT_GT(worker->work_count.load(), 0);

@@ -427,3 +427,27 @@ TEST(thread_pool_test, manual_workers_individual_vs_batch_arm64)
 		EXPECT_GE(counter.load(), 1);
 	}
 }
+
+TEST(thread_pool_test, EnqueueMetricsWithAndWithoutLatencyCollection)
+{
+    for (const bool enhanced : {false, true}) {
+        SCOPED_TRACE(enhanced);
+        thread_pool pool;
+        pool.set_enhanced_metrics_enabled(enhanced);
+        const auto make_job = [] {
+            return std::make_unique<callback_job>([] { return common::ok(); });
+        };
+        ASSERT_TRUE(pool.enqueue(make_job()).is_ok());
+        std::vector<std::unique_ptr<job>> batch;
+        batch.push_back(make_job());
+        batch.push_back(make_job());
+        ASSERT_TRUE(pool.enqueue_batch(std::move(batch)).is_ok());
+        const auto basic = pool.metrics().snapshot();
+        EXPECT_EQ(basic.tasks_submitted, 3);
+        EXPECT_EQ(basic.tasks_enqueued, 3);
+        if (enhanced) {
+            EXPECT_EQ(pool.enhanced_metrics().enqueue_latency().count(), 3);
+            EXPECT_EQ(pool.enhanced_metrics_snapshot().current_queue_depth, 3);
+        }
+    }
+}

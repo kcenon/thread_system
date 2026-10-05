@@ -115,7 +115,10 @@ TEST_F(DiagnosticsPerformanceTest, FormatThreadDumpOverhead)
 
 TEST_F(DiagnosticsPerformanceTest, HealthCheckOverhead)
 {
-	constexpr int iterations = 100;
+	// Keep the 100 us per-call budget, but measure enough calls that a single
+	// hosted-runner scheduling interruption cannot dominate a 100-call mean.
+	// The complete elapsed interval is retained; no samples are discarded.
+	constexpr int iterations = 10'000;
 
 	double avg_ns = measure_operation_ns(
 		[this]()
