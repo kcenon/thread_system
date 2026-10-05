@@ -23,13 +23,13 @@ and reviewers a single map of *what runs, when, and what a failure means*.
 
 | Gate | Tool | Workflow file | Trigger | Scope | Release-blocking |
 |------|------|---------------|---------|-------|------------------|
-| ASan | AddressSanitizer (`-fsanitize=address`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `address`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
-| TSan | ThreadSanitizer (`-fsanitize=thread`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `thread`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
-| UBSan | UndefinedBehaviorSanitizer (`-fsanitize=undefined`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `undefined`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
+| ASan | AddressSanitizer (`-fsanitize=address`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `address`) | `push` to `main`/`develop`/`phase-*`, `pull_request` to `main`/`develop` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
+| TSan | ThreadSanitizer (`-fsanitize=thread`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `thread`) | `push` to `main`/`develop`/`phase-*`, `pull_request` to `main`/`develop` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
+| UBSan | UndefinedBehaviorSanitizer (`-fsanitize=undefined`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `undefined`) | `push` to `main`/`develop`/`phase-*`, `pull_request` to `main`/`develop` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
 | Stress | Custom sustained/burst/memory stress scenarios | `.github/workflows/stress-tests.yml` | Nightly `schedule` (02:00 UTC), `workflow_dispatch` | Long-running concurrency stress, configurable duration/scenarios | No (nightly signal) |
 | Integration | GoogleTest integration suite (`BUILD_INTEGRATION_TESTS=ON`) | `.github/workflows/integration-tests.yml` | `push` to `main`, `pull_request` to `main`, `workflow_dispatch` | Cross-component integration, Debug + Release matrix | Yes |
 | Valgrind | Valgrind memcheck | `.github/workflows/valgrind.yml` | `push` to `main`, `pull_request` to `main`, nightly `schedule`, `workflow_dispatch` | Memory leak / invalid access detection | Yes |
-| Static analysis | clang-tidy | `.github/workflows/static-analysis.yml` | `push` to `main`/`phase-*`, `pull_request` to `main` | Static lint of source headers/sources | Yes |
+| Static analysis | clang-tidy | `.github/workflows/static-analysis.yml` | `push` to `main`/`develop`/`phase-*`, `pull_request` to `main`/`develop` | Static lint of source headers/sources | Yes |
 | Coverage | gcov / lcov | `.github/workflows/coverage.yml` | `push` to `main`/`phase-*`, `pull_request` to `main` | Line/function coverage thresholds (see workflow `env`) | Yes |
 | Performance | Google Benchmark suite | `.github/workflows/performance-benchmarks.yml` | `push` to `main`/`phase-*`, `pull_request` to `main`, nightly `schedule`, `workflow_dispatch` | Throughput/latency regression tracking | No (trend signal) |
 
@@ -38,11 +38,35 @@ and reviewers a single map of *what runs, when, and what a failure means*.
 
 ## Release Branch Gate Set
 
-Thread System follows a `main` / `develop` branch model. **CI runs only on pull
-requests targeting `main`** — the workflows above are scoped with
-`pull_request: branches: [ main ]`. Pull requests targeting `develop` (the default
-integration branch) do **not** trigger these gates. Verification therefore
-concentrates at the `develop` → `main` release PR.
+Thread System runs the four platform/compiler builds, unit tests, three sanitizers,
+API Guard and the dedicated GCC jthread test on pushes and PRs to both `main` and
+`develop`. Static analysis also runs for both branches. Superseded PR runs of these
+workflows are cancelled; pushes are never cancelled by a PR run. No `phase-*` probe
+branch is needed to validate a develop PR.
+
+Every main CI configure sets `BUILD_TESTING=ON`. `scripts/run_required_tests.py`
+checks that cache value and the required CTest entries before running CTest with
+`--no-tests=error`. The build matrix runs all discovered tests, including integration
+and performance. Unix additionally requires all eleven currently enabled unit
+executables; the existing unit CMake platform policy supports Unix only, so Windows
+requires SmokeTests, IntegrationTests and PerformanceTests. Sanitizers require all
+eleven Unix unit executables, preserving the existing TSan filter and suppressions.
+The CI gate self-test injects a failed test, empty discovery/selection, missing suite
+and `BUILD_TESTING=OFF`; each must produce a nonzero gate exit.
+
+Coverage, the separate Debug/Release integration workflow and Valgrind retain their
+release/nightly/manual triggers to limit duplicate runner use. Develop already runs
+integration via the main build matrix and memory checking via all three sanitizers.
+
+As audited on 2026-10-05, the active rulesets require `cross-system conformance linter`
+and `SOUP Version Drift Detection` on main/develop and prevent develop deletion/force
+pushes. This change preserves those settings. Recommended additional required contexts
+for develop (after observing successful runs) are `ubuntu-24.04 / gcc`,
+`ubuntu-24.04 / clang`, `macos-latest / clang`, `windows-2022 / msvc`,
+`Sanitizer / thread`, `Sanitizer / address`, `Sanitizer / undefined`,
+`API Guard - No Legacy Types`, `Unit tests / std::jthread (gcc)` and `CI gate self-test`.
+These make build/runtime failures and test-gate regressions block integration. No
+repository protection setting is changed by this PR.
 
 A release pull request into `main` must pass the following minimum gate set before
 merge:
