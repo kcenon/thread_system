@@ -2,11 +2,24 @@ name: CI
 
 on:
   push:
-    branches: [ main, phase-* ]
+    branches: [ main, develop, phase-* ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
+
+# Superseded PR runs cancel; branch pushes remain independent.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  test-gate:
+    name: CI gate self-test
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v7
+    - name: Inject failed, missing and disabled tests
+      run: python3 -m unittest discover -s scripts/tests -p 'test_run_required_tests.py' -v
+
   # Guard against re-introduction of legacy error types in public API
   api-guard:
     name: API Guard - No Legacy Types
@@ -26,6 +39,8 @@ jobs:
         fi
         echo "No legacy types found in public headers"
 
+  # Run unchanged performance limits against optimized binaries with symbols.
+  # Debug coverage remains in all three sanitizer jobs below.
   build:
     name: ${{ matrix.os }} / ${{ matrix.compiler }}
     runs-on: ${{ matrix.os }}
@@ -139,7 +154,6 @@ jobs:
     - name: Configure and Build (vcpkg - Unix)
       if: runner.os != 'Windows'
       id: build-vcpkg-unix
-      continue-on-error: true
       run: |
         echo "=== Build Configuration ==="
         echo "Compiler: $CC / $CXX"
@@ -148,9 +162,10 @@ jobs:
         echo "==========================="
 
         cmake -B build -G Ninja \
-          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DCMAKE_TOOLCHAIN_FILE="${{ env.CMAKE_TOOLCHAIN_FILE }}" \
           -DKCENON_WITH_COMMON_SYSTEM=ON \
+          -DBUILD_TESTING=ON \
           -DBUILD_INTEGRATION_TESTS=ON \
           -DCMAKE_PREFIX_PATH="/usr;/usr/local" || {
             echo "::error::CMake configuration failed"
@@ -158,12 +173,11 @@ jobs:
             exit 1
           }
 
-        cmake --build build --config Debug
+        cmake --build build --config RelWithDebInfo
 
     - name: Configure and Build (vcpkg - Windows)
       if: runner.os == 'Windows'
       id: build-vcpkg-windows
-      continue-on-error: true
       shell: pwsh
       run: |
         Write-Host "=== Build Configuration ==="
@@ -174,11 +188,12 @@ jobs:
 
         # Use Ninja with MSVC - feature detection uses version-based check
         cmake -B build -G Ninja `
-          -DCMAKE_BUILD_TYPE=Debug `
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo `
           -DCMAKE_TOOLCHAIN_FILE="${{ env.CMAKE_TOOLCHAIN_FILE }}" `
           -DCMAKE_CXX_STANDARD=20 `
           -DCMAKE_CXX_FLAGS="/std:c++20 /EHsc /Zc:__cplusplus /permissive-" `
           -DKCENON_WITH_COMMON_SYSTEM=ON `
+          -DBUILD_TESTING=ON `
           -DBUILD_INTEGRATION_TESTS=ON
         if ($LASTEXITCODE -ne 0) {
           Write-Host "::error::CMake configuration failed"
@@ -188,80 +203,19 @@ jobs:
           exit 1
         }
 
-        cmake --build build --config Debug
+        cmake --build build --config RelWithDebInfo
 
-    - name: Configure and Build (fallback - Unix)
-      if: runner.os != 'Windows' && steps.build-vcpkg-unix.outcome != 'success'
+    - name: Test required suites
+      timeout-minutes: 20
+      shell: bash
       run: |
-        echo "vcpkg build failed. Falling back to FetchContent..."
-        rm -rf build
-
-        cmake -B build -G Ninja \
-          -DCMAKE_BUILD_TYPE=Debug \
-          -DKCENON_WITH_COMMON_SYSTEM=ON \
-          -DBUILD_INTEGRATION_TESTS=ON \
-          -DCMAKE_PREFIX_PATH="/usr;/usr/local" || {
-            echo "::error::CMake configuration failed (fallback)"
-            cat build/CMakeFiles/CMakeError.log 2>/dev/null || echo "No error log found"
-            exit 1
-          }
-
-        cmake --build build --config Debug
-
-    - name: Configure and Build (fallback - Windows)
-      if: runner.os == 'Windows' && steps.build-vcpkg-windows.outcome != 'success'
-      shell: pwsh
-      run: |
-        Write-Host "vcpkg build failed. Falling back to FetchContent..."
-        if (Test-Path build) { Remove-Item -Recurse -Force build }
-
-        cmake -B build -G Ninja `
-          -DCMAKE_BUILD_TYPE=Debug `
-          -DCMAKE_CXX_STANDARD=20 `
-          -DCMAKE_CXX_FLAGS="/std:c++20 /EHsc /Zc:__cplusplus /permissive-" `
-          -DKCENON_WITH_COMMON_SYSTEM=ON `
-          -DBUILD_INTEGRATION_TESTS=ON
-        if ($LASTEXITCODE -ne 0) {
-          Write-Host "::error::CMake configuration failed (fallback)"
-          if (Test-Path "build/CMakeFiles/CMakeError.log") {
-            Get-Content "build/CMakeFiles/CMakeError.log"
-          }
-          exit 1
-        }
-
-        cmake --build build --config Debug
-
-    - name: Test (Unix)
-      if: runner.os != 'Windows'
-      timeout-minutes: 10
-      run: |
-        cd build
-        if [ -f "bin/thread_base_unit" ]; then
-          echo "Running unit tests..."
-          find bin -name "*_unit" -executable 2>/dev/null | while read test; do
-            echo "Running $test..."
-            timeout 300 ./$test || echo "Test $test failed but continuing..."
+        required=(--require SmokeTests --require IntegrationTests --require PerformanceTests)
+        if [[ "$RUNNER_OS" != Windows ]]; then
+          for name in utilities_unit thread_base_unit thread_pool_unit interfaces_unit typed_thread_pool_unit platform_test lockfree_test dag_unit diagnostics_unit stealing_unit core_unit; do
+            required+=(--require "$name")
           done
-        else
-          echo "No unit tests found, running ctest..."
-          # Debug builds run 2-3x slower, use 300s timeout for integration tests
-          ctest -C Debug --output-on-failure --timeout 300 || true
         fi
-
-    - name: Test (Windows)
-      if: runner.os == 'Windows'
-      timeout-minutes: 10
-      shell: pwsh
-      run: |
-        cd build
-        Write-Host "Running ctest..."
-        # Debug builds run 2-3x slower, use 300s timeout for integration tests
-        ctest -C Debug --output-on-failure --timeout 300
-        if ($LASTEXITCODE -ne 0) {
-          Write-Host "Some tests failed but continuing..."
-        }
-        # Exit with success to match Unix behavior (|| true)
-        exit 0
+        python scripts/run_required_tests.py build --gtest "${required[@]}"
 
     - name: Upload build artifacts
       if: failure()
@@ -271,6 +225,7 @@ jobs:
         path: |
           build/CMakeFiles/*.log
           build/Testing/Temporary/
+          build/required-gtest-*/
 
   # Phase 1: Sanitizer builds (failures block merge)
   sanitizer:
@@ -317,6 +272,7 @@ jobs:
           -DCMAKE_CXX_FLAGS="-stdlib=libc++ -fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer -g" \
           -DCMAKE_EXE_LINKER_FLAGS="-stdlib=libc++ -lc++abi" \
           -DKCENON_WITH_COMMON_SYSTEM=ON \
+          -DBUILD_TESTING=ON \
           -DBUILD_INTEGRATION_TESTS=ON \
           -DCMAKE_PREFIX_PATH="/usr" || {
             echo "::error::CMake configuration failed for ${{ matrix.sanitizer }} sanitizer"
@@ -330,9 +286,8 @@ jobs:
     - name: Run tests with sanitizer
       timeout-minutes: 20
       run: |
-        cd build
         export ASAN_OPTIONS=detect_leaks=1:alloc_dealloc_mismatch=0
-        export UBSAN_OPTIONS=print_stacktrace=1
+        export UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1
         export TSAN_OPTIONS=second_deadlock_stack=1
 
         # Tests that hang under TSan due to extreme instrumentation overhead
@@ -352,22 +307,17 @@ jobs:
         #   future while the main thread is still inside future::get()/condition_variable
         #   internals. libc++ synchronizes this correctly, but TSan reports a spurious race
         #   on the promise object's destruction path.
-        TSAN_FILTER="--gtest_filter=*-*DataIntegrityDuringModeSwitch:*DataIntegrityWithMultipleProducersConsumers:*ConcurrentEnableDisable:*LinkedWithTimeoutParentCancel:ExecutorAdapterTest.SubmitExecutesTask:ExecutorAdapterTest.SubmitMultipleTasks:ExecutorAdapterTest.ExecuteRunsJob:ExecutorAdapterTest.ExecuteFailingJobReportsError:ExecutorAdapterTest.FactoryAdapterExecutesJob"
+        TSAN_FILTER="*-*DataIntegrityDuringModeSwitch:*DataIntegrityWithMultipleProducersConsumers:*ConcurrentEnableDisable:*LinkedWithTimeoutParentCancel:ExecutorAdapterTest.SubmitExecutesTask:ExecutorAdapterTest.SubmitMultipleTasks:ExecutorAdapterTest.ExecuteRunsJob:ExecutorAdapterTest.ExecuteFailingJobReportsError:ExecutorAdapterTest.FactoryAdapterExecutesJob"
 
-        if [ -f "bin/thread_base_unit" ]; then
-          echo "Running unit tests with ${{ matrix.sanitizer }}..."
-          find bin -name "*_unit" -executable 2>/dev/null | while read test; do
-            echo "Running $test..."
-            if [[ "${{ matrix.sanitizer }}" == "thread" ]]; then
-              timeout 600 ./$test $TSAN_FILTER
-            else
-              timeout 300 ./$test
-            fi
-          done
-        else
-          echo "Running ctest with ${{ matrix.sanitizer }}..."
-          ctest -C Debug --output-on-failure --timeout 120 -LE performance
+        if [[ "${{ matrix.sanitizer }}" == "thread" ]]; then
+          export GTEST_FILTER="$TSAN_FILTER"
         fi
+        required=()
+        for name in utilities_unit thread_base_unit thread_pool_unit interfaces_unit typed_thread_pool_unit platform_test lockfree_test dag_unit diagnostics_unit stealing_unit core_unit; do
+          required+=(--require "$name")
+        done
+        python3 scripts/run_required_tests.py build --gtest --include '(_unit|_test)$' \
+          --timeout 600 "${required[@]}"
 
     - name: Upload sanitizer results
       if: always()
@@ -377,11 +327,9 @@ jobs:
         path: |
           build/Testing/Temporary/
           build/**/*.log
+          build/required-gtest-*/
 
-  # std::jthread lifecycle path (#727). The build matrix above never builds
-  # the unit tests (BUILD_TESTING is unset there), and the sanitizer jobs use
-  # Clang with libc++, where the std::jthread probe fails. This is the only
-  # job that runs thread_base_unit with USE_STD_JTHREAD defined.
+  # Dedicated GCC std::jthread lifecycle coverage, with explicit path validation.
   jthread-unit:
     name: Unit tests / std::jthread (gcc)
     runs-on: ubuntu-24.04
@@ -422,4 +370,4 @@ jobs:
 
     - name: Run thread_base_unit
       timeout-minutes: 15
-      run: ./build/bin/thread_base_unit --gtest_brief=1
+      run: python3 scripts/run_required_tests.py build --gtest --include '^thread_base_unit$' --require thread_base_unit --timeout 600
