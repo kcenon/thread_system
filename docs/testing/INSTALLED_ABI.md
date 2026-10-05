@@ -53,3 +53,15 @@ Neither is evidence that this PR's public feature contract has been deployed.
 Issue #739 must remain open until a separately reviewed package delivery carries
 the corrected sources/exports and real external registry consumers pass the same
 ABI and worker checks. This PR changes no release tag or package version.
+
+The existing v1.0.0 port was also installed without binary cache on arm64-osx via
+Git registry baseline and reference
+`14296b92eb8accac35e9c6c24aa4c1f3c2f3faef`, using vcpkg tool commit
+`2200159cd465157f20133e363e4604ac4d68181b` and builtin baseline
+`b02e341c927f16d991edbd915d8ea43eac52096c`. The verified archive corresponds to
+Thread source `6dd5c9e8c224fcd177560623cd7eccad6415f3e4`. Installation succeeds,
+but its archive is compiled with all five header feature macros while the
+installed CMake target exports none of them and pkg-config Cflags contain only
+include paths. External CMake and pkg-config acceptance consumers both fail the
+five macro checks before worker allocation. This confirms the package delivery
+condition remains unmet, independently of the Windows MSYS2 tooling repair.
