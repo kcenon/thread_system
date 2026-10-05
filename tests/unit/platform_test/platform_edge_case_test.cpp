@@ -312,16 +312,20 @@ TEST_F(PlatformEdgeCaseTest, ThreadYieldBehavior) {
     EXPECT_EQ(counter.load(), iterations * 2);
 }
 
-TEST_F(PlatformEdgeCaseTest, HighPrecisionSleep) {
-    auto start = std::chrono::high_resolution_clock::now();
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    auto end = std::chrono::high_resolution_clock::now();
+TEST_F(PlatformEdgeCaseTest, SleepForHonorsMinimumDuration) {
+    constexpr auto requested = std::chrono::milliseconds(10);
+    const auto start = std::chrono::steady_clock::now();
+    std::this_thread::sleep_for(requested);
+    const auto elapsed = std::chrono::steady_clock::now() - start;
 
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-
-    // Allow some variance due to OS scheduling
-    EXPECT_GE(duration.count(), 9);   // At least 9ms
-    EXPECT_LE(duration.count(), 50);  // No more than 50ms (generous for CI)
+    // [thread.req.timing] permits scheduling/resource-contention delay after
+    // the requested duration. A hosted runner has no 50 ms scheduling SLA.
+    // Check the actual contract without truncation or a 1 ms early-wake margin.
+    // CTest's process timeout still detects a sleep that never returns.
+    EXPECT_GE(elapsed, requested);
+    RecordProperty("sleep_elapsed_ns",
+                   std::to_string(std::chrono::duration_cast<
+                       std::chrono::nanoseconds>(elapsed).count()));
 }
 
 } // namespace platform_edge_case_test

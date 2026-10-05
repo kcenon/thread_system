@@ -164,15 +164,43 @@ TEST_F(enhanced_cancellation_token_test, ExtendTimeout)
 	auto token = enhanced_cancellation_token::create_with_timeout(
 		std::chrono::milliseconds{100});
 
+	const auto original_deadline = token.deadline();
 	token.extend_timeout(std::chrono::milliseconds{200});
+	const auto extended_deadline = token.deadline();
+	ASSERT_EQ(extended_deadline, original_deadline + std::chrono::milliseconds{200});
 
-	// Should not be cancelled yet
-	std::this_thread::sleep_for(std::chrono::milliseconds{50});
-	EXPECT_FALSE(token.is_cancelled());
+	ASSERT_TRUE(wait_for([&]() { return token.is_cancelled(); },
+						std::chrono::milliseconds{500}));
+	const auto reason = token.get_reason();
+	ASSERT_TRUE(reason.has_value());
+	EXPECT_EQ(reason->reason_type, cancellation_reason::type::timeout);
+	// Validate when cancellation happened, independent of when this test was
+	// next scheduled. A timer retaining the original deadline fails this check.
+	EXPECT_GE(reason->cancel_time, extended_deadline);
+}
 
-	// Wait longer and check
-	EXPECT_TRUE(wait_for([&]() { return token.is_cancelled(); },
-						 std::chrono::milliseconds{500}));
+TEST_F(enhanced_cancellation_token_test, ConcurrentDeadlineReadsAndExtensions)
+{
+	auto token = enhanced_cancellation_token::create_with_timeout(std::chrono::seconds{30});
+	const auto original_deadline = token.deadline();
+	std::latch start{2};
+	std::thread reader([&]
+	{
+		start.arrive_and_wait();
+		for (int i = 0; i < 1000; ++i)
+		{
+			EXPECT_GE(token.deadline(), original_deadline);
+			EXPECT_GT(token.remaining_time().count(), 0);
+		}
+	});
+	start.arrive_and_wait();
+	for (int i = 0; i < 1000; ++i)
+	{
+		token.extend_timeout(std::chrono::milliseconds{1});
+	}
+	reader.join();
+	EXPECT_EQ(token.deadline(), original_deadline + std::chrono::seconds{1});
+	token.cancel();
 }
 
 // ============================================================================

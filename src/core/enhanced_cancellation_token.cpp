@@ -326,7 +326,7 @@ namespace kcenon::thread
 		}
 
 		auto now = std::chrono::steady_clock::now();
-		auto deadline_point = state_->deadline_point;
+		auto deadline_point = deadline();
 
 		if (now >= deadline_point)
 		{
@@ -340,6 +340,7 @@ namespace kcenon::thread
 	auto enhanced_cancellation_token::deadline() const
 		-> std::chrono::steady_clock::time_point
 	{
+		std::lock_guard<std::mutex> lock(state_->mutex);
 		return state_->deadline_point;
 	}
 
@@ -350,6 +351,7 @@ namespace kcenon::thread
 		if (state_->has_deadline.load(std::memory_order_acquire))
 		{
 			state_->deadline_point += additional;
+			state_->cv.notify_all();
 		}
 	}
 
@@ -465,17 +467,26 @@ namespace kcenon::thread
 
 				std::unique_lock<std::mutex> lock(s->mutex);
 
-				// Wait until deadline or cancellation
-				auto result = s->cv.wait_until(
-					lock, deadline_point,
-					[&s]
+				const auto stopped = [&s]
+				{
+					return s->is_cancelled.load(std::memory_order_acquire) ||
+						   s->timer_should_stop.load(std::memory_order_acquire);
+				};
+				while (!stopped())
+				{
+					// Read under the same mutex used by extend_timeout(), including
+					// extensions made before the timer thread first starts running.
+					deadline_point = s->deadline_point;
+					if (!s->cv.wait_until(lock, deadline_point, [&]
+						{
+							return stopped() || s->deadline_point != deadline_point;
+						}))
 					{
-						return s->is_cancelled.load(std::memory_order_acquire) ||
-							   s->timer_should_stop.load(std::memory_order_acquire);
-					});
+						break; // The current deadline expired while holding the lock.
+					}
+				}
 
-				// If not cancelled and deadline reached, cancel with timeout reason
-				if (!result && !s->is_cancelled.load(std::memory_order_acquire))
+				if (!stopped())
 				{
 					std::vector<callback_type> simple_to_invoke;
 					std::vector<callback_with_reason_type> reason_to_invoke;
