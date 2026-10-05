@@ -23,9 +23,9 @@ and reviewers a single map of *what runs, when, and what a failure means*.
 
 | Gate | Tool | Workflow file | Trigger | Scope | Release-blocking |
 |------|------|---------------|---------|-------|------------------|
-| ASan | AddressSanitizer (`-fsanitize=address`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `address`) | `push` to `main`/`develop`/`phase-*`, `pull_request` to `main`/`develop` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
-| TSan | ThreadSanitizer (`-fsanitize=thread`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `thread`) | `push` to `main`/`develop`/`phase-*`, `pull_request` to `main`/`develop` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
-| UBSan | UndefinedBehaviorSanitizer (`-fsanitize=undefined`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `undefined`) | `push` to `main`/`develop`/`phase-*`, `pull_request` to `main`/`develop` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
+| ASan | AddressSanitizer (`-fsanitize=address`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `address`) | `push` to `main`/`develop`/`phase-*`, `pull_request` to `main`/`develop` | All eleven enabled Unix unit executables, Debug build, clang + libc++ | Yes |
+| TSan | ThreadSanitizer (`-fsanitize=thread`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `thread`) | `push` to `main`/`develop`/`phase-*`, `pull_request` to `main`/`develop` | All eleven enabled Unix unit executables, Debug build, clang + libc++ | Yes |
+| UBSan | UndefinedBehaviorSanitizer (`-fsanitize=undefined`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `undefined`) | `push` to `main`/`develop`/`phase-*`, `pull_request` to `main`/`develop` | All eleven enabled Unix unit executables, Debug build, clang + libc++ | Yes |
 | Stress | Custom sustained/burst/memory stress scenarios | `.github/workflows/stress-tests.yml` | Nightly `schedule` (02:00 UTC), `workflow_dispatch` | Long-running concurrency stress, configurable duration/scenarios | No (nightly signal) |
 | Integration | GoogleTest integration suite (`BUILD_INTEGRATION_TESTS=ON`) | `.github/workflows/integration-tests.yml` | `push` to `main`, `pull_request` to `main`, `workflow_dispatch` | Cross-component integration, Debug + Release matrix | Yes |
 | Valgrind | Valgrind memcheck | `.github/workflows/valgrind.yml` | `push` to `main`, `pull_request` to `main`, nightly `schedule`, `workflow_dispatch` | Memory leak / invalid access detection | Yes |
