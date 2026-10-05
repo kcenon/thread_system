@@ -647,6 +647,17 @@ TEST_F(WorkStealingDequeTest, OwnerAndBatchThieves) {
     work_stealing_deque<int*> deque;
     constexpr int count = 10000;
     std::vector<int> values(count);
+    std::vector<std::atomic<int>> visits(count);
+    for (int i = 0; i < count; ++i) {
+        values[i] = i;
+        visits[i].store(0);
+    }
+    const auto record = [&](int* item) {
+        ASSERT_NE(item, nullptr);
+        ASSERT_GE(*item, 0);
+        ASSERT_LT(*item, count);
+        visits[*item].fetch_add(1);
+    };
 
     std::atomic<int> owner_count{0};
     std::atomic<int> stolen_count{0};
@@ -660,6 +671,9 @@ TEST_F(WorkStealingDequeTest, OwnerAndBatchThieves) {
             while (!done || !deque.empty()) {
                 auto batch = deque.steal_batch(4);
                 if (!batch.empty()) {
+                    for (auto* item : batch) {
+                        record(item);
+                    }
                     stolen_count += static_cast<int>(batch.size());
                 } else {
                     std::this_thread::yield();
@@ -671,13 +685,13 @@ TEST_F(WorkStealingDequeTest, OwnerAndBatchThieves) {
     // Owner pushes and pops
     std::thread owner([&]() {
         for (int i = 0; i < count; ++i) {
-            values[i] = i;
             deque.push(&values[i]);
 
             // Occasionally pop
             if (i % 5 == 0) {
                 auto result = deque.pop();
                 if (result.has_value()) {
+                    record(*result);
                     owner_count++;
                 }
             }
@@ -685,6 +699,7 @@ TEST_F(WorkStealingDequeTest, OwnerAndBatchThieves) {
 
         // Pop remaining
         while (auto result = deque.pop()) {
+            record(*result);
             owner_count++;
         }
     });
@@ -698,6 +713,9 @@ TEST_F(WorkStealingDequeTest, OwnerAndBatchThieves) {
 
     EXPECT_EQ(owner_count.load() + stolen_count.load(), count);
     EXPECT_TRUE(deque.empty());
+    for (int i = 0; i < count; ++i) {
+        EXPECT_EQ(visits[i].load(), 1) << "item " << i;
+    }
 }
 
 TEST_F(WorkStealingDequeTest, BatchStealStressTest) {

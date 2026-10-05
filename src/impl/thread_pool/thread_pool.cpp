@@ -341,7 +341,11 @@ auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> common::VoidResult {
     // Record metrics and enqueue job
     metrics_service_->record_submission();
 
-    auto start_time = std::chrono::steady_clock::now();
+    // Basic counters are always collected; clock reads and queue-depth samples
+    // are only useful when the optional enhanced metrics consume them.
+    const bool measure_latency = metrics_service_->is_enhanced_metrics_enabled();
+    const auto start_time = measure_latency ? std::chrono::steady_clock::now()
+                                           : std::chrono::steady_clock::time_point{};
 
     if (queue_adapter_) {
         auto enqueue_result = queue_adapter_->enqueue(std::move(job));
@@ -355,12 +359,15 @@ auto thread_pool::enqueue(std::unique_ptr<job>&& job) -> common::VoidResult {
         }
     }
 
-    auto end_time = std::chrono::steady_clock::now();
-    auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
-    metrics_service_->record_enqueue_with_latency(latency);
-
-    auto queue_size = queue_adapter_ ? queue_adapter_->size() : job_queue_->size();
-    metrics_service_->record_queue_depth(queue_size);
+    if (measure_latency) {
+        const auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(
+            std::chrono::steady_clock::now() - start_time);
+        metrics_service_->record_enqueue_with_latency(latency);
+        const auto queue_size = queue_adapter_ ? queue_adapter_->size() : job_queue_->size();
+        metrics_service_->record_queue_depth(queue_size);
+    } else {
+        metrics_service_->record_enqueue();
+    }
 
     return common::ok();
 }
@@ -385,7 +392,11 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> com
     const auto batch_size = jobs.size();
     metrics_service_->record_submission(batch_size);
 
-    auto start_time = std::chrono::steady_clock::now();
+    // Basic counters are always collected; clock reads and queue-depth samples
+    // are only useful when the optional enhanced metrics consume them.
+    const bool measure_latency = metrics_service_->is_enhanced_metrics_enabled();
+    const auto start_time = measure_latency ? std::chrono::steady_clock::now()
+                                           : std::chrono::steady_clock::time_point{};
 
     if (queue_adapter_) {
         auto enqueue_result = queue_adapter_->enqueue_batch(std::move(jobs));
@@ -399,12 +410,15 @@ auto thread_pool::enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> com
         }
     }
 
-    auto end_time = std::chrono::steady_clock::now();
-    auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
-    metrics_service_->record_enqueue_with_latency(latency, batch_size);
-
-    auto queue_size = queue_adapter_ ? queue_adapter_->size() : job_queue_->size();
-    metrics_service_->record_queue_depth(queue_size);
+    if (measure_latency) {
+        const auto latency = std::chrono::duration_cast<std::chrono::nanoseconds>(
+            std::chrono::steady_clock::now() - start_time);
+        metrics_service_->record_enqueue_with_latency(latency, batch_size);
+        const auto queue_size = queue_adapter_ ? queue_adapter_->size() : job_queue_->size();
+        metrics_service_->record_queue_depth(queue_size);
+    } else {
+        metrics_service_->record_enqueue(batch_size);
+    }
 
     return common::ok();
 }
