@@ -61,8 +61,10 @@ release/nightly/manual triggers to limit duplicate runner use. Develop already r
 integration via the main build matrix and memory checking via all three sanitizers.
 
 As audited on 2026-10-05, the active rulesets require `cross-system conformance linter`
-and `SOUP Version Drift Detection` on main/develop and prevent develop deletion/force
-pushes. This change preserves those settings. Recommended additional required contexts
+and `SOUP Version Drift Detection` on main/develop. Main additionally requires the
+eight existing API Guard, build matrix and sanitizer contexts listed below, plus a
+PR; develop currently has only the coherence checks and deletion/force-push guards.
+This change preserves all these settings. Recommended additional required contexts
 for develop (after observing successful runs) are `ubuntu-24.04 / gcc`,
 `ubuntu-24.04 / clang`, `macos-latest / clang`, `windows-2022 / msvc`,
 `Sanitizer / thread`, `Sanitizer / address`, `Sanitizer / undefined`,
