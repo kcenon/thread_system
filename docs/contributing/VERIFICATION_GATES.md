@@ -44,6 +44,11 @@ API Guard and the dedicated GCC jthread test on pushes and PRs to both `main` an
 workflows are cancelled; pushes are never cancelled by a PR run. No `phase-*` probe
 branch is needed to validate a develop PR.
 
+The four platform/compiler builds use `RelWithDebInfo` so the existing latency
+and throughput limits measure optimized library code with debug symbols. All
+CTest suites, including `PerformanceTests`, remain mandatory with their original
+limits; all three sanitizer jobs retain Debug builds.
+
 Every main CI configure sets `BUILD_TESTING=ON`. `scripts/run_required_tests.py`
 checks that cache value and the required CTest entries before running CTest with
 `--no-tests=error`. It also requires a nonempty GoogleTest XML report for every
@@ -147,9 +152,8 @@ Workflow references:
 The TSan gate (`ci.yml` `sanitizer` job, matrix `thread`) excludes a fixed set of tests
 via a `--gtest_filter` exclusion. These exclusions are intentional and documented inline
 in `ci.yml`; they are reproduced here so the rationale is discoverable without reading
-the workflow. The filter applies to the unit-test executables, which the job runs when
-`bin/thread_base_unit` exists; otherwise the job runs `ctest` without the filter
-(`ci.yml` lines 357-370). The job builds the integration tests but does not run them;
+the workflow. The filter applies to the eleven required unit-test executables; missing or empty
+suites fail the gate, without a fallback path. The job builds the integration tests but does not run them;
 they run under the Integration gate.
 
 | Excluded test pattern | Reason |
@@ -170,7 +174,7 @@ Rules for this exclusion list:
 
 ASan and UBSan run every unit-test executable with no exclusions. The sanitizer runtime options
 applied by the job are `ASAN_OPTIONS=detect_leaks=1:alloc_dealloc_mismatch=0`,
-`UBSAN_OPTIONS=print_stacktrace=1`, and `TSAN_OPTIONS=second_deadlock_stack=1`.
+`UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1`, and `TSAN_OPTIONS=second_deadlock_stack=1`.
 
 ## Retry Policy & Failure Triage
 

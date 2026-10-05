@@ -39,6 +39,8 @@ jobs:
         fi
         echo "No legacy types found in public headers"
 
+  # Run unchanged performance limits against optimized binaries with symbols.
+  # Debug coverage remains in all three sanitizer jobs below.
   build:
     name: ${{ matrix.os }} / ${{ matrix.compiler }}
     runs-on: ${{ matrix.os }}
@@ -160,7 +162,7 @@ jobs:
         echo "==========================="
 
         cmake -B build -G Ninja \
-          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DCMAKE_TOOLCHAIN_FILE="${{ env.CMAKE_TOOLCHAIN_FILE }}" \
           -DKCENON_WITH_COMMON_SYSTEM=ON \
           -DBUILD_TESTING=ON \
@@ -171,7 +173,7 @@ jobs:
             exit 1
           }
 
-        cmake --build build --config Debug
+        cmake --build build --config RelWithDebInfo
 
     - name: Configure and Build (vcpkg - Windows)
       if: runner.os == 'Windows'
@@ -186,7 +188,7 @@ jobs:
 
         # Use Ninja with MSVC - feature detection uses version-based check
         cmake -B build -G Ninja `
-          -DCMAKE_BUILD_TYPE=Debug `
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo `
           -DCMAKE_TOOLCHAIN_FILE="${{ env.CMAKE_TOOLCHAIN_FILE }}" `
           -DCMAKE_CXX_STANDARD=20 `
           -DCMAKE_CXX_FLAGS="/std:c++20 /EHsc /Zc:__cplusplus /permissive-" `
@@ -201,7 +203,7 @@ jobs:
           exit 1
         }
 
-        cmake --build build --config Debug
+        cmake --build build --config RelWithDebInfo
 
     - name: Test required suites
       timeout-minutes: 20

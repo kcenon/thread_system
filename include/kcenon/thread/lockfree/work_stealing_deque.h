@@ -160,10 +160,12 @@ public:
     }
 
     /**
-     * @brief Destructor - cleans up the circular array
+     * @brief Destructor - reclaims current and retired arrays after users stop
+     * @note The owner and all thieves must have finished before destruction.
      */
     ~work_stealing_deque() {
         delete array_.load(std::memory_order_relaxed);
+        cleanup_old_arrays();
     }
 
     // Non-copyable and non-movable
@@ -189,12 +191,13 @@ public:
         // Check if array needs to grow
         if (b - t > static_cast<std::int64_t>(a->size()) - 1) {
             // Grow the array
-            circular_array<T>* new_array = a->grow(b, t);
-            // Store old array for cleanup (in a real implementation,
-            // you would use hazard pointers or epoch-based reclamation)
+            std::unique_ptr<circular_array<T>> new_array(a->grow(b, t));
+            // Thieves can still hold the old array. Retain it until quiescent
+            // cleanup/destruction; also keep growth exception-safe if the
+            // retired-array vector allocation fails.
             old_arrays_.push_back(a);
-            array_.store(new_array, std::memory_order_release);
-            a = new_array;
+            a = new_array.release();
+            array_.store(a, std::memory_order_release);
         }
 
         a->put(b, item);
