@@ -20,7 +20,8 @@ endfunction()
 function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
   # Use CMAKE_CXX_STANDARD for standard selection (more reliable across compilers)
   set(CMAKE_REQUIRED_FLAGS "")
-  set(CMAKE_REQUIRED_LIBRARIES "${CMAKE_EXE_LINKER_FLAGS}")
+  # try_compile already inherits CMAKE_EXE_LINKER_FLAGS. Passing them as
+  # libraries makes Ninja treat MSVC /machine:x64 as a missing input file.
 
   # Set C++20 standard requirement
   if(MSVC)

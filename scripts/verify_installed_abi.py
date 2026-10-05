@@ -30,6 +30,7 @@ def main():
     if work.is_relative_to(source):
         raise RuntimeError("Consumers must live outside the source tree")
     work.mkdir(parents=True, exist_ok=False)
+    os.chdir(work)
     prefix = work / "prefix"
     options = ["-G", "Ninja", "-DCMAKE_BUILD_TYPE=RelWithDebInfo", "-DCMAKE_INSTALL_LIBDIR=lib",
                f"-DCMAKE_INSTALL_PREFIX={prefix}", "-DBUILD_TESTING=OFF"]
@@ -75,13 +76,14 @@ def main():
 
     env = dict(os.environ, PKG_CONFIG_PATH=str(prefix / "lib/pkgconfig"),
                PKG_CONFIG_LIBDIR=str(prefix / "lib/pkgconfig"))
-    pkg_command = ["pkg-config", "--static", "--cflags", "--libs", "thread_system"]
+    pkg_command = ["pkg-config"]
     if os.name == "nt":
-        pkg_command.insert(1, "--msvc-syntax")
-    pkg_output = subprocess.check_output(pkg_command, env=env, text=True)
-    print("pkg-config: " + pkg_output, flush=True)
-    # pkg-config emits shell-quoted paths; even on Windows they use forward slashes.
-    flags = shlex.split(pkg_output)
+        pkg_command.append("--msvc-syntax")
+    cflags = shlex.split(subprocess.check_output(
+        [*pkg_command, "--cflags", "thread_system"], env=env, text=True))
+    libs = shlex.split(subprocess.check_output(
+        [*pkg_command, "--static", "--libs", "thread_system"], env=env, text=True))
+    print("pkg-config: " + shlex.join(cflags + libs), flush=True)
     compiler = shlex.split(os.environ.get("CXX", "cl" if os.name == "nt" else "c++"))
     cxxflags = shlex.split(os.environ.get("CXXFLAGS", ""))
     ldflags = shlex.split(os.environ.get("LDFLAGS", ""))
@@ -93,15 +95,13 @@ def main():
             mutation = [("/" if os.name == "nt" else "-") +
                         ("UUSE_STD_JTHREAD" if args.jthread == "ON" else "DUSE_STD_JTHREAD")]
         if os.name == "nt":
-            # /link options emitted by pkg-config must follow the source and /Fe.
+            # pkg-config emits /libpath and .lib arguments but no /link marker.
             command = [*compiler, "/nologo", "/std:c++20", "/EHsc", "/MD", *cxxflags,
-                       f"/DEXPECT_JTHREAD={expected_jthread}", str(consumer / "main.cpp"),
-                       f"/Fe:{output}"]
-            split = flags.index("/link") if "/link" in flags else len(flags)
-            command += [*flags[:split], *mutation, *flags[split:], *ldflags]
+                       f"/DEXPECT_JTHREAD={expected_jthread}", *cflags, *mutation,
+                       consumer / "main.cpp", f"/Fe:{output}", "/link", *libs, *ldflags]
         else:
             command = [*compiler, "-std=c++20", *cxxflags, f"-DEXPECT_JTHREAD={expected_jthread}",
-                       consumer / "main.cpp", "-o", output, *flags, *mutation, *ldflags]
+                       *cflags, *mutation, consumer / "main.cpp", "-o", output, *libs, *ldflags]
         run(command, env=env)
         run([output], expected=2 if negative else 0, env=env)
         results["pkg_negative" if negative else "pkg_config"] = "rejected" if negative else "passed"
