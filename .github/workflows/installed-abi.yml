@@ -47,7 +47,24 @@ jobs:
           echo 'CXXFLAGS=-fsanitize=address -fno-omit-frame-pointer' >> "$GITHUB_ENV"
       - name: Install tools (Windows)
         if: runner.os == 'Windows'
-        run: choco install ninja pkgconfiglite -y
+        shell: pwsh
+        run: |
+          choco install ninja -y
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          # pkgconfiglite 0.28 corrupts /libpath:<prefix>/lib into lib.lib.
+          # Use the official pkgconf release with a verified immutable digest.
+          $installer = Join-Path $env:RUNNER_TEMP 'pkgconf.msi'
+          $destination = Join-Path $env:RUNNER_TEMP 'pkgconf'
+          Invoke-WebRequest 'https://github.com/pkgconf/pkgconf/releases/download/pkgconf-3.0.7/pkgconf-x64-3.0.7.msi' -OutFile $installer
+          if ((Get-FileHash $installer -Algorithm SHA256).Hash -ne '7a316dba4a4498ea952b746c82deed41c597657095a0f776b75654191b45ae44') {
+            throw 'pkgconf SHA256 mismatch'
+          }
+          $process = Start-Process msiexec.exe -Wait -PassThru -ArgumentList @('/a', $installer, '/qn', "TARGETDIR=$destination")
+          if ($process.ExitCode -ne 0) { throw "pkgconf extraction failed: $($process.ExitCode)" }
+          $program = Get-ChildItem $destination -Filter pkgconf.exe -Recurse | Select-Object -First 1
+          if (-not $program) { throw 'pkgconf.exe not found' }
+          "PKG_CONFIG=$($program.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append
+
       - uses: ilammy/msvc-dev-cmd@v1
         if: runner.os == 'Windows'
       - name: Configure Windows sanitizer

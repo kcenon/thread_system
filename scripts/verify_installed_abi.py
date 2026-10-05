@@ -76,7 +76,8 @@ def main():
 
     env = dict(os.environ, PKG_CONFIG_PATH=str(prefix / "lib/pkgconfig"),
                PKG_CONFIG_LIBDIR=str(prefix / "lib/pkgconfig"))
-    pkg_command = ["pkg-config"]
+    pkg_command = [os.environ.get("PKG_CONFIG", "pkg-config")]
+    run([*pkg_command, "--version"], env=env)
     if os.name == "nt":
         pkg_command.append("--msvc-syntax")
     cflags = shlex.split(subprocess.check_output(
