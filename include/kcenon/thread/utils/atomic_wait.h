@@ -24,6 +24,10 @@
 #include <chrono>
 #include <type_traits>
 
+#ifdef _MSC_VER
+#include <intrin.h>
+#endif
+
 #ifdef USE_STD_CONCEPTS
 #include <concepts>
 #endif
@@ -87,7 +91,11 @@ public:
                 return;
             }
             // Hint to CPU: this is a spin-wait loop
-            #if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
+            #if defined(_MSC_VER) && (defined(_M_X64) || defined(_M_IX86))
+                _mm_pause();
+            #elif defined(_MSC_VER) && defined(_M_ARM64)
+                __yield();
+            #elif defined(__x86_64__) || defined(__i386__)
                 __builtin_ia32_pause();
             #elif defined(__aarch64__) || defined(_M_ARM64)
                 __asm__ __volatile__("yield" ::: "memory");

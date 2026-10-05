@@ -73,6 +73,8 @@ jobs:
             installed-abi.log
             ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/result.json
             ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/library-build/compile_commands.json
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/library-build/CMakeCache.txt
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/library-build/CMakeFiles/CMakeConfigureLog.yaml
             ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/prefix/lib/pkgconfig/thread_system.pc
             ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/prefix/lib/cmake/thread_system/
             ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/cmake-consumer/Testing/Temporary/

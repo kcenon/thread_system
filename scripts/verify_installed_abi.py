@@ -4,6 +4,7 @@ import argparse
 import ast
 import json
 import os
+import re
 from pathlib import Path
 import shlex
 import shutil
@@ -44,6 +45,10 @@ def main():
          *[f"-DSET_STD_{feature}={args.jthread}" for feature in
            ["JTHREAD", "CONCEPTS", "ATOMIC_WAIT", "LATCH", "SPAN"]],
          f"-DTHREAD_ENABLE_WORK_STEALING={args.jthread}"])
+    if args.jthread == "ON":
+        cache = (work / "library-build/CMakeCache.txt").read_text()
+        if not re.search(r"^HAS_STD_JTHREAD:INTERNAL=(1|ON|TRUE)$", cache, re.MULTILINE):
+            raise RuntimeError("Requested jthread ON was not selected; inspect CMakeConfigureLog.yaml")
     run(["cmake", "--build", work / "library-build", "--parallel", "3"])
     run(["cmake", "--install", work / "library-build"])
 
