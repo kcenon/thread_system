@@ -55,7 +55,8 @@ jobs:
         shell: bash
         run: |
           echo 'CXX=cl' >> "$GITHUB_ENV"
-          echo 'CXXFLAGS=/fsanitize=address /Zi' >> "$GITHUB_ENV"
+          # Hyphen spelling prevents Git Bash from converting /fsanitize to a path.
+          echo 'CXXFLAGS=-fsanitize=address -Zi' >> "$GITHUB_ENV"
       - name: Install and verify CMake and pkg-config consumers
         shell: bash
         run: |
