@@ -65,17 +65,23 @@ Coverage, the separate Debug/Release integration workflow and Valgrind retain th
 release/nightly/manual triggers to limit duplicate runner use. Develop already runs
 integration via the main build matrix and memory checking via all three sanitizers.
 
-As audited on 2026-10-05, the active rulesets require `cross-system conformance linter`
-and `SOUP Version Drift Detection` on main/develop. Main additionally requires the
-eight existing API Guard, build matrix and sanitizer contexts listed below, plus a
-PR; develop currently has only the coherence checks and deletion/force-push guards.
-This change preserves all these settings. Recommended additional required contexts
-for develop (after observing successful runs) are `ubuntu-24.04 / gcc`,
-`ubuntu-24.04 / clang`, `macos-latest / clang`, `windows-2022 / msvc`,
-`Sanitizer / thread`, `Sanitizer / address`, `Sanitizer / undefined`,
-`API Guard - No Legacy Types`, `Unit tests / std::jthread (gcc)` and `CI gate self-test`.
-These make build/runtime failures and test-gate regressions block integration. No
-repository protection setting is changed by this PR.
+As applied on 2026-10-05 after PR #752 passed, develop requires these ten CI
+contexts in addition to the existing `cross-system conformance linter` and
+`SOUP Version Drift Detection`:
+
+- `ubuntu-24.04 / gcc`, `ubuntu-24.04 / clang`, `macos-latest / clang`, `windows-2022 / msvc`
+- `Sanitizer / thread`, `Sanitizer / address`, `Sanitizer / undefined`
+- `API Guard - No Legacy Types`, `Unit tests / std::jthread (gcc)`, `CI gate self-test`
+
+These make build/runtime failures and test-gate regressions block integration.
+The existing deletion/force-push guards and all main protections are preserved.
+
+Platform timeout tests use `steady_clock` and check that a sleep does not return
+before its requested duration. The C++ [timing contract](https://eel.is/c++draft/thread.req.timing)
+permits additional scheduler/resource-contention delay, so correctness does not
+assume a maximum hosted-runner scheduling latency. The measured duration is
+recorded in GoogleTest XML; the CTest process timeout detects hangs. Product
+latency/throughput benchmarks retain their existing thresholds.
 
 A release pull request into `main` must pass the following minimum gate set before
 merge:

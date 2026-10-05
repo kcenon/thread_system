@@ -215,7 +215,7 @@ jobs:
             required+=(--require "$name")
           done
         fi
-        python scripts/run_required_tests.py build --gtest "${required[@]}"
+        python scripts/run_required_tests.py build --config RelWithDebInfo --gtest "${required[@]}"
 
     - name: Upload build artifacts
       if: failure()
