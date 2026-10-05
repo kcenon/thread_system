@@ -8,12 +8,20 @@
 
 include(CheckCXXSourceCompiles)
 
+# Record the definitions selected by the probes once. The library target and
+# installed consumers (CMake and pkg-config) all use this same public contract.
+function(thread_system_enable_public_feature definition)
+  set_property(DIRECTORY APPEND PROPERTY THREAD_SYSTEM_PUBLIC_FEATURES "${definition}")
+endfunction()
+
+
 # Function to test for C++20 features at configure time
 # Note: This will fail gracefully in C++17 mode and use fallback implementations
 function(check_cxx20_feature FEATURE_NAME TEST_CODE RESULT_VAR)
   # Use CMAKE_CXX_STANDARD for standard selection (more reliable across compilers)
   set(CMAKE_REQUIRED_FLAGS "")
-  set(CMAKE_REQUIRED_LIBRARIES "${CMAKE_EXE_LINKER_FLAGS}")
+  # try_compile already inherits CMAKE_EXE_LINKER_FLAGS. Passing them as
+  # libraries makes Ninja treat MSVC /machine:x64 as a missing input file.
 
   # Set C++20 standard requirement
   if(MSVC)
@@ -50,7 +58,7 @@ function(check_std_format_support)
   if(MSVC)
     if(MSVC_VERSION GREATER_EQUAL 1930)
       message(STATUS "MSVC ${MSVC_VERSION} detected - using version-based std::format detection")
-      add_definitions(-DUSE_STD_FORMAT)
+      thread_system_enable_public_feature(USE_STD_FORMAT)
       set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format (C++20)" FORCE)
       message(STATUS "✅ Using std::format (MSVC ${MSVC_VERSION} - version check)")
       set(USE_STD_FORMAT TRUE PARENT_SCOPE)
@@ -110,7 +118,7 @@ function(check_std_format_support)
     )
 
     if(STD_FORMAT_COMPILE_TEST)
-      add_definitions(-DUSE_STD_FORMAT)
+      thread_system_enable_public_feature(USE_STD_FORMAT)
       set(USE_STD_FORMAT TRUE CACHE BOOL "Using std::format (C++20)" FORCE)
       message(STATUS "✅ Using std::format (C++20 standard)")
     else()
@@ -149,7 +157,7 @@ function(check_std_jthread_support)
   " HAS_STD_JTHREAD)
 
   if(HAS_STD_JTHREAD AND SET_STD_JTHREAD)
-    add_definitions(-DUSE_STD_JTHREAD)
+    thread_system_enable_public_feature(USE_STD_JTHREAD)
     message(STATUS "✅ Using std::jthread")
   else()
     message(STATUS "Using std::thread fallback")
@@ -173,7 +181,7 @@ function(check_std_latch_support)
   " HAS_STD_LATCH)
 
   if(HAS_STD_LATCH AND SET_STD_LATCH)
-    add_definitions(-DHAS_STD_LATCH)
+    thread_system_enable_public_feature(HAS_STD_LATCH)
     message(STATUS "✅ Using std::latch and std::barrier")
   else()
     message(STATUS "Using custom latch/barrier implementation")
@@ -197,7 +205,7 @@ function(check_std_atomic_wait_support)
   " HAS_STD_ATOMIC_WAIT)
 
   if(HAS_STD_ATOMIC_WAIT AND SET_STD_ATOMIC_WAIT)
-    add_definitions(-DHAS_STD_ATOMIC_WAIT)
+    thread_system_enable_public_feature(HAS_STD_ATOMIC_WAIT)
     message(STATUS "✅ Using std::atomic::wait/notify")
   else()
     message(STATUS "Using custom atomic wait/notify implementation")
@@ -220,7 +228,7 @@ function(check_std_chrono_current_zone_support)
   " HAS_STD_CHRONO_CURRENT_ZONE)
 
   if(HAS_STD_CHRONO_CURRENT_ZONE AND SET_STD_CHRONO_CURRENT_ZONE)
-    add_definitions(-DUSE_STD_CHRONO_CURRENT_ZONE)
+    thread_system_enable_public_feature(USE_STD_CHRONO_CURRENT_ZONE)
     message(STATUS "✅ Using std::chrono::current_zone")
   else()
     message(STATUS "Using time_t fallback")
@@ -253,7 +261,7 @@ function(check_std_span_support)
     )
 
     if(STD_SPAN_COMPILE_TEST AND SET_STD_SPAN)
-      add_definitions(-DUSE_STD_SPAN)
+      thread_system_enable_public_feature(USE_STD_SPAN)
       message(STATUS "✅ Using std::span")
     endif()
   else()
@@ -284,7 +292,7 @@ function(check_std_filesystem_support)
     )
 
     if(STD_FILESYSTEM_COMPILE_TEST)
-      add_definitions(-DUSE_STD_FILESYSTEM)
+      thread_system_enable_public_feature(USE_STD_FILESYSTEM)
       message(STATUS "✅ Using std::filesystem")
     endif()
   endif()
@@ -315,7 +323,7 @@ function(check_std_ranges_support)
     )
 
     if(STD_RANGES_COMPILE_TEST)
-      add_definitions(-DUSE_STD_RANGES)
+      thread_system_enable_public_feature(USE_STD_RANGES)
       message(STATUS "✅ Using std::ranges")
     endif()
   endif()
@@ -342,7 +350,7 @@ function(check_std_concepts_support)
   )
 
   if(STD_CONCEPTS_COMPILE_TEST)
-    add_definitions(-DUSE_STD_CONCEPTS)
+    thread_system_enable_public_feature(USE_STD_CONCEPTS)
     message(STATUS "✅ Using std::concepts")
   else()
     # Only show detailed error in verbose mode
@@ -418,10 +426,10 @@ function(check_common_concepts_support)
 
   if(_COMMON_CONCEPTS_FOUND)
     # KCENON_* unified feature flag (primary)
-    add_definitions(-DKCENON_HAS_COMMON_CONCEPTS=1)
+    thread_system_enable_public_feature(KCENON_HAS_COMMON_CONCEPTS=1)
     set(KCENON_HAS_COMMON_CONCEPTS TRUE CACHE BOOL "common_system C++20 concepts available" FORCE)
     # Legacy alias for backward compatibility (deprecated, will be removed in v1.0.0)
-    add_definitions(-DTHREAD_HAS_COMMON_CONCEPTS=1)
+    thread_system_enable_public_feature(THREAD_HAS_COMMON_CONCEPTS=1)
     set(THREAD_HAS_COMMON_CONCEPTS TRUE CACHE BOOL "common_system C++20 concepts available (legacy)" FORCE)
     message(STATUS "✅ Using common_system C++20 concepts")
     message(STATUS "   Available concept categories:")
@@ -441,6 +449,7 @@ endfunction()
 # Main function to check all features
 ##################################################
 function(check_thread_system_features)
+  set_property(DIRECTORY PROPERTY THREAD_SYSTEM_PUBLIC_FEATURES "")
   message(STATUS "Checking C++20 feature support...")
 
   check_std_format_support()

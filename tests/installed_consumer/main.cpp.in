@@ -1,0 +1,27 @@
+#include "abi_snapshot.h"
+#include <kcenon/thread/core/thread_pool.h>
+#include <iostream>
+#include <memory>
+
+int main()
+{
+    const auto features = feature_snapshot();
+    std::cout << "library features=" << thread_library_features()
+              << " consumer features=" << features
+              << " thread_base=" << thread_library_base_size() << "/"
+              << sizeof(kcenon::thread::thread_base)
+              << " lifecycle=" << thread_library_lifecycle_size() << "/"
+              << sizeof(kcenon::thread::lifecycle_controller)
+              << " worker=" << thread_library_worker_size() << "/"
+              << sizeof(kcenon::thread::thread_worker) << std::endl;
+    if (features != thread_library_features()
+        || (features & 1u) != EXPECT_JTHREAD
+        || sizeof(kcenon::thread::thread_base) != thread_library_base_size()
+        || sizeof(kcenon::thread::lifecycle_controller) != thread_library_lifecycle_size()
+        || sizeof(kcenon::thread::thread_worker) != thread_library_worker_size()) {
+        std::cerr << "Installed consumer ABI mismatch" << std::endl;
+        return 2;
+    }
+    // Reuse the installed worker scenario maintained by common_system#751.
+    @WORKER_SMOKE_BODY@
+}

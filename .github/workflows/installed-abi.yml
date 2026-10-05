@@ -1,0 +1,97 @@
+name: Installed ABI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  installed-abi:
+    name: Installed ABI / ${{ matrix.os }} / jthread-${{ matrix.jthread }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-latest, windows-2022]
+        jthread: ['ON', 'OFF']
+    steps:
+      - uses: actions/checkout@v7
+      - name: Checkout common worker consumer contract
+        uses: actions/checkout@v7
+        with:
+          repository: kcenon/common_system
+          ref: 4aa24d2650c1d3d8446f7e9f681824bec12b5112
+          path: common_system
+      - name: Install tools (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build g++ pkg-config
+          echo 'CXX=g++' >> "$GITHUB_ENV"
+          echo 'CXXFLAGS=-fsanitize=address -fno-omit-frame-pointer' >> "$GITHUB_ENV"
+      - name: Install tools (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install ninja llvm pkgconf
+          echo "CXX=$(brew --prefix llvm)/bin/clang++" >> "$GITHUB_ENV"
+          echo 'CXXFLAGS=-fsanitize=address -fno-omit-frame-pointer' >> "$GITHUB_ENV"
+      - name: Install tools (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install ninja -y
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          # pkgconfiglite 0.28 corrupts /libpath:<prefix>/lib into lib.lib.
+          # Use the official pkgconf release with a verified immutable digest.
+          $installer = Join-Path $env:RUNNER_TEMP 'pkgconf.msi'
+          $destination = Join-Path $env:RUNNER_TEMP 'pkgconf'
+          Invoke-WebRequest 'https://github.com/pkgconf/pkgconf/releases/download/pkgconf-3.0.7/pkgconf-x64-3.0.7.msi' -OutFile $installer
+          if ((Get-FileHash $installer -Algorithm SHA256).Hash -ne '7a316dba4a4498ea952b746c82deed41c597657095a0f776b75654191b45ae44') {
+            throw 'pkgconf SHA256 mismatch'
+          }
+          $process = Start-Process msiexec.exe -Wait -PassThru -ArgumentList @('/a', $installer, '/qn', "TARGETDIR=$destination")
+          if ($process.ExitCode -ne 0) { throw "pkgconf extraction failed: $($process.ExitCode)" }
+          $program = Get-ChildItem $destination -Filter pkgconf.exe -Recurse | Select-Object -First 1
+          if (-not $program) { throw 'pkgconf.exe not found' }
+          "PKG_CONFIG=$($program.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+      - name: Configure Windows sanitizer
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          echo 'CXX=cl' >> "$GITHUB_ENV"
+          # Hyphen spelling prevents Git Bash from converting /fsanitize to a path.
+          echo 'CXXFLAGS=-fsanitize=address -Zi' >> "$GITHUB_ENV"
+      - name: Install and verify CMake and pkg-config consumers
+        shell: bash
+        run: |
+          python scripts/verify_installed_abi.py \
+            --common "$GITHUB_WORKSPACE/common_system" \
+            --work "$RUNNER_TEMP/thread-abi-${{ matrix.jthread }}" \
+            --jthread '${{ matrix.jthread }}' 2>&1 | tee installed-abi.log
+      - name: Upload raw ABI evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: abi-${{ matrix.os }}-${{ matrix.jthread }}
+          path: |
+            installed-abi.log
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/result.json
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/library-build/compile_commands.json
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/library-build/CMakeCache.txt
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/library-build/CMakeFiles/CMakeConfigureLog.yaml
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/prefix/lib/pkgconfig/thread_system.pc
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/prefix/lib/cmake/thread_system/
+            ${{ runner.temp }}/thread-abi-${{ matrix.jthread }}/cmake-consumer/Testing/Temporary/
