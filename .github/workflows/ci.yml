@@ -213,7 +213,7 @@ jobs:
             required+=(--require "$name")
           done
         fi
-        python scripts/run_required_tests.py build "${required[@]}"
+        python scripts/run_required_tests.py build --gtest "${required[@]}"
 
     - name: Upload build artifacts
       if: failure()
@@ -223,6 +223,7 @@ jobs:
         path: |
           build/CMakeFiles/*.log
           build/Testing/Temporary/
+          build/required-gtest-*/
 
   # Phase 1: Sanitizer builds (failures block merge)
   sanitizer:
@@ -284,7 +285,7 @@ jobs:
       timeout-minutes: 20
       run: |
         export ASAN_OPTIONS=detect_leaks=1:alloc_dealloc_mismatch=0
-        export UBSAN_OPTIONS=print_stacktrace=1
+        export UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1
         export TSAN_OPTIONS=second_deadlock_stack=1
 
         # Tests that hang under TSan due to extreme instrumentation overhead
@@ -313,7 +314,7 @@ jobs:
         for name in utilities_unit thread_base_unit thread_pool_unit interfaces_unit typed_thread_pool_unit platform_test lockfree_test dag_unit diagnostics_unit stealing_unit core_unit; do
           required+=(--require "$name")
         done
-        python3 scripts/run_required_tests.py build --include '(_unit|_test)$' \
+        python3 scripts/run_required_tests.py build --gtest --include '(_unit|_test)$' \
           --timeout 600 "${required[@]}"
 
     - name: Upload sanitizer results
@@ -324,6 +325,7 @@ jobs:
         path: |
           build/Testing/Temporary/
           build/**/*.log
+          build/required-gtest-*/
 
   # Dedicated GCC std::jthread lifecycle coverage, with explicit path validation.
   jthread-unit:
@@ -366,4 +368,4 @@ jobs:
 
     - name: Run thread_base_unit
       timeout-minutes: 15
-      run: python3 scripts/run_required_tests.py build --include '^thread_base_unit$' --require thread_base_unit --timeout 600
+      run: python3 scripts/run_required_tests.py build --gtest --include '^thread_base_unit$' --require thread_base_unit --timeout 600

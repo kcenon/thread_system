@@ -46,7 +46,9 @@ branch is needed to validate a develop PR.
 
 Every main CI configure sets `BUILD_TESTING=ON`. `scripts/run_required_tests.py`
 checks that cache value and the required CTest entries before running CTest with
-`--no-tests=error`. The build matrix runs all discovered tests, including integration
+`--no-tests=error`. It also requires a nonempty GoogleTest XML report for every
+selected executable, catching filters that silently run zero test cases. UBSan
+uses `halt_on_error=1` so recoverable diagnostics cannot leave a green job. The build matrix runs all discovered tests, including integration
 and performance. Unix additionally requires all eleven currently enabled unit
 executables; the existing unit CMake platform policy supports Unix only, so Windows
 requires SmokeTests, IntegrationTests and PerformanceTests. Sanitizers require all
