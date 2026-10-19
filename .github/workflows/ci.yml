@@ -301,13 +301,14 @@ jobs:
         #   ~weak_ptr() -> __on_zero_shared_weak() -> operator delete. The actual
         #   synchronization is established via __weak_count_ acq_rel operations.
         # - ExecutorAdapterTest.{SubmitExecutesTask,SubmitMultipleTasks,ExecuteRunsJob,
-        #   ExecuteFailingJobReportsError,FactoryAdapterExecutesJob}: libc++ ThreadSanitizer
+        #   ExecuteFailingJobReportsError,FactoryAdapterExecutesJob} and
+        #   UnifiedSubmitTest.SubmitSingleWithVoidReturn (#759): libc++ ThreadSanitizer
         #   false positive around std::promise/std::future shared-state teardown. The
         #   worker thread releases the last shared_ptr<promise<void>> after fulfilling the
         #   future while the main thread is still inside future::get()/condition_variable
         #   internals. libc++ synchronizes this correctly, but TSan reports a spurious race
         #   on the promise object's destruction path.
-        TSAN_FILTER="*-*DataIntegrityDuringModeSwitch:*DataIntegrityWithMultipleProducersConsumers:*ConcurrentEnableDisable:*LinkedWithTimeoutParentCancel:ExecutorAdapterTest.SubmitExecutesTask:ExecutorAdapterTest.SubmitMultipleTasks:ExecutorAdapterTest.ExecuteRunsJob:ExecutorAdapterTest.ExecuteFailingJobReportsError:ExecutorAdapterTest.FactoryAdapterExecutesJob"
+        TSAN_FILTER="*-*DataIntegrityDuringModeSwitch:*DataIntegrityWithMultipleProducersConsumers:*ConcurrentEnableDisable:*LinkedWithTimeoutParentCancel:ExecutorAdapterTest.SubmitExecutesTask:ExecutorAdapterTest.SubmitMultipleTasks:ExecutorAdapterTest.ExecuteRunsJob:ExecutorAdapterTest.ExecuteFailingJobReportsError:ExecutorAdapterTest.FactoryAdapterExecutesJob:UnifiedSubmitTest.SubmitSingleWithVoidReturn"
 
         if [[ "${{ matrix.sanitizer }}" == "thread" ]]; then
           export GTEST_FILTER="$TSAN_FILTER"
