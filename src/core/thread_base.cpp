@@ -173,6 +173,10 @@ namespace kcenon::thread
 							break;
 						}
 
+						// Work may acquire application locks also held by stop() callers.
+						// Release the lifecycle lock before work and its error handling.
+						lock.unlock();
+
 						// Execute the actual work with exception protection
 						try
 						{

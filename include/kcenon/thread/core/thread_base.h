@@ -205,6 +205,9 @@ namespace kcenon::thread
 		 * 1. Signals the thread to stop (via @c stop_source_ or @c stop_requested_).
 		 * 2. Joins the thread, ensuring it has fully exited.
 		 * 3. Calls @c after_stop() for post-shutdown cleanup in derived classes.
+		 *
+		 * @note The caller must release any locks the worker needs to finish,
+		 * since this operation synchronously joins the worker.
 		 */
 		auto stop(void) -> common::VoidResult;
 
@@ -270,6 +273,7 @@ namespace kcenon::thread
 		 * Derived classes should override this method to implement the actual work the thread
 		 * needs to perform. This method is called repeatedly (in an internal loop) until the
 		 * thread is signaled to stop or @c should_continue_work() returns @c false.
+		 * It executes without the lifecycle mutex held.
 		 */
 		virtual auto do_work(void) -> common::VoidResult { return common::ok(); }
 
