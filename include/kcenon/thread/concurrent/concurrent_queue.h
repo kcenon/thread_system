@@ -140,6 +140,8 @@ public:
             // Account for the item before publishing it: a consumer may remove
             // it immediately after the release store (under a different lock).
             size_.fetch_add(1, std::memory_order_release);
+            // Publish the initialized payload to the acquire load in try_dequeue().
+            // The separate head/tail mutexes cannot provide this ordering.
             tail_->next.store(new_node, std::memory_order_release);
             tail_ = new_node;
         }
