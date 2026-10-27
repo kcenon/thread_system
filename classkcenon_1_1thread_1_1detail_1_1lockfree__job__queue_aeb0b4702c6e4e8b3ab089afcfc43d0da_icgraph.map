@@ -1,0 +1,5 @@
+<map id="kcenon::thread::detail::lockfree_job_queue::enqueue" name="kcenon::thread::detail::lockfree_job_queue::enqueue">
+<area shape="rect" id="Node000001" title="Enqueues a job into the queue (thread&#45;safe)" alt="" coords="219,5,384,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#a6df782bf457c67f3f67d66fa902c3f2c" title="Schedule a job (delegates to enqueue)" alt="" coords="5,5,171,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,35,171,35,171,30,205,30"/>
+</map>

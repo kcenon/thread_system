@@ -1,0 +1,17 @@
+<map id="include/kcenon/thread/diagnostics/job_info.h" name="include/kcenon/thread/diagnostics/job_info.h">
+<area shape="rect" id="Node000001" title="Job information snapshot for diagnostics and monitoring." alt="" coords="239,5,407,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,72,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="255,48,86,94,84,89,254,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,93,163,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="277,48,171,91,169,86,275,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="187,93,261,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="300,48,251,87,248,82,297,43"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="285,93,360,119"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="325,46,325,79,320,79,320,46"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="384,93,459,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="348,43,397,82,394,87,345,48"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="483,93,541,119"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="369,43,472,85,470,90,367,48"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="565,93,629,119"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="389,43,553,89,552,94,388,48"/>
+</map>

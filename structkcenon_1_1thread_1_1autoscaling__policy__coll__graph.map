@@ -1,0 +1,7 @@
+<map id="kcenon::thread::autoscaling_policy" name="kcenon::thread::autoscaling_policy">
+<area shape="rect" id="Node000001" title="Configuration for autoscaling behavior." alt="" coords="115,208,309,523"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1autoscaling__policy_1_1scale__up__config.html" title="Configuration for scale&#45;up triggers." alt="" coords="5,5,200,145"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,145,149,191,144,193,126,146"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1autoscaling__policy_1_1scale__down__config.html" title="Configuration for scale&#45;down triggers." alt="" coords="224,15,419,135"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="301,136,280,194,275,192,296,135"/>
+</map>

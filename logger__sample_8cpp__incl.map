@@ -1,0 +1,21 @@
+<map id="examples/logger_sample/logger_sample.cpp" name="examples/logger_sample/logger_sample.cpp">
+<area shape="rect" id="Node000001" title="Logger system sample with multi&#45;language Unicode output." alt="" coords="139,5,325,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,101,85,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,48,84,97,82,92,190,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="109,101,176,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="214,48,167,93,163,89,210,44"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="200,101,264,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="235,46,235,87,229,87,229,46"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="289,101,439,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="263,43,336,91,333,95,260,48"/>
+<area shape="rect" id="Node000006" href="$include_2kcenon_2thread_2utils_2formatter_8h.html" title="Generic formatter for enum types using user&#45;provided converter functors." alt="" coords="464,93,611,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="300,43,458,87,457,92,298,48"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="365,181,432,207"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="505,136,432,177,430,172,503,131"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="456,181,515,207"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="527,135,503,171,498,168,523,132"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="539,181,637,207"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="552,132,575,168,571,171,547,135"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="661,181,753,207"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="579,131,670,173,668,178,577,136"/>
+</map>

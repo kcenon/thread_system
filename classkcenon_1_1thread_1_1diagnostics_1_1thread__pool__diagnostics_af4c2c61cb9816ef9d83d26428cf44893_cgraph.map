@@ -1,0 +1,9 @@
+<map id="kcenon::thread::diagnostics::thread_pool_diagnostics::check_worker_health" name="kcenon::thread::diagnostics::thread_pool_diagnostics::check_worker_health">
+<area shape="rect" id="Node000001" title="Checks worker component health." alt="" coords="5,62,207,117"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#a51dc6391d2b7be450f353b8d775bdc56" title="Get the current number of active (running) workers." alt="" coords="255,5,481,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,62,272,46,273,51,207,67"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__pool.html#a20210275a456e84078d611a8ad625d71" title="Get the number of idle workers." alt="" coords="263,69,473,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="207,87,249,87,249,92,207,92"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__pool.html#aa909fc61736d7362f1dfbad08bbe4f65" title="Check if the thread pool is currently running." alt="" coords="283,133,453,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="207,111,273,127,272,133,206,116"/>
+</map>

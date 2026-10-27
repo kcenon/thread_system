@@ -1,0 +1,7 @@
+<map id="kcenon::thread::make_exceptional_future" name="kcenon::thread::make_exceptional_future">
+<area shape="rect" id="Node000001" title="Create a future that is already ready with an exception." alt="" coords="5,37,168,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1pool__promise.html#a48cc3e62a0ffbc746638ecd25184fc1f" title="Get the associated future." alt="" coords="228,5,385,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,43,214,36,215,41,169,48"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1pool__promise.html#ac56aa1c931c18392c545b0bbe835a81b" title="Set an exception." alt="" coords="216,69,397,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="169,67,203,72,202,77,168,72"/>
+</map>

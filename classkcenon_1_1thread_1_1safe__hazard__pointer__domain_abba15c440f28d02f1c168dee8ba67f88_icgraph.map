@@ -1,0 +1,7 @@
+<map id="kcenon::thread::safe_hazard_pointer_domain::release" name="kcenon::thread::safe_hazard_pointer_domain::release">
+<area shape="rect" id="Node000001" title="Release a hazard pointer record." alt="" coords="244,34,427,89"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__guard.html#aa7651ad418f775df8ff21b3fc9a98c47" title=" " alt="" coords="5,5,196,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,48,196,43,197,37,231,43"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__guard.html#a1391bd1677c2d286eba54c581ac63619" title="Destructor &#45; releases the record." alt="" coords="19,70,183,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="231,80,183,87,182,82,230,75"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="kcenon::thread::atomic_shared_ptr::store" name="kcenon::thread::atomic_shared_ptr::store">
+<area shape="rect" id="Node000001" title="Atomically store a new value." alt="" coords="225,133,397,173"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1atomic__shared__ptr.html#ac2864743ffb5a17d85f5c5861961fcc8" title="Move assignment." alt="" coords="5,5,177,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="274,127,229,93,176,60,151,48,153,43,179,55,232,88,277,122"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1atomic__shared__ptr.html#a3aceed5283b1274e50f64e7eb1358d8d" title="Copy assignment &#45; atomically copies the shared_ptr." alt="" coords="5,69,177,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="228,132,160,112,161,107,230,127"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1atomic__shared__ptr.html#a0801140b741adf98a97172893c315ccc" title="Assign from shared_ptr." alt="" coords="5,133,177,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="211,156,177,156,177,151,211,151"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1atomic__shared__ptr.html#a12a607783fdcdca19e095f7ade0c8c22" title="Reset to nullptr." alt="" coords="5,197,177,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="230,180,161,200,160,195,228,175"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1atomic__shared__ptr.html#a09368c604778bde260c10cb7d72bbea1" title="Reset to new value." alt="" coords="5,261,177,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="277,184,232,218,179,252,153,264,151,259,176,247,229,214,274,180"/>
+</map>

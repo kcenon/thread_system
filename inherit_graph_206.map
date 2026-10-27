@@ -1,0 +1,31 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,465,117,490"/>
+<area shape="rect" id="Node000001" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1job__types_01_4.html" title="Specialization of std::formatter for job_types using narrow strings." alt="" coords="193,5,367,45"/>
+<area shape="poly" id="edge72_Node000000_Node000001" title=" " alt="" coords="63,451,75,362,96,244,125,131,143,86,163,55,191,37,194,41,167,59,148,89,130,132,101,245,80,363,68,451"/>
+<area shape="rect" id="Node000002" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1job__types_00_01wchar__t_01_4.html" title="Specialization of std::formatter for job_types using wide strings." alt="" coords="171,69,389,109"/>
+<area shape="poly" id="edge73_Node000000_Node000002" title=" " alt="" coords="59,451,63,384,76,296,89,248,108,202,132,158,163,119,179,107,182,111,167,123,136,161,112,204,94,250,81,297,68,385,65,451"/>
+<area shape="rect" id="Node000003" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_01_4.html" title="Specialization of std::formatter for kcenon::thread::thread_conditions." alt="" coords="175,133,385,173"/>
+<area shape="poly" id="edge74_Node000000_Node000003" title=" " alt="" coords="61,451,68,395,85,324,98,286,115,248,137,214,164,183,180,171,183,176,167,187,141,217,120,251,103,288,90,325,73,396,67,451"/>
+<area shape="rect" id="Node000004" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_00_01wchar__t_01_4.html" title="Specialization of std::formatter for wide&#45;character kcenon::thread::thread_conditions." alt="" coords="180,198,380,253"/>
+<area shape="poly" id="edge75_Node000000_Node000004" title=" " alt="" coords="66,450,78,410,97,360,125,308,164,263,181,251,184,255,167,267,130,311,102,362,83,411,71,452"/>
+<area shape="rect" id="Node000005" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_01_4.html" title="Specialization of std::formatter for kcenon::thread::thread_pool." alt="" coords="193,277,367,317"/>
+<area shape="poly" id="edge76_Node000000_Node000005" title=" " alt="" coords="71,450,106,389,132,355,164,327,191,313,193,317,167,332,136,359,111,392,76,453"/>
+<area shape="rect" id="Node000006" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_00_01wchar__t_01_4.html" title="Specialization of std::formatter for wide&#45;character kcenon::thread::thread_pool." alt="" coords="193,342,367,397"/>
+<area shape="poly" id="edge77_Node000000_Node000006" title=" " alt="" coords="89,454,124,430,164,407,192,394,195,399,167,412,127,435,92,459"/>
+<area shape="rect" id="Node000007" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_01_4.html" title="Specialization of std::formatter for kcenon::thread::thread_worker." alt="" coords="186,421,374,461"/>
+<area shape="poly" id="edge78_Node000000_Node000007" title=" " alt="" coords="131,463,186,454,186,459,132,469"/>
+<area shape="rect" id="Node000008" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_00_01wchar__t_01_4.html" title="Specialization of std::formatter for wide&#45;character kcenon::thread::thread_worker." alt="" coords="191,486,369,541"/>
+<area shape="poly" id="edge79_Node000000_Node000008" title=" " alt="" coords="132,486,191,496,191,501,131,491"/>
+<area shape="rect" id="Node000009" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__pool__t_3_01job__type_01_4_01_4.html" title="Specialization of std::formatter for typed_thread_pool_t&lt;job_type&gt;." alt="" coords="193,565,367,619"/>
+<area shape="poly" id="edge80_Node000000_Node000009" title=" " alt="" coords="90,497,125,524,167,550,193,562,191,567,164,554,122,528,87,501"/>
+<area shape="rect" id="Node000010" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__pool__t_3_01job__type_01_4_00_01wchar__t_01_4.html" title="Specialization of std::formatter for wide&#45;character typed_thread_pool_t&lt;job_type&gt;." alt="" coords="165,643,395,698"/>
+<area shape="poly" id="edge81_Node000000_Node000010" title=" " alt="" coords="76,501,111,565,136,599,167,629,187,641,184,646,164,633,132,602,106,568,71,504"/>
+<area shape="rect" id="Node000011" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html" title="Specialization of std::formatter for typed_thread_worker_t&lt;job_type&gt;." alt="" coords="187,722,373,777"/>
+<area shape="poly" id="edge82_Node000000_Node000011" title=" " alt="" coords="70,503,81,548,99,602,128,659,146,684,167,707,188,722,185,727,164,711,142,688,123,661,94,604,76,549,65,505"/>
+<area shape="rect" id="Node000012" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_00_01wchar__t_01_4.html" title="Specialization of std::formatter for wide&#45;character typed_thread_worker_t&lt;job_type&gt;." alt="" coords="193,801,367,871"/>
+<area shape="poly" id="edge83_Node000000_Node000012" title=" " alt="" coords="67,503,74,561,90,636,103,676,120,715,141,753,167,786,194,807,191,811,163,790,137,756,115,718,98,678,85,637,69,562,62,504"/>
+<area shape="rect" id="Node000013" href="$structstd_1_1formatter_3_01test__priority_01_4.html" title="Specialization of std::formatter for test_priority. Enables formatting of test_priority enum values a..." alt="" coords="204,895,356,935"/>
+<area shape="poly" id="edge84_Node000000_Node000013" title=" " alt="" coords="69,504,81,589,102,702,131,811,148,853,167,881,184,894,205,903,203,908,182,899,163,884,144,855,126,812,97,704,76,590,63,504"/>
+<area shape="rect" id="Node000014" href="$structstd_1_1formatter_3_01test__priority_00_01wchar__t_01_4.html" title="Specialization of std::formatter for wide&#45;character test_priority. Allows test_priority enum values t..." alt="" coords="204,959,356,999"/>
+<area shape="poly" id="edge85_Node000000_Node000014" title=" " alt="" coords="68,503,78,600,98,733,111,800,127,861,146,911,167,945,185,958,205,967,203,972,182,963,163,948,141,914,122,863,106,802,92,734,73,601,62,504"/>
+</map>

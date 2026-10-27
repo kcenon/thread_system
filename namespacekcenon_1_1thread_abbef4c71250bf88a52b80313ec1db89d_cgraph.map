@@ -1,0 +1,15 @@
+<map id="kcenon::thread::safe_retire_hazard" name="kcenon::thread::safe_retire_hazard">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,53,160,93"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a489ed9f947f27820791f237e1ed3576f" title="Get singleton instance." alt="" coords="208,5,391,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,56,194,49,195,55,161,61"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a5dbea55217b9dbb8bf8dfe167e548ca7" title="Retire a pointer for later reclamation." alt="" coords="208,84,391,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="161,84,195,90,194,95,160,89"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a4757c51c9a4bd33934e5a928df10b902" title="Collect reclaimable objects." alt="" coords="439,44,621,99"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="390,93,425,87,426,92,391,98"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#ae53dcb6a4fe401fba69359eeca5fc910" title="Get adaptive threshold based on active thread count." alt="" coords="439,123,621,177"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="391,124,426,130,425,135,390,129"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#affee714bf1ce5f368c1f3d77fb9fe611" title="Collect reclaimable objects (internal, lock held)" alt="" coords="669,44,852,99"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="621,69,656,69,656,74,621,74"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html#ae368cdbfdf4ea5e527bbf7432ee53f58" title="Get protected pointer at slot." alt="" coords="900,51,1103,91"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="852,69,886,69,886,74,852,74"/>
+</map>

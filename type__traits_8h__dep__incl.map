@@ -1,0 +1,7 @@
+<map id="include/kcenon/thread/impl/typed_pool/type_traits.h" name="include/kcenon/thread/impl/typed_pool/type_traits.h">
+<area shape="rect" id="Node000001" title="Type traits for typed_thread_pool module." alt="" coords="123,5,290,60"/>
+<area shape="rect" id="Node000002" href="$template__helpers_8h.html" title="Template metaprogramming utilities for typed_thread_pool module." alt="" coords="5,108,200,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,72,132,110,128,106,168,68"/>
+<area shape="rect" id="Node000003" href="$typed__job__interface_8h.html" title="Interface definitions for typed jobs." alt="" coords="225,108,397,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="246,68,285,106,282,110,242,72"/>
+</map>

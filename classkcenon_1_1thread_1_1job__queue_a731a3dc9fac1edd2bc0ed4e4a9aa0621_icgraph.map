@@ -1,0 +1,8 @@
+<map id="kcenon::thread::job_queue::size" name="kcenon::thread::job_queue::size">
+<area shape="rect" id="Node000001" title="Returns the current number of jobs in the queue." alt="" coords="541,35,688,75"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#af9a538f198ebfa76426b8e4cb8a78923" title="Returns the current pressure as a ratio." alt="" coords="268,5,493,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="527,46,493,42,494,37,528,41"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#a5b87f40b7ec00c87c8a909737149eb1d" title="Returns string representation including backpressure state." alt="" coords="5,35,220,75"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="528,59,493,60,268,60,220,59,220,54,268,55,493,55,528,54"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="255,42,221,46,220,40,254,36"/>
+</map>

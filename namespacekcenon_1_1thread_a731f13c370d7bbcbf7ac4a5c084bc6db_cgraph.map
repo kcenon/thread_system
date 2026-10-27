@@ -1,0 +1,7 @@
+<map id="kcenon::thread::make_ready_future" name="kcenon::thread::make_ready_future">
+<area shape="rect" id="Node000001" title="Create a future that is already ready with void." alt="" coords="5,37,168,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1pool__promise.html#a48cc3e62a0ffbc746638ecd25184fc1f" title="Get the associated future." alt="" coords="216,5,373,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,42,202,37,203,42,169,47"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1pool__promise.html#ae8a107b57513e7bc8ea5fb5a55d20bc5" title="Set the value." alt="" coords="217,69,372,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="169,67,204,73,203,78,168,73"/>
+</map>

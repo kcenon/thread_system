@@ -1,0 +1,19 @@
+<map id="kcenon::thread::metrics::SlidingWindowCounter::current_time_ms" name="kcenon::thread::metrics::SlidingWindowCounter::current_time_ms">
+<area shape="rect" id="Node000001" title="Get current time in milliseconds since epoch." alt="" coords="1019,84,1196,139"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a63752d36dead7bb560dbf77f1018d8b4" title="Get the current bucket index based on current time." alt="" coords="793,5,971,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1014,82,960,63,962,58,1016,77"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a7380ee4f04fdcff9a93790d3cb4ef2fc" title="Increment the counter." alt="" coords="793,84,971,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1005,114,971,114,971,109,1005,109"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a8e32ae89603462b68593811e567c136e" title="Get the total count within the current window." alt="" coords="793,163,971,217"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="1016,146,962,165,960,160,1014,141"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a55561eeac969ea283f09a06a93392d4a" title="Record task execution completion." alt="" coords="531,84,745,139"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="780,114,745,114,745,109,780,109"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#ac08aff2056171fdfaa680e27f41a48f3" title="Get the current rate per second." alt="" coords="549,163,727,217"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="779,193,727,193,727,187,779,187"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a58a052dbb7b54f397dc1d6800c9ede66" title="Get a comprehensive snapshot of all metrics." alt="" coords="268,163,483,217"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="535,193,483,193,483,187,535,187"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a955158e389ad1adbe7ac30c30efb637e" title="Export metrics as JSON string." alt="" coords="5,123,220,177"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="254,174,220,169,221,164,255,169"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a6fe360a58406f871be147c2e96e8214e" title="Export metrics in Prometheus/OpenMetrics format." alt="" coords="5,201,220,256"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="255,210,221,216,220,210,254,205"/>
+</map>

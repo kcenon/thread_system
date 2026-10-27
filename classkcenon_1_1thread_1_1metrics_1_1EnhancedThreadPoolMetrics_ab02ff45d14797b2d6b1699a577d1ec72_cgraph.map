@@ -1,0 +1,9 @@
+<map id="kcenon::thread::metrics::EnhancedThreadPoolMetrics::reset" name="kcenon::thread::metrics::EnhancedThreadPoolMetrics::reset">
+<area shape="rect" id="Node000001" title="Reset all metrics to initial state." alt="" coords="5,62,220,117"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#ab0a98892dab94e3655d99cb2eea3ff3a" title="Reset all buckets and counters to zero." alt="" coords="268,5,459,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,59,271,46,272,51,221,64"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#af2c754415f9f1692949252f6fd7547e8" title="Reset all metrics to their initial state." alt="" coords="275,69,451,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="220,87,262,87,262,92,220,92"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a298c39b22baf415e893c9630a3bb84a4" title="Reset the counter." alt="" coords="275,134,452,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="209,114,262,129,260,135,208,119"/>
+</map>

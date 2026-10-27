@@ -1,0 +1,7 @@
+<map id="kcenon::thread::diagnostics::thread_info::success_rate" name="kcenon::thread::diagnostics::thread_info::success_rate">
+<area shape="rect" id="Node000001" title="Calculates the success rate." alt="" coords="255,37,456,77"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1diagnostics_1_1thread__info.html#ad273cfe9d261a0c8bf8e2559babad6ad" title="Converts the thread info to a JSON string." alt="" coords="5,5,207,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="241,45,207,41,207,36,241,40"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1diagnostics_1_1thread__info.html#a38de281d3116c6f70e3ee71b710d8f1f" title="Converts the thread info to a human&#45;readable string." alt="" coords="5,69,207,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="241,75,207,79,207,74,241,69"/>
+</map>

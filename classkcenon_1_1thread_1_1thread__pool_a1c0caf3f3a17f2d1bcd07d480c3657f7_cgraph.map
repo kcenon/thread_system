@@ -1,0 +1,13 @@
+<map id="kcenon::thread::thread_pool::report_metrics" name="kcenon::thread::thread_pool::report_metrics">
+<area shape="rect" id="Node000001" title="Collect and report current thread pool metrics." alt="" coords="5,101,175,141"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#a20210275a456e84078d611a8ad625d71" title="Get the number of idle workers." alt="" coords="223,5,433,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,99,222,55,243,47,244,52,224,60,130,104"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__pool.html#ad334280444cef62a9c1b2d8379ab329b" title="Access aggregated runtime metrics (read&#45;only reference)." alt="" coords="243,69,413,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,107,229,100,230,105,175,113"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__context.html#a65227b5642bfa1da3e111a87ebec47f4" title="Get the monitoring service." alt="" coords="243,133,413,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="175,130,230,137,229,143,175,135"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__context.html#aa842f208bd1d141b205177510d9826ce" title="Update thread pool metrics if monitoring is available." alt="" coords="238,198,418,253"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="132,139,224,183,242,190,240,195,222,188,129,144"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1thread__logger.html#aa82a04c11d0645cbd22bb8f0c5a58b57" title="Check if shutdown is in progress." alt="" coords="481,205,672,245"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="418,223,468,223,468,228,418,228"/>
+</map>

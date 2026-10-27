@@ -1,0 +1,8 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,60,38"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#aec5fe973e44efa3d1040ff7bec85f822" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="283,5,437,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,23,269,23,269,28,60,28"/>
+<area shape="rect" id="Node000003" href="$logger__sample_8cpp.html#a8d986ee76ac0cece6635815924ac089f" title=" " alt="" coords="108,38,235,63"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="61,28,95,34,94,39,60,33"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="235,40,269,35,269,40,235,45"/>
+</map>

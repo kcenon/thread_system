@@ -1,0 +1,17 @@
+<map id="kcenon::thread::queue_capabilities_interface::get_capabilities" name="kcenon::thread::queue_capabilities_interface::get_capabilities">
+<area shape="rect" id="Node000001" title="Get capabilities of this queue implementation." alt="" coords="236,241,405,296"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html#aebeb9dc9090aef85b17a7d784d7e8086" title="Check if empty() check is atomic." alt="" coords="12,5,181,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="299,230,254,152,223,110,186,73,170,62,173,58,190,69,227,107,259,149,304,228"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html#a74c2d5245a3792facfdced8596c33b5e" title="Check if size() returns exact values." alt="" coords="12,84,181,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="283,233,239,192,187,152,167,141,170,137,189,148,242,188,286,229"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html#a98e0dada6f32f5c4dcdac009e40b9d86" title="Check if this is a lock&#45;free implementation." alt="" coords="12,163,181,217"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="228,239,174,220,176,215,230,234"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html#adfae65d45761328dd31a86918688cec5" title="Check if this is a wait&#45;free implementation." alt="" coords="12,241,181,296"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="222,271,181,271,181,266,222,266"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html#a6b1aa81f415d066a779bbe81dc11bbe4" title="Check if batch operations are supported." alt="" coords="12,320,181,375"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="230,303,176,322,174,317,228,298"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html#ad68e9cfb1f6bec6321f3b5da55ba5d97" title="Check if blocking wait is supported." alt="" coords="5,399,188,453"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="286,308,242,349,189,388,167,401,165,396,187,384,238,344,282,304"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html#aeef2372eba94526cf6c313315a193efb" title="Check if stop signaling is supported." alt="" coords="12,477,181,532"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="304,310,258,388,227,430,190,467,172,479,168,475,186,463,223,426,254,385,299,307"/>
+</map>

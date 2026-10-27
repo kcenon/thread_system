@@ -1,0 +1,5 @@
+<map id="kcenon::thread::thread_context::update_system_metrics" name="kcenon::thread::thread_context::update_system_metrics">
+<area shape="rect" id="Node000001" title="Update system metrics if monitoring is available." alt="" coords="5,5,192,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__logger.html#aa82a04c11d0645cbd22bb8f0c5a58b57" title="Check if shutdown is in progress." alt="" coords="240,13,431,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,30,226,30,226,35,192,35"/>
+</map>

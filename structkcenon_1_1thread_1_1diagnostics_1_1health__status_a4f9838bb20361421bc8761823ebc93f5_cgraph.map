@@ -1,0 +1,5 @@
+<map id="kcenon::thread::diagnostics::health_status::http_status_code" name="kcenon::thread::diagnostics::health_status::http_status_code">
+<area shape="rect" id="Node000001" title="Gets HTTP status code for this health status." alt="" coords="5,5,243,45"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread_1_1diagnostics.html#abb38dc1e957b302cdf23aae6235343a5" title="Gets HTTP status code for health state." alt="" coords="291,5,493,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,23,277,23,277,28,243,28"/>
+</map>

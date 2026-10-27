@@ -1,0 +1,11 @@
+<map id="kcenon::thread::diagnostics::job_info::to_json" name="kcenon::thread::diagnostics::job_info::to_json">
+<area shape="rect" id="Node000001" title="Converts the job info to a JSON string." alt="" coords="5,101,207,141"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1diagnostics_1_1job__info.html#ae27c2e52062acfd48029b03308921272" title="Converts execution_time to milliseconds." alt="" coords="255,5,472,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,99,254,55,276,47,278,52,256,60,151,104"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread_1_1diagnostics.html#af185226c77a876dc7c38aff3f5255927" title="Converts job_status to human&#45;readable string." alt="" coords="263,69,464,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="207,106,249,101,249,106,207,111"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1diagnostics_1_1job__info.html#aaad637c4aad7c6f10cf58932c66e223c" title="Calculates total latency (wait + execution time)." alt="" coords="263,133,464,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="207,131,249,137,249,142,207,136"/>
+<area shape="rect" id="Node000005" href="$structkcenon_1_1thread_1_1diagnostics_1_1job__info.html#a7e9f893eb3a8f563281030ac1303e5bb" title="Converts wait_time to milliseconds." alt="" coords="263,197,464,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="151,139,256,183,278,191,276,196,254,188,149,144"/>
+</map>

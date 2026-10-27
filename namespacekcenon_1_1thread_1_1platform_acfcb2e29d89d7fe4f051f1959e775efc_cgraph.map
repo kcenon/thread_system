@@ -1,0 +1,17 @@
+<map id="kcenon::thread::platform::get_system_info" name="kcenon::thread::platform::get_system_info">
+<area shape="rect" id="Node000001" title="Get comprehensive system information." alt="" coords="5,197,188,237"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread_1_1platform.html#a6c1fe5d19521fe8698bea7c7f2f61dd0" title="Get current CPU architecture." alt="" coords="244,5,427,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,195,158,127,193,88,234,55,245,49,247,54,238,60,197,92,162,130,112,199"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread_1_1platform.html#a6bf8c0010ddf61c537eaf12783fa958b" title="Get logical core count." alt="" coords="244,69,427,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="120,195,171,157,235,119,250,112,253,117,237,124,174,162,124,199"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread_1_1platform.html#a80314bea8476205a5e081c5619e8e4a8" title="Get current operating system." alt="" coords="244,133,427,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="171,195,246,174,248,179,173,200"/>
+<area shape="rect" id="Node000005" href="$namespacekcenon_1_1thread_1_1platform.html#a7739538e624943815eac97de10e3b50e" title="Get physical core count." alt="" coords="240,197,431,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="188,215,226,215,226,220,188,220"/>
+<area shape="rect" id="Node000006" href="$namespacekcenon_1_1thread_1_1platform.html#a34c18d805153ada820f59d89c8add913" title="Check if system has efficiency cores (Apple Silicon)" alt="" coords="244,261,427,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="173,235,248,255,246,260,171,240"/>
+<area shape="rect" id="Node000007" href="$namespacekcenon_1_1thread_1_1platform.html#a85b189fe8b36dd9063223ca16fe03540" title="Check if running on ARM64 architecture." alt="" coords="244,325,427,365"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="124,235,174,273,237,311,253,318,250,323,235,316,171,278,120,239"/>
+<area shape="rect" id="Node000008" href="$namespacekcenon_1_1thread_1_1platform.html#a853357a3ab11bf8264c0ed9df6795e87" title="Check if running in container environment." alt="" coords="236,389,435,429"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="112,236,162,304,197,342,238,375,247,381,245,386,234,380,193,346,158,308,108,239"/>
+</map>

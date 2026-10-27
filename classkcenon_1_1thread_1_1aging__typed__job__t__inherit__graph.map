@@ -1,0 +1,9 @@
+<map id="kcenon::thread::aging_typed_job_t&lt; job_type &gt;" name="kcenon::thread::aging_typed_job_t&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title="A typed job with priority aging support." alt="" coords="9,669,192,989"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1aging__typed__job__t.html" title=" " alt="" coords="5,1052,196,1372"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="103,1003,103,1052,98,1052,98,1003"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1typed__job__t.html" title="Typed job template." alt="" coords="23,500,179,620"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,634,103,669,98,669,98,634"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="6,5,195,451"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,464,103,500,98,500,98,464"/>
+</map>

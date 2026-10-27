@@ -1,0 +1,5 @@
+<map id="kcenon::thread::enhanced_cancellation_token::unregister_callback" name="kcenon::thread::enhanced_cancellation_token::unregister_callback">
+<area shape="rect" id="Node000001" title="Unregisters a previously registered callback." alt="" coords="279,5,504,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1cancellation__callback__guard.html#a3d8caf206d3ccd664feb764a51c8fbc1" title="Destructor unregisters the callback." alt="" coords="5,5,231,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="265,35,231,35,231,30,265,30"/>
+</map>

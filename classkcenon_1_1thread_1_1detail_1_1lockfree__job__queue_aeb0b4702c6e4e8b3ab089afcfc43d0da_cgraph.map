@@ -1,0 +1,7 @@
+<map id="kcenon::thread::detail::lockfree_job_queue::enqueue" name="kcenon::thread::detail::lockfree_job_queue::enqueue">
+<area shape="rect" id="Node000001" title="Enqueues a job into the queue (thread&#45;safe)" alt="" coords="5,5,171,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__guard.html#a6a993bc8a8a2f110d66964a9fa8431dc" title="Protect a pointer." alt="" coords="219,13,389,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,30,205,30,205,35,171,35"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html#acf1c44aa138a473548e2a73bf107508d" title="Protect a pointer from reclamation." alt="" coords="437,5,612,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="390,30,423,30,423,35,390,35"/>
+</map>

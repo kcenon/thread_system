@@ -1,0 +1,7 @@
+<map id="kcenon::thread::policies::adaptive_sync_policy::get_capabilities" name="kcenon::thread::policies::adaptive_sync_policy::get_capabilities">
+<area shape="rect" id="Node000001" title="Queue capabilities (dynamic based on mode)" alt="" coords="5,45,183,100"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1policies_1_1lockfree__sync__policy.html#a448aebdc8c6637b064ddf08bf4185186" title="Queue capabilities for lock&#45;free sync policy." alt="" coords="233,5,411,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,54,219,48,220,53,184,60"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1policies_1_1mutex__sync__policy.html#ad8000281d7af6c830d26d695028a50d4" title="Queue capabilities for mutex sync policy." alt="" coords="231,84,413,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="184,85,218,91,217,96,183,90"/>
+</map>

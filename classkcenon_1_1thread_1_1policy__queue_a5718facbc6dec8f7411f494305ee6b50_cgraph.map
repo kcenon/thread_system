@@ -1,0 +1,7 @@
+<map id="kcenon::thread::policy_queue::schedule" name="kcenon::thread::policy_queue::schedule">
+<area shape="rect" id="Node000001" title="Schedule a job (delegates to enqueue)" alt="" coords="5,5,172,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1policy__queue.html#acc3b92a88a9d9d24452bf4da0b5a6013" title="Enqueue a job into the queue." alt="" coords="220,5,387,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="173,23,206,23,206,28,173,28"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1policy__queue.html#ae9a02b139259b94d366c7c9807df1683" title="Handle overflow based on overflow policy." alt="" coords="435,5,619,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="387,23,421,23,421,28,387,28"/>
+</map>

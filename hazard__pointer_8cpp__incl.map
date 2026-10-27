@@ -1,0 +1,22 @@
+<map id="src/core/hazard_pointer.cpp" name="src/core/hazard_pointer.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="205,5,405,31"/>
+<area shape="rect" id="Node000002" href="$hazard__pointer_8h.html" title="Hazard pointer implementation for lock&#45;free memory reclamation." alt="" coords="168,79,315,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="298,33,267,70,263,66,294,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,91,192"/>
+<area shape="poly" id="edge8_Node000001_Node000003" title=" " alt="" coords="266,33,213,53,157,81,108,119,69,158,66,154,105,115,155,76,211,48,265,28"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="339,86,403,111"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="317,29,354,73,350,77,313,33"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="427,86,514,111"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="331,28,435,78,433,83,328,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="196,121,90,164,88,159,194,116"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="115,167,181,192"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="220,121,174,160,171,155,217,117"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="206,167,277,192"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="244,119,244,153,239,153,239,119"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="301,167,387,192"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="268,117,320,156,316,160,265,121"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="412,167,489,192"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="292,116,408,159,406,164,291,121"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="514,167,577,192"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="315,116,501,164,500,169,314,121"/>
+</map>

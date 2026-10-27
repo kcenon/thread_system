@@ -1,0 +1,12 @@
+<map id="kcenon::thread::metrics::ThreadPoolMetrics" name="kcenon::thread::metrics::ThreadPoolMetrics">
+<area shape="rect" id="Node000001" title="Lightweight metrics container shared between thread_pool and workers." alt="" coords="14,932,185,1112"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html" title="Abstract base class for thread pool metrics." alt="" coords="230,463,398,883"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,865,214,884,178,933,174,930,209,881,221,862"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,261,204,327"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="105,327,98,463,95,673,98,883,99,916,93,916,93,883,90,673,93,463,100,327"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="128,325,214,461,225,482,220,484,209,464,124,328"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="42,133,167,199"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="107,213,107,261,102,261,102,213"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="93,5,116,71"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="107,71,107,117,102,117,102,71"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="kcenon::thread::pool_promise::set_value" name="kcenon::thread::pool_promise::set_value">
+<area shape="rect" id="Node000001" title="Set the value." alt="" coords="216,37,371,77"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread.html#a731f13c370d7bbcbf7ac4a5c084bc6db" title="Create a future that is already ready with void." alt="" coords="5,5,168,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,46,168,41,168,35,203,41"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread.html#a1b5c9939896a2dcbc04564a08b82f850" title="Create a future that is already ready with a value." alt="" coords="5,69,168,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,74,168,79,168,74,202,69"/>
+</map>

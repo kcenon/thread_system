@@ -1,0 +1,18 @@
+<map id="include/kcenon/thread/queue/adaptive_job_queue.h" name="include/kcenon/thread/queue/adaptive_job_queue.h">
+<area shape="rect" id="Node000001" title="Adaptive queue that auto&#45;switches between mutex and lock&#45;free modes." alt="" coords="441,5,655,45"/>
+<area shape="rect" id="Node000002" href="$adaptive__queue__sample_8cpp.html" title="Adaptive job queue sample comparing policies and demonstrating mode switching." alt="" coords="5,93,200,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="436,51,213,96,201,99,200,93,211,91,435,45"/>
+<area shape="rect" id="Node000003" href="$queue__capabilities__sample_8cpp.html" title="Runtime queue capability introspection and adaptive queue selection." alt="" coords="225,93,437,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="492,53,393,96,391,91,490,48"/>
+<area shape="rect" id="Node000004" href="$queue__factory_8h.html" title="Factory for creating queue instances based on configuration." alt="" coords="461,101,635,141"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="551,59,551,101,545,101,545,59"/>
+<area shape="rect" id="Node000006" href="$queue_8cppm.html" title="C++20 module partition for thread_system queue implementations." alt="" coords="627,211,813,236"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="597,50,624,69,649,92,673,122,693,156,718,209,713,212,688,158,668,125,645,95,621,73,594,55"/>
+<area shape="rect" id="Node000008" href="$adaptive__job__queue_8cpp.html" title=" " alt="" coords="709,101,856,141"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="609,48,736,98,734,103,607,53"/>
+<area shape="rect" id="Node000005" href="$queue__factory__sample_8cpp.html" title="Queue factory for requirements&#45;based and compile&#45;time queue selection." alt="" coords="190,196,373,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="486,148,352,198,350,193,484,143"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="593,145,701,208,699,213,591,150"/>
+<area shape="rect" id="Node000007" href="$queue__factory_8cpp.html" title=" " alt="" coords="397,211,603,236"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="535,154,508,211,503,209,531,152"/>
+</map>

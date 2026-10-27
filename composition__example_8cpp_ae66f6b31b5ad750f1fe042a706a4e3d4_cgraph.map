@@ -1,0 +1,14 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,76,60,101"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1service__container.html#a4271562a2c462c29645e5173d4d599be" title="Clear all registered services." alt="" coords="348,7,523,47"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="43,74,69,48,87,35,107,25,164,10,224,4,282,4,335,8,334,13,281,9,224,9,165,15,109,30,90,39,73,52,46,78"/>
+<area shape="rect" id="Node000003" href="$composition__example_8cpp.html#a2cc626209026644ec679ff229ca36a06" title="Demonstrate composition&#45;based design." alt="" coords="108,104,300,129"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="61,91,113,99,112,104,60,96"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1service__container.html#a8be7271c31c2b1efed81c5bcb56c5502" title="Get the global service container instance." alt="" coords="348,97,523,137"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="48,100,75,122,109,140,171,152,235,154,297,148,353,137,354,143,298,153,236,159,171,158,107,145,72,126,45,104"/>
+<area shape="rect" id="Node000005" href="$composition__example_8cpp.html#a353f73822e6878864dca0d8706ad075d" title="Demonstrate using thread pool without any services." alt="" coords="121,39,287,79"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="60,82,107,73,108,79,61,87"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="300,114,334,114,334,119,300,119"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="288,45,334,39,335,44,288,51"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="286,77,341,91,340,96,285,82"/>
+</map>

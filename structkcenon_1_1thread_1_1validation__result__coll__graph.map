@@ -1,0 +1,13 @@
+<map id="kcenon::thread::validation_result" name="kcenon::thread::validation_result">
+<area shape="rect" id="Node000001" title="Configuration validation result." alt="" coords="40,419,224,519"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="43,276,221,341"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,341,135,402,129,402,129,341"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="31,148,110,213"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="76,213,86,251,92,261,87,264,82,253,71,214"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,5,136,85"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="73,99,73,148,68,148,68,99"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="134,148,255,213"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="177,227,164,253,151,277,147,275,159,251,172,225"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="183,13,206,78"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="197,78,197,131,192,131,192,78"/>
+</map>

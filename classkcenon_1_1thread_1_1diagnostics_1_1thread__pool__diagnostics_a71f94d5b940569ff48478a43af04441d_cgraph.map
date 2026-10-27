@@ -1,0 +1,19 @@
+<map id="kcenon::thread::diagnostics::thread_pool_diagnostics::to_string" name="kcenon::thread::diagnostics::thread_pool_diagnostics::to_string">
+<area shape="rect" id="Node000001" title="Exports diagnostics as formatted string." alt="" coords="5,141,207,196"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a69b90d07833c496c1b40d9b8598a61af" title="Gets formatted thread dump (human&#45;readable)." alt="" coords="255,141,456,196"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,166,241,166,241,171,207,171"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#ae150a464d6ff6bad18ec9f9900ab2c84" title="Gets current state of all worker threads." alt="" coords="517,5,718,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="392,139,443,104,503,70,519,63,521,68,505,75,446,109,395,143"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__pool.html#a51dc6391d2b7be450f353b8d775bdc56" title="Get the current number of active (running) workers." alt="" coords="504,85,731,125"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="456,142,521,125,522,131,457,147"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1thread__pool.html#a20210275a456e84078d611a8ad625d71" title="Get the number of idle workers." alt="" coords="512,149,723,189"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="456,166,498,166,498,171,456,171"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1thread__pool.html#a3548c068b3f0f369dd09af0df56383c0" title="Provides a string representation of this thread_pool." alt="" coords="533,213,702,253"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="457,191,522,207,521,212,456,196"/>
+<area shape="rect" id="Node000009" href="$namespacekcenon_1_1thread_1_1diagnostics.html#ab4a80f175e72ee0ed4cd46d54e3648f7" title="Converts worker_state to human&#45;readable string." alt="" coords="517,277,718,317"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="394,194,445,229,505,262,523,270,521,275,503,267,442,234,391,199"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__pool.html#aa68a68ac5ec911d075d10e0537cf43b3" title="Collects diagnostics information from all workers." alt="" coords="779,5,948,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="718,30,765,30,765,35,718,35"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#a8f00efcd854ecca1c3d3f8a29d81e580" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="781,213,945,253"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="702,230,767,230,767,235,702,235"/>
+</map>

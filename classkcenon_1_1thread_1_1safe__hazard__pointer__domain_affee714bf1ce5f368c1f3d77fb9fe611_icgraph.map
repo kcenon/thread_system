@@ -1,0 +1,17 @@
+<map id="kcenon::thread::safe_hazard_pointer_domain::collect_internal" name="kcenon::thread::safe_hazard_pointer_domain::collect_internal">
+<area shape="rect" id="Node000001" title="Collect reclaimable objects (internal, lock held)" alt="" coords="900,45,1083,100"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a4757c51c9a4bd33934e5a928df10b902" title="Collect reclaimable objects." alt="" coords="669,45,852,100"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="887,75,852,75,852,70,887,70"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1typed__safe__hazard__domain.html#abb8458562d1c6d84554d095f329d1ff1" title=" " alt="" coords="444,5,616,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="656,57,616,50,617,45,656,52"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a5dbea55217b9dbb8bf8dfe167e548ca7" title="Retire a pointer for later reclamation." alt="" coords="439,84,621,139"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="656,93,622,99,621,93,655,88"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#aa9a793d873420afd653f02a860e5cab4" title="Retire a node through hazard pointers, recycling via pool on reclamation." alt="" coords="225,47,391,101"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="424,96,390,90,391,85,425,91"/>
+<area shape="rect" id="Node000007" href="$namespacekcenon_1_1thread.html#abbef4c71250bf88a52b80313ec1db89d" title=" " alt="" coords="231,127,385,167"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="425,131,386,137,385,132,425,126"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#a0358cd30749f36d3f3e00570b20d46e0" title="Destructor." alt="" coords="9,44,174,99"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="212,75,174,75,174,70,212,70"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1typed__safe__hazard__domain.html#aa81f5a9cbeb6d72a8ed6e9cf78bd298e" title=" " alt="" coords="5,123,177,177"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="217,151,178,152,178,146,217,146"/>
+</map>

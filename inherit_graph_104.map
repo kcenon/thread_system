@@ -1,0 +1,27 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="5,226,152,251"/>
+<area shape="rect" id="Node000001" href="$classkcenon_1_1thread_1_1typed__job__t.html" title=" " alt="" coords="226,5,390,45"/>
+<area shape="poly" id="edge12_Node000000_Node000001" title=" " alt="" coords="88,212,104,177,128,135,160,92,198,55,224,41,227,45,202,59,164,95,133,137,109,179,92,214"/>
+<area shape="rect" id="Node000003" href="$classcancellable__long__job.html" title="A job that performs a long&#45;running task with periodic cancellation checks." alt="" coords="229,70,387,95"/>
+<area shape="poly" id="edge14_Node000000_Node000003" title=" " alt="" coords="93,213,136,157,165,129,199,104,227,92,229,97,201,109,169,133,140,161,97,216"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1callback__job.html" title="A specialized job class that encapsulates user&#45;defined callbacks." alt="" coords="204,119,412,145"/>
+<area shape="poly" id="edge15_Node000000_Node000004" title=" " alt="" coords="104,215,147,183,199,154,232,142,233,147,201,158,149,187,107,219"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1dag__job.html" title="A job with dependency support for DAG&#45;based scheduling." alt="" coords="219,169,397,194"/>
+<area shape="poly" id="edge16_Node000000_Node000005" title=" " alt="" coords="139,220,199,204,251,191,252,197,201,209,140,225"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1future__job.html" title="A job that wraps a callable and provides a future for its result." alt="" coords="225,219,391,259"/>
+<area shape="poly" id="edge17_Node000000_Node000006" title=" " alt="" coords="166,236,224,236,224,241,166,241"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1job__builder_1_1built__job.html" title="Internal job implementation created by the builder." alt="" coords="235,283,381,323"/>
+<area shape="poly" id="edge18_Node000000_Node000007" title=" " alt="" coords="139,253,236,280,235,285,138,258"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1protected__job.html" title="A job wrapper that integrates circuit breaker protection." alt="" coords="200,347,416,373"/>
+<area shape="poly" id="edge19_Node000000_Node000008" title=" " alt="" coords="104,259,147,297,201,332,235,345,233,350,199,337,143,301,100,263"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1typed__job__t.html" title="Typed job template." alt="" coords="226,397,390,437"/>
+<area shape="poly" id="edge20_Node000000_Node000009" title=" " alt="" coords="96,262,139,322,168,354,201,382,227,395,224,400,199,386,164,358,135,326,92,265"/>
+<area shape="rect" id="Node000012" href="$classnon__cancellable__job.html" title="A job that DOES NOT check for cancellation (anti&#45;pattern)." alt="" coords="231,462,385,487"/>
+<area shape="poly" id="edge23_Node000000_Node000012" title=" " alt="" coords="90,264,104,305,127,355,160,405,179,428,201,447,232,462,229,467,199,452,176,431,155,408,123,357,99,307,85,266"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1aging__typed__job__t.html" title=" " alt="" coords="464,5,663,45"/>
+<area shape="poly" id="edge13_Node000001_Node000002" title=" " alt="" coords="404,23,464,23,464,28,404,28"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1aging__typed__job__t.html" title="A typed job with priority aging support." alt="" coords="468,365,659,405"/>
+<area shape="poly" id="edge21_Node000009_Node000010" title=" " alt="" coords="404,403,467,395,468,400,404,408"/>
+<area shape="rect" id="Node000011" href="$classkcenon_1_1thread_1_1callback__typed__job__t.html" title="Callback&#45;based typed job template." alt="" coords="468,429,659,469"/>
+<area shape="poly" id="edge22_Node000009_Node000011" title=" " alt="" coords="404,427,468,435,467,440,404,432"/>
+</map>

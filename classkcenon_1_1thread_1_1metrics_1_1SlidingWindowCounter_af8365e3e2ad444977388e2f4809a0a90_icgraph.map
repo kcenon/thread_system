@@ -1,0 +1,7 @@
+<map id="kcenon::thread::metrics::SlidingWindowCounter::advance_bucket" name="kcenon::thread::metrics::SlidingWindowCounter::advance_bucket">
+<area shape="rect" id="Node000001" title="Advance bucket to current time period if needed." alt="" coords="493,5,671,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a7380ee4f04fdcff9a93790d3cb4ef2fc" title="Increment the counter." alt="" coords="268,5,445,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="480,35,445,35,445,30,480,30"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a55561eeac969ea283f09a06a93392d4a" title="Record task execution completion." alt="" coords="5,5,220,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="254,35,220,35,220,30,254,30"/>
+</map>

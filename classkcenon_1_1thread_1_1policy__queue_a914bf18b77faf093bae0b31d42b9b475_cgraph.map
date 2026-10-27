@@ -1,0 +1,5 @@
+<map id="kcenon::thread::policy_queue::get_next_job" name="kcenon::thread::policy_queue::get_next_job">
+<area shape="rect" id="Node000001" title="Get next job (delegates to dequeue)" alt="" coords="5,5,172,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1policy__queue.html#a408f53148ce37957be952105f71db1b5" title="Dequeue a job (blocking if sync policy supports it)" alt="" coords="220,5,387,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="173,23,206,23,206,28,173,28"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="policy_comparison_example" name="policy_comparison_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,77,213,102"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a575742ca11fe9522d2da36c5dcb0e206" title="Dequeues a job from the current active queue." alt="" coords="261,5,445,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,74,262,46,264,52,160,79"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1job.html#abb0aab22ba1692b557b8138afcd99894" title="The core task execution method to be overridden by derived classes." alt="" coords="280,69,427,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="213,87,266,87,266,92,213,92"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a586cab78d0bb73cac4c7fff9c644cceb" title="Enqueues a job into the current active queue." alt="" coords="261,133,445,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="160,100,264,127,262,132,158,105"/>
+</map>

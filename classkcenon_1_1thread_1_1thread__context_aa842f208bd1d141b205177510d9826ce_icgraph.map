@@ -1,0 +1,5 @@
+<map id="kcenon::thread::thread_context::update_thread_pool_metrics" name="kcenon::thread::thread_context::update_thread_pool_metrics">
+<area shape="rect" id="Node000001" title="Update thread pool metrics if monitoring is available." alt="" coords="223,5,403,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#a1c0caf3f3a17f2d1bcd07d480c3657f7" title="Collect and report current thread pool metrics." alt="" coords="5,13,175,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,35,175,35,175,30,209,30"/>
+</map>

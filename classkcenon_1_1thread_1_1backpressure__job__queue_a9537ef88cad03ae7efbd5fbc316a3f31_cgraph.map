@@ -1,0 +1,11 @@
+<map id="kcenon::thread::backpressure_job_queue::enqueue_batch" name="kcenon::thread::backpressure_job_queue::enqueue_batch">
+<area shape="rect" id="Node000001" title="Enqueues a batch of jobs with backpressure handling." alt="" coords="5,37,220,77"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job__queue.html#aff70e9d72b51fc062696f8e23cd1defc" title="Enqueues a batch of jobs into the queue." alt="" coords="268,5,444,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,41,254,36,255,41,221,46"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread.html#a13f75c13dd33420c01a704c8bd09a79e" title="Create a common::VoidResult error from a thread::error_code." alt="" coords="275,69,437,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="221,69,262,74,261,80,220,74"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread.html#a899d6d797fc353567761b0d4ed2637e6" title="Convert a thread::error_code to common::error_info." alt="" coords="492,69,632,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="438,87,478,87,478,92,438,92"/>
+<area shape="rect" id="Node000005" href="$namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="680,69,839,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="633,87,666,87,666,92,633,92"/>
+</map>

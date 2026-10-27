@@ -1,0 +1,20 @@
+<map id="kcenon::thread::detail::concurrent_queue&lt; T &gt;" name="kcenon::thread::detail::concurrent_queue&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Thread&#45;safe MPMC queue with blocking wait support (Internal implementation)" alt="" coords="410,512,586,792"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1detail_1_1concurrent__queue_1_1node.html" title=" " alt="" coords="5,133,167,248"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="56,249,40,289,29,333,29,378,34,399,43,419,75,462,115,500,159,532,206,560,255,583,304,602,395,629,393,634,303,607,253,588,204,565,156,537,111,504,71,466,38,421,29,401,23,378,24,333,35,288,51,247"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="102,325,289,420"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="85,248,89,275,99,300,107,312,103,315,94,303,84,276,80,249"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="164,327,149,303,125,264,130,261,154,300,168,324"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="385,158,510,223"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="371,205,334,215,297,229,260,248,229,274,213,298,204,326,199,324,208,296,225,270,258,244,294,224,333,210,370,200"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="313,340,496,405"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="439,237,415,340,410,339,434,236"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="520,340,665,405"/>
+<area shape="poly" id="edge10_Node000008_Node000004" title=" " alt="" coords="499,231,536,270,560,305,579,339,575,341,556,308,532,274,495,235"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="436,5,459,71"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="450,71,450,142,445,142,445,71"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="689,340,773,405"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="713,407,653,490,600,551,596,548,649,486,709,404"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="418,405,449,496,443,497,413,407"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="584,407,553,497,548,496,579,405"/>
+</map>

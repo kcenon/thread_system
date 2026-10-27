@@ -1,0 +1,9 @@
+<map id="kcenon::thread::metrics::LatencyHistogram::record" name="kcenon::thread::metrics::LatencyHistogram::record">
+<area shape="rect" id="Node000001" title="Record a latency value." alt="" coords="268,91,467,131"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#ad6db8a9bdc9bb60b2e718084941a227b" title="Record enqueue operation latency." alt="" coords="5,5,220,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="288,90,201,63,203,58,290,85"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a55561eeac969ea283f09a06a93392d4a" title="Record task execution completion." alt="" coords="5,84,220,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="254,114,220,114,220,109,254,109"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a929ad88b734c1912e74f37b18e5dce7e" title="Record wait time (time spent in queue)." alt="" coords="5,163,220,217"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="290,138,203,165,201,160,288,133"/>
+</map>

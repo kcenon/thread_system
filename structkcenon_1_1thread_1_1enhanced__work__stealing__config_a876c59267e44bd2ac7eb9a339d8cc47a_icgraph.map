@@ -1,0 +1,5 @@
+<map id="kcenon::thread::enhanced_work_stealing_config::numa_optimized" name="kcenon::thread::enhanced_work_stealing_config::numa_optimized">
+<area shape="rect" id="Node000001" title="Create a configuration optimized for NUMA systems." alt="" coords="217,5,408,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1numa__thread__pool.html#a9e78b00bec4f37dc0f04f1a1f458a2de" title="Enable NUMA&#45;optimized work stealing with default settings." alt="" coords="5,5,169,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,35,170,35,170,30,204,30"/>
+</map>

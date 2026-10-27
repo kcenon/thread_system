@@ -1,0 +1,12 @@
+<map id="kcenon::thread::operation_cancelled_exception" name="kcenon::thread::operation_cancelled_exception">
+<area shape="rect" id="Node000001" title="Exception thrown when an operation is cancelled." alt="" coords="69,465,251,600"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,300,112,365"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,376,128,464,124,466,79,379"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1cancellation__reason.html" title="Holds information about why a cancellation occurred." alt="" coords="261,263,459,403"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="292,405,241,456,237,452,288,401"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="142,135,221,200"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="181,201,176,263,166,449,161,449,171,262,176,200"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="218,198,274,249,270,253,214,202"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="116,5,247,85"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="184,99,184,134,179,134,179,99"/>
+</map>

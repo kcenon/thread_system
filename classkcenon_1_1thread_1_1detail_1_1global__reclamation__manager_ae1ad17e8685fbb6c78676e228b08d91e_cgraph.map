@@ -1,0 +1,5 @@
+<map id="kcenon::thread::detail::global_reclamation_manager::reclaim" name="kcenon::thread::detail::global_reclamation_manager::reclaim">
+<area shape="rect" id="Node000001" title="Reclaim orphaned nodes that are no longer protected." alt="" coords="5,5,225,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1global__reclamation__manager.html#a3f4feb38de44fa202c9a12791e4d38d9" title="Add a list of retired nodes to the global orphanage." alt="" coords="273,5,493,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,30,260,30,260,35,225,35"/>
+</map>

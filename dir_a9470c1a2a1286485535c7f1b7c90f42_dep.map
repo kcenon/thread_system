@@ -1,0 +1,34 @@
+<map id="include/kcenon/thread/core" name="include/kcenon/thread/core">
+<area shape="rect" id="node1" href="dir_19b97fb6b4b32cd4e4fcf6c69c6053df.html" title="metrics" alt="" coords="27,125,98,151"/>
+<area shape="rect" id="node2" href="dir_41c3bbfbe391e3de53cf1c29b237af6c.html" title="interfaces" alt="" coords="122,125,209,151"/>
+<area shape="rect" id="node3" href="dir_5048818c2ddb7f79e9c2affd5eb81f6c.html" title="impl" alt="" coords="233,125,284,151"/>
+<area shape="rect" id="node4" href="dir_5bb7b2e82de14acb7941bf7430c24515.html" title="pool_policies" alt="" coords="308,125,415,151"/>
+<area shape="rect" id="node5" href="dir_7db1f88026a30797963fd0c63a85ab09.html" title="lockfree" alt="" coords="439,125,513,151"/>
+<area shape="rect" id="node6" href="dir_87c95ac94b96557e8a11fc0431ffaa15.html" title="scaling" alt="" coords="538,125,606,151"/>
+<area shape="rect" id="node7" href="dir_88658620ab87305aa543a525a80be4cb.html" title="stealing" alt="" coords="631,125,705,151"/>
+<area shape="rect" id="node8" href="dir_987042fe08554895d5ac2c05f7cbdf5f.html" title="concepts" alt="" coords="729,125,809,151"/>
+<area shape="rect" id="node9" href="dir_a322b4f241707caf3324996b0f98f4b6.html" title="diagnostics" alt="" coords="833,125,929,151"/>
+<area shape="rect" id="node10" href="dir_cf32c9565c38592013af124482f44b16.html" title="utils" alt="" coords="953,125,1004,151"/>
+<area shape="rect" id="node11" href="dir_a9470c1a2a1286485535c7f1b7c90f42.html" title="core" alt="" coords="499,52,549,77"/>
+<area shape="poly" id="edge1" href="dir_000009_000034.html" alt="" coords="499,72,340,92,112,128,111,123,339,86,498,66"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000009_000034.html" title="4" alt="" coords="113,126,122,140"/>
+<area shape="poly" id="edge2" href="dir_000009_000028.html" alt="" coords="499,74,222,128,221,123,498,68"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000009_000028.html" title="6" alt="" coords="224,125,233,140"/>
+<area shape="poly" id="edge3" href="dir_000009_000021.html" alt="" coords="499,75,298,128,297,123,498,70"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000009_000021.html" title="2" alt="" coords="299,125,309,139"/>
+<area shape="poly" id="edge4" href="dir_000009_000042.html" alt="" coords="500,79,401,122,399,117,498,75"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000009_000042.html" title="4" alt="" coords="403,118,412,133"/>
+<area shape="poly" id="edge5" href="dir_000009_000031.html" alt="" coords="518,79,494,116,489,113,514,76"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000009_000031.html" title="1" alt="" coords="496,108,506,122"/>
+<area shape="poly" id="edge6" href="dir_000009_000050.html" alt="" coords="534,76,559,113,554,116,530,79"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000009_000050.html" title="1" alt="" coords="556,98,566,113"/>
+<area shape="poly" id="edge7" href="dir_000009_000054.html" alt="" coords="548,75,633,117,631,121,546,80"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000009_000054.html" title="4" alt="" coords="627,102,637,117"/>
+<area shape="poly" id="edge8" href="dir_000009_000004.html" alt="" coords="551,71,717,119,716,124,549,76"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000009_000004.html" title="1" alt="" coords="710,105,719,119"/>
+<area shape="poly" id="edge9" href="dir_000009_000016.html" alt="" coords="550,68,821,122,820,127,549,74"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000009_000016.html" title="3" alt="" coords="812,108,822,123"/>
+<area shape="poly" id="edge10" href="dir_000009_000066.html" alt="" coords="550,66,711,84,823,101,941,123,940,128,822,106,710,89,549,71"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000009_000066.html" title="18" alt="" coords="929,109,946,124"/>
+<area shape="rect" id="clust1" href="dir_3aa0db76c1681ddaada603a61998eb7a.html" title="thread" alt="" coords="16,16,1015,161"/>
+</map>

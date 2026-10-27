@@ -1,0 +1,53 @@
+<map id="examples" name="examples">
+<area shape="rect" id="node2" href="dir_eaf56d257139b4860d544c1668047769.html" title="adaptive_queue_sample" alt="" coords="3441,34,3623,59"/>
+<area shape="rect" id="node21" href="dir_d44c64559bbebec7f509842c48db8b23.html" title="include" alt="" coords="2065,115,2135,140"/>
+<area shape="poly" id="edge1" href="dir_000001_000025.html" alt="" coords="3500,62,3430,80,3310,94,3151,104,2771,119,2400,126,2148,128,2148,123,2400,121,2771,114,3151,99,3310,88,3429,75,3499,57"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000001_000025.html" title="2" alt="" coords="2148,127,2158,142"/>
+<area shape="rect" id="node3" href="dir_1a0f3c91e252d69b111e2358adefef55.html" title="composition_example" alt="" coords="3250,34,3417,59"/>
+<area shape="poly" id="edge2" href="dir_000003_000025.html" alt="" coords="3304,62,3238,80,3137,93,3003,103,2683,117,2148,128,2148,123,2683,112,3003,97,3136,87,3237,75,3302,57"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000003_000025.html" title="5" alt="" coords="2148,127,2158,141"/>
+<area shape="rect" id="node4" href="dir_20d5a33f2ff6bb8b111705e071e25570.html" title="config_example" alt="" coords="3100,34,3225,59"/>
+<area shape="poly" id="edge3" href="dir_000007_000025.html" alt="" coords="3140,62,3089,80,3003,93,2889,104,2615,118,2343,126,2149,128,2149,123,2343,120,2615,113,2888,99,3002,88,3087,75,3138,57"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000007_000025.html" title="1" alt="" coords="2149,127,2158,141"/>
+<area shape="rect" id="node5" href="dir_dbb692231112a77fcb384d450ec0480b.html" title="crash_protection" alt="" coords="2945,34,3076,59"/>
+<area shape="poly" id="edge4" href="dir_000011_000025.html" alt="" coords="2987,62,2934,80,2863,91,2769,101,2542,115,2149,128,2149,122,2542,109,2768,95,2862,86,2933,75,2986,57"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000011_000025.html" title="4" alt="" coords="2149,126,2158,141"/>
+<area shape="rect" id="node6" href="dir_eca7f55bac64c79e9a6fd7573d24809b.html" title="hazard_pointer_sample" alt="" coords="2746,34,2921,59"/>
+<area shape="rect" id="node7" href="dir_252229f70734ffb8f35af7ca0c3bb069.html" title="integration_example" alt="" coords="2564,34,2721,59"/>
+<area shape="poly" id="edge5" href="dir_000027_000025.html" alt="" coords="2614,62,2553,80,2440,100,2327,113,2149,127,2148,121,2327,108,2439,94,2551,75,2612,57"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000027_000025.html" title="5" alt="" coords="2149,125,2158,140"/>
+<area shape="rect" id="node8" href="dir_4f95e62860458a24746ae193a5dc3308.html" title="job_cancellation_example" alt="" coords="2348,34,2540,59"/>
+<area shape="poly" id="edge6" href="dir_000029_000025.html" alt="" coords="2405,62,2337,80,2149,120,2148,114,2335,75,2403,57"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000029_000025.html" title="4" alt="" coords="2150,117,2159,132"/>
+<area shape="rect" id="node9" href="dir_f05b14f74bd14170fdd053b1b6002c43.html" title="logger_sample" alt="" coords="2205,34,2323,59"/>
+<area shape="poly" id="edge7" href="dir_000033_000025.html" alt="" coords="2241,62,2137,111,2135,106,2239,57"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000033_000025.html" title="1" alt="" coords="2139,107,2149,122"/>
+<area shape="rect" id="node10" href="dir_2e99f78914c049c60fc67b16f12016b1.html" title="minimal_thread_pool" alt="" coords="2020,34,2180,59"/>
+<area shape="poly" id="edge8" href="dir_000036_000025.html" alt="" coords="2103,60,2103,101,2097,101,2097,60"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000036_000025.html" title="4" alt="" coords="2104,89,2113,104"/>
+<area shape="rect" id="node11" href="dir_c4a5e01f4461157d68bf522cf53cfe46.html" title="mpmc_queue_sample" alt="" coords="1831,34,1996,59"/>
+<area shape="rect" id="node12" href="dir_40bc58892b3fe59771359b47f2b7fc1a.html" title="multi_process_monitoring\l_integration" alt="" coords="1615,27,1806,67"/>
+<area shape="poly" id="edge9" href="dir_000039_000025.html" alt="" coords="1776,64,1819,75,1945,99,2052,116,2051,122,1944,104,1818,80,1775,69"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000039_000025.html" title="5" alt="" coords="2044,103,2053,117"/>
+<area shape="rect" id="node13" href="dir_e4e38694c663c706306111e9a9374bd4.html" title="node_pool_sample" alt="" coords="1447,34,1591,59"/>
+<area shape="rect" id="node14" href="dir_5014c78f09a06840650b1ca038587c77.html" title="queue_capabilities\l_sample" alt="" coords="1279,27,1423,67"/>
+<area shape="poly" id="edge10" href="dir_000046_000025.html" alt="" coords="1398,64,1435,75,1522,90,1612,102,1787,117,1941,123,2052,124,2052,129,1941,129,1787,123,1611,108,1522,96,1434,80,1396,69"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000046_000025.html" title="6" alt="" coords="2042,111,2052,126"/>
+<area shape="rect" id="node15" href="dir_e729bbbbc3bcfec0a9807246717dc68a.html" title="queue_factory_sample" alt="" coords="1084,34,1255,59"/>
+<area shape="poly" id="edge11" href="dir_000047_000025.html" alt="" coords="1201,57,1267,75,1432,93,1659,107,2052,122,2051,127,1658,112,1432,98,1266,80,1200,62"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000047_000025.html" title="2" alt="" coords="2042,109,2052,123"/>
+<area shape="rect" id="node16" href="dir_f0d510d843c31a0848936ec3360dcb5e.html" title="service_registry_sample" alt="" coords="879,34,1060,59"/>
+<area shape="poly" id="edge12" href="dir_000052_000025.html" alt="" coords="1002,57,1072,75,1162,86,1282,95,1568,109,2052,123,2052,128,1568,115,1281,100,1162,91,1072,80,1001,62"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000052_000025.html" title="4" alt="" coords="2042,109,2052,124"/>
+<area shape="rect" id="node17" href="dir_3bcf76caa6fbfe8568e60c354179b3b1.html" title="thread_pool_sample" alt="" coords="700,34,855,59"/>
+<area shape="poly" id="edge13" href="dir_000059_000025.html" alt="" coords="806,57,867,75,977,89,1123,100,1472,114,1815,121,2051,123,2051,129,1815,127,1472,120,1122,105,976,94,866,80,805,62"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000059_000025.html" title="2" alt="" coords="2043,110,2052,125"/>
+<area shape="rect" id="node18" href="dir_97929944126cd465f5648ece5a04fbab.html" title="typed_job_queue_sample" alt="" coords="487,34,675,59"/>
+<area shape="rect" id="node19" href="dir_4c5f438947de271cf11991e56424a95f.html" title="typed_thread_pool_sample" alt="" coords="265,34,463,59"/>
+<area shape="poly" id="edge14" href="dir_000063_000025.html" alt="" coords="400,57,476,75,625,90,822,101,1294,116,1751,122,2052,123,2052,129,1751,127,1294,121,822,107,624,95,476,80,399,62"/>
+<area shape="rect" id="edge14-headlabel" href="dir_000063_000025.html" title="2" alt="" coords="2042,110,2052,125"/>
+<area shape="rect" id="node20" href="dir_7c7e7bbb220f0b04eade018171ec9dce.html" title="typed_thread_pool_sample_2" alt="" coords="27,34,240,59"/>
+<area shape="poly" id="edge15" href="dir_000064_000025.html" alt="" coords="171,57,254,75,424,91,652,103,1193,117,1715,123,2052,123,2052,129,1715,128,1193,123,651,108,424,96,253,80,170,62"/>
+<area shape="rect" id="edge15-headlabel" href="dir_000064_000025.html" title="2" alt="" coords="2042,110,2052,125"/>
+<area shape="rect" id="clust1" href="dir_d28a4824dc47e487b107a5db32ef43c4.html" alt="" coords="16,16,3745,77"/>
+</map>

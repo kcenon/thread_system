@@ -1,0 +1,9 @@
+<map id="web_server_simulation" name="web_server_simulation">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,77,179,102"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a575742ca11fe9522d2da36c5dcb0e206" title="Dequeues a job from the current active queue." alt="" coords="227,5,411,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,74,233,47,235,52,139,79"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a586cab78d0bb73cac4c7fff9c644cceb" title="Enqueues a job into the current active queue." alt="" coords="227,69,411,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="179,87,213,87,213,92,179,92"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#ac490e300f2f57e1ca7879f5104491c67" title="Get statistics about queue usage." alt="" coords="227,133,411,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="139,100,235,127,233,132,137,105"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="include/kcenon/thread/concurrent/concurrent_queue.h" name="include/kcenon/thread/concurrent/concurrent_queue.h">
+<area shape="rect" id="Node000001" title="Thread&#45;safe MPMC queue with blocking wait support." alt="" coords="305,5,473,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,72,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="306,57,86,110,85,105,304,52"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,108,163,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="311,63,177,107,175,102,309,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="187,108,330,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="351,62,289,103,286,98,348,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="354,108,425,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="392,60,392,94,387,94,387,60"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="449,108,513,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="419,58,461,96,457,100,416,62"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="537,108,612,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="447,58,538,100,536,105,445,62"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="637,108,729,133"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="474,56,632,102,630,107,473,61"/>
+</map>

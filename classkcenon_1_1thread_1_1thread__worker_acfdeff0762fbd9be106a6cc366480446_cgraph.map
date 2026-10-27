@@ -1,0 +1,5 @@
+<map id="kcenon::thread::thread_worker::do_work" name="kcenon::thread::thread_worker::do_work">
+<area shape="rect" id="Node000001" title="Processes one or more jobs from the queue." alt="" coords="5,5,175,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#aec5fe973e44efa3d1040ff7bec85f822" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="223,5,377,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,23,209,23,209,28,175,28"/>
+</map>

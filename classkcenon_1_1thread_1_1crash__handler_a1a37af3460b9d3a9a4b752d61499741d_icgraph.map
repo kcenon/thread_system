@@ -1,0 +1,7 @@
+<map id="kcenon::thread::crash_handler::unregister_crash_callback" name="kcenon::thread::crash_handler::unregister_crash_callback">
+<area shape="rect" id="Node000001" title="Unregister a crash callback." alt="" coords="244,23,407,77"/>
+<area shape="rect" id="Node000002" href="$crash__protection_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="73,5,128,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,39,128,24,128,19,231,34"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1scoped__crash__callback.html#aa26a0c8a4ce5fb355ded549cdf71a455" title=" " alt="" coords="5,55,196,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="231,66,196,71,196,66,230,61"/>
+</map>

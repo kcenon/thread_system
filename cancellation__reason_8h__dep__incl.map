@@ -1,0 +1,10 @@
+<map id="include/kcenon/thread/core/cancellation_reason.h" name="include/kcenon/thread/core/cancellation_reason.h">
+<area shape="rect" id="Node000001" title="Cancellation reason structure for enhanced cancellation tokens." alt="" coords="89,5,289,45"/>
+<area shape="rect" id="Node000002" href="$cancellation__exception_8h.html" title="Exception class for operation cancellation." alt="" coords="5,93,225,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,58,134,95,130,91,162,54"/>
+<area shape="rect" id="Node000003" href="$enhanced__cancellation__token_8h.html" title="Enhanced cancellation token with timeout, deadline, and reason support." alt="" coords="85,181,292,236"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="219,55,231,72,241,93,245,113,241,134,229,160,214,183,209,180,224,158,235,133,239,113,235,94,227,75,215,58"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="141,143,170,180,166,183,137,146"/>
+<area shape="rect" id="Node000004" href="$enhanced__cancellation__token_8cpp.html" title=" " alt="" coords="75,284,302,324"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="191,250,191,284,186,284,186,250"/>
+</map>

@@ -1,0 +1,23 @@
+<map id="kcenon::thread::detail::lockfree_job_queue::~lockfree_job_queue" name="kcenon::thread::detail::lockfree_job_queue::~lockfree_job_queue">
+<area shape="rect" id="Node000001" title="Destructor." alt="" coords="5,45,171,100"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#afdd966b3ada4a6b20d091496e1d6c491" title="Dequeues a job from the queue (thread&#45;safe)" alt="" coords="219,5,384,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,55,205,48,206,53,171,60"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#aa9a793d873420afd653f02a860e5cab4" title="Retire a node through hazard pointers, recycling via pool on reclamation." alt="" coords="219,84,384,139"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="171,85,206,91,205,97,170,90"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__guard.html#a6a993bc8a8a2f110d66964a9fa8431dc" title="Protect a pointer." alt="" coords="438,13,609,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="384,30,424,30,424,35,384,35"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html#acf1c44aa138a473548e2a73bf107508d" title="Protect a pointer from reclamation." alt="" coords="667,5,841,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="609,30,653,30,653,35,609,35"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a489ed9f947f27820791f237e1ed3576f" title="Get singleton instance." alt="" coords="432,80,615,135"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="384,107,418,107,418,112,384,113"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a5dbea55217b9dbb8bf8dfe167e548ca7" title="Retire a pointer for later reclamation." alt="" coords="432,159,615,213"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="384,136,430,152,428,157,382,141"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a4757c51c9a4bd33934e5a928df10b902" title="Collect reclaimable objects." alt="" coords="663,121,845,176"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="614,169,649,163,650,168,615,174"/>
+<area shape="rect" id="Node000011" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#ae53dcb6a4fe401fba69359eeca5fc910" title="Get adaptive threshold based on active thread count." alt="" coords="663,200,845,255"/>
+<area shape="poly" id="edge10_Node000007_Node000011" title=" " alt="" coords="615,200,650,206,649,211,614,205"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#affee714bf1ce5f368c1f3d77fb9fe611" title="Collect reclaimable objects (internal, lock held)" alt="" coords="893,121,1076,176"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="845,146,880,146,880,151,845,151"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html#ae368cdbfdf4ea5e527bbf7432ee53f58" title="Get protected pointer at slot." alt="" coords="1124,129,1327,169"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="1076,146,1110,146,1110,151,1076,151"/>
+</map>

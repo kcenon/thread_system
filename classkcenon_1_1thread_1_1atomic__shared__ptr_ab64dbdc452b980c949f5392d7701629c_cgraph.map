@@ -1,0 +1,5 @@
+<map id="kcenon::thread::atomic_shared_ptr::shared_ptr&lt; T &gt;" name="kcenon::thread::atomic_shared_ptr::shared_ptr&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Conversion operator to shared_ptr." alt="" coords="5,5,219,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1atomic__shared__ptr.html#a21bc10fb01018392d3f2798e54b46b9b" title="Atomically load the current value." alt="" coords="267,5,439,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,23,253,23,253,28,219,28"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="adaptive_behavior_example" name="adaptive_behavior_example">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,109,212,134"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#afaf53bb542a3bc84905263fe7a8ecab2" title="Get current operating mode." alt="" coords="260,5,455,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,106,259,55,280,47,282,52,261,60,139,111"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a575742ca11fe9522d2da36c5dcb0e206" title="Dequeues a job from the current active queue." alt="" coords="265,69,449,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="207,106,251,100,252,106,208,111"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a586cab78d0bb73cac4c7fff9c644cceb" title="Enqueues a job into the current active queue." alt="" coords="265,133,449,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="208,131,252,137,251,142,207,137"/>
+<area shape="rect" id="Node000005" href="$adaptive__queue__sample_8cpp.html#a69b0926a5d57c054e334865c63324613" title=" " alt="" coords="296,198,419,223"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="138,132,194,157,261,183,290,192,289,197,259,188,192,162,136,137"/>
+</map>

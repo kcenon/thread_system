@@ -1,0 +1,9 @@
+<map id="include/kcenon/thread/metrics/thread_pool_metrics.h" name="include/kcenon/thread/metrics/thread_pool_metrics.h">
+<area shape="rect" id="Node000001" title="Lightweight metrics container shared between thread_pool and workers." alt="" coords="6,5,173,60"/>
+<area shape="rect" id="Node000002" href="$metrics__base_8h.html" title="Thread pool metrics collection, histograms, and observability." alt="" coords="5,108,173,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,60,92,94,87,94,87,60"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="11,196,77,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="81,150,60,185,55,183,76,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="101,196,168,221"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="103,147,123,183,119,185,98,150"/>
+</map>

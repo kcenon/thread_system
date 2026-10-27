@@ -1,0 +1,5 @@
+<map id="kcenon::thread::cancellation_context::current" name="kcenon::thread::cancellation_context::current">
+<area shape="rect" id="Node000001" title="Gets the current thread&#39;s cancellation token." alt="" coords="5,5,212,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1enhanced__cancellation__token.html#a2008c454e0c5a2cef620db435c99d47d" title="Creates a new cancellation token." alt="" coords="260,5,460,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,23,246,23,246,28,212,28"/>
+</map>

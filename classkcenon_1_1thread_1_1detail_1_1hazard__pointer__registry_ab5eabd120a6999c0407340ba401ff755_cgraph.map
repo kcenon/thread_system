@@ -1,0 +1,5 @@
+<map id="kcenon::thread::detail::hazard_pointer_registry::mark_inactive" name="kcenon::thread::detail::hazard_pointer_registry::mark_inactive">
+<area shape="rect" id="Node000001" title="Mark current thread&#39;s list as inactive." alt="" coords="5,5,189,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1hazard__pointer__registry.html#a6c8f58091a85986b40e7228e073ad199" title="Get or create thread&#45;local hazard list." alt="" coords="237,5,421,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,30,223,30,223,35,190,35"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::detail::lockfree_job_queue::retire_node" name="kcenon::thread::detail::lockfree_job_queue::retire_node">
+<area shape="rect" id="Node000001" title="Retire a node through hazard pointers, recycling via pool on reclamation." alt="" coords="219,5,384,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#a0358cd30749f36d3f3e00570b20d46e0" title="Destructor." alt="" coords="5,5,171,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,35,171,35,171,30,205,30"/>
+</map>

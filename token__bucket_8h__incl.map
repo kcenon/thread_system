@@ -1,0 +1,9 @@
+<map id="include/kcenon/thread/core/token_bucket.h" name="include/kcenon/thread/core/token_bucket.h">
+<area shape="rect" id="Node000001" title="Lock&#45;free token bucket rate limiter for controlling throughput." alt="" coords="46,5,213,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,72,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,48,64,86,61,82,106,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,93,163,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="132,46,132,79,127,79,127,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="187,93,258,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="154,44,200,82,196,86,150,48"/>
+</map>

@@ -1,0 +1,29 @@
+<map id="include/kcenon/thread/pool_policies/work_stealing_pool_policy.h" name="include/kcenon/thread/pool_policies/work_stealing_pool_policy.h">
+<area shape="rect" id="Node000001" title="Pool policy implementing work&#45;stealing for load balancing." alt="" coords="246,5,453,60"/>
+<area shape="rect" id="Node000002" href="$pool__policy_8h.html" title="Base interface for extensible thread pool behavior policies." alt="" coords="176,115,283,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="317,62,257,109,254,105,314,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,203,83,229"/>
+<area shape="poly" id="edge14_Node000001_Node000004" title=" " alt="" coords="268,63,216,84,165,110,109,153,66,195,62,191,106,149,163,106,214,79,266,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="320,203,379,229"/>
+<area shape="poly" id="edge15_Node000001_Node000005" title=" " alt="" coords="352,60,352,189,347,189,347,60"/>
+<area shape="rect" id="Node000006" href="$worker__policy_8h.html" title="Worker behavior policies and configuration." alt="" coords="403,108,549,148"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="387,58,441,97,437,102,383,62"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="573,115,640,141"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="428,58,562,106,568,108,566,113,560,110,426,63"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="107,196,295,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="228,142,214,184,209,182,223,140"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="205,143,82,200,80,195,203,138"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="247,139,323,193,320,197,244,143"/>
+<area shape="poly" id="edge12_Node000006_Node000005" title=" " alt="" coords="449,150,379,198,376,193,446,146"/>
+<area shape="rect" id="Node000007" href="$forward_8h.html" title="Forward declarations for thread system types." alt="" coords="403,203,584,229"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="482,148,491,189,486,190,477,149"/>
+<area shape="rect" id="Node000009" href="$core_2config_8h.html" title="Central configuration for thread_pool module." alt="" coords="609,203,682,229"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="514,146,612,195,609,200,512,150"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="687,284,753,309"/>
+<area shape="poly" id="edge11_Node000006_Node000011" title=" " alt="" coords="551,145,641,171,677,184,696,194,709,212,717,231,723,270,718,271,711,233,704,214,693,198,675,189,640,176,549,151"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="460,284,527,309"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="496,229,496,270,491,270,491,229"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="591,284,662,309"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="645,229,635,271,630,270,640,228"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="658,227,702,272,698,276,654,231"/>
+</map>

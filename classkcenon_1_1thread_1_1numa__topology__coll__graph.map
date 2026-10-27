@@ -1,0 +1,19 @@
+<map id="kcenon::thread::numa_topology" name="kcenon::thread::numa_topology">
+<area shape="rect" id="Node000001" title="NUMA (Non&#45;Uniform Memory Access) topology information." alt="" coords="225,695,387,995"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="225,552,387,632"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="309,632,309,678,303,678,303,632"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1numa__node.html" title="Information about a single NUMA node." alt="" coords="197,404,391,489"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="300,489,304,535,299,536,295,490"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="263,261,394,327"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="370,325,390,349,410,387,423,422,430,454,431,486,421,552,402,633,388,680,383,679,397,631,416,551,426,485,425,455,418,423,405,389,385,352,366,328"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="324,327,310,388,305,387,319,326"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="5,407,172,487"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="270,329,229,353,158,399,155,395,226,348,267,325"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="268,133,389,199"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="383,206,453,270,488,310,519,352,542,397,554,442,555,465,552,487,544,509,531,530,509,546,474,560,388,581,387,576,472,555,506,542,527,526,539,506,546,486,550,464,549,443,537,399,514,355,484,313,449,274,379,210"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="331,213,331,261,326,261,326,213"/>
+<area shape="poly" id="edge10_Node000007_Node000005" title=" " alt="" coords="255,180,214,191,172,207,134,231,103,263,86,297,79,335,79,373,83,406,78,407,74,373,74,334,81,295,98,260,131,227,170,203,212,186,254,175"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="317,5,340,71"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="331,71,331,117,326,117,326,71"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="96,486,109,556,121,594,136,631,173,692,216,747,212,751,169,695,132,633,116,596,104,557,91,487"/>
+</map>

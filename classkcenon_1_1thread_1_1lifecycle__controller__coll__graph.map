@@ -1,0 +1,14 @@
+<map id="kcenon::thread::lifecycle_controller" name="kcenon::thread::lifecycle_controller">
+<area shape="rect" id="Node000001" title="Centralized thread lifecycle state and synchronization management." alt="" coords="99,404,273,684"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,269,89,334"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,333,100,388,95,391,63,335"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="114,261,258,341"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="189,342,189,388,183,388,183,342"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="210,133,335,199"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="201,205,186,224,180,242,180,261,174,261,175,241,181,221,197,202"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="288,269,433,334"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="326,207,336,221,348,244,356,268,351,269,343,246,332,224,321,211"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="261,5,284,71"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="275,71,275,117,270,117,270,71"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="340,336,285,411,281,408,336,332"/>
+</map>

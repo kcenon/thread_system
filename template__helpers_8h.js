@@ -1,0 +1,28 @@
+var template__helpers_8h =
+[
+    [ "kcenon::thread::detail::has_priority_method< T, typename >", "structkcenon_1_1thread_1_1detail_1_1has__priority__method.html", null ],
+    [ "kcenon::thread::detail::has_priority_method< T, std::void_t< decltype(std::declval< T >().priority())> >", "structkcenon_1_1thread_1_1detail_1_1has__priority__method_3_01T_00_01std_1_1void__t_3_01decltype1259939ce1df6e30ea7bdfeb245c14ca.html", null ],
+    [ "kcenon::thread::detail::has_do_work_method< T, typename >", "structkcenon_1_1thread_1_1detail_1_1has__do__work__method.html", null ],
+    [ "kcenon::thread::detail::has_do_work_method< T, std::void_t< decltype(std::declval< T >().do_work())> >", "structkcenon_1_1thread_1_1detail_1_1has__do__work__method_3_01T_00_01std_1_1void__t_3_01decltype279da4895ca19f645443738873665ae7.html", null ],
+    [ "kcenon::thread::detail::job_type_extractor< Job >", "structkcenon_1_1thread_1_1detail_1_1job__type__extractor.html", "structkcenon_1_1thread_1_1detail_1_1job__type__extractor" ],
+    [ "kcenon::thread::detail::job_type_extractor< T >", "structkcenon_1_1thread_1_1detail_1_1job__type__extractor_3_01T_01_4.html", "structkcenon_1_1thread_1_1detail_1_1job__type__extractor_3_01T_01_4" ],
+    [ "kcenon::thread::detail::is_compatible_job< Job, ExpectedJobType >", "structkcenon_1_1thread_1_1detail_1_1is__compatible__job.html", null ],
+    [ "kcenon::thread::detail::is_compatible_job< Job, ExpectedJobType >", "structkcenon_1_1thread_1_1detail_1_1is__compatible__job_3_01Job_00_01ExpectedJobType_01_4.html", "structkcenon_1_1thread_1_1detail_1_1is__compatible__job_3_01Job_00_01ExpectedJobType_01_4" ],
+    [ "kcenon::thread::detail::function_traits< R(*)(Args...)>", "structkcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07_5_08_07Args_8_8_8_08_4.html", "structkcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07_5_08_07Args_8_8_8_08_4" ],
+    [ "kcenon::thread::detail::function_traits< R(C::*)(Args...)>", "structkcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_4.html", "structkcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_4" ],
+    [ "kcenon::thread::detail::function_traits< R(C::*)(Args...) const >", "structkcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_01const_01_4.html", "structkcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_01const_01_4" ],
+    [ "kcenon::thread::detail::function_traits< F >", "structkcenon_1_1thread_1_1detail_1_1function__traits.html", null ],
+    [ "kcenon::thread::detail::constexpr_string< N >", "structkcenon_1_1thread_1_1detail_1_1constexpr__string.html", "structkcenon_1_1thread_1_1detail_1_1constexpr__string" ],
+    [ "kcenon::thread::detail::priority_comparator< T, Comparator >", "structkcenon_1_1thread_1_1detail_1_1priority__comparator.html", "structkcenon_1_1thread_1_1detail_1_1priority__comparator" ],
+    [ "kcenon::thread::detail::conditional_feature< Condition >", "structkcenon_1_1thread_1_1detail_1_1conditional__feature.html", "structkcenon_1_1thread_1_1detail_1_1conditional__feature" ],
+    [ "kcenon::thread::detail::job_type_list< Types >", "structkcenon_1_1thread_1_1detail_1_1job__type__list.html", "structkcenon_1_1thread_1_1detail_1_1job__type__list" ],
+    [ "kcenon::thread::detail::job_eraser", "classkcenon_1_1thread_1_1detail_1_1job__eraser.html", "classkcenon_1_1thread_1_1detail_1_1job__eraser" ],
+    [ "kcenon::thread::detail::job_eraser::vtable_t", "structkcenon_1_1thread_1_1detail_1_1job__eraser_1_1vtable__t.html", "structkcenon_1_1thread_1_1detail_1_1job__eraser_1_1vtable__t" ],
+    [ "kcenon::thread::detail::job_validator< Job, ExpectedType >", "structkcenon_1_1thread_1_1detail_1_1job__validator.html", "structkcenon_1_1thread_1_1detail_1_1job__validator" ],
+    [ "job_type_t", "template__helpers_8h.html#a3c598e9e3488f32b23bfdda7dda49d34", null ],
+    [ "generate_job_name", "template__helpers_8h.html#acafcadbf6b0a068f04d4b372c67bdd88", null ],
+    [ "make_job_args", "template__helpers_8h.html#aed68b81558f5118c9a53ba49dc902610", null ],
+    [ "has_do_work_method_v", "template__helpers_8h.html#aa2529c1003e8a703a72dbec9984abb64", null ],
+    [ "has_priority_method_v", "template__helpers_8h.html#a9adde10822919d8f74cbad3078fe0fe4", null ],
+    [ "is_compatible_job_v", "template__helpers_8h.html#a7237fc1d2ee81da00507457ca7209610", null ]
+];

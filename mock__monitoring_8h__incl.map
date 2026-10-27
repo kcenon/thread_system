@@ -1,0 +1,15 @@
+<map id="examples/integration_example/mock_monitoring.h" name="examples/integration_example/mock_monitoring.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="299,5,515,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,204,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="342,48,185,92,184,87,340,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="227,101,307,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="378,48,299,96,297,91,375,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="332,101,395,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="400,47,378,89,373,87,395,44"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="419,101,483,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="419,44,441,87,437,89,415,47"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="507,101,571,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="438,43,512,91,509,95,435,48"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="595,101,662,126"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="459,43,584,91,590,93,588,98,582,96,457,48"/>
+</map>

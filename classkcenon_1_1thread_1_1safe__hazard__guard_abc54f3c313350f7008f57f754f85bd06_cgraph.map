@@ -1,0 +1,5 @@
+<map id="kcenon::thread::safe_hazard_guard::safe_hazard_guard" name="kcenon::thread::safe_hazard_guard::safe_hazard_guard">
+<area shape="rect" id="Node000001" title="Construct guard, optionally protecting a pointer." alt="" coords="5,13,253,53"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html#acf1c44aa138a473548e2a73bf107508d" title="Protect a pointer from reclamation." alt="" coords="301,5,476,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="253,30,288,30,288,35,253,35"/>
+</map>

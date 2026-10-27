@@ -1,0 +1,5 @@
+<map id="kcenon::thread::dag_scheduler::get_stats" name="kcenon::thread::dag_scheduler::get_stats">
+<area shape="rect" id="Node000001" title="Gets execution statistics." alt="" coords="204,5,364,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1dag__scheduler.html#a2bbe943cf03998d3c939fadcb20778b6" title="Exports the DAG as JSON format." alt="" coords="5,5,156,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,28,157,28,157,23,190,23"/>
+</map>

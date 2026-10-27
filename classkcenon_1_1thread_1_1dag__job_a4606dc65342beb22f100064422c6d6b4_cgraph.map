@@ -1,0 +1,5 @@
+<map id="kcenon::thread::dag_job::add_dependencies" name="kcenon::thread::dag_job::add_dependencies">
+<area shape="rect" id="Node000001" title="Adds multiple dependencies." alt="" coords="5,5,184,45"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1dag__job.html#a9de41ddde0ced2367d3315b3e04c40f1" title="Adds a dependency on another job." alt="" coords="232,5,399,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,23,219,23,219,28,184,28"/>
+</map>

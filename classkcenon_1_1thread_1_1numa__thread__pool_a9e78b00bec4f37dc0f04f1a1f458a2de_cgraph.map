@@ -1,0 +1,13 @@
+<map id="kcenon::thread::numa_thread_pool::enable_numa_work_stealing" name="kcenon::thread::numa_thread_pool::enable_numa_work_stealing">
+<area shape="rect" id="Node000001" title="Enable NUMA&#45;optimized work stealing with default settings." alt="" coords="5,81,169,136"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1numa__thread__pool.html#adb61888a1cdd9c2366f02db486c509aa" title="Configure NUMA&#45;aware work stealing." alt="" coords="225,41,400,96"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,91,211,84,212,89,170,97"/>
+<area shape="rect" id="Node000006" href="$structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a876c59267e44bd2ac7eb9a339d8cc47a" title="Create a configuration optimized for NUMA systems." alt="" coords="217,120,408,175"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="170,120,204,126,203,131,169,125"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1numa__thread__pool.html#af0f9477008f58825594f3e07105e20de" title="Ensure topology is detected." alt="" coords="458,5,622,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="400,52,444,45,445,50,401,57"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1numa__topology.html#ae8b3f906dfcc3e66dc900461fae16bbf" title="Get the number of NUMA nodes." alt="" coords="456,85,624,125"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="401,80,443,87,442,92,400,85"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1numa__topology.html#a394d1c43d0b95b4d3cfd5b6caec4ce83" title="Detect and return the system&#39;s NUMA topology." alt="" coords="672,13,836,53"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="622,30,658,30,658,35,622,35"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::lockfree::work_stealing_deque::steal_batch" name="kcenon::thread::lockfree::work_stealing_deque::steal_batch">
+<area shape="rect" id="Node000001" title="Steal multiple elements from the top of the deque (thief threads)" alt="" coords="5,5,185,60"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1lockfree_1_1circular__array.html#abe5269850abfc35b726f4f3adb3f1f1d" title="Get element at index with relaxed memory ordering." alt="" coords="233,13,413,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,30,220,30,220,35,186,35"/>
+</map>

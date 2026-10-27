@@ -1,0 +1,21 @@
+<map id="kcenon::thread::policy_queue_adapter&lt; SyncPolicy, BoundPolicy, OverflowPolicy &gt;" name="kcenon::thread::policy_queue_adapter&lt; SyncPolicy, BoundPolicy, OverflowPolicy &gt;">
+<area shape="rect" id="Node000001" title="Adapter for policy_queue to pool_queue_adapter_interface." alt="" coords="351,1152,570,1447"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1pool__queue__adapter__interface.html" title="Abstract interface for queue adapters used by thread_pool." alt="" coords="348,715,531,1089"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="453,1103,455,1151,450,1152,447,1103"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="555,862,729,942"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="627,943,537,1138,532,1136,622,941"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1policy__queue.html" title="Policy&#45;based queue template." alt="" coords="395,323,633,637"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="564,637,628,846,623,847,559,638"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,73,188,193"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="150,202,202,258,299,337,396,404,393,408,295,341,199,262,146,205"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html" title="Mixin interface for queue capability introspection." alt="" coords="213,5,405,260"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="393,271,423,321,419,324,389,274"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1policies_1_1unbounded__policy.html" title="Policy that allows unlimited queue size." alt="" coords="429,53,599,213"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="517,213,517,307,511,307,511,213"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1policies_1_1overflow__reject__policy.html" title="Policy that rejects new items when queue is full." alt="" coords="623,73,792,193"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="680,194,624,300,619,310,614,307,620,297,676,192"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="713,447,862,513"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="774,527,658,862,653,861,769,525"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="831,100,853,165"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="840,166,798,431,792,431,834,165"/>
+</map>

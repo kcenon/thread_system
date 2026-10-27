@@ -1,0 +1,5 @@
+<map id="kcenon::thread::autoscaling_pool_policy" name="kcenon::thread::autoscaling_pool_policy">
+<area shape="rect" id="Node000001" title="Pool policy that implements automatic scaling for dynamic worker management." alt="" coords="5,253,211,553"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1pool__policy.html" title="Base interface for thread pool policies." alt="" coords="33,5,183,205"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,219,111,253,105,253,105,219"/>
+</map>

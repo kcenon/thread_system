@@ -1,0 +1,23 @@
+<map id="mock_monitoring" name="mock_monitoring">
+<area shape="rect" id="Node000001" title="Mock monitoring implementation for demonstration." alt="" coords="493,433,657,739"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,283,204,363"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,368,495,537,492,542,186,372"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="229,276,381,371"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="355,369,483,492,479,496,351,373"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="290,133,410,199"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="314,212,309,224,303,249,302,276,296,276,298,249,303,222,309,209"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="411,5,433,71"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="413,61,379,120,374,118,408,58"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="478,133,603,199"/>
+<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="435,50,502,119,498,123,431,53"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="797,291,881,356"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="819,358,776,411,725,462,672,509,668,505,721,458,772,408,815,355"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="405,291,551,356"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="492,355,515,417,510,419,487,357"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="529,213,514,253,496,292,491,290,509,251,524,211"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="575,291,773,356"/>
+<area shape="poly" id="edge11_Node000010_Node000008" title=" " alt="" coords="579,208,591,221,649,289,645,292,587,224,575,211"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="905,291,989,356"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="912,358,896,373,850,411,760,474,673,530,670,525,757,470,847,407,892,369,909,354"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="665,357,641,419,636,417,660,355"/>
+</map>
