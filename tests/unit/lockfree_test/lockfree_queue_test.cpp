@@ -5,12 +5,13 @@ Copyright (c) 2024, 🍀☀🌕🌥 🌊
 All rights reserved.
 *****************************************************************************/
 
-#include <kcenon/thread/concurrent/concurrent_queue.h>
-
 #include <gtest/gtest.h>
+#include <kcenon/thread/concurrent/concurrent_queue.h>
 
 #include <atomic>
 #include <chrono>
+#include <cstdint>
+#include <memory>
 #include <string>
 #include <thread>
 #include <vector>
@@ -148,6 +149,158 @@ TEST_F(ConcurrentQueueTest, ShutdownWakesWaiters) {
 // =============================================================================
 // Concurrent Access
 // =============================================================================
+
+namespace {
+
+struct publication_payload {
+    int producer;
+    int sequence;
+    std::uint64_t checksum;
+    std::string text;
+
+    publication_payload(int producer_id, int sequence_id)
+        : producer(producer_id)
+        , sequence(sequence_id)
+        , checksum((static_cast<std::uint64_t>(producer_id) << 32U) ^
+                   static_cast<std::uint64_t>(sequence_id))
+        , text(std::to_string(producer_id) + ":" + std::to_string(sequence_id) +
+               std::string(128, 'x')) {}
+};
+
+void expect_payload(const publication_payload& value, int producer, int sequence) {
+    const publication_payload expected(producer, sequence);
+    EXPECT_EQ(value.producer, expected.producer);
+    EXPECT_EQ(value.sequence, expected.sequence);
+    EXPECT_EQ(value.checksum, expected.checksum);
+    EXPECT_EQ(value.text, expected.text);
+}
+
+}  // namespace
+
+TEST_F(ConcurrentQueueTest, PublishesPayloadAcrossEmptyTransitions) {
+    concurrent_queue<publication_payload> queue;
+    constexpr int count = 1000;
+    const auto deadline = std::chrono::steady_clock::now() + 10s;
+    std::atomic<bool> start{false};
+    std::atomic<int> acknowledged{0};
+    std::vector<publication_payload> received;
+    received.reserve(count);
+    int empty_transitions = 0;
+
+    std::thread consumer([&] {
+        while (!start.load(std::memory_order_acquire)) {
+            std::this_thread::yield();
+        }
+        while (received.size() < count && std::chrono::steady_clock::now() < deadline) {
+            if (auto value = queue.try_dequeue()) {
+                received.push_back(std::move(*value));
+                if (!queue.try_dequeue()) {
+                    ++empty_transitions;
+                }
+                // Only consumer -> producer synchronization: the next payload
+                // is constructed AFTER this acknowledgement. Its publication
+                // must still come from the queue's next link, not this flag.
+                acknowledged.store(static_cast<int>(received.size()), std::memory_order_release);
+            } else {
+                std::this_thread::yield();
+            }
+        }
+    });
+    std::thread producer([&] {
+        while (!start.load(std::memory_order_acquire)) {
+            std::this_thread::yield();
+        }
+        for (int i = 0; i < count; ++i) {
+            while (acknowledged.load(std::memory_order_acquire) != i) {
+                if (std::chrono::steady_clock::now() >= deadline) {
+                    return;
+                }
+                std::this_thread::yield();
+            }
+            queue.enqueue(publication_payload{0, i});
+        }
+    });
+
+    start.store(true, std::memory_order_release);
+    producer.join();
+    consumer.join();
+
+    ASSERT_EQ(received.size(), count);
+    EXPECT_EQ(empty_transitions, count);
+    for (int i = 0; i < count; ++i) {
+        expect_payload(received.at(i), 0, i);
+    }
+    EXPECT_EQ(queue.size(), 0);
+    EXPECT_TRUE(queue.empty());
+}
+
+TEST_F(ConcurrentQueueTest, PublishesPayloadExactlyOnceWithMultipleProducersAndConsumers) {
+    concurrent_queue<publication_payload> queue;
+    constexpr int producers = 4;
+    constexpr int consumers = 4;
+    constexpr int per_producer = 1000;
+    constexpr int total = producers * per_producer;
+    const auto deadline = std::chrono::steady_clock::now() + 10s;
+    std::atomic<bool> start{false};
+    std::atomic<int> consumed{0};
+    std::vector<std::vector<publication_payload>> received(consumers);
+    std::vector<std::thread> threads;
+    threads.reserve(producers + consumers);
+
+    for (int c = 0; c < consumers; ++c) {
+        threads.emplace_back([&, c] {
+            auto& values = received.at(c);
+            values.reserve(total);
+            while (!start.load(std::memory_order_acquire)) {
+                std::this_thread::yield();
+            }
+            // A relaxed counter bounds the work without publishing producer
+            // data. Do not gate dequeue on size(), empty(), or producer flags.
+            while (consumed.load(std::memory_order_relaxed) < total &&
+                   std::chrono::steady_clock::now() < deadline) {
+                if (auto value = queue.try_dequeue()) {
+                    values.push_back(std::move(*value));
+                    consumed.fetch_add(1, std::memory_order_relaxed);
+                } else {
+                    std::this_thread::yield();
+                }
+            }
+        });
+    }
+    for (int p = 0; p < producers; ++p) {
+        threads.emplace_back([&, p] {
+            while (!start.load(std::memory_order_acquire)) {
+                std::this_thread::yield();
+            }
+            for (int i = 0; i < per_producer; ++i) {
+                queue.enqueue(publication_payload{p, i});
+            }
+        });
+    }
+
+    start.store(true, std::memory_order_release);
+    for (auto& thread : threads) {
+        thread.join();
+    }
+
+    EXPECT_EQ(consumed.load(), total);
+    std::vector<int> seen(total, 0);
+    for (const auto& values : received) {
+        for (const auto& value : values) {
+            ASSERT_GE(value.producer, 0);
+            ASSERT_LT(value.producer, producers);
+            ASSERT_GE(value.sequence, 0);
+            ASSERT_LT(value.sequence, per_producer);
+            ++seen.at((value.producer * per_producer) + value.sequence);
+            expect_payload(value, value.producer, value.sequence);
+        }
+    }
+    for (int id = 0; id < total; ++id) {
+        EXPECT_EQ(seen.at(id), 1) << "Payload ID " << id;
+    }
+    EXPECT_EQ(queue.size(), 0);
+    EXPECT_TRUE(queue.empty());
+}
 
 TEST_F(ConcurrentQueueTest, SingleProducerSingleConsumer) {
     concurrent_queue<int> queue;
