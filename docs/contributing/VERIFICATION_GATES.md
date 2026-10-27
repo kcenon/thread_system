@@ -23,6 +23,7 @@ and reviewers a single map of *what runs, when, and what a failure means*.
 
 | Gate | Tool | Workflow file | Trigger | Scope | Release-blocking |
 |------|------|---------------|---------|-------|------------------|
+| Concurrent queue | GoogleTest, TSan, ASan, UBSan | `.github/workflows/ci.yml` (`concurrent-queue` job) | `push` to `main`/`phase-*`, `pull_request` to `main` | Required publication regressions and concurrent-queue sanitizer suite; full queue/deque and `PerformanceTests` suites in Release | Yes |
 | ASan | AddressSanitizer (`-fsanitize=address`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `address`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
 | TSan | ThreadSanitizer (`-fsanitize=thread`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `thread`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
 | UBSan | UndefinedBehaviorSanitizer (`-fsanitize=undefined`) | `.github/workflows/ci.yml` (`sanitizer` job, matrix `undefined`) | `push` to `main`/`phase-*`, `pull_request` to `main` | Unit-test executables (`bin/*_unit`), Debug build, clang + libc++ | Yes |
@@ -38,6 +39,27 @@ and reviewers a single map of *what runs, when, and what a failure means*.
 
 ## Release Branch Gate Set
 
+### Concurrent queue publication
+
+The `concurrent-queue` job explicitly enables `BUILD_TESTING` and requires
+`lockfree_test` discovery and nonempty GoogleTest execution through
+`scripts/run_required_tests.py`. Each publication regression runs separately, so
+removing or renaming either test fails the gate. The runner's self-tests also run
+in this job. Test failures, sanitizer diagnostics, missing reports, and timeouts
+fail the job; results are retained as workflow artifacts.
+
+TSan runs all `ConcurrentQueueTest.*` cases twenty times; ASan and UBSan run the
+same suite once. These sanitizer runs select the concurrent queue explicitly;
+they do not cover the work-stealing deque, whose independent fixes are pending
+delivery from `develop`. Release runs the complete `lockfree_test` executable and
+the required `PerformanceTests` suite with unchanged thresholds. This performance
+check is separate from the optional Google Benchmark trend workflow below.
+
+This focused gate supplements the existing jobs. The legacy `*_unit` executable
+scan does not include `lockfree_test`; it cannot substitute for this gate.
+
+### Release requirements
+
 Thread System follows a `main` / `develop` branch model. **CI runs only on pull
 requests targeting `main`** — the workflows above are scoped with
 `pull_request: branches: [ main ]`. Pull requests targeting `develop` (the default
@@ -50,6 +72,8 @@ merge:
 - **ASan** — no memory errors.
 - **TSan** — no data races (tolerated known flakes excluded; see below).
 - **UBSan** — no undefined behavior.
+- **Concurrent queue** — publication regressions and the selected sanitizer and
+  Release suites above must execute and pass.
 - **Integration** — full integration suite green on Debug and Release.
 - **Valgrind** — no leaks or invalid memory access.
 - **Static analysis** — clang-tidy clean.

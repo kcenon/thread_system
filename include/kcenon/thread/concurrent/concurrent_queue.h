@@ -137,11 +137,15 @@ public:
 
         {
             std::lock_guard<std::mutex> lock(tail_mutex_);
-            tail_->next = new_node;
+            // Account for the item before publishing it: a consumer may remove
+            // it immediately after the release store (under a different lock).
+            size_.fetch_add(1, std::memory_order_release);
+            // Publish the initialized payload to the acquire load in try_dequeue().
+            // The separate head/tail mutexes cannot provide this ordering.
+            tail_->next.store(new_node, std::memory_order_release);
             tail_ = new_node;
         }
 
-        size_.fetch_add(1, std::memory_order_release);
         notify_one();
     }
 
@@ -156,7 +160,7 @@ public:
         std::lock_guard<std::mutex> lock(head_mutex_);
 
         node* old_head = head_;
-        node* next = old_head->next;
+        node* next = old_head->next.load(std::memory_order_acquire);
 
         if (next == nullptr) {
             return std::nullopt;  // Queue is empty
@@ -169,7 +173,8 @@ public:
             next->data.reset();
         }
 
-        // Advance head (old_head becomes the new dummy)
+        // The acquired link publishes next's payload and completes the
+        // producer's last access to old_head, which can now be reclaimed.
         head_ = next;
         delete old_head;
 
@@ -273,7 +278,7 @@ public:
 private:
     struct node {
         std::optional<T> data;
-        node* next{nullptr};
+        std::atomic<node*> next{nullptr};
 
         node() = default;
         explicit node(T value) : data(std::move(value)) {}

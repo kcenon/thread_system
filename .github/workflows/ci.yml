@@ -26,6 +26,103 @@ jobs:
         fi
         echo "No legacy types found in public headers"
 
+  concurrent-queue:
+    name: Concurrent queue / ${{ matrix.mode }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [release, thread, address, undefined]
+    env:
+      ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+      TSAN_OPTIONS: halt_on_error=1
+      UBSAN_OPTIONS: print_stacktrace=1:halt_on_error=1
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build clang libc++-dev libc++abi-dev
+
+    - name: Checkout common_system
+      uses: actions/checkout@v7
+      with:
+        repository: kcenon/common_system
+        path: common_system
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Verify required-test runner
+      run: python3 -m unittest discover -s scripts/tests -p test_run_required_tests.py -v
+
+    - name: Configure concurrent-queue tests
+      env:
+        MODE: ${{ matrix.mode }}
+      run: |
+        flags="-stdlib=libc++"
+        build_type=Release
+        integration=ON
+        if [ "$MODE" != release ]; then
+          flags="$flags -fsanitize=$MODE -fno-omit-frame-pointer -g"
+          build_type=Debug
+          integration=OFF
+        fi
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE="$build_type" \
+          -DCMAKE_C_COMPILER=clang \
+          -DCMAKE_CXX_COMPILER=clang++ \
+          -DCMAKE_CXX_FLAGS="$flags" \
+          -DCMAKE_EXE_LINKER_FLAGS="-stdlib=libc++ -lc++abi" \
+          -DCOMMON_SYSTEM_INCLUDE_DIR="$GITHUB_WORKSPACE/common_system/include" \
+          -DBUILD_TESTING=ON \
+          -DBUILD_INTEGRATION_TESTS="$integration" \
+          -DBUILD_DOCUMENTATION=OFF
+
+    - name: Build concurrent-queue tests
+      run: cmake --build build --target lockfree_test --parallel 2
+
+    - name: Require both publication regressions
+      run: |
+        for test in \
+          PublishesPayloadAcrossEmptyTransitions \
+          PublishesPayloadExactlyOnceWithMultipleProducersAndConsumers; do
+          GTEST_FILTER="ConcurrentQueueTest.$test" \
+            python3 scripts/run_required_tests.py build --gtest \
+              --include '^lockfree_test$' --require lockfree_test --timeout 120
+        done
+
+    - name: Run concurrent-queue sanitizer suite
+      if: matrix.mode != 'release'
+      env:
+        GTEST_FILTER: ConcurrentQueueTest.*
+        MODE: ${{ matrix.mode }}
+      run: |
+        if [ "$MODE" = thread ]; then
+          export GTEST_REPEAT=20
+        fi
+        python3 scripts/run_required_tests.py build --gtest \
+          --include '^lockfree_test$' --require lockfree_test --timeout 300
+
+    - name: Run full queue and performance suites
+      if: matrix.mode == 'release'
+      run: |
+        cmake --build build --target performance_tests --parallel 2
+        python3 scripts/run_required_tests.py build --config Release --gtest \
+          --include '^(lockfree_test|PerformanceTests)$' \
+          --require lockfree_test --require PerformanceTests --timeout 300
+
+    - name: Upload concurrent-queue results
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: concurrent-queue-${{ matrix.mode }}-results
+        path: |
+          build/Testing/Temporary/
+          build/required-gtest-*/
+          build/CMakeFiles/*.log
+
   build:
     name: ${{ matrix.os }} / ${{ matrix.compiler }}
     runs-on: ${{ matrix.os }}
