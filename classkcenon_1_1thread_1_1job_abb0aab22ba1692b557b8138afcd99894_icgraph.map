@@ -1,0 +1,31 @@
+<map id="kcenon::thread::job::do_work" name="kcenon::thread::job::do_work">
+<area shape="rect" id="Node000001" title="The core task execution method to be overridden by derived classes." alt="" coords="373,261,519,306"/>
+<area shape="rect" id="Node000002" href="$mpmc__queue__sample_8cpp.html#a2eae948c8b6adfa8552c3ed50ddba103" title=" " alt="" coords="139,57,294,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="428,246,412,212,389,172,359,133,323,100,295,85,294,80,327,96,363,129,393,169,417,210,434,247"/>
+<area shape="rect" id="Node000004" href="$typed__job__queue__sample_8cpp.html#a321ef82abad81c7fedbfe6c419391a01" title=" " alt="" coords="111,299,322,326"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="355,296,323,302,321,297,360,293"/>
+<area shape="rect" id="Node000006" href="$mpmc__queue__sample_8cpp.html#a945cedda90dc9326e3e06de84c543c52" title=" " alt="" coords="118,109,315,137"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="420,248,379,198,353,172,324,151,302,140,301,135,326,146,356,168,383,194,425,248"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1callback__job.html#ad33becc537f5b387f959a310a82a5bae" title="Executes the appropriate callback function to perform the job&#39;s work." alt="" coords="126,161,306,206"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="392,254,324,220,295,209,294,203,326,215,397,252"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1typed__thread__worker__t.html#a288757c465ef5a3c9831a3d828c89d43" title="Executes pending work by processing one job at a time." alt="" coords="118,230,314,275"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="355,272,315,268,314,263,360,271"/>
+<area shape="rect" id="Node000009" href="$mpmc__queue__sample_8cpp.html#a8d76c423bb645996fcbb1e72c8f1cdda" title=" " alt="" coords="153,5,280,33"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="434,245,420,200,397,146,365,93,346,69,323,48,302,36,281,28,279,23,305,31,327,44,350,65,370,90,402,144,425,198,439,246"/>
+<area shape="rect" id="Node000010" href="$typed__job__queue__sample_8cpp.html#a37aa6c7a2c2e921edf037ae704057e8c" title=" " alt="" coords="108,351,325,378"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="384,314,326,340,285,352,283,348,324,335,389,311"/>
+<area shape="rect" id="Node000011" href="$typed__job__queue__sample_8cpp.html#ae02d8cf8e89039528a2dac66c67534df" title=" " alt="" coords="123,402,310,447"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="417,315,376,357,326,392,302,404,299,399,324,388,372,353,412,318"/>
+<area shape="rect" id="Node000012" href="$adaptive__queue__sample_8cpp.html#aff6943b24f1669731fdb15ab93341ef9" title=" " alt="" coords="113,471,320,498"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="432,318,415,355,392,393,362,430,327,461,305,473,303,468,323,457,358,427,387,390,410,352,428,322"/>
+<area shape="rect" id="Node000014" href="$typed__job__queue__sample_8cpp.html#aa5aaded1abd8b4090507fbd19498d080" title=" " alt="" coords="138,523,294,550"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="437,318,423,365,400,417,369,468,349,492,327,512,296,528,294,523,323,508,345,488,364,465,396,415,418,363,434,322"/>
+<area shape="rect" id="Node000003" href="$mpmc__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,57,60,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="121,73,62,73,59,69,125,69"/>
+<area shape="rect" id="Node000005" href="$typed__job__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,299,60,326"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,314,62,315,59,310,98,311"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="136,106,107,99,61,83,59,78,108,94,140,103"/>
+<area shape="poly" id="edge10_Node000009_Node000003" title=" " alt="" coords="136,39,108,48,62,63,58,60,107,43,140,35"/>
+<area shape="rect" id="Node000013" href="$adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,471,60,498"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="95,486,61,487,60,482,99,483"/>
+</map>

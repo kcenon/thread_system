@@ -1,0 +1,13 @@
+<map id="kcenon::thread::scheduler_interface" name="kcenon::thread::scheduler_interface">
+<area shape="rect" id="Node000001" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="310,5,488,139"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html" title="Adaptive queue that switches between mutex and lock&#45;free modes." alt="" coords="5,187,184,785"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="295,115,244,147,220,167,198,189,187,204,182,202,194,186,216,163,241,143,298,111"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html" title="Lock&#45;free Multi&#45;Producer Multi&#45;Consumer (MPMC) job queue (Internal implementation)" alt="" coords="209,240,384,732"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="379,151,360,242,354,240,378,156"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="408,252,598,721"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="419,151,447,252,441,252,419,156"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1policy__queue.html" title="Policy&#45;based queue template." alt="" coords="622,288,856,684"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="501,110,560,142,587,163,611,186,648,233,678,288,673,288,644,236,608,189,584,167,557,147,503,115"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html" title="A job queue with comprehensive backpressure mechanisms." alt="" coords="398,833,607,1475"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="504,733,505,834,500,832,502,738"/>
+</map>

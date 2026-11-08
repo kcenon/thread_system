@@ -1,0 +1,19 @@
+<map id="src/stealing/work_affinity_tracker.cpp" name="src/stealing/work_affinity_tracker.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="252,5,438,50"/>
+<area shape="rect" id="Node000002" href="$work__affinity__tracker_8h.html" title="Tracks cooperation patterns between workers for locality&#45;aware stealing." alt="" coords="182,98,356,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="329,49,298,88,295,84,325,52"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="380,106,465,134"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="364,48,404,95,399,94,363,53"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,191,72,218"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="209,146,87,189,85,184,207,141"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="96,191,165,218"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="235,143,167,185,165,180,230,144"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="190,191,255,218"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="259,142,239,179,236,175,255,144"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="279,191,355,218"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="283,141,304,178,299,176,280,145"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="380,191,439,218"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="307,141,377,183,371,183,306,146"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="463,191,526,218"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="329,141,451,186,446,187,328,146"/>
+</map>

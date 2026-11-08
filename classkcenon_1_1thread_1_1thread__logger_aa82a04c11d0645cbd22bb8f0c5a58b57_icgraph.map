@@ -1,0 +1,21 @@
+<map id="kcenon::thread::thread_logger::is_shutting_down" name="kcenon::thread::thread_logger::is_shutting_down">
+<area shape="rect" id="Node000001" title="Check if shutdown is in progress." alt="" coords="455,264,645,309"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__context.html#a67f1f94e401b0fbd371f9b009d0e6e42" title="Log a message if logger is available." alt="" coords="230,5,398,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="532,249,512,208,484,158,448,108,405,64,390,53,389,48,409,60,453,105,489,155,517,206,537,250"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__context.html#aec44e9ec720c8d284e6a9f53652b2ca2" title="Log a message with source location if logger is available." alt="" coords="230,75,398,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="522,251,472,193,440,161,406,134,387,123,386,117,408,129,444,157,476,189,527,252"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__context.html#a76c3af1a58369a88a3a3061d0b023865" title="Log a message if logger is available (v2 API with conversion)" alt="" coords="230,144,398,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="500,256,406,203,381,192,380,187,408,199,505,255"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__context.html#a67868ca5037f9ca00247e8e1fd6076e4" title="Update system metrics if monitoring is available." alt="" coords="222,213,407,274"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="437,267,408,263,407,258,442,266"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1thread__context.html#aa842f208bd1d141b205177510d9826ce" title="Update thread pool metrics if monitoring is available." alt="" coords="225,298,404,360"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="437,307,405,315,404,310,442,305"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1thread__context.html#ac175a38a0983bddc2358e581a9499469" title="Update thread pool metrics with pool identifier." alt="" coords="225,384,404,445"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="503,316,408,374,386,385,384,381,406,369,498,318"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1thread__context.html#aad1885ea00efcee7be75d11dc5d0f058" title="Update worker metrics if monitoring is available." alt="" coords="224,469,405,530"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="529,320,478,391,445,427,409,459,391,471,389,466,405,455,441,423,474,387,524,323"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1thread__pool.html#a0e06c5be9b580cef250bb6053630755f" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="230,555,398,599"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="539,322,521,374,494,432,456,492,434,520,409,544,391,557,389,552,405,540,430,516,452,489,489,430,516,372,535,326"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1thread__pool.html#a1c0caf3f3a17f2d1bcd07d480c3657f7" title="Collect and report current thread pool metrics." alt="" coords="5,307,174,351"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="207,330,175,331,173,327,212,328"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="include/kcenon/thread/core/thread_impl.h" name="include/kcenon/thread/core/thread_impl.h">
+<area shape="rect" id="Node000001" title="Thread implementation abstraction bridging std::jthread and std::thread." alt="" coords="57,5,222,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,82,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,49,72,90,69,85,112,51"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="106,98,173,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="141,48,142,84,137,81,138,52"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="197,98,260,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="164,48,206,87,201,87,162,53"/>
+</map>

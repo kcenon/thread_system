@@ -1,0 +1,14 @@
+<map id="kcenon::thread::diagnostics::bottleneck_report" name="kcenon::thread::diagnostics::bottleneck_report">
+<area shape="rect" id="Node000001" title="Analysis report of bottlenecks in the thread pool." alt="" coords="105,434,320,853"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="204,160,279,232"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="262,229,273,255,280,295,283,336,278,418,273,417,278,336,275,296,268,257,262,234"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="49,297,224,369"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="213,234,197,258,176,285,171,283,193,254,215,230"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="178,5,305,95"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="242,107,244,160,239,159,241,112"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="135,366,140,410,142,418,136,417,135,411,135,372"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,160,123,232"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="59,244,68,272,86,296,80,298,63,274,59,249"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="55,14,74,86"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="64,83,67,143,62,143,64,89"/>
+</map>

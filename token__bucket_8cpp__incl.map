@@ -1,0 +1,15 @@
+<map id="src/core/token_bucket.cpp" name="src/core/token_bucket.cpp">
+<area shape="rect" id="Node000001" title="Implementation of lock&#45;free token bucket rate limiter." alt="" coords="173,5,362,33"/>
+<area shape="rect" id="Node000002" href="$token__bucket_8h.html" title="Lock&#45;free token bucket rate limiter for controlling throughput." alt="" coords="55,81,201,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,35,180,75,177,70,248,32"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="226,90,310,117"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="269,31,270,75,265,73,266,36"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="334,90,397,117"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="284,31,341,80,336,80,283,36"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,174,72,201"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,125,66,165,62,161,102,127"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="95,174,160,201"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="130,124,130,159,125,157,126,128"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="185,174,254,201"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="153,124,197,163,191,163,151,129"/>
+</map>

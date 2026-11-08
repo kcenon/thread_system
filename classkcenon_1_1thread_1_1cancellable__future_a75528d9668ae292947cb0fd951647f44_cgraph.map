@@ -1,0 +1,11 @@
+<map id="kcenon::thread::cancellable_future::get" name="kcenon::thread::cancellable_future::get">
+<area shape="rect" id="Node000001" title="Wait for and retrieve the result." alt="" coords="5,40,206,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1cancellation__token.html#ae6f752c51fe6a2a735313550812edbfc" title="Checks if the token has been canceled." alt="" coords="254,5,459,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,46,241,43,235,45,207,51"/>
+<area shape="rect" id="Node000003" href="$namespacekcenon_1_1thread.html#a13f75c13dd33420c01a704c8bd09a79e" title="Create a common::VoidResult error from a thread::error_code." alt="" coords="275,75,438,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,74,262,83,257,84,206,79"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread.html#a899d6d797fc353567761b0d4ed2637e6" title="Convert a thread::error_code to common::error_info." alt="" coords="507,75,646,119"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="438,94,494,97,489,97,438,100"/>
+<area shape="rect" id="Node000005" href="$namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="694,75,852,119"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="647,94,681,97,676,97,647,100"/>
+</map>

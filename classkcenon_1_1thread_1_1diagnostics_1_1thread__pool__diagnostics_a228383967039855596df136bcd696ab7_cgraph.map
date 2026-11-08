@@ -1,0 +1,56 @@
+<map id="kcenon::thread::diagnostics::thread_pool_diagnostics::to_json" name="kcenon::thread::diagnostics::thread_pool_diagnostics::to_json">
+<area shape="rect" id="Node000001" title="Exports diagnostics as JSON." alt="" coords="5,348,206,409"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread_1_1diagnostics.html#a016953281c0f93d2fb82176c1da217f7" title="Converts bottleneck_type to human&#45;readable string." alt="" coords="254,261,454,306"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,345,281,310,277,314,190,349"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a4b93368a3bdd15a158627d9c2c9672e6" title="Analyzes for bottlenecks." alt="" coords="502,202,702,264"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="205,368,326,350,391,335,453,316,489,298,540,271,536,274,492,303,455,321,392,340,327,355,207,373"/>
+<area shape="rect" id="Node000017" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a9ab588881fb90a45966cf463c9e7990d" title="Performs comprehensive health check." alt="" coords="254,381,454,442"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="205,389,241,395,236,397,207,394"/>
+<area shape="rect" id="Node000023" href="$namespacekcenon_1_1thread_1_1diagnostics.html#afde8923eb434436293f74ba0f706827d" title="Converts health_state to human&#45;readable string." alt="" coords="254,467,454,511"/>
+<area shape="poly" id="edge31_Node000001_Node000023" title=" " alt="" coords="163,407,255,452,272,460,267,461,253,457,163,412"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__pool.html#aa68a68ac5ec911d075d10e0537cf43b3" title="Collects diagnostics information from all workers." alt="" coords="779,298,948,360"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="688,262,767,292,762,293,688,267"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a11a9716b38eba8b4ea82eeecd767223c" title="Generates recommendations for a bottleneck." alt="" coords="757,213,970,274"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="702,235,744,238,739,239,703,240"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1thread__pool.html#a51dc6391d2b7be450f353b8d775bdc56" title="Get the current number of active (running) workers." alt="" coords="750,5,977,50"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="658,200,681,183,700,163,716,136,722,111,729,86,748,60,757,57,753,60,752,64,734,88,727,112,721,138,704,167,684,187,662,204"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1thread__pool.html#a20210275a456e84078d611a8ad625d71" title="Get the number of idle workers." alt="" coords="758,144,969,189"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="702,205,761,192,756,194,704,210"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1thread__pool.html#aebd7dbb88679675d09d7479b6dbab529" title="Returns the shared job_queue used by this thread pool." alt="" coords="779,620,948,665"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="648,261,680,290,705,325,721,366,726,404,724,440,720,473,717,506,719,539,729,572,752,606,768,622,763,620,748,609,724,574,713,540,712,506,715,473,719,439,721,404,716,367,700,328,676,294,647,267"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1thread__pool.html#a1ac09aac27cb01dc7a0c82b64ccbc969" title="Get the number of pending tasks in the queue." alt="" coords="752,551,975,595"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="647,262,679,291,705,325,717,353,723,379,725,426,728,471,736,494,752,518,780,543,774,542,748,521,732,496,723,472,719,426,718,379,712,355,700,328,675,294,646,267"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1thread__pool.html#ad334280444cef62a9c1b2d8379ab329b" title="Access aggregated runtime metrics (read&#45;only reference)." alt="" coords="779,384,948,429"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="679,262,704,280,721,304,728,327,735,349,752,370,768,382,763,382,749,374,730,351,723,329,716,307,700,284,679,267"/>
+<area shape="rect" id="Node000011" href="$classkcenon_1_1thread_1_1metrics_1_1ThreadPoolMetrics.html#a921470d5f838991835cf56d36fc237b7" title="Get a snapshot of all metrics." alt="" coords="755,463,972,507"/>
+<area shape="poly" id="edge10_Node000003_Node000011" title=" " alt="" coords="644,262,676,291,705,325,720,357,726,386,733,412,752,439,770,455,765,454,748,443,728,414,721,387,715,359,700,328,672,295,644,267"/>
+<area shape="rect" id="Node000012" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a3741f9aaf9790c6da5f4bc70f5224ce4" title="Get the total number of tasks successfully executed." alt="" coords="1028,324,1246,369"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="938,460,975,439,990,424,998,409,1007,394,1023,379,1030,377,1035,375,1026,383,1011,397,1003,412,994,427,978,443,940,464"/>
+<area shape="rect" id="Node000013" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a824bee8bb995f8294725ae0e550ec840" title="Get the total number of failed tasks." alt="" coords="1039,393,1236,438"/>
+<area shape="poly" id="edge12_Node000011_Node000013" title=" " alt="" coords="954,459,1034,442,1029,443,955,465"/>
+<area shape="rect" id="Node000014" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a5cc9b46e7234c95c2f56dcf3c9fe1d83" title="Get the total number of tasks submitted." alt="" coords="1025,463,1250,507"/>
+<area shape="poly" id="edge13_Node000011_Node000014" title=" " alt="" coords="972,482,1012,485,1006,485,973,488"/>
+<area shape="rect" id="Node000015" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a1b30e693bd0b1a295fc6a4fed9bab38c" title="Get the total busy time in nanoseconds." alt="" coords="1045,532,1230,593"/>
+<area shape="poly" id="edge14_Node000011_Node000015" title=" " alt="" coords="946,505,1032,532,1027,532,945,511"/>
+<area shape="rect" id="Node000016" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#ad8eec6c5037bebfd0b5887ff41ba07f7" title="Get the total idle time in nanoseconds." alt="" coords="1048,617,1226,678"/>
+<area shape="poly" id="edge15_Node000011_Node000016" title=" " alt="" coords="927,505,954,519,978,536,994,554,1003,571,1011,587,1026,603,1037,613,1032,611,1023,607,1007,590,998,573,990,557,975,540,951,524,926,510"/>
+<area shape="poly" id="edge26_Node000017_Node000006" title=" " alt="" coords="397,378,427,351,452,317,465,283,470,251,466,192,463,163,466,134,477,106,500,78,525,58,552,42,612,21,674,11,737,11,732,13,675,16,613,26,554,47,528,62,504,82,482,109,471,136,469,163,471,191,475,252,470,285,456,320,431,354,401,382"/>
+<area shape="poly" id="edge27_Node000017_Node000008" title=" " alt="" coords="443,440,456,453,474,484,481,515,479,545,475,575,471,604,472,631,482,657,504,682,538,702,575,714,615,717,657,715,697,707,736,696,802,672,808,671,738,701,699,712,657,720,615,723,574,719,536,707,500,686,477,660,467,632,466,603,470,574,474,545,475,515,469,486,452,456,442,446"/>
+<area shape="poly" id="edge28_Node000017_Node000009" title=" " alt="" coords="438,440,456,452,472,471,479,490,487,507,504,523,559,549,619,566,679,575,740,581,734,581,679,580,618,571,557,554,500,527,483,510,474,492,467,474,452,456,438,446"/>
+<area shape="poly" id="edge29_Node000017_Node000010" title=" " alt="" coords="421,378,452,360,475,340,486,331,501,324,557,307,603,301,649,306,703,324,720,334,729,346,738,358,752,369,768,379,763,379,749,374,734,362,725,349,716,338,701,329,647,311,603,306,558,312,503,329,488,336,479,344,456,365,423,383"/>
+<area shape="poly" id="edge30_Node000017_Node000011" title=" " alt="" coords="434,440,456,452,470,464,479,476,488,486,503,495,565,511,629,517,692,515,753,510,748,511,692,520,629,522,564,516,501,499,485,490,475,479,466,468,452,457,434,446"/>
+<area shape="rect" id="Node000018" href="$structkcenon_1_1thread_1_1diagnostics_1_1health__status.html#a8768fc127b162e29ee69a974c980248f" title="Calculates overall status from component states." alt="" coords="502,338,702,400"/>
+<area shape="poly" id="edge17_Node000017_Node000018" title=" " alt="" coords="453,392,489,388,484,390,455,397"/>
+<area shape="rect" id="Node000019" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a53e2293a22523b3dc2e67841fa9569e1" title="Checks metrics component health." alt="" coords="502,424,702,485"/>
+<area shape="poly" id="edge18_Node000017_Node000019" title=" " alt="" coords="454,426,489,434,484,435,455,432"/>
+<area shape="rect" id="Node000020" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a02c6b078d35493754223fcfdaaf57d45" title="Checks queue component health." alt="" coords="502,610,702,672"/>
+<area shape="poly" id="edge19_Node000017_Node000020" title=" " alt="" coords="442,440,456,453,469,471,477,488,481,522,485,556,492,573,504,590,514,601,508,600,500,593,487,575,480,557,476,523,472,490,465,473,452,456,441,446"/>
+<area shape="rect" id="Node000021" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#af4c2c61cb9816ef9d83d26428cf44893" title="Checks worker component health." alt="" coords="502,92,702,153"/>
+<area shape="poly" id="edge22_Node000017_Node000021" title=" " alt="" coords="395,378,425,350,452,317,468,283,474,253,481,222,500,189,532,161,528,165,504,192,486,224,479,254,473,285,456,320,429,354,398,382"/>
+<area shape="poly" id="edge20_Node000020_Node000008" title=" " alt="" coords="703,639,766,642,761,642,703,644"/>
+<area shape="poly" id="edge21_Node000020_Node000009" title=" " alt="" coords="702,612,758,600,763,599,703,618"/>
+<area shape="poly" id="edge23_Node000021_Node000006" title=" " alt="" coords="676,89,749,60,773,54,768,57,751,65,678,93"/>
+<area shape="poly" id="edge24_Node000021_Node000007" title=" " alt="" coords="702,137,745,145,740,147,703,142"/>
+<area shape="rect" id="Node000022" href="$classkcenon_1_1thread_1_1thread__pool.html#aa909fc61736d7362f1dfbad08bbe4f65" title="Check if the thread pool is currently running." alt="" coords="779,75,948,119"/>
+<area shape="poly" id="edge25_Node000021_Node000022" title=" " alt="" coords="702,110,766,106,761,108,704,115"/>
+</map>

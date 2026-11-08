@@ -1,0 +1,15 @@
+<map id="kcenon::thread::job::get_name" name="kcenon::thread::job::get_name">
+<area shape="rect" id="Node000001" title="Retrieves the name of this job." alt="" coords="242,179,388,223"/>
+<area shape="rect" id="Node000002" href="$classcancellable__long__job.html#aa3dbcf279a3eb9572e1234c3a70a378e" title="The core task execution method to be overridden by derived classes." alt="" coords="21,5,178,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="288,166,247,115,221,88,192,65,174,53,172,48,195,60,225,84,251,111,293,166"/>
+<area shape="rect" id="Node000003" href="$classnon__cancellable__job.html#a360e6055c3bb08c29df8b562d99aed99" title="The core task execution method to be overridden by derived classes." alt="" coords="23,75,176,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="262,171,193,134,167,122,166,117,195,129,267,169"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1dag__job.html#a023ece86df393c26bd59a21f5fbb15a7" title="Creates a dag_job_info snapshot." alt="" coords="24,144,175,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="224,188,176,181,175,176,229,186"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1protected__job.html#aa59cee1f4e87712ade57243a9b4571b1" title="Gets the name of this job." alt="" coords="5,213,194,258"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="224,216,195,223,193,218,229,214"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1dag__scheduler.html#afb8cc400a68994d1133d1457a03f11bc" title="Exports the DAG as DOT format (Graphviz)" alt="" coords="24,283,175,327"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="263,233,195,273,168,284,165,280,193,268,267,230"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1dag__job.html#af9ca3d1969d756bee076c20f7d214283" title="Returns a string representation of the job." alt="" coords="24,352,175,397"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="293,235,251,291,225,318,195,342,174,354,172,349,192,337,221,314,247,287,289,238"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,14,60,42"/>
+<area shape="rect" id="Node000002" href="$typed__job__queue__sample_8cpp.html#a321ef82abad81c7fedbfe6c419391a01" title=" " alt="" coords="108,14,318,42"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,25,94,27,90,29,60,30"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1job.html#abb0aab22ba1692b557b8138afcd99894" title="The core task execution method to be overridden by derived classes." alt="" coords="366,5,512,50"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="318,25,353,28,348,28,318,30"/>
+</map>

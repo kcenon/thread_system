@@ -1,0 +1,5 @@
+<map id="kcenon::thread::retry_policy::no_retry" name="kcenon::thread::retry_policy::no_retry">
+<area shape="rect" id="Node000001" title="Creates a policy that disables retry." alt="" coords="5,5,163,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1retry__policy.html#acf89bf284cbb5dd76362a21d7cb12571" title="Default constructor creates a &quot;no retry&quot; policy." alt="" coords="211,5,368,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,25,198,27,192,28,163,30"/>
+</map>

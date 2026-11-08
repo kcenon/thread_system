@@ -1,0 +1,7 @@
+<map id="kcenon::thread::metrics::LatencyHistogram::bucket_midpoint" name="kcenon::thread::metrics::LatencyHistogram::bucket_midpoint">
+<area shape="rect" id="Node000001" title="Get the midpoint value of a bucket for estimation." alt="" coords="5,48,205,110"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a65c2f0cfc8b1e9c061fd4898bc3feaee" title="Get the lower bound of a bucket." alt="" coords="253,5,452,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,59,240,55,235,57,206,64"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a89866428f9fd1b7712077896582c35e9" title="Get the upper bound of a bucket." alt="" coords="253,91,452,152"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="205,93,240,101,235,102,205,99"/>
+</map>

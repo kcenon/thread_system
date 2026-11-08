@@ -1,0 +1,38 @@
+<map id="kcenon::thread::diagnostics::thread_pool_diagnostics::health_check" name="kcenon::thread::diagnostics::thread_pool_diagnostics::health_check">
+<area shape="rect" id="Node000001" title="Performs comprehensive health check." alt="" coords="5,295,206,356"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1diagnostics_1_1health__status.html#a8768fc127b162e29ee69a974c980248f" title="Calculates overall status from component states." alt="" coords="262,5,462,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,293,135,246,164,188,203,129,252,77,258,74,255,78,255,81,207,132,169,191,140,248,120,295"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a53e2293a22523b3dc2e67841fa9569e1" title="Checks metrics component health." alt="" coords="262,91,462,152"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="128,293,182,231,215,198,252,169,272,158,268,162,255,173,219,202,185,235,133,296"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a02c6b078d35493754223fcfdaaf57d45" title="Checks queue component health." alt="" coords="262,227,462,288"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="204,297,249,286,245,290,208,301"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__pool.html#aebd7dbb88679675d09d7479b6dbab529" title="Returns the shared job_queue used by this thread pool." alt="" coords="548,179,716,224"/>
+<area shape="poly" id="edge11_Node000001_Node000005" title=" " alt="" coords="134,293,187,248,219,228,253,212,324,194,398,185,469,183,535,188,530,190,469,189,398,190,325,199,255,217,221,233,190,253,139,296"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1thread__pool.html#a1ac09aac27cb01dc7a0c82b64ccbc969" title="Get the number of pending tasks in the queue." alt="" coords="521,271,743,316"/>
+<area shape="poly" id="edge12_Node000001_Node000006" title=" " alt="" coords="205,317,507,299,504,303,207,322"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#af4c2c61cb9816ef9d83d26428cf44893" title="Checks worker component health." alt="" coords="262,413,462,475"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="172,354,255,392,281,406,276,407,253,397,174,359"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1thread__pool.html#a51dc6391d2b7be450f353b8d775bdc56" title="Get the current number of active (running) workers." alt="" coords="519,352,745,397"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="205,332,505,361,502,365,207,337"/>
+<area shape="rect" id="Node000011" href="$classkcenon_1_1thread_1_1thread__pool.html#ad334280444cef62a9c1b2d8379ab329b" title="Access aggregated runtime metrics (read&#45;only reference)." alt="" coords="278,499,446,544"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="127,354,182,421,217,455,255,485,266,492,261,493,252,489,213,459,178,424,128,359"/>
+<area shape="rect" id="Node000012" href="$classkcenon_1_1thread_1_1metrics_1_1ThreadPoolMetrics.html#a921470d5f838991835cf56d36fc237b7" title="Get a snapshot of all metrics." alt="" coords="254,664,471,709"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="125,354,183,446,256,555,333,652,328,653,252,558,178,449,125,360"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="462,234,535,220,531,224,465,239"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="462,268,508,276,503,278,464,273"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="462,416,530,400,526,403,464,421"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1thread__pool.html#a20210275a456e84078d611a8ad625d71" title="Get the number of idle workers." alt="" coords="527,422,737,466"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="462,442,514,443,509,445,464,447"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1thread__pool.html#aa909fc61736d7362f1dfbad08bbe4f65" title="Check if the thread pool is currently running." alt="" coords="548,491,716,536"/>
+<area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="463,467,535,487,530,489,464,473"/>
+<area shape="rect" id="Node000013" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a3741f9aaf9790c6da5f4bc70f5224ce4" title="Get the total number of tasks successfully executed." alt="" coords="523,560,741,605"/>
+<area shape="poly" id="edge15_Node000012_Node000013" title=" " alt="" coords="410,662,518,615,541,609,536,612,520,620,412,666"/>
+<area shape="rect" id="Node000014" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a824bee8bb995f8294725ae0e550ec840" title="Get the total number of failed tasks." alt="" coords="534,630,730,674"/>
+<area shape="poly" id="edge16_Node000012_Node000014" title=" " alt="" coords="471,670,521,666,516,668,472,675"/>
+<area shape="rect" id="Node000015" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a5cc9b46e7234c95c2f56dcf3c9fe1d83" title="Get the total number of tasks submitted." alt="" coords="520,699,745,744"/>
+<area shape="poly" id="edge17_Node000012_Node000015" title=" " alt="" coords="471,698,506,705,501,705,472,703"/>
+<area shape="rect" id="Node000016" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a1b30e693bd0b1a295fc6a4fed9bab38c" title="Get the total busy time in nanoseconds." alt="" coords="540,768,725,830"/>
+<area shape="poly" id="edge18_Node000012_Node000016" title=" " alt="" coords="413,707,520,754,535,762,530,762,518,759,413,712"/>
+<area shape="rect" id="Node000017" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#ad8eec6c5037bebfd0b5887ff41ba07f7" title="Get the total idle time in nanoseconds." alt="" coords="543,853,721,915"/>
+<area shape="poly" id="edge19_Node000012_Node000017" title=" " alt="" coords="382,707,441,772,479,808,520,839,532,848,526,847,518,844,475,812,437,776,380,712"/>
+</map>

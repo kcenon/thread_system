@@ -1,0 +1,13 @@
+<map id="core/sync/include/error_handling.h" name="core/sync/include/error_handling.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="114,5,283,50"/>
+<area shape="rect" id="Node000002" href="$include_2kcenon_2thread_2core_2error__handling_8h.html" title="Error codes and utilities for the thread system." alt="" coords="125,98,272,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,48,201,84,196,82,197,53"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,199,64,227"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="160,146,73,194,70,189,158,141"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="88,199,184,227"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="186,142,155,188,152,184,181,144"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="208,199,315,227"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="215,141,246,187,241,186,212,145"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="340,191,527,235"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="255,141,366,184,360,185,254,146"/>
+</map>

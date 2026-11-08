@@ -1,0 +1,9 @@
+<map id="include/kcenon/thread/policies/bound_policies.h" name="include/kcenon/thread/policies/bound_policies.h">
+<area shape="rect" id="Node000001" title="Bound policies for queue capacity: unbounded or fixed&#45;size." alt="" coords="34,5,222,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,75,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,49,67,89,63,85,102,51"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="99,98,157,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="130,48,130,83,126,81,126,52"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="182,98,256,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="153,48,195,87,190,87,151,53"/>
+</map>

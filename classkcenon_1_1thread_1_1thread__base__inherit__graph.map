@@ -1,0 +1,10 @@
+<map id="kcenon::thread::thread_base" name="kcenon::thread::thread_base">
+<area shape="rect" id="Node000001" title="A foundational class for implementing custom worker threads." alt="" coords="113,5,310,614"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1typed__thread__worker__t.html" title=" " alt="" coords="5,1449,202,1779"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,631,110,663,98,768,89,875,82,1088,85,1285,93,1449,88,1449,80,1285,77,1087,84,874,92,767,105,663,114,626"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__worker.html" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="120,663,303,1384"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,626,214,663,209,663,212,631"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1typed__thread__worker__t.html" title="Typed thread worker template." alt="" coords="328,859,525,1188"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="308,625,380,859,374,859,307,631"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="390,1200,360,1296,318,1385,293,1424,265,1461,204,1527,200,1524,261,1458,289,1421,314,1383,355,1294,387,1205"/>
+</map>

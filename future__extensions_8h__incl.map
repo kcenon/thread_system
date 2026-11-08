@@ -1,0 +1,25 @@
+<map id="include/kcenon/thread/core/future_extensions.h" name="include/kcenon/thread/core/future_extensions.h">
+<area shape="rect" id="Node000001" title="Future and promise utilities for thread pool." alt="" coords="364,5,550,50"/>
+<area shape="rect" id="Node000002" href="$forward_8h.html" title="Forward declarations for thread system types." alt="" coords="5,106,186,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="369,53,164,105,162,100,371,48"/>
+<area shape="rect" id="Node000004" href="$include_2kcenon_2thread_2core_2error__handling_8h.html" title="Error codes and utilities for the thread system." alt="" coords="210,98,357,143"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="418,49,339,93,337,88,413,52"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="381,106,442,134"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="448,49,427,94,423,90,444,52"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="465,106,542,134"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="469,48,492,93,487,92,467,53"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="566,106,631,134"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="491,48,567,98,562,98,490,53"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="655,106,741,134"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="516,48,644,96,653,101,648,101,643,100,515,53"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="63,199,128,227"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,133,98,185,93,183,94,136"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="152,199,210,227"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="262,142,208,191,206,186,257,144"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="234,199,330,227"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="285,141,285,185,280,182,281,145"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="354,199,461,227"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="314,140,380,190,375,190,312,146"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="486,191,673,235"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="355,141,497,185,491,186,354,146"/>
+</map>

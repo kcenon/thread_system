@@ -1,0 +1,73 @@
+<map id="kcenon::thread::utils::formatter::format" name="kcenon::thread::utils::formatter::format">
+<area shape="rect" id="Node000001" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="505,538,659,583"/>
+<area shape="rect" id="Node000002" href="$typed__thread__pool__sample_8cpp.html#aafb600353d47812a2e5723b2b5b37e94" title=" " alt="" coords="290,265,406,293"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="571,522,557,474,534,415,501,356,480,329,455,307,432,293,407,285,405,281,434,288,459,302,484,326,505,353,539,412,562,472,576,523"/>
+<area shape="rect" id="Node000004" href="$typed__thread__pool__sample__2_8cpp.html#aa3f0b7249bf28fd9f1be6a9094be08bf" title=" " alt="" coords="290,763,406,790"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="568,595,552,635,528,677,496,718,459,752,433,765,407,773,404,769,431,760,455,748,493,714,523,674,547,633,565,600"/>
+<area shape="rect" id="Node000006" href="$job__cancellation__example_8cpp.html#a1a9dc17e2fdbf95074b828af809117b0" title="Demonstrates basic job cancellation via worker stop." alt="" coords="255,57,440,85"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="573,522,557,423,531,296,515,233,497,177,477,131,455,100,441,88,439,83,459,96,481,128,502,175,520,232,537,295,562,422,578,523"/>
+<area shape="rect" id="Node000008" href="$job__cancellation__example_8cpp.html#a2b45efeb3e15cf641a7229f8c1105e3b" title="Demonstrates immediate vs. graceful shutdown." alt="" coords="239,109,457,137"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="578,522,573,445,556,345,540,292,519,241,491,193,455,152,440,140,439,135,459,148,495,190,524,239,545,290,561,344,579,445,584,523"/>
+<area shape="rect" id="Node000009" href="$job__cancellation__example_8cpp.html#aa16b2ec68c5c55c6d674b7370030cdfa" title="Demonstrates what happens with non&#45;cooperating jobs." alt="" coords="248,161,448,189"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="577,522,568,454,549,368,533,323,513,279,487,239,455,204,440,192,438,187,459,200,491,236,517,277,538,321,554,366,574,453,582,523"/>
+<area shape="rect" id="Node000010" href="$job__cancellation__example_8cpp.html#a7eb7cfae755052b05328be6f7b822594" title="Demonstrates pool&#45;level cancellation with multiple workers." alt="" coords="239,5,457,33"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="574,522,560,413,535,270,519,199,500,135,479,83,455,48,441,36,440,31,459,44,484,80,505,133,524,198,540,269,565,412,579,523"/>
+<area shape="rect" id="Node000011" href="$classkcenon_1_1thread_1_1thread__worker.html#acfdeff0762fbd9be106a6cc366480446" title="Processes one or more jobs from the queue." alt="" coords="264,317,432,362"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="563,524,546,490,522,450,491,410,455,376,433,362,431,357,459,372,495,406,526,447,550,487,568,524"/>
+<area shape="rect" id="Node000012" href="$logger__sample_8cpp.html#a8d986ee76ac0cece6635815924ac089f" title=" " alt="" coords="285,385,410,413"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="553,526,511,479,485,454,456,433,412,414,410,409,458,429,488,450,515,475,559,525"/>
+<area shape="rect" id="Node000013" href="$logger__sample_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="71,411,125,438"/>
+<area shape="poly" id="edge17_Node000001_Node000013" title=" " alt="" coords="541,529,502,502,456,478,411,462,364,450,270,435,186,428,127,426,124,422,186,423,270,430,365,445,412,457,458,473,505,497,547,528"/>
+<area shape="rect" id="Node000014" href="$multi__process__monitoring__integration_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="321,487,375,514"/>
+<area shape="poly" id="edge16_Node000001_Node000014" title=" " alt="" coords="487,536,456,528,376,509,374,504,458,523,492,533"/>
+<area shape="rect" id="Node000015" href="$classkcenon_1_1thread_1_1autoscaler.html#a2691e322ea506e84906583eabb9d2ffc" title="Makes a scaling decision based on recent samples." alt="" coords="251,538,445,583"/>
+<area shape="poly" id="edge18_Node000001_Node000015" title=" " alt="" coords="487,562,447,563,444,558,491,559"/>
+<area shape="rect" id="Node000016" href="$classkcenon_1_1thread_1_1thread__worker.html#a8d314320b35599f7d0d01490c99aae5d" title="Called when the worker is requested to stop." alt="" coords="246,608,450,652"/>
+<area shape="poly" id="edge19_Node000001_Node000016" title=" " alt="" coords="488,589,428,609,424,605,492,586"/>
+<area shape="rect" id="Node000017" href="$classkcenon_1_1thread_1_1thread__pool.html#ae3cf33b2cdcb579a4c3b992068913937" title="Internal method to remove workers from the pool." alt="" coords="262,676,434,738"/>
+<area shape="poly" id="edge20_Node000001_Node000017" title=" " alt="" coords="546,596,508,632,458,667,436,678,433,674,456,662,504,628,549,592"/>
+<area shape="rect" id="Node000018" href="$classkcenon_1_1thread_1_1thread__pool.html#af0d13085ca8af0504a4b4a82630fc18d" title="Stops the thread pool and all worker threads." alt="" coords="264,866,432,911"/>
+<area shape="poly" id="edge21_Node000001_Node000018" title=" " alt="" coords="576,596,565,655,543,724,508,795,486,827,459,856,434,872,430,868,455,852,481,824,504,792,538,722,560,654,574,601"/>
+<area shape="rect" id="Node000023" href="$typed__thread__pool__sample_8cpp.html#adf78aacb76ab72876e80a0a0543d1b89" title=" " alt="" coords="307,213,388,241"/>
+<area shape="poly" id="edge26_Node000001_Node000023" title=" " alt="" coords="574,522,563,464,541,391,526,354,507,318,483,285,455,256,423,239,390,231,388,226,425,234,459,252,487,281,511,315,531,352,546,390,568,463,579,523"/>
+<area shape="rect" id="Node000024" href="$typed__thread__pool__sample__2_8cpp.html#a053c6e0a280d23520270f183587cb036" title=" " alt="" coords="307,815,388,842"/>
+<area shape="poly" id="edge28_Node000001_Node000024" title=" " alt="" coords="573,596,560,646,536,701,503,757,482,782,459,804,425,821,391,829,388,824,423,816,455,800,478,778,499,754,532,699,555,644,571,600"/>
+<area shape="rect" id="Node000025" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#a5b87f40b7ec00c87c8a909737149eb1d" title="Returns string representation including backpressure state." alt="" coords="241,936,454,980"/>
+<area shape="poly" id="edge30_Node000001_Node000025" title=" " alt="" coords="580,596,573,668,553,755,537,801,516,846,491,888,459,925,443,937,440,933,455,921,486,885,512,843,532,799,548,754,567,667,578,601"/>
+<area shape="rect" id="Node000026" href="$classkcenon_1_1thread_1_1job.html#a75209d940db17c6d7091fe977ea5672f" title="Provides a string representation of the job for logging or debugging." alt="" coords="275,1005,421,1050"/>
+<area shape="poly" id="edge31_Node000001_Node000026" title=" " alt="" coords="582,596,579,680,562,785,546,841,524,897,496,948,459,994,442,1008,423,1017,420,1013,439,1003,455,991,491,945,519,894,541,840,557,784,574,679,580,601"/>
+<area shape="rect" id="Node000027" href="$classkcenon_1_1thread_1_1job__queue.html#a835fd9184955397c8bc806844c96b88e" title="Returns a string representation of this job_queue." alt="" coords="275,1074,421,1119"/>
+<area shape="poly" id="edge32_Node000001_Node000027" title=" " alt="" coords="577,596,564,706,538,844,522,913,503,976,482,1028,459,1064,442,1077,423,1087,420,1082,439,1073,455,1060,478,1025,498,974,517,912,533,843,558,705,575,601"/>
+<area shape="rect" id="Node000028" href="$classkcenon_1_1thread_1_1policy__queue__adapter.html#acea4fd3fc0c10dce16943b5ee7c24e10" title="Get string representation." alt="" coords="253,1144,443,1188"/>
+<area shape="poly" id="edge33_Node000001_Node000028" title=" " alt="" coords="579,596,567,719,543,878,527,958,507,1031,485,1091,459,1133,445,1145,441,1141,455,1129,480,1089,502,1030,521,957,538,877,562,718,576,601"/>
+<area shape="rect" id="Node000029" href="$classkcenon_1_1thread_1_1thread__base.html#a1130c1076dfd5fec14bb0453ff0dbc9e" title="Returns a string representation of this thread_base object." alt="" coords="264,1213,432,1258"/>
+<area shape="poly" id="edge34_Node000001_Node000029" title=" " alt="" coords="580,596,570,732,547,912,531,1003,511,1086,487,1155,474,1182,459,1202,434,1221,431,1217,455,1199,469,1179,483,1153,506,1085,526,1002,542,911,565,732,577,601"/>
+<area shape="rect" id="Node000003" href="$typed__thread__pool__sample_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="71,240,125,268"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="273,274,127,259,124,254,277,270"/>
+<area shape="rect" id="Node000005" href="$typed__thread__pool__sample__2_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="71,764,125,792"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="273,779,127,780,124,775,277,775"/>
+<area shape="rect" id="Node000007" href="$job__cancellation__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="71,84,125,112"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="238,85,127,97,124,93,242,81"/>
+<area shape="poly" id="edge8_Node000008_Node000007" title=" " alt="" coords="221,112,127,103,124,98,225,109"/>
+<area shape="poly" id="edge10_Node000009_Node000007" title=" " alt="" coords="266,158,238,151,127,111,125,106,239,146,271,156"/>
+<area shape="poly" id="edge12_Node000010_Node000007" title=" " alt="" coords="267,39,239,48,128,89,124,85,238,43,270,35"/>
+<area shape="poly" id="edge15_Node000012_Node000013" title=" " alt="" coords="268,409,127,424,124,420,272,405"/>
+<area shape="rect" id="Node000019" href="$crash__protection_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="71,820,125,848"/>
+<area shape="poly" id="edge22_Node000018_Node000019" title=" " alt="" coords="246,868,127,842,125,837,250,865"/>
+<area shape="rect" id="Node000020" href="$thread__pool__sample_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="71,872,125,900"/>
+<area shape="poly" id="edge23_Node000018_Node000020" title=" " alt="" coords="246,889,127,888,124,884,250,886"/>
+<area shape="rect" id="Node000021" href="$classkcenon_1_1thread_1_1adapters_1_1thread__pool__executor__adapter.html#ad65bc53369a40c0ef3578346fe8008e4" title=" " alt="" coords="6,924,190,986"/>
+<area shape="poly" id="edge24_Node000018_Node000021" title=" " alt="" coords="247,917,192,933,188,929,250,913"/>
+<area shape="rect" id="Node000022" href="$classkcenon_1_1thread_1_1thread__pool.html#a0e06c5be9b580cef250bb6053630755f" title="Virtual destructor. Cleans up resources used by the thread pool." alt="" coords="14,1010,182,1055"/>
+<area shape="poly" id="edge25_Node000018_Node000022" title=" " alt="" coords="248,918,240,925,225,943,217,961,209,980,192,1000,175,1011,170,1008,189,996,204,978,212,959,220,940,237,921,252,913"/>
+<area shape="poly" id="edge27_Node000023_Node000003" title=" " alt="" coords="290,235,127,253,124,249,293,231"/>
+<area shape="poly" id="edge29_Node000024_Node000005" title=" " alt="" coords="290,819,127,786,125,781,294,816"/>
+<area shape="rect" id="Node000030" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_01_4.html#a7cd8c1f73c101444c35c5989f59f81e6" title="Formats a thread_worker object as a string." alt="" coords="11,1102,185,1163"/>
+<area shape="poly" id="edge35_Node000029_Node000030" title=" " alt="" coords="253,1208,238,1203,189,1178,168,1166,167,1161,192,1173,240,1198,258,1206"/>
+<area shape="rect" id="Node000031" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_00_01wchar__t_01_4.html#a6de469c555246dbbb1b9044f2bb68e2a" title="Formats a thread_worker object as a wide string." alt="" coords="10,1187,186,1249"/>
+<area shape="poly" id="edge36_Node000029_Node000031" title=" " alt="" coords="246,1230,187,1227,186,1221,250,1227"/>
+<area shape="rect" id="Node000032" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html#a3344f15e85c16b7fcbdb535a9e95b133" title="Formats a typed_thread_worker_t&lt;job_type&gt; instance to a string." alt="" coords="5,1273,191,1352"/>
+<area shape="poly" id="edge37_Node000029_Node000032" title=" " alt="" coords="257,1264,192,1286,190,1281,261,1261"/>
+<area shape="rect" id="Node000033" href="$structstd_1_1formatter_3_01kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_00_01wchar__t_01_4.html#ae373118eb1937895c35bf4655e9ff8cf" title="Formats a typed_thread_worker_t&lt;job_type&gt; instance to a wide string." alt="" coords="11,1376,185,1454"/>
+<area shape="poly" id="edge38_Node000029_Node000033" title=" " alt="" coords="312,1267,257,1317,192,1365,173,1378,170,1373,189,1361,253,1313,308,1269"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,49,212,94"/>
+<area shape="rect" id="Node000001" href="$classconsole__monitoring.html" title="Simple monitoring implementation using common::interfaces::IMonitor." alt="" coords="260,5,409,33"/>
+<area shape="poly" id="edge4_Node000000_Node000001" title=" " alt="" coords="222,42,273,33,268,35,224,47"/>
+<area shape="rect" id="Node000002" href="$classmock__monitoring.html" title="Mock monitoring implementation for demonstration." alt="" coords="267,57,402,85"/>
+<area shape="poly" id="edge5_Node000000_Node000002" title=" " alt="" coords="227,69,269,71,264,72,228,74"/>
+<area shape="rect" id="Node000003" href="$classsample__monitoring.html" title=" " alt="" coords="261,109,408,137"/>
+<area shape="poly" id="edge6_Node000000_Node000003" title=" " alt="" coords="223,95,274,109,268,109,223,100"/>
+</map>

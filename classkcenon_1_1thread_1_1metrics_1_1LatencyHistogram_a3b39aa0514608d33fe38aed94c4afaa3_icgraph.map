@@ -1,0 +1,13 @@
+<map id="kcenon::thread::metrics::LatencyHistogram::compute_bucket_index" name="kcenon::thread::metrics::LatencyHistogram::compute_bucket_index">
+<area shape="rect" id="Node000001" title="Compute the bucket index for a given value." alt="" coords="779,91,993,152"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#acebf5a20dc245be8ab3f01d18b680ca6" title="Record a raw nanosecond value." alt="" coords="512,99,731,144"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="761,122,732,124,731,119,767,121"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a0ea635577a50e41efa2fa2f540b4a7a8" title="Record a latency value." alt="" coords="267,99,464,144"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="494,122,465,124,464,119,499,121"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#ad6db8a9bdc9bb60b2e718084941a227b" title="Record enqueue operation latency." alt="" coords="5,5,219,67"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="280,95,206,70,206,65,285,93"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a55561eeac969ea283f09a06a93392d4a" title="Record task execution completion." alt="" coords="5,91,219,152"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="248,122,220,124,219,119,253,121"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a929ad88b734c1912e74f37b18e5dce7e" title="Record wait time (time spent in queue)." alt="" coords="5,176,219,238"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="285,148,207,178,205,173,280,150"/>
+</map>

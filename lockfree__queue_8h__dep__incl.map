@@ -1,0 +1,5 @@
+<map id="include/kcenon/thread/lockfree/lockfree_queue.h" name="include/kcenon/thread/lockfree/lockfree_queue.h">
+<area shape="rect" id="Node000001" title="Backward compatibility header for concurrent_queue." alt="" coords="5,5,200,50"/>
+<area shape="rect" id="Node000002" href="$queue_8cppm.html" title="C++20 module partition for thread_system queue implementations." alt="" coords="10,98,195,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,64,105,98,100,96,101,68"/>
+</map>

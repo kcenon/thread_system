@@ -1,0 +1,7 @@
+<map id="kcenon::thread::safe_hazard_pointer_domain::collect" name="kcenon::thread::safe_hazard_pointer_domain::collect">
+<area shape="rect" id="Node000001" title="Collect reclaimable objects." alt="" coords="5,5,187,67"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#affee714bf1ce5f368c1f3d77fb9fe611" title="Collect reclaimable objects (internal, lock held)" alt="" coords="235,5,416,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,34,222,36,217,36,187,39"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html#ae368cdbfdf4ea5e527bbf7432ee53f58" title="Get protected pointer at slot." alt="" coords="464,14,666,58"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="416,34,451,36,446,36,416,39"/>
+</map>

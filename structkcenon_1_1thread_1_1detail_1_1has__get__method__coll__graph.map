@@ -1,0 +1,5 @@
+<map id="kcenon::thread::detail::has_get_method&lt; T, typename &gt;" name="kcenon::thread::detail::has_get_method&lt; T, typename &gt;">
+<area shape="rect" id="Node000001" title="SFINAE helper to detect if a type has a specific member." alt="" coords="5,126,244,215"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="71,5,178,78"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,91,127,127,122,125,123,95"/>
+</map>

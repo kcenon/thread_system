@@ -1,0 +1,53 @@
+<map id="kcenon::thread::metrics::EnhancedThreadPoolMetrics::to_prometheus" name="kcenon::thread::metrics::EnhancedThreadPoolMetrics::to_prometheus">
+<area shape="rect" id="Node000001" title="Export metrics in Prometheus/OpenMetrics format." alt="" coords="5,164,219,226"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1PrometheusBackend.html#aea23f0d6455f5157a7cff57685161248" title="Export enhanced metrics snapshot." alt="" coords="267,79,480,140"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,162,264,144,261,148,210,165"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBackend.html#a65c62f953cdfd337cd678a0397b220cd" title="Set metric name prefix." alt="" coords="286,164,461,226"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="218,193,272,193,268,197,221,197"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#a58a052dbb7b54f397dc1d6800c9ede66" title="Get a comprehensive snapshot of all metrics." alt="" coords="267,531,480,592"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="136,224,344,517,339,519,135,229"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1PrometheusBackend.html#a8502d1629fd2b243efa9091bbe284fda" title="Format labels for Prometheus output." alt="" coords="534,5,748,67"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="478,78,521,68,517,71,482,82"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBackend.html#a5eb8fc7214223b30ab8c16eabf384961" title="Get all configured labels." alt="" coords="551,91,730,136"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="479,109,538,111,533,113,481,113"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBackend.html#a043149b147f584bf7fe2799e8a542082" title="Get current metric name prefix." alt="" coords="552,168,729,213"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="460,191,539,191,534,194,463,196"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#ad102fe6f126d6c03848dd1447a6ec846" title=" " alt="" coords="534,237,747,299"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="384,529,404,481,435,423,476,362,500,334,526,309,533,306,529,310,530,313,504,338,480,365,439,425,409,484,388,532"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a445adfdfa4b8a69037285384b88fac1d" title="Get the 50th percentile (median)." alt="" coords="550,323,731,368"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="391,529,446,453,483,413,526,378,539,373,535,377,530,382,487,417,450,457,395,532"/>
+<area shape="rect" id="Node000014" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a62edc49fdf8fe5bd97612cb3c572e5d0" title="Get the 90th percentile." alt="" coords="550,392,731,437"/>
+<area shape="poly" id="edge15_Node000007_Node000014" title=" " alt="" coords="408,528,462,487,527,447,544,442,539,445,529,452,465,491,412,532"/>
+<area shape="rect" id="Node000015" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a77bc6cb1d6f88702ed0fd884b10126f4" title="Get the 99th percentile." alt="" coords="550,462,731,506"/>
+<area shape="poly" id="edge17_Node000007_Node000015" title=" " alt="" coords="479,528,548,510,544,513,482,533"/>
+<area shape="rect" id="Node000016" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#ac08aff2056171fdfaa680e27f41a48f3" title="Get the current rate per second." alt="" coords="552,531,729,592"/>
+<area shape="poly" id="edge19_Node000007_Node000016" title=" " alt="" coords="480,559,539,560,534,563,481,564"/>
+<area shape="rect" id="Node000020" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a3741f9aaf9790c6da5f4bc70f5224ce4" title="Get the total number of tasks successfully executed." alt="" coords="532,616,750,661"/>
+<area shape="poly" id="edge23_Node000007_Node000020" title=" " alt="" coords="480,590,549,611,544,612,481,595"/>
+<area shape="rect" id="Node000021" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a824bee8bb995f8294725ae0e550ec840" title="Get the total number of failed tasks." alt="" coords="542,686,739,730"/>
+<area shape="poly" id="edge24_Node000007_Node000021" title=" " alt="" coords="410,590,465,632,529,671,544,680,539,680,527,676,462,636,410,595"/>
+<area shape="rect" id="Node000022" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a5cc9b46e7234c95c2f56dcf3c9fe1d83" title="Get the total number of tasks submitted." alt="" coords="528,755,753,800"/>
+<area shape="poly" id="edge25_Node000007_Node000022" title=" " alt="" coords="394,590,450,666,487,706,530,741,539,748,534,748,526,745,483,710,446,670,392,595"/>
+<area shape="rect" id="Node000023" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#a1b30e693bd0b1a295fc6a4fed9bab38c" title="Get the total busy time in nanoseconds." alt="" coords="548,824,733,886"/>
+<area shape="poly" id="edge26_Node000007_Node000023" title=" " alt="" coords="387,590,409,639,439,698,480,758,504,785,530,810,538,818,532,817,526,814,500,789,476,761,435,700,404,642,385,595"/>
+<area shape="rect" id="Node000024" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBase.html#ad8eec6c5037bebfd0b5887ff41ba07f7" title="Get the total idle time in nanoseconds." alt="" coords="552,909,730,971"/>
+<area shape="poly" id="edge27_Node000007_Node000024" title=" " alt="" coords="382,590,399,655,427,736,447,779,470,821,498,861,530,896,541,907,536,905,526,899,494,864,466,824,442,781,422,738,394,656,380,595"/>
+<area shape="rect" id="Node000010" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a7a7305a970b312aef6d97a652709a0ca" title="Calculate the value at a given percentile." alt="" coords="801,392,1023,437"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="731,366,810,387,805,389,732,371"/>
+<area shape="rect" id="Node000011" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a65c2f0cfc8b1e9c061fd4898bc3feaee" title="Get the lower bound of a bucket." alt="" coords="1318,329,1517,391"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="983,389,1070,370,1190,358,1305,357,1300,358,1190,363,1071,375,985,394"/>
+<area shape="rect" id="Node000012" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#abd3b39f8b7fdd52010d08ff0dcd338e6" title="Get the midpoint value of a bucket for estimation." alt="" coords="1071,384,1270,446"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="1023,412,1057,414,1052,416,1024,417"/>
+<area shape="rect" id="Node000013" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a89866428f9fd1b7712077896582c35e9" title="Get the upper bound of a bucket." alt="" coords="1318,427,1517,488"/>
+<area shape="poly" id="edge14_Node000010_Node000013" title=" " alt="" coords="982,435,1071,455,1190,463,1305,464,1300,466,1190,469,1070,460,982,440"/>
+<area shape="poly" id="edge12_Node000012_Node000011" title=" " alt="" coords="1270,390,1305,385,1300,386,1271,395"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="1270,429,1305,437,1300,438,1271,435"/>
+<area shape="poly" id="edge16_Node000014_Node000010" title=" " alt="" coords="731,412,788,414,783,416,732,417"/>
+<area shape="poly" id="edge18_Node000015_Node000010" title=" " alt="" coords="730,459,810,440,805,443,732,464"/>
+<area shape="rect" id="Node000017" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a8e32ae89603462b68593811e567c136e" title="Get the total count within the current window." alt="" coords="824,531,1000,592"/>
+<area shape="poly" id="edge20_Node000016_Node000017" title=" " alt="" coords="729,559,811,561,806,562,730,564"/>
+<area shape="rect" id="Node000018" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#afae0624b08953afcee66b62fe892d07a" title="Get current time in milliseconds since epoch." alt="" coords="1082,525,1258,587"/>
+<area shape="poly" id="edge21_Node000017_Node000018" title=" " alt="" coords="1000,557,1069,558,1064,559,1001,562"/>
+<area shape="rect" id="Node000019" href="$classkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter.html#a0cbadfc08636391446a80070b4be314f" title="Check if a bucket is within the current window." alt="" coords="1082,611,1258,672"/>
+<area shape="poly" id="edge22_Node000017_Node000019" title=" " alt="" coords="1001,586,1070,610,1065,610,1001,591"/>
+</map>

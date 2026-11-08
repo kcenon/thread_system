@@ -1,0 +1,31 @@
+<map id="include/kcenon/thread/impl/typed_pool/aging_typed_job.h" name="include/kcenon/thread/impl/typed_pool/aging_typed_job.h">
+<area shape="rect" id="Node000001" title="Typed job with priority aging support to prevent starvation." alt="" coords="184,5,354,67"/>
+<area shape="rect" id="Node000002" href="$aging__typed__job__queue_8h.html" title="Priority queue with aging to prevent low&#45;priority job starvation." alt="" coords="184,115,354,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="270,80,272,115,267,114,268,85"/>
+<area shape="rect" id="Node000008" href="$typed__thread__pool_8cpp.html" title=" " alt="" coords="12,452,185,497"/>
+<area shape="poly" id="edge16_Node000001_Node000008" title=" " alt="" coords="209,78,133,142,94,182,61,226,32,270,14,309,9,328,8,348,12,370,21,395,41,426,68,451,63,453,37,429,16,397,7,371,3,348,4,327,9,307,28,268,56,223,90,179,130,138,212,74"/>
+<area shape="rect" id="Node000013" href="$aging__typed__job_8cpp.html" title=" " alt="" coords="379,124,538,168"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="335,72,423,122,418,124,336,78"/>
+<area shape="rect" id="Node000003" href="$impl_2typed__pool_2typed__thread__pool_8h.html" title="Type&#45;based thread pool with priority scheduling and job type routing." alt="" coords="537,334,708,396"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="369,174,406,179,439,181,496,179,522,181,548,187,573,201,599,223,616,248,625,278,629,308,628,335,624,333,623,308,620,279,611,251,595,226,570,205,546,192,521,186,496,185,439,186,406,185,370,179"/>
+<area shape="poly" id="edge14_Node000002_Node000008" title=" " alt="" coords="190,187,149,214,105,248,65,288,34,335,26,365,34,395,52,425,75,451,70,453,47,429,29,397,21,365,29,333,61,285,101,244,146,209,193,182"/>
+<area shape="rect" id="Node000009" href="$impl_2typed__pool_2typed__thread__worker_8h.html" title="Worker thread for typed_thread_pool processing priority job queues." alt="" coords="183,225,355,286"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="270,190,272,225,267,223,268,195"/>
+<area shape="rect" id="Node000012" href="$aging__typed__job__queue_8cpp.html" title=" " alt="" coords="379,233,586,278"/>
+<area shape="poly" id="edge13_Node000002_Node000012" title=" " alt="" coords="343,181,442,232,437,233,343,187"/>
+<area shape="rect" id="Node000004" href="$typed__thread__pool__sample_8cpp.html" title="Typed thread pool with priority&#45;based job routing using built&#45;in job_types." alt="" coords="742,444,943,506"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="699,401,783,444,778,443,698,406"/>
+<area shape="rect" id="Node000005" href="$typed__thread__pool__sample__2_8cpp.html" title="Typed thread pool with a custom priority enum (test_priority)" alt="" coords="301,444,504,506"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="549,402,465,446,463,441,544,404"/>
+<area shape="rect" id="Node000006" href="$core_2typed__thread__pool_8h.html" title="Public forwarding header for type&#45;safe thread pool." alt="" coords="527,452,718,497"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="624,410,625,454,620,450,621,414"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="520,398,339,437,186,463,185,458,338,432,524,395"/>
+<area shape="rect" id="Node000007" href="$typed__thread__pool_8h.html" title="Stable public include for typed_thread_pool_t." alt="" coords="540,554,705,598"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="624,511,625,555,620,552,621,515"/>
+<area shape="poly" id="edge10_Node000009_Node000003" title=" " alt="" coords="369,285,526,332,539,338,534,338,524,337,369,290"/>
+<area shape="poly" id="edge11_Node000009_Node000008" title=" " alt="" coords="272,300,268,351,260,375,247,398,231,416,212,431,170,454,167,450,209,427,227,412,243,394,255,373,263,349,270,305"/>
+<area shape="rect" id="Node000010" href="$core_2typed__thread__worker_8h.html" title="Worker thread specialized for typed_thread_pool with priority queues." alt="" coords="308,343,513,388"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="321,293,385,342,380,343,320,299"/>
+<area shape="rect" id="Node000011" href="$typed__thread__worker_8cpp.html" title=" " alt="" coords="44,343,233,388"/>
+<area shape="poly" id="edge12_Node000009_Node000011" title=" " alt="" coords="219,298,166,344,163,341,222,294"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::barrier::arrive_and_wait" name="kcenon::thread::barrier::arrive_and_wait">
+<area shape="rect" id="Node000001" title="Arrives at the barrier and blocks until all threads arrive." alt="" coords="223,5,392,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1barrier.html#a28e902513535a43fa3d6a44c119f717c" title="Decrements the counter without blocking." alt="" coords="5,5,175,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,28,175,30,175,25,210,27"/>
+</map>

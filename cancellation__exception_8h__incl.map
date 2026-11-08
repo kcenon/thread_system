@@ -1,0 +1,15 @@
+<map id="include/kcenon/thread/core/cancellation_exception.h" name="include/kcenon/thread/core/cancellation_exception.h">
+<area shape="rect" id="Node000001" title="Exception class for operation cancellation." alt="" coords="92,5,311,50"/>
+<area shape="rect" id="Node000002" href="$cancellation__reason_8h.html" title="Cancellation reason structure for enhanced cancellation tokens." alt="" coords="120,98,283,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,48,204,83,199,81,200,53"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,174,91,201"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="165,52,139,74,110,100,85,131,65,162,61,158,81,127,106,96,135,70,169,49"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="303,174,361,201"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="240,48,270,70,297,96,315,127,327,160,322,157,310,129,293,100,267,74,239,53"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="115,174,181,201"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="194,125,168,163,165,159,189,127"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="176,128,90,169,88,164,172,125"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="204,174,278,201"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="210,124,230,161,224,159,207,129"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="225,124,298,166,293,166,224,129"/>
+</map>

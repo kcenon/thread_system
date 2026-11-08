@@ -1,0 +1,23 @@
+<map id="examples/typed_job_queue_sample/typed_job_queue_sample.cpp" name="examples/typed_job_queue_sample/typed_job_queue_sample.cpp">
+<area shape="rect" id="Node000001" title="Lock&#45;free typed job queue with MPMC patterns and performance benchmarks." alt="" coords="800,5,977,67"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,222,160"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="796,47,551,77,237,117,237,112,550,71,802,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="246,115,419,160"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="802,52,434,117,434,112,796,51"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="443,115,616,160"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="802,62,624,113,622,108,796,62"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="640,124,790,151"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="838,67,752,118,750,113,833,68"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="814,124,877,151"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="877,66,859,111,856,107,873,69"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="901,124,963,151"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="903,65,923,111,918,108,900,70"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="987,124,1053,151"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="929,65,993,115,988,113,928,70"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1077,124,1142,151"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="959,65,1067,113,1072,117,1067,116,1064,117,958,70"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1166,124,1237,151"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="978,57,1065,82,1156,112,1163,117,1158,117,1154,118,1063,87,977,63"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1262,124,1312,151"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="977,46,1108,71,1180,89,1250,112,1255,117,1250,116,1249,118,1179,95,1107,76,977,52"/>
+</map>

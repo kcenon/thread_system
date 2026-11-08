@@ -1,0 +1,7 @@
+<map id="kcenon::thread::policies::lockfree_sync_policy::dequeue" name="kcenon::thread::policies::lockfree_sync_policy::dequeue">
+<area shape="rect" id="Node000001" title="Dequeue a job (lock&#45;free)" alt="" coords="258,36,434,97"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1policies_1_1lockfree__sync__policy.html#a74f735260b3ee38f373c01febea08cdc" title="Clear queue (best effort for lock&#45;free)" alt="" coords="5,5,210,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="240,50,210,47,210,42,245,49"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1policies_1_1lockfree__sync__policy.html#a75b7e6ff223ec1411a8506204fe3221b" title="Try to dequeue a job (non&#45;blocking, same as dequeue for lock&#45;free)" alt="" coords="19,74,196,136"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="239,84,197,93,196,88,245,83"/>
+</map>

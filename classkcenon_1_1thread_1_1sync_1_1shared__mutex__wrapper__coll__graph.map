@@ -1,0 +1,5 @@
+<map id="kcenon::thread::sync::shared_mutex_wrapper" name="kcenon::thread::sync::shared_mutex_wrapper">
+<area shape="rect" id="Node000001" title="Shared mutex wrapper with reader&#45;writer lock semantics." alt="" coords="5,143,206,478"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="40,5,172,78"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,75,108,126,103,126,105,80"/>
+</map>

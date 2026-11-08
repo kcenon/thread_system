@@ -1,0 +1,7 @@
+<map id="kcenon::thread::adaptive_job_queue" name="kcenon::thread::adaptive_job_queue">
+<area shape="rect" id="Node000001" title="Adaptive queue that switches between mutex and lock&#45;free modes." alt="" coords="109,338,288,936"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,81,184,215"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,227,138,339,133,339,112,232"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1queue__capabilities__interface.html" title="Mixin interface for queue capability introspection." alt="" coords="208,5,398,290"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="270,302,265,339,260,338,269,307"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::atomic_shared_ptr::get_unsafe" name="kcenon::thread::atomic_shared_ptr::get_unsafe">
+<area shape="rect" id="Node000001" title="Get raw pointer (unsafe &#45; for debugging only)" alt="" coords="5,5,183,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1atomic__shared__ptr.html#a21bc10fb01018392d3f2798e54b46b9b" title="Atomically load the current value." alt="" coords="231,5,402,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,25,218,27,213,28,183,30"/>
+</map>

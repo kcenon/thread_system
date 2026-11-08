@@ -1,0 +1,33 @@
+<map id="kcenon::thread::cancellation_scope" name="kcenon::thread::cancellation_scope">
+<area shape="rect" id="Node000001" title="Structured cancellation scope with check points." alt="" coords="58,1626,253,1894"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1enhanced__cancellation__token.html" title="Advanced cancellation token with timeout, deadline, and reason support." alt="" coords="62,967,249,1561"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,1558,158,1609,153,1608,155,1563"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="47,796,264,902"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="156,900,158,950,153,950,155,905"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1enhanced__cancellation__token_1_1state.html" title=" " alt="" coords="392,597,572,731"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="391,718,265,789,261,786,394,713"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="299,380,441,453"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="371,450,380,510,388,542,400,572,406,583,401,583,395,574,383,543,375,511,371,455"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="187,151,308,224"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="319,229,343,255,358,286,367,319,374,381,368,381,362,320,353,288,339,257,320,234"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="123,372,276,461"/>
+<area shape="poly" id="edge14_Node000012_Node000006" title=" " alt="" coords="210,239,204,257,198,286,195,316,196,372,191,372,189,316,192,285,199,255,211,233"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="238,5,257,78"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="248,75,250,135,245,134,247,80"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="490,143,631,232"/>
+<area shape="poly" id="edge10_Node000009_Node000007" title=" " alt="" coords="256,44,477,145,473,148,258,49"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="5,256,151,328"/>
+<area shape="poly" id="edge17_Node000014_Node000007" title=" " alt="" coords="237,57,176,144,111,243,106,241,172,141,239,52"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="464,352,657,481"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="556,478,550,527,537,574,533,583,528,581,532,572,545,526,554,483"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="561,244,563,353,558,352,560,250"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="787,352,980,481"/>
+<area shape="poly" id="edge12_Node000011_Node000009" title=" " alt="" coords="644,225,696,254,760,301,819,352,814,353,757,305,693,258,645,230"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="551,5,571,78"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="561,75,563,126,558,125,560,80"/>
+<area shape="poly" id="edge11_Node000004_Node000011" title=" " alt="" coords="852,483,823,532,802,555,778,575,734,602,686,623,637,639,591,650,588,646,635,634,684,618,732,598,775,571,798,551,818,528,855,479"/>
+<area shape="poly" id="edge13_Node000004_Node000012" title=" " alt="" coords="224,458,250,504,261,540,267,555,278,571,300,590,325,606,378,633,374,635,322,611,297,594,275,575,262,558,256,542,245,506,225,464"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="682,380,762,453"/>
+<area shape="poly" id="edge15_Node000004_Node000013" title=" " alt="" coords="723,450,715,514,704,546,686,575,665,595,641,612,591,638,587,634,639,608,662,591,681,571,699,544,710,512,721,455"/>
+<area shape="poly" id="edge16_Node000003_Node000014" title=" " alt="" coords="66,346,54,449,52,511,58,573,72,634,91,694,133,796,128,797,86,695,67,635,53,573,47,511,49,449,67,340"/>
+</map>

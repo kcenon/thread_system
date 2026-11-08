@@ -1,0 +1,15 @@
+<map id="kcenon::thread::detail::global_reclamation_manager" name="kcenon::thread::detail::global_reclamation_manager">
+<area shape="rect" id="Node000001" title="Global manager for orphaned nodes from terminated threads." alt="" coords="128,508,337,703"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="71,336,220,443"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,440,189,492,184,492,166,445"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1detail_1_1retire__node.html" title="Retire node for pending deletion." alt="" coords="5,143,158,254"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="75,251,79,283,86,312,90,321,85,322,81,313,74,284,75,256"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="157,180,177,186,185,199,177,211,172,208,179,198,174,190,159,185"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="264,162,385,235"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="260,244,239,257,215,263,195,264,178,267,161,280,148,307,143,337,138,336,143,305,157,277,176,263,195,259,214,258,237,252,263,240"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="252,353,404,426"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="327,247,330,354,325,353,324,252"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="315,5,334,78"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="325,75,327,146,322,145,324,80"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="314,424,285,493,281,490,311,428"/>
+</map>

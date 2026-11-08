@@ -1,0 +1,23 @@
+<map id="kcenon::thread::safe_hazard_guard" name="kcenon::thread::safe_hazard_guard">
+<area shape="rect" id="Node000001" title=" " alt="" coords="189,960,360,1250"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html" title="Thread&#45;local hazard pointer record with explicit memory ordering." alt="" coords="136,699,328,895"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="246,892,255,943,250,942,245,897"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="17,1052,164,1158"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="144,897,133,920,112,978,100,1036,95,1035,107,976,129,918,146,892"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,1051,179,912,182,908,117,1053"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="179,143,301,215"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="164,207,113,233,61,269,40,290,23,314,12,341,8,370,8,798,14,868,29,937,49,999,70,1052,64,1053,44,1001,24,938,9,869,3,799,3,370,7,340,18,312,36,287,58,265,110,229,167,203"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="132,432,274,504"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="198,230,197,240,186,291,184,343,189,391,196,432,191,432,184,392,179,343,180,290,191,238,200,225"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="229,335,382,408"/>
+<area shape="poly" id="edge10_Node000008_Node000004" title=" " alt="" coords="257,226,296,335,291,336,257,232"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="324,5,343,78"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="323,59,276,130,271,128,325,54"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="371,239,482,311"/>
+<area shape="poly" id="edge12_Node000009_Node000005" title=" " alt="" coords="343,63,409,224,404,224,342,68"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="206,501,224,683,219,682,205,506"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="311,528,492,634"/>
+<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="359,636,321,688,317,685,362,632"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="309,405,320,454,337,503,343,514,338,514,332,505,314,455,308,410"/>
+<area shape="poly" id="edge11_Node000007_Node000009" title=" " alt="" coords="425,324,413,504,411,529,406,527,408,504,423,329"/>
+</map>

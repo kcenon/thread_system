@@ -1,0 +1,9 @@
+<map id="kcenon::thread::work_stealing_stats" name="kcenon::thread::work_stealing_stats">
+<area shape="rect" id="Node000001" title="Statistics for work&#45;stealing operations." alt="" coords="23,621,183,822"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,280,200,352"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,351,105,604,100,604,100,354"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="42,143,164,215"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,227,105,280,100,280,102,232"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="93,5,112,78"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="103,75,105,126,100,126,102,80"/>
+</map>

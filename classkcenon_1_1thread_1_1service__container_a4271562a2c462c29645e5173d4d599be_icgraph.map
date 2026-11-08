@@ -1,0 +1,21 @@
+<map id="kcenon::thread::service_container::clear" name="kcenon::thread::service_container::clear">
+<area shape="rect" id="Node000001" title="Clear all registered services." alt="" coords="367,160,540,205"/>
+<area shape="rect" id="Node000002" href="$integration__example_8cpp.html#ab1a0004b3a04a02621ceb5741c13e5dc" title="Example 3: Complete integration with both logger and monitoring." alt="" coords="133,5,294,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="419,148,374,106,318,65,294,53,293,47,320,60,378,102,425,148"/>
+<area shape="rect" id="Node000004" href="$composition__example_8cpp.html#a353f73822e6878864dca0d8706ad075d" title="Demonstrate using thread pool without any services." alt="" coords="131,264,296,309"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="402,212,320,254,290,266,288,261,318,249,397,213"/>
+<area shape="rect" id="Node000005" href="$composition__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,302,60,329"/>
+<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="433,216,387,276,356,303,320,323,285,335,249,342,176,344,109,336,60,326,60,320,110,331,176,338,248,336,284,330,318,319,352,299,383,272,428,219"/>
+<area shape="rect" id="Node000006" href="$integration__example_8cpp.html#a0f0b39a9116011a8ebfff831aca8ff5a" title="Example 4: Dynamic service registration." alt="" coords="116,74,311,101"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="399,153,318,115,285,105,284,99,320,111,404,151"/>
+<area shape="rect" id="Node000007" href="$integration__example_8cpp.html#aa204e12bb384a3637482664094389b48" title="Example 1: Thread pool with external logger only." alt="" coords="123,125,304,170"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="349,168,305,163,304,158,354,167"/>
+<area shape="rect" id="Node000008" href="$integration__example_8cpp.html#a7128eab2a6c79a31acdc494497275084" title="Example 2: Thread pool with external monitoring only." alt="" coords="108,195,319,239"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="349,198,320,204,319,199,354,196"/>
+<area shape="rect" id="Node000003" href="$integration__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,104,60,132"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="118,58,109,65,77,85,51,106,47,103,74,81,106,60,122,54"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="114,304,61,314,60,309,117,300"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="111,107,61,116,59,112,115,103"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="106,132,61,125,59,120,110,129"/>
+<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="115,189,106,185,72,160,47,135,46,130,75,156,109,180,121,187"/>
+</map>

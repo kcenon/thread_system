@@ -1,0 +1,5 @@
+<map id="kcenon::thread::job_queue::dequeue" name="kcenon::thread::job_queue::dequeue">
+<area shape="rect" id="Node000001" title="Dequeues a job from the queue in FIFO order (blocking operation)." alt="" coords="214,5,360,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job__queue.html#ad3434c40ad66ee86f974be0c5ef33479" title="scheduler_interface implementation: get next job" alt="" coords="5,5,166,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,28,166,30,166,25,201,27"/>
+</map>

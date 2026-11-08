@@ -1,0 +1,18 @@
+<map id="kcenon::thread::thread_pool::metrics" name="kcenon::thread::thread_pool::metrics">
+<area shape="rect" id="Node000001" title="Access aggregated runtime metrics (read&#45;only reference)." alt="" coords="502,125,670,170"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1autoscaler.html#a08f555cbe2d05f8ee9f38364fc5e4d75" title="Collects current metrics from the pool." alt="" coords="257,5,451,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="539,116,499,91,453,65,427,53,427,48,455,60,502,86,545,116"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a4b93368a3bdd15a158627d9c2c9672e6" title="Analyzes for bottlenecks." alt="" coords="254,74,454,136"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="484,130,455,126,454,121,490,129"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a9ab588881fb90a45966cf463c9e7990d" title="Performs comprehensive health check." alt="" coords="254,160,454,221"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="484,166,455,175,454,169,489,165"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1thread__pool.html#a1c0caf3f3a17f2d1bcd07d480c3657f7" title="Collect and report current thread pool metrics." alt="" coords="270,245,438,290"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="545,178,502,209,455,235,428,247,427,242,453,231,499,205,540,180"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1autoscaler.html#ad2b36a4db012690def3c1fbe2f001472" title="Collects current metrics from the thread pool." alt="" coords="8,5,203,50"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="238,29,204,30,202,25,243,26"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a228383967039855596df136bcd696ab7" title="Exports diagnostics as JSON." alt="" coords="5,74,206,136"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="236,106,207,108,205,102,241,104"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="245,155,198,139,197,134,250,153"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a3869a283fd860d747c4cf485242103c1" title="Exports diagnostics as Prometheus&#45;compatible metrics." alt="" coords="5,160,206,221"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="236,191,206,193,206,188,241,190"/>
+</map>

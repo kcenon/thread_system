@@ -1,0 +1,13 @@
+<map id="include/kcenon/thread/metrics/sliding_window_counter.h" name="include/kcenon/thread/metrics/sliding_window_counter.h">
+<area shape="rect" id="Node000001" title="Sliding window counter for throughput measurement." alt="" coords="128,5,306,67"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,72,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,70,79,110,77,105,156,65"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="95,115,160,143"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,66,153,106,150,102,185,69"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="184,115,250,143"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="219,66,219,101,215,98,215,69"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="274,115,350,143"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="250,65,290,105,285,104,248,70"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="374,115,436,143"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="280,65,367,108,362,108,279,70"/>
+</map>

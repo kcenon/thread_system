@@ -1,0 +1,9 @@
+<map id="include/kcenon/thread/scaling/scaling_metrics.h" name="include/kcenon/thread/scaling/scaling_metrics.h">
+<area shape="rect" id="Node000001" title="Scaling direction and metrics for autoscaling decisions." alt="" coords="35,5,225,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,71,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,49,66,90,62,85,103,51"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="95,98,165,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="132,48,132,83,128,81,128,52"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="189,98,255,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="155,48,199,87,193,88,153,53"/>
+</map>

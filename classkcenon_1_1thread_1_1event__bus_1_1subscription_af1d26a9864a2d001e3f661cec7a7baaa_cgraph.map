@@ -1,0 +1,7 @@
+<map id="kcenon::thread::event_bus::subscription::operator=" name="kcenon::thread::event_bus::subscription::operator=">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,218,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1event__bus_1_1subscription.html#aa3a382fa95f388b5a99d565a1d9c8f88" title="Unsubscribe from events." alt="" coords="266,5,490,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="218,25,253,28,248,28,218,30"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1event__bus.html#a9ec395730db105811a3cd1ad8cbd7299" title="Unsubscribe a specific handler." alt="" coords="538,5,701,50"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="490,25,525,28,520,28,490,30"/>
+</map>

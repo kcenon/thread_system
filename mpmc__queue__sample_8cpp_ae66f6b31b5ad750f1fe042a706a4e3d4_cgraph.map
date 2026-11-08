@@ -1,0 +1,15 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,84,60,112"/>
+<area shape="rect" id="Node000002" href="$mpmc__queue__sample_8cpp.html#a2eae948c8b6adfa8552c3ed50ddba103" title=" " alt="" coords="129,5,284,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="48,82,75,62,106,43,128,37,124,40,109,48,78,66,52,85"/>
+<area shape="rect" id="Node000004" href="$mpmc__queue__sample_8cpp.html#a945cedda90dc9326e3e06de84c543c52" title=" " alt="" coords="108,57,305,85"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="59,91,99,86,95,90,61,96"/>
+<area shape="rect" id="Node000005" href="$mpmc__queue__sample_8cpp.html#a8d76c423bb645996fcbb1e72c8f1cdda" title=" " alt="" coords="143,109,270,137"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="60,99,130,110,126,114,60,104"/>
+<area shape="rect" id="Node000006" href="$mpmc__queue__sample_8cpp.html#a86233f9bdfa543063cc95c88d9f6da6d" title=" " alt="" coords="122,161,290,189"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="51,109,78,129,109,146,129,156,124,156,107,151,75,133,51,115"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1job.html#abb0aab22ba1692b557b8138afcd99894" title="The core task execution method to be overridden by derived classes." alt="" coords="353,49,499,94"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="268,31,341,50,336,51,268,36"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="305,69,340,71,335,72,306,74"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="267,106,341,91,336,93,269,111"/>
+</map>

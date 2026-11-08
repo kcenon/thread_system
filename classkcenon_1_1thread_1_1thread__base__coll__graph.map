@@ -1,0 +1,31 @@
+<map id="kcenon::thread::thread_base" name="kcenon::thread::thread_base">
+<area shape="rect" id="Node000001" title="A foundational class for implementing custom worker threads." alt="" coords="344,867,542,1364"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="399,393,530,466"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="464,462,465,490,454,851,448,850,460,490,462,468"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="301,143,422,215"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="425,223,437,238,454,277,464,319,469,394,464,393,459,320,449,279,433,240,426,229"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="275,280,416,369"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="292,229,287,240,285,250,285,260,295,280,290,281,280,261,279,249,283,238,294,224"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="110,288,251,361"/>
+<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="285,199,250,216,216,241,200,264,190,289,185,288,195,261,212,237,247,212,288,195"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="483,5,502,78"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="482,54,409,132,405,129,485,50"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="600,143,745,215"/>
+<area shape="poly" id="edge14_Node000011_Node000004" title=" " alt="" coords="501,47,615,132,609,133,502,52"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,288,86,361"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="37,363,24,443,13,556,14,618,20,681,34,743,56,801,80,844,110,883,144,920,180,953,257,1012,332,1058,327,1060,254,1016,177,957,140,923,106,886,76,846,51,803,28,744,15,682,8,618,8,556,18,443,37,358"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1lifecycle__controller.html" title="Centralized thread lifecycle state and synchronization management." alt="" coords="222,490,394,802"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="51,358,72,414,87,441,107,464,131,475,153,476,178,477,204,487,212,493,207,495,202,492,177,482,153,482,129,481,104,468,83,444,67,416,52,363"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="343,800,356,843,358,852,353,851,351,844,342,805"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="341,366,331,473,326,472,340,372"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="185,358,197,410,212,465,218,481,213,481,207,467,191,412,185,363"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="570,280,713,369"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="646,367,651,451,650,560,640,682,629,743,615,803,587,879,552,951,547,948,582,877,610,802,624,742,634,681,645,559,646,451,644,372"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="495,143,575,215"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="561,212,602,266,597,267,561,217"/>
+<area shape="poly" id="edge13_Node000009_Node000011" title=" " alt="" coords="663,227,653,281,648,279,661,232"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="774,610,850,682"/>
+<area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="806,680,789,741,759,804,713,867,662,926,608,980,556,1028,553,1023,604,976,658,922,709,863,754,801,784,739,803,684"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="748,280,876,369"/>
+<area shape="poly" id="edge16_Node000012_Node000013" title=" " alt="" coords="814,382,815,611,810,609,811,386"/>
+</map>

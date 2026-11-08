@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$classkcenon_1_1thread_1_1metrics_1_1MetricsBackend.html" title="Abstract interface for metrics export backends." alt="" coords="5,75,181,119"/>
+<area shape="rect" id="Node000001" href="$classkcenon_1_1thread_1_1metrics_1_1JsonBackend.html" title="JSON format backend." alt="" coords="229,5,404,50"/>
+<area shape="poly" id="edge24_Node000000_Node000001" title=" " alt="" coords="180,67,244,49,240,52,183,72"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1LoggingBackend.html" title="Logging backend for debugging and diagnostics." alt="" coords="229,75,404,119"/>
+<area shape="poly" id="edge25_Node000000_Node000002" title=" " alt="" coords="196,94,231,96,226,98,196,100"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1PrometheusBackend.html" title="Prometheus/OpenMetrics format backend." alt="" coords="229,144,404,189"/>
+<area shape="poly" id="edge26_Node000000_Node000003" title=" " alt="" coords="182,122,244,143,239,144,181,127"/>
+</map>

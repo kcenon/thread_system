@@ -1,0 +1,9 @@
+<map id="include/kcenon/thread/core/submit_options.h" name="include/kcenon/thread/core/submit_options.h">
+<area shape="rect" id="Node000001" title="Options struct for unified submit() API." alt="" coords="40,5,210,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,64,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,49,62,89,59,85,99,52"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="88,98,162,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="127,48,128,83,123,81,123,52"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="186,98,251,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="151,48,195,87,190,88,149,53"/>
+</map>

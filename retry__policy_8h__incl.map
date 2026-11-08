@@ -1,0 +1,17 @@
+<map id="include/kcenon/thread/core/retry_policy.h" name="include/kcenon/thread/core/retry_policy.h">
+<area shape="rect" id="Node000001" title="Retry policy with configurable strategies: fixed, linear, and exponential backoff." alt="" coords="246,5,411,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,71,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="252,53,86,100,85,95,251,48"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="95,98,165,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="279,50,177,94,175,89,273,51"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="189,98,274,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="306,50,260,90,257,86,301,51"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="298,98,360,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="331,48,331,84,327,81,327,52"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="384,98,470,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="355,48,403,88,397,87,354,53"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="494,98,552,126"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="381,48,482,92,477,92,380,53"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="577,98,635,126"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="404,48,564,97,559,97,403,53"/>
+</map>

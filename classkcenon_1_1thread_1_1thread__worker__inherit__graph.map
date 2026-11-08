@@ -1,0 +1,5 @@
+<map id="kcenon::thread::thread_worker" name="kcenon::thread::thread_worker">
+<area shape="rect" id="Node000001" title="A specialized worker thread that processes jobs from a job_queue." alt="" coords="12,662,195,1383"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,202,614"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,626,106,662,101,662,104,631"/>
+</map>

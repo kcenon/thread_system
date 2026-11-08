@@ -1,0 +1,17 @@
+<map id="src/metrics/sliding_window_counter.cpp" name="src/metrics/sliding_window_counter.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="218,5,379,50"/>
+<area shape="rect" id="Node000002" href="$sliding__window__counter_8h.html" title="Sliding window counter for throughput measurement." alt="" coords="121,98,313,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="281,49,248,89,245,85,277,52"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="338,106,422,134"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="319,48,361,95,355,95,317,53"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,191,72,218"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="171,146,82,186,80,181,169,141"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="95,191,160,218"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="196,142,155,182,152,178,191,144"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="184,191,250,218"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="219,141,219,176,215,174,215,145"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="274,191,350,218"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="243,141,288,180,282,180,241,146"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="374,191,436,218"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="268,141,364,184,359,184,266,146"/>
+</map>

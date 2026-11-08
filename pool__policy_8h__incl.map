@@ -1,0 +1,9 @@
+<map id="include/kcenon/thread/pool_policies/pool_policy.h" name="include/kcenon/thread/pool_policies/pool_policy.h">
+<area shape="rect" id="Node000001" title="Base interface for extensible thread pool behavior policies." alt="" coords="156,5,354,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,193,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,50,150,93,148,88,215,51"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="217,106,293,134"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="257,48,257,92,253,90,253,52"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="318,106,376,134"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="278,48,325,95,320,95,276,53"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="std::formatter&lt; kcenon::thread::job_types, wchar_t &gt;::format" name="std::formatter&lt; kcenon::thread::job_types, wchar_t &gt;::format">
+<area shape="rect" id="Node000001" title="Formats a job_types value as a wide string." alt="" coords="5,32,195,93"/>
+<area shape="rect" id="Node000002" href="$namespacekcenon_1_1thread.html#ad6d085f98c4c6032ff322a5eddf18648" title="Convert log_level_v2 to string representation." alt="" coords="259,5,398,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,45,246,40,241,41,196,51"/>
+<area shape="rect" id="Node000003" href="$classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4" title="Converts a std::string (system&#45;encoded) to a std::wstring." alt="" coords="243,75,415,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="195,74,230,81,225,82,195,79"/>
+</map>

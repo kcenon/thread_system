@@ -1,0 +1,26 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,118,60,146"/>
+<area shape="rect" id="Node000002" href="$integration__example_8cpp.html#ab1a0004b3a04a02621ceb5741c13e5dc" title="Example 3: Complete integration with both logger and monitoring." alt="" coords="133,144,294,189"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,134,120,146,116,150,60,139"/>
+<area shape="rect" id="Node000006" href="$integration__example_8cpp.html#a0f0b39a9116011a8ebfff831aca8ff5a" title="Example 4: Dynamic service registration." alt="" coords="116,212,311,240"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="45,143,73,172,109,199,122,207,117,207,106,203,70,176,44,148"/>
+<area shape="rect" id="Node000007" href="$integration__example_8cpp.html#aa204e12bb384a3637482664094389b48" title="Example 1: Thread pool with external logger only." alt="" coords="123,5,304,50"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="43,116,70,88,106,60,120,55,116,59,109,65,74,92,48,119"/>
+<area shape="rect" id="Node000008" href="$integration__example_8cpp.html#a7128eab2a6c79a31acdc494497275084" title="Example 2: Thread pool with external monitoring only." alt="" coords="108,75,319,119"/>
+<area shape="poly" id="edge13_Node000001_Node000008" title=" " alt="" coords="59,124,94,118,90,122,61,129"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1service__container.html#a4271562a2c462c29645e5173d4d599be" title="Clear all registered services." alt="" coords="388,36,561,81"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="293,141,318,129,341,110,366,91,376,88,381,86,368,95,345,114,320,134,295,146"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1service__container.html#a8be7271c31c2b1efed81c5bcb56c5502" title="Get the global service container instance." alt="" coords="388,105,561,150"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="293,152,375,142,369,143,294,157"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1service__container.html#a364402b457500b9aedcb3a4fe2fda89a" title="Register a service with singleton lifetime." alt="" coords="367,175,581,219"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="294,173,354,182,349,183,294,178"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="301,209,317,199,329,187,336,174,341,147,346,119,353,105,365,91,372,88,377,85,369,95,358,108,351,121,346,148,341,176,333,190,321,203,303,214"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="291,209,318,199,332,190,341,180,366,160,376,157,381,156,368,165,345,184,335,194,320,203,292,214"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="311,213,349,211,354,211,312,218"/>
+<area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="304,36,375,46,369,47,305,41"/>
+<area shape="poly" id="edge11_Node000007_Node000004" title=" " alt="" coords="291,48,320,60,344,75,368,91,384,99,379,99,366,95,342,80,318,65,291,53"/>
+<area shape="poly" id="edge12_Node000007_Node000005" title=" " alt="" coords="302,48,321,60,332,73,339,86,346,112,352,137,358,148,369,160,374,167,369,165,365,164,354,152,347,139,340,113,334,88,328,76,317,64,302,53"/>
+<area shape="poly" id="edge14_Node000008_Node000003" title=" " alt="" coords="319,79,375,73,370,74,320,84"/>
+<area shape="poly" id="edge15_Node000008_Node000004" title=" " alt="" coords="319,107,375,115,369,116,320,112"/>
+<area shape="poly" id="edge16_Node000008_Node000005" title=" " alt="" coords="291,117,320,129,344,145,368,160,384,169,379,168,366,165,342,149,318,134,291,122"/>
+</map>

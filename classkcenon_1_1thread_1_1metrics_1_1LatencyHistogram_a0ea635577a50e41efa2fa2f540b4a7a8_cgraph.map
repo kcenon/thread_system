@@ -1,0 +1,7 @@
+<map id="kcenon::thread::metrics::LatencyHistogram::record" name="kcenon::thread::metrics::LatencyHistogram::record">
+<area shape="rect" id="Node000001" title="Record a latency value." alt="" coords="5,14,203,58"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#acebf5a20dc245be8ab3f01d18b680ca6" title="Record a raw nanosecond value." alt="" coords="251,14,470,58"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,34,238,36,233,36,203,39"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1LatencyHistogram.html#a3b39aa0514608d33fe38aed94c4afaa3" title="Compute the bucket index for a given value." alt="" coords="518,5,731,67"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="470,34,505,36,500,36,470,39"/>
+</map>

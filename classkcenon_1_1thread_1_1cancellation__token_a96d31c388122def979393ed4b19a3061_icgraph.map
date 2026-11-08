@@ -1,0 +1,11 @@
+<map id="kcenon::thread::cancellation_token::create" name="kcenon::thread::cancellation_token::create">
+<area shape="rect" id="Node000001" title="Creates a new cancellation token." alt="" coords="361,40,566,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1cancellation__token.html#a8ebfe26fb9b1c14e8d27ee23eb15811f" title="Creates a linked token that is canceled when any of the parent tokens are canceled." alt="" coords="108,5,313,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="343,46,314,44,313,39,348,46"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__pool.html#af7d8c0189c9b08f50b369df16040a0e8" title="Starts the thread pool and all associated workers." alt="" coords="126,75,294,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="343,79,296,88,295,83,348,78"/>
+<area shape="rect" id="Node000004" href="$crash__protection_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,56,60,84"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="108,84,60,77,60,72,113,80"/>
+<area shape="rect" id="Node000005" href="$thread__pool__sample_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef" title=" " alt="" coords="5,108,60,136"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="108,113,60,121,60,116,113,110"/>
+</map>

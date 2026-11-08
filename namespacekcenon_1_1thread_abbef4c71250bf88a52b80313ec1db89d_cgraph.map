@@ -1,0 +1,15 @@
+<map id="kcenon::thread::safe_retire_hazard" name="kcenon::thread::safe_retire_hazard">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,160,101"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a489ed9f947f27820791f237e1ed3576f" title="Get singleton instance." alt="" coords="208,5,389,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,61,195,56,190,58,161,66"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a5dbea55217b9dbb8bf8dfe167e548ca7" title="Retire a pointer for later reclamation." alt="" coords="208,91,389,152"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="160,91,195,100,190,101,160,97"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a4757c51c9a4bd33934e5a928df10b902" title="Collect reclaimable objects." alt="" coords="438,48,619,110"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="389,102,425,98,420,99,390,107"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#ae53dcb6a4fe401fba69359eeca5fc910" title="Get adaptive threshold based on active thread count." alt="" coords="437,133,619,195"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="390,136,424,144,419,144,389,141"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#affee714bf1ce5f368c1f3d77fb9fe611" title="Collect reclaimable objects (internal, lock held)" alt="" coords="667,48,849,110"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="619,76,654,79,649,79,620,81"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html#ae368cdbfdf4ea5e527bbf7432ee53f58" title="Get protected pointer at slot." alt="" coords="897,56,1099,101"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="849,76,884,79,879,79,849,81"/>
+</map>

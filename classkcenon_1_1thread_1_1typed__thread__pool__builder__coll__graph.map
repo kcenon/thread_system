@@ -1,0 +1,13 @@
+<map id="kcenon::thread::typed_thread_pool_builder&lt; job_type &gt;" name="kcenon::thread::typed_thread_pool_builder&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title="Typed thread pool builder template." alt="" coords="38,434,248,809"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="31,297,107,369"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,366,93,418,88,418,78,372"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,143,133,232"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="69,244,72,297,67,297,69,250"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="131,297,304,369"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="209,366,198,419,193,417,207,371"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="158,151,276,224"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="218,236,220,298,215,297,217,241"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="208,5,226,78"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="218,75,220,135,215,134,217,80"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::concepts::has_wait_method&lt; T, typename &gt;" name="kcenon::thread::concepts::has_wait_method&lt; T, typename &gt;">
+<area shape="rect" id="Node000001" title="SFINAE helper to detect if a type has a wait() method." alt="" coords="5,126,251,215"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="75,5,182,78"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,91,131,127,126,125,127,95"/>
+</map>

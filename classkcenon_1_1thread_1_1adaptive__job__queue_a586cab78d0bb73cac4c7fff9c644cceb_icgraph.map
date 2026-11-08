@@ -1,0 +1,21 @@
+<map id="kcenon::thread::adaptive_job_queue::enqueue" name="kcenon::thread::adaptive_job_queue::enqueue">
+<area shape="rect" id="Node000001" title="Enqueues a job into the current active queue." alt="" coords="363,161,546,206"/>
+<area shape="rect" id="Node000002" href="$adaptive__queue__sample_8cpp.html#aea521acdfd711def1c088811d3d5c0a2" title=" " alt="" coords="108,5,314,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="426,149,378,97,347,70,314,47,291,36,290,31,316,42,350,65,381,93,431,149"/>
+<area shape="rect" id="Node000004" href="$adaptive__queue__sample_8cpp.html#ad3807da4331da23479052ba772a377f0" title=" " alt="" coords="145,57,278,102"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="396,154,314,116,278,102,278,97,316,111,401,153"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1adaptive__job__queue.html#a8a7f45a1e177068d56ba95a73076e35b" title="Type&#45;safe enqueue for job subclasses." alt="" coords="120,126,303,171"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="345,169,304,164,303,159,350,167"/>
+<area shape="rect" id="Node000006" href="$adaptive__queue__sample_8cpp.html#a21793bcc15486980f337c12b1567fba3" title=" " alt="" coords="120,196,302,240"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="345,199,304,207,302,202,350,198"/>
+<area shape="rect" id="Node000007" href="$adaptive__queue__sample_8cpp.html#aff6943b24f1669731fdb15ab93341ef9" title=" " alt="" coords="108,264,315,292"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="403,212,316,255,281,266,279,261,314,250,398,214"/>
+<area shape="rect" id="Node000008" href="$adaptive__queue__sample_8cpp.html#a01b6774eb0da092cdcda2a8084f6b3a5" title=" " alt="" coords="125,316,298,344"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="426,216,377,264,348,286,316,306,286,318,285,313,314,301,345,282,373,260,421,218"/>
+<area shape="rect" id="Node000003" href="$adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,204,60,232"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="110,44,109,46,92,64,78,84,57,129,44,171,38,204,33,203,39,170,52,127,74,81,88,61,106,43,113,39"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="129,102,109,116,87,137,68,161,43,205,38,202,64,158,83,133,106,112,132,98"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="103,220,61,220,59,215,107,216"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="126,260,107,255,60,234,60,229,109,250,131,259"/>
+<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="117,310,106,305,85,289,67,270,42,235,43,230,71,266,89,285,109,301,122,310"/>
+</map>

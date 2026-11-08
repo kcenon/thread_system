@@ -1,0 +1,7 @@
+<map id="include/kcenon/thread/core/hazard_pointer.h" name="include/kcenon/thread/core/hazard_pointer.h">
+<area shape="rect" id="Node000001" title="Hazard pointer implementation for lock&#45;free memory reclamation." alt="" coords="126,5,292,50"/>
+<area shape="rect" id="Node000002" href="$hazard__pointer_8cpp.html" title=" " alt="" coords="5,98,205,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="173,59,123,100,120,95,167,60"/>
+<area shape="rect" id="Node000003" href="$core_8cppm.html" title="C++20 module partition for thread_system core components." alt="" coords="228,98,400,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="249,57,300,98,295,97,248,62"/>
+</map>

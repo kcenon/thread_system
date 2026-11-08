@@ -1,0 +1,18 @@
+<map id="include/kcenon/thread/core/pool_traits.h" name="include/kcenon/thread/core/pool_traits.h">
+<area shape="rect" id="Node000001" title="Type traits and metaprogramming utilities for thread pool." alt="" coords="144,5,310,50"/>
+<area shape="rect" id="Node000002" href="$thread__concepts_8h.html" title="C++20 Concepts for thread_system." alt="" coords="139,98,315,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="228,48,229,84,225,82,226,53"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,191,97,218"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="181,52,150,74,118,100,87,139,65,178,61,175,83,136,114,96,147,69,185,49"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="121,191,208,218"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="176,52,151,73,129,99,124,119,127,139,147,178,141,178,122,140,119,118,125,97,147,69,180,49"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="316,191,381,218"/>
+<area shape="poly" id="edge8_Node000001_Node000005" title=" " alt="" coords="273,48,304,69,329,97,345,136,351,176,346,173,340,137,325,99,301,73,273,53"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="390,106,474,134"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="277,48,391,99,386,101,276,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="183,145,94,186,92,181,178,142"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="213,142,185,180,182,176,208,144"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="260,141,319,182,314,181,258,146"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="231,191,290,218"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="237,141,252,177,247,175,234,145"/>
+</map>

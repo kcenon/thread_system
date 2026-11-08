@@ -1,0 +1,27 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,580,117,608"/>
+<area shape="rect" id="Node000001" href="$structkcenon_1_1thread_1_1concepts_1_1has__get__method_3_01T_00_01std_1_1void__t_3_01decltype_07d869b6cf96acafc0ea1f11f421689910.html" title=" " alt="" coords="179,5,400,84"/>
+<area shape="poly" id="edge89_Node000000_Node000001" title=" " alt="" coords="62,565,73,461,93,321,106,250,122,185,141,131,163,94,180,79,177,84,167,97,146,134,127,187,111,251,98,322,78,462,67,565"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1concepts_1_1has__wait__method_3_01T_00_01std_1_1void__t_3_01decltype_05d3c12d9bfc583e0c6389f2921b80175.html" title=" " alt="" coords="179,108,400,187"/>
+<area shape="poly" id="edge90_Node000000_Node000002" title=" " alt="" coords="59,564,62,492,75,395,88,343,106,291,131,242,163,198,180,184,178,188,167,201,136,245,111,293,93,345,80,396,67,493,64,565"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1concepts_1_1is__duration_3_01std_1_1chrono_1_1duration_3_01Rep_00_01Period_01_4_01_4.html" title=" " alt="" coords="188,211,390,273"/>
+<area shape="poly" id="edge91_Node000000_Node000003" title=" " alt="" coords="61,564,68,506,84,431,97,391,114,352,136,315,163,283,189,265,186,270,167,287,140,318,119,354,102,393,89,432,73,507,66,565"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1concepts_1_1is__valid__job__type_3_01T_00_01std_1_1enable__if__t_3_01JobType_3_01T_01_4_01_4_01_4.html" title=" " alt="" coords="194,297,384,376"/>
+<area shape="poly" id="edge92_Node000000_Node000004" title=" " alt="" coords="67,565,80,525,99,477,127,428,163,385,195,364,193,369,166,389,131,431,104,480,85,527,72,566"/>
+<area shape="rect" id="Node000005" href="$structkcenon_1_1thread_1_1detail_1_1has__bound__policy__type_3_01T_00_01std_1_1void__t_3_01typen855d4214eb0f318dab7d3b857389f8a0.html" title=" " alt="" coords="189,400,390,479"/>
+<area shape="poly" id="edge93_Node000000_Node000005" title=" " alt="" coords="80,567,117,527,163,488,190,474,187,478,166,492,120,531,85,569"/>
+<area shape="rect" id="Node000006" href="$structkcenon_1_1thread_1_1detail_1_1has__do__work__method_3_01T_00_01std_1_1void__t_3_01decltype279da4895ca19f645443738873665ae7.html" title=" " alt="" coords="165,503,414,581"/>
+<area shape="poly" id="edge94_Node000000_Node000006" title=" " alt="" coords="130,576,166,569,162,572,134,580"/>
+<area shape="rect" id="Node000007" href="$structkcenon_1_1thread_1_1detail_1_1has__get__method_3_01T_00_01std_1_1void__t_3_01decltype_07st2973351f2472797fc8429b46ac63ffb8.html" title=" " alt="" coords="195,605,384,684"/>
+<area shape="poly" id="edge95_Node000000_Node000007" title=" " alt="" coords="131,607,197,622,193,625,133,612"/>
+<area shape="rect" id="Node000008" href="$structkcenon_1_1thread_1_1detail_1_1has__overflow__policy__type_3_01T_00_01std_1_1void__t_3_01tyd833da87b23127ba287c43a16167794f.html" title=" " alt="" coords="183,708,396,803"/>
+<area shape="poly" id="edge96_Node000000_Node000008" title=" " alt="" coords="83,617,122,655,166,693,185,706,180,708,163,697,118,659,84,622"/>
+<area shape="rect" id="Node000009" href="$structkcenon_1_1thread_1_1detail_1_1has__priority__method_3_01T_00_01std_1_1void__t_3_01decltype1259939ce1df6e30ea7bdfeb245c14ca.html" title=" " alt="" coords="169,827,410,905"/>
+<area shape="poly" id="edge97_Node000000_Node000009" title=" " alt="" coords="68,620,83,664,102,715,130,767,167,813,180,825,175,827,163,817,125,770,97,717,78,666,69,626"/>
+<area shape="rect" id="Node000010" href="$structkcenon_1_1thread_1_1detail_1_1has__sync__policy__type_3_01T_00_01std_1_1void__t_3_01typena93cedef5780fa3e844c7d4b967dd5a13.html" title=" " alt="" coords="189,929,390,1008"/>
+<area shape="poly" id="edge98_Node000000_Node000010" title=" " alt="" coords="64,621,73,683,89,761,102,802,119,842,140,881,167,915,191,936,186,937,163,919,136,883,114,845,97,803,84,762,68,684,64,626"/>
+<area shape="rect" id="Node000011" href="$structkcenon_1_1thread_1_1detail_1_1is__policy__queue__impl_3_01policy__queue_3_01SyncPolicy_00_e091157b5e63405d7e768a64a3750f7f.html" title="Specialization for policy_queue template." alt="" coords="169,1032,410,1111"/>
+<area shape="poly" id="edge99_Node000000_Node000011" title=" " alt="" coords="66,621,81,712,103,830,131,943,148,987,167,1018,180,1031,174,1032,163,1021,144,989,126,945,97,831,76,713,66,626"/>
+<area shape="rect" id="Node000012" href="$structstd_1_1is__error__code__enum_3_01kcenon_1_1thread_1_1error__code_01_4.html" title="Specialization to enable implicit conversion of thread_system::error_code to std::error_code." alt="" coords="201,1135,378,1197"/>
+<area shape="poly" id="edge100_Node000000_Node000012" title=" " alt="" coords="64,620,76,732,95,881,108,956,125,1025,144,1082,167,1120,183,1135,203,1148,198,1148,180,1139,163,1124,139,1084,120,1026,103,957,90,881,71,732,64,626"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="kcenon::thread::detail::concurrent_queue::try_dequeue" name="kcenon::thread::detail::concurrent_queue::try_dequeue">
+<area shape="rect" id="Node000001" title="Tries to dequeue a value (non&#45;blocking)" alt="" coords="334,44,505,106"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1concurrent__queue.html#aed116425812637e8c9680ce6a6ebfba2" title="Dequeues a value with blocking wait." alt="" coords="55,5,236,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="316,61,237,52,236,46,321,60"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1detail_1_1concurrent__queue.html#a66233e4a0978ec01b9cd9625ec63c51d" title="Destructor &#45; signals shutdown and drains the queue." alt="" coords="5,91,286,136"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="316,89,286,96,286,91,321,89"/>
+</map>

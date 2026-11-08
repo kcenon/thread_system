@@ -1,0 +1,14 @@
+<map id="kcenon::thread::enhanced_cancellation_token::check_cancelled" name="kcenon::thread::enhanced_cancellation_token::check_cancelled">
+<area shape="rect" id="Node000001" title="Checks if the token has been cancelled and returns an error result." alt="" coords="5,98,202,160"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1enhanced__cancellation__token.html#ae129c9226358cfee666ff9e9e079efc9" title="Gets the cancellation reason." alt="" coords="250,5,480,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,95,249,60,271,54,267,57,251,65,169,100"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1enhanced__cancellation__token.html#a77756ddbe3aa4c18d88ca4b3e1fa0695" title="Checks if the token has been cancelled." alt="" coords="270,98,460,160"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="202,126,257,128,252,130,203,132"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread.html#a13f75c13dd33420c01a704c8bd09a79e" title="Create a common::VoidResult error from a thread::error_code." alt="" coords="284,184,446,229"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="203,155,275,179,269,179,202,161"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="319,96,320,88,329,79,344,73,365,72,389,74,406,84,400,84,388,79,365,77,345,79,332,83,325,90,324,100"/>
+<area shape="rect" id="Node000005" href="$namespacekcenon_1_1thread.html#a899d6d797fc353567761b0d4ed2637e6" title="Convert a thread::error_code to common::error_info." alt="" coords="528,184,667,229"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="446,204,515,206,510,206,446,209"/>
+<area shape="rect" id="Node000006" href="$namespacekcenon_1_1thread.html#ad0779f8bb1ec9253f6d59a66f35230ef" title="Converts an error_code to a string representation." alt="" coords="715,184,873,229"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="668,204,702,206,697,206,668,209"/>
+</map>

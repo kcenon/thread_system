@@ -1,0 +1,19 @@
+<map id="kcenon::thread::detail::thread_impl" name="kcenon::thread::detail::thread_impl">
+<area shape="rect" id="Node000001" title="Thread implementation abstraction that handles differences between std::jthread and std::thread." alt="" coords="103,572,255,907"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="7,417,172,507"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,504,122,556,117,556,103,509"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,280,86,352"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="43,349,50,393,53,401,48,402,45,394,43,355"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="180,280,325,352"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="165,355,137,378,121,397,109,418,104,416,117,394,133,374,168,351"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="196,417,346,507"/>
+<area shape="poly" id="edge9_Node000006_Node000004" title=" " alt="" coords="252,365,257,393,261,418,256,417,251,394,251,370"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="290,5,308,78"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="294,75,264,264,259,263,292,80"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="346,143,468,215"/>
+<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="308,52,371,129,366,130,308,57"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="258,504,242,557,238,555,255,509"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="351,280,492,352"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="417,350,410,375,397,395,363,424,359,421,393,392,405,372,414,354"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="413,227,421,281,415,280,412,232"/>
+</map>

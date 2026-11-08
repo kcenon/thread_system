@@ -1,0 +1,21 @@
+<map id="include/kcenon/thread/pool_policies/circuit_breaker_policy.h" name="include/kcenon/thread/pool_policies/circuit_breaker_policy.h">
+<area shape="rect" id="Node000001" title="Pool policy implementing circuit breaker pattern for failure protection." alt="" coords="344,5,509,67"/>
+<area shape="rect" id="Node000002" href="$pool__policy_8h.html" title="Base interface for extensible thread pool behavior policies." alt="" coords="147,124,252,151"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="355,69,244,119,242,115,359,66"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,216,82,244"/>
+<area shape="poly" id="edge9_Node000001_Node000004" title=" " alt="" coords="340,47,294,57,240,71,187,91,137,117,113,136,92,159,60,204,56,201,88,155,109,132,134,113,185,86,239,66,293,52,345,45"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="317,216,375,244"/>
+<area shape="poly" id="edge10_Node000001_Node000005" title=" " alt="" coords="364,66,338,90,318,116,312,138,314,160,331,204,326,202,309,161,307,137,313,114,334,86,360,69"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="328,115,524,160"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="428,65,428,101,424,98,425,70"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="548,115,744,160"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="494,65,587,108,581,108,493,70"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="768,115,964,160"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="510,53,757,110,752,112,509,59"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="989,124,1055,151"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="509,39,606,47,724,60,852,82,978,112,986,117,981,117,976,118,851,87,723,66,606,52,510,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="106,208,293,252"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="201,150,202,193,197,191,198,154"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="178,154,81,210,78,206,176,149"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="221,149,314,207,309,208,220,154"/>
+</map>

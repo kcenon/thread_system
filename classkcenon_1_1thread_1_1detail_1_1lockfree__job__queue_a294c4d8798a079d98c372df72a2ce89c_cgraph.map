@@ -1,0 +1,9 @@
+<map id="kcenon::thread::detail::lockfree_job_queue::try_dequeue" name="kcenon::thread::detail::lockfree_job_queue::try_dequeue">
+<area shape="rect" id="Node000001" title="Tries to dequeue a job without blocking." alt="" coords="5,5,170,67"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#afdd966b3ada4a6b20d091496e1d6c491" title="Dequeues a job from the queue (thread&#45;safe)" alt="" coords="218,5,382,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,34,205,36,200,36,170,39"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__guard.html#a6a993bc8a8a2f110d66964a9fa8431dc" title="Protect a pointer." alt="" coords="430,14,600,58"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="382,34,417,36,412,36,382,39"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html#acf1c44aa138a473548e2a73bf107508d" title="Protect a pointer from reclamation." alt="" coords="648,5,822,67"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="600,34,635,36,630,36,601,39"/>
+</map>

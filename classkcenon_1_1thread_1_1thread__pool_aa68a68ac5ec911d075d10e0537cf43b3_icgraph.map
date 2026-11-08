@@ -1,0 +1,15 @@
+<map id="kcenon::thread::thread_pool::collect_worker_diagnostics" name="kcenon::thread::thread_pool::collect_worker_diagnostics">
+<area shape="rect" id="Node000001" title="Collects diagnostics information from all workers." alt="" coords="750,48,919,110"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a4b93368a3bdd15a158627d9c2c9672e6" title="Analyzes for bottlenecks." alt="" coords="502,5,702,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="733,61,703,57,703,52,738,61"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#ae150a464d6ff6bad18ec9f9900ab2c84" title="Gets current state of all worker threads." alt="" coords="502,91,702,152"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="733,98,703,106,702,100,738,97"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a228383967039855596df136bcd696ab7" title="Exports diagnostics as JSON." alt="" coords="254,5,454,67"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="484,37,455,39,454,34,489,36"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a69b90d07833c496c1b40d9b8598a61af" title="Gets formatted thread dump (human&#45;readable)." alt="" coords="254,91,454,152"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="484,122,455,124,454,119,489,121"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a130f0e611b2328fb91949af2224cb6ba" title="Gets currently executing jobs." alt="" coords="254,176,454,238"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="499,157,446,178,445,173,493,159"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a71f94d5b940569ff48478a43af04441d" title="Exports diagnostics as formatted string." alt="" coords="5,91,206,152"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="236,122,207,124,205,119,241,121"/>
+</map>

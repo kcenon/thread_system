@@ -1,0 +1,19 @@
+<map id="include/kcenon/thread/utils/when_helpers.h" name="include/kcenon/thread/utils/when_helpers.h">
+<area shape="rect" id="Node000001" title="Helper functions for combining multiple futures." alt="" coords="270,5,436,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,72,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="271,53,88,100,86,95,269,47"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,98,157,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="296,51,172,97,170,92,290,51"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="180,98,257,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="320,50,254,92,252,87,315,51"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="280,98,344,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="345,49,327,86,324,82,340,52"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="367,98,422,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="365,48,383,85,379,83,363,53"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="446,98,538,126"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="391,48,459,90,454,89,389,53"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="562,98,622,126"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="417,48,550,95,545,95,416,53"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="646,98,708,126"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="436,46,633,97,628,98,436,51"/>
+</map>

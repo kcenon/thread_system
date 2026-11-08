@@ -1,0 +1,7 @@
+<map id="kcenon::thread::diagnostics::thread_pool_diagnostics::check_queue_health" name="kcenon::thread::diagnostics::thread_pool_diagnostics::check_queue_health">
+<area shape="rect" id="Node000001" title="Checks queue component health." alt="" coords="5,32,206,93"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#aebd7dbb88679675d09d7479b6dbab529" title="Returns the shared job_queue used by this thread pool." alt="" coords="281,5,449,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,46,268,40,263,42,207,52"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1thread__pool.html#a1ac09aac27cb01dc7a0c82b64ccbc969" title="Get the number of pending tasks in the queue." alt="" coords="254,75,476,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,73,241,80,235,80,206,78"/>
+</map>

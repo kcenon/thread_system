@@ -1,0 +1,11 @@
+<map id="include/kcenon/thread/core/cancellation_reason.h" name="include/kcenon/thread/core/cancellation_reason.h">
+<area shape="rect" id="Node000001" title="Cancellation reason structure for enhanced cancellation tokens." alt="" coords="90,5,290,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,71,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,53,77,93,74,88,148,49"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="95,98,181,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="179,49,156,87,153,83,174,52"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="205,98,279,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="205,48,228,85,223,84,202,53"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="304,98,362,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="229,48,300,90,294,90,227,53"/>
+</map>

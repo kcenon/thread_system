@@ -1,0 +1,45 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,568,60,596"/>
+<area shape="rect" id="Node000002" href="$crash__protection_2main_8cpp.html#abcc3426fa8cd19b722d7fd8e93448fef" title=" " alt="" coords="112,5,301,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="31,567,33,465,41,308,51,226,64,150,82,87,93,63,106,44,112,40,109,45,110,48,97,65,87,89,69,151,56,226,47,308,38,465,36,567"/>
+<area shape="rect" id="Node000003" href="$crash__protection_2main_8cpp.html#a7e2dac29460f757cd4a198671c3b7bf3" title=" " alt="" coords="120,57,292,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="31,567,34,473,45,332,54,258,67,191,84,135,106,96,112,92,110,97,110,99,89,137,72,192,59,259,50,333,40,474,37,567"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__pool__crash__safety.html#ad35a24641fc2a1dfbc9443dd0c3e5bc4" title="Enable crash safety for a thread pool." alt="" coords="108,110,305,171"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="32,567,38,489,52,374,74,260,88,214,105,182,109,180,107,185,110,185,93,216,79,261,57,375,44,490,37,568"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1thread__pool.html#a9aada2257cece6256f61457d70e0881c" title="Enqueues a new job into the shared job_queue." alt="" coords="122,196,290,240"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="33,567,40,501,55,406,77,313,90,276,106,251,111,247,109,252,110,254,95,279,82,315,60,407,46,501,38,568"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1thread__pool.html#aadb01256dae22254645858d28bc7d593" title="Enqueues a batch of jobs into the shared job_queue." alt="" coords="122,265,290,310"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="31,568,33,521,43,456,52,420,65,384,83,350,106,320,111,317,109,322,110,324,87,353,70,386,57,421,48,457,38,522,36,568"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1crash__handler.html#ab84f36a712f9264aa9637d4e2d5ce148" title=" " alt="" coords="126,334,287,379"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="33,567,39,532,51,484,73,434,88,410,106,389,114,384,111,389,110,393,92,413,77,436,56,486,44,533,38,568"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1crash__handler.html#a6c401f34b82840376f8d690e971b8ae7" title="Initialize crash handling with specified safety level." alt="" coords="126,404,287,448"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="36,567,61,514,81,485,106,459,114,454,112,459,109,462,85,488,65,517,41,568"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1crash__handler.html#aa5bda67531b9424e8704f1cc67ba04a2" title="Get the global crash handler instance." alt="" coords="126,473,287,518"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="49,566,106,528,121,522,118,526,109,532,53,569"/>
+<area shape="rect" id="Node000010" href="$crash__protection_2main_8cpp.html#a1a248f585fa8d27c85bb9ec05d6472df" title=" " alt="" coords="155,541,258,569"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="58,576,142,563,138,567,62,580"/>
+<area shape="rect" id="Node000011" href="$crash__protection_2main_8cpp.html#a611a2c2c939164753898da654dc0dc8a" title=" " alt="" coords="139,593,274,621"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="59,583,126,593,122,597,62,588"/>
+<area shape="rect" id="Node000012" href="$classkcenon_1_1thread_1_1crash__handler.html#a6fae4009cb4d60a187e6a26a0b5afa0a" title="Register a resource cleanup function." alt="" coords="110,645,303,690"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="51,594,109,630,122,637,118,640,106,635,53,599"/>
+<area shape="rect" id="Node000013" href="$classkcenon_1_1thread_1_1crash__handler.html#ae11a4b50e93444331ac0e567c028720a" title="Register a callback to be called during crash handling." alt="" coords="118,714,295,775"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="39,593,66,645,86,674,110,700,113,704,108,705,106,704,82,678,62,648,40,599"/>
+<area shape="rect" id="Node000014" href="$classkcenon_1_1thread_1_1crash__handler.html#aea8a59d736773cf906c745c3f91e2810" title="Set custom crash log directory." alt="" coords="119,799,294,861"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="35,594,43,633,56,683,77,737,92,763,110,785,112,788,107,789,106,789,87,766,72,740,51,685,38,634,35,599"/>
+<area shape="rect" id="Node000015" href="$classkcenon_1_1thread_1_1thread__pool__crash__safety.html#a24bc5585f60e97666dcba58761860391" title="Register job crash handler." alt="" coords="120,884,293,946"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="33,593,37,646,46,719,55,759,68,799,86,837,110,871,111,873,106,874,106,874,81,839,63,801,50,760,41,720,32,647,33,599"/>
+<area shape="rect" id="Node000016" href="$classkcenon_1_1thread_1_1thread__pool.html#af7d8c0189c9b08f50b369df16040a0e8" title="Starts the thread pool and all associated workers." alt="" coords="122,970,290,1015"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="35,593,44,671,57,779,79,886,93,928,110,956,113,960,107,961,106,959,88,930,74,887,52,780,39,671,35,599"/>
+<area shape="rect" id="Node000019" href="$classkcenon_1_1thread_1_1thread__pool.html#af0d13085ca8af0504a4b4a82630fc18d" title="Stops the thread pool and all worker threads." alt="" coords="122,1040,290,1084"/>
+<area shape="poly" id="edge18_Node000001_Node000019" title=" " alt="" coords="34,593,41,682,53,811,63,878,75,940,91,991,110,1026,113,1029,107,1030,105,1029,86,993,70,941,58,879,48,812,36,683,34,599"/>
+<area shape="rect" id="Node000021" href="$classkcenon_1_1thread_1_1crash__handler.html#aeef2a863a47fd3d8e24cf47d7d8266c5" title="Manually trigger crash handling (for testing)" alt="" coords="121,1108,292,1170"/>
+<area shape="poly" id="edge20_Node000001_Node000021" title=" " alt="" coords="34,593,40,694,51,843,60,921,73,994,89,1054,110,1095,113,1099,107,1099,105,1098,84,1055,67,995,55,922,45,844,35,694,34,599"/>
+<area shape="rect" id="Node000022" href="$classkcenon_1_1thread_1_1crash__handler.html#a1a37af3460b9d3a9a4b752d61499741d" title="Unregister a crash callback." alt="" coords="126,1194,287,1255"/>
+<area shape="poly" id="edge21_Node000001_Node000022" title=" " alt="" coords="34,593,38,708,46,883,55,975,68,1060,86,1131,97,1159,110,1180,116,1189,111,1189,105,1183,93,1161,81,1133,63,1062,50,976,41,884,32,709,34,599"/>
+<area shape="rect" id="Node000017" href="$classkcenon_1_1thread_1_1cancellation__token.html#a96d31c388122def979393ed4b19a3061" title="Creates a new cancellation token." alt="" coords="353,970,558,1015"/>
+<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="290,990,340,991,335,994,292,995"/>
+<area shape="rect" id="Node000018" href="$classkcenon_1_1thread_1_1cancellation__token.html#a43cb9007fd321a0e234353ea7b6f252b" title=" " alt="" coords="606,970,812,1015"/>
+<area shape="poly" id="edge17_Node000017_Node000018" title=" " alt="" coords="558,990,593,992,588,993,559,995"/>
+<area shape="rect" id="Node000020" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#aec5fe973e44efa3d1040ff7bec85f822" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="378,1040,533,1084"/>
+<area shape="poly" id="edge19_Node000019_Node000020" title=" " alt="" coords="290,1059,365,1061,360,1063,291,1064"/>
+</map>

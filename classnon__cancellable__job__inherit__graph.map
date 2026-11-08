@@ -1,0 +1,5 @@
+<map id="non_cancellable_job" name="non_cancellable_job">
+<area shape="rect" id="Node000001" title="A job that DOES NOT check for cancellation (anti&#45;pattern)." alt="" coords="14,550,183,645"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="5,5,192,502"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,515,101,551,96,550,98,519"/>
+</map>

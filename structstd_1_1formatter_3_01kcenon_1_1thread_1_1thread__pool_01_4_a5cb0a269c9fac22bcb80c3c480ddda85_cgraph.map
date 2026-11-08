@@ -1,0 +1,7 @@
+<map id="std::formatter&lt; kcenon::thread::thread_pool &gt;::format" name="std::formatter&lt; kcenon::thread::thread_pool &gt;::format">
+<area shape="rect" id="Node000001" title="Formats a thread_pool object as a string." alt="" coords="5,5,179,67"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#a3548c068b3f0f369dd09af0df56383c0" title="Provides a string representation of this thread_pool." alt="" coords="227,14,395,58"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,34,214,36,208,36,179,39"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#a8f00efcd854ecca1c3d3f8a29d81e580" title="Formats a narrow&#45;character string directly to an output iterator." alt="" coords="443,14,606,58"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="396,34,430,36,425,36,396,39"/>
+</map>

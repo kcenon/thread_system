@@ -1,0 +1,64 @@
+<map id="src/stealing/numa_work_stealer.cpp" name="src/stealing/numa_work_stealer.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1238,5,1414,50"/>
+<area shape="rect" id="Node000002" href="$numa__work__stealer_8h.html" title="NUMA&#45;aware work stealer with enhanced victim selection policies." alt="" coords="779,98,950,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1235,47,965,102,964,97,1240,46"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="1096,359,1180,387"/>
+<area shape="poly" id="edge39_Node000001_Node000007" title=" " alt="" coords="1327,49,1324,102,1312,170,1288,244,1271,280,1249,313,1223,337,1192,355,1190,350,1220,333,1245,309,1266,277,1283,242,1306,169,1318,101,1323,53"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="1298,359,1364,387"/>
+<area shape="poly" id="edge40_Node000001_Node000008" title=" " alt="" coords="1335,48,1347,98,1352,167,1350,235,1338,345,1334,341,1345,235,1346,167,1342,98,1332,53"/>
+<area shape="rect" id="Node000019" href="$work__stealing__deque_8h.html" title="Dynamic circular array work&#45;stealing deque for lock&#45;free task distribution." alt="" coords="193,191,368,235"/>
+<area shape="poly" id="edge32_Node000001_Node000019" title=" " alt="" coords="1235,38,1023,63,767,101,557,144,376,189,374,184,556,139,767,95,1022,58,1240,36"/>
+<area shape="rect" id="Node000021" title=" " alt="" coords="1462,106,1525,134"/>
+<area shape="poly" id="edge41_Node000001_Node000021" title=" " alt="" coords="1366,48,1459,99,1453,99,1365,53"/>
+<area shape="rect" id="Node000003" href="$enhanced__work__stealing__config_8h.html" title="Configuration for enhanced work&#45;stealing with NUMA awareness." alt="" coords="1005,191,1188,235"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="920,141,1029,185,1024,185,920,146"/>
+<area shape="rect" id="Node000006" href="$steal__backoff__strategy_8h.html" title="Backoff strategies for work&#45;stealing operations." alt="" coords="1056,283,1235,311"/>
+<area shape="poly" id="edge16_Node000002_Node000006" title=" " alt="" coords="950,125,1022,133,1097,145,1160,163,1185,175,1201,189,1209,211,1204,233,1191,255,1174,275,1171,270,1187,252,1199,231,1204,211,1197,192,1182,180,1159,168,1095,150,1021,138,950,130"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="934,359,1003,387"/>
+<area shape="poly" id="edge27_Node000002_Node000009" title=" " alt="" coords="899,141,925,162,945,189,961,229,970,271,972,345,968,342,964,272,956,231,941,192,921,166,898,146"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1203,359,1275,387"/>
+<area shape="poly" id="edge30_Node000002_Node000010" title=" " alt="" coords="950,125,1026,134,1107,146,1177,164,1204,176,1223,189,1237,205,1247,224,1256,267,1255,309,1248,346,1244,342,1249,308,1250,267,1242,226,1233,208,1220,193,1201,180,1175,169,1106,152,1026,139,950,131"/>
+<area shape="rect" id="Node000011" href="$numa__topology_8h.html" title="NUMA node topology detection and information." alt="" coords="798,199,930,227"/>
+<area shape="poly" id="edge13_Node000002_Node000011" title=" " alt="" coords="866,141,866,185,862,182,863,145"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="616,283,678,311"/>
+<area shape="poly" id="edge31_Node000002_Node000012" title=" " alt="" coords="842,142,787,193,737,237,681,277,679,272,733,233,784,189,837,144"/>
+<area shape="rect" id="Node000013" href="$work__affinity__tracker_8h.html" title="Tracks cooperation patterns between workers for locality&#45;aware stealing." alt="" coords="444,199,613,227"/>
+<area shape="poly" id="edge17_Node000002_Node000013" title=" " alt="" coords="781,144,593,197,591,192,786,142"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="332,283,408,311"/>
+<area shape="poly" id="edge29_Node000002_Node000015" title=" " alt="" coords="776,127,687,138,586,150,495,169,460,180,434,193,416,209,401,229,380,271,376,267,396,226,412,205,431,188,458,175,494,163,585,145,686,132,782,126"/>
+<area shape="rect" id="Node000017" href="$work__stealing__stats_8h.html" title="Statistics snapshot for work&#45;stealing performance monitoring." alt="" coords="5,199,169,227"/>
+<area shape="poly" id="edge24_Node000002_Node000017" title=" " alt="" coords="776,128,511,152,346,170,181,193,156,198,153,193,180,188,345,165,511,146,781,126"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="637,199,724,227"/>
+<area shape="poly" id="edge28_Node000002_Node000018" title=" " alt="" coords="823,142,721,194,720,190,818,144"/>
+<area shape="rect" id="Node000004" href="$enhanced__steal__policy_8h.html" title="Enhanced policies for selecting work&#45;stealing victims." alt="" coords="752,283,931,311"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="1031,235,897,281,896,276,1026,236"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="1111,233,1132,271,1128,269,1108,238"/>
+<area shape="poly" id="edge11_Node000003_Node000008" title=" " alt="" coords="1158,233,1204,254,1249,281,1285,313,1314,348,1309,346,1281,316,1245,285,1201,259,1157,239"/>
+<area shape="poly" id="edge12_Node000003_Node000009" title=" " alt="" coords="1082,234,990,349,987,344,1077,237"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="496,359,561,387"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="788,311,577,363,576,358,783,312"/>
+<area shape="poly" id="edge9_Node000006_Node000005" title=" " alt="" coords="1059,309,576,369,575,363,1053,309"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="1146,310,1143,345,1139,341,1142,313"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="1179,309,1287,353,1282,353,1178,314"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="1117,311,1014,355,1013,350,1111,312"/>
+<area shape="poly" id="edge10_Node000006_Node000010" title=" " alt="" coords="1163,309,1213,350,1208,349,1161,314"/>
+<area shape="poly" id="edge14_Node000011_Node000009" title=" " alt="" coords="824,227,787,245,755,264,744,274,737,286,736,297,742,309,753,319,770,328,815,343,921,365,916,365,814,348,768,333,750,323,738,313,731,298,732,284,739,271,752,259,784,240,819,228"/>
+<area shape="poly" id="edge15_Node000011_Node000012" title=" " alt="" coords="832,227,694,281,692,276,827,228"/>
+<area shape="poly" id="edge20_Node000013_Node000005" title=" " alt="" coords="530,225,531,345,526,342,526,229"/>
+<area shape="poly" id="edge19_Node000013_Node000009" title=" " alt="" coords="536,225,563,268,582,290,606,309,630,320,664,329,749,346,921,368,916,368,748,351,663,334,628,325,603,313,579,294,558,271,533,230"/>
+<area shape="poly" id="edge23_Node000013_Node000012" title=" " alt="" coords="548,225,618,274,613,274,547,230"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="190,283,256,311"/>
+<area shape="poly" id="edge18_Node000013_Node000014" title=" " alt="" coords="477,229,272,285,271,280,482,226"/>
+<area shape="poly" id="edge21_Node000013_Node000015" title=" " alt="" coords="505,227,410,278,408,273,500,228"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="432,283,491,311"/>
+<area shape="poly" id="edge22_Node000013_Node000016" title=" " alt="" coords="520,226,483,274,480,269,515,229"/>
+<area shape="poly" id="edge26_Node000017_Node000005" title=" " alt="" coords="77,230,71,247,64,269,62,290,70,309,90,320,129,329,242,346,482,367,478,371,242,351,128,335,88,324,66,313,57,291,58,267,66,245,80,225"/>
+<area shape="poly" id="edge25_Node000017_Node000014" title=" " alt="" coords="109,225,191,274,186,276,108,230"/>
+<area shape="poly" id="edge35_Node000019_Node000005" title=" " alt="" coords="190,236,124,258,97,271,81,285,76,297,81,309,108,328,149,343,201,354,260,362,381,369,483,373,478,373,380,374,259,367,201,359,148,348,106,333,77,313,71,297,77,282,94,267,122,253,194,232"/>
+<area shape="poly" id="edge33_Node000019_Node000007" title=" " alt="" coords="284,233,295,274,306,293,321,309,337,316,364,323,444,334,662,347,1015,356,1083,365,1077,365,1015,362,661,352,443,339,363,329,335,322,317,313,301,297,290,276,281,238"/>
+<area shape="poly" id="edge38_Node000019_Node000012" title=" " alt="" coords="369,231,603,284,598,287,368,237"/>
+<area shape="poly" id="edge34_Node000019_Node000014" title=" " alt="" coords="267,234,243,272,239,268,263,237"/>
+<area shape="poly" id="edge36_Node000019_Node000015" title=" " alt="" coords="305,233,347,273,341,272,303,238"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="91,283,166,311"/>
+<area shape="poly" id="edge37_Node000019_Node000020" title=" " alt="" coords="238,237,167,278,164,273,242,234"/>
+</map>

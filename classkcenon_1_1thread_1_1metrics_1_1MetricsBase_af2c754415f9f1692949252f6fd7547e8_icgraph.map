@@ -1,0 +1,9 @@
+<map id="kcenon::thread::metrics::MetricsBase::reset" name="kcenon::thread::metrics::MetricsBase::reset">
+<area shape="rect" id="Node000001" title="Reset all metrics to their initial state." alt="" coords="483,52,658,97"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html#ab02ff45d14797b2d6b1699a577d1ec72" title="Reset all metrics to initial state." alt="" coords="222,5,435,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="465,58,435,56,435,51,470,58"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1ThreadPoolMetrics.html#aac8fea70bc2f7ec5f857f21b45ba4711" title="Reset all metrics to their initial state." alt="" coords="233,91,424,136"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="470,91,425,101,424,96,465,92"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1thread__pool.html#a73a9ae10aeb33a372796d1b40f89e44e" title="Reset accumulated metrics." alt="" coords="5,91,174,136"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="215,114,174,116,174,111,220,113"/>
+</map>

@@ -1,0 +1,24 @@
+/* kcenon/common_system branding overrides for doxygen-awesome-css */
+
+/* Light mode accent colors */
+html {
+    --primary-color: #1a73e8;
+    --primary-dark-color: #1558b0;
+    --primary-light-color: #4a9af5;
+}
+
+/* Dark mode accent colors */
+html.dark-mode {
+    --primary-color: #6aadff;
+    --primary-dark-color: #4a9af5;
+    --primary-light-color: #8ac4ff;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

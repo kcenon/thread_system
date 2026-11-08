@@ -1,0 +1,7 @@
+<map id="include/kcenon/thread/core/cancellation_exception.h" name="include/kcenon/thread/core/cancellation_exception.h">
+<area shape="rect" id="Node000001" title="Exception class for operation cancellation." alt="" coords="8,5,228,50"/>
+<area shape="rect" id="Node000002" href="$enhanced__cancellation__token_8h.html" title="Enhanced cancellation token with timeout, deadline, and reason support." alt="" coords="15,98,221,160"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,63,121,98,115,97,117,68"/>
+<area shape="rect" id="Node000003" href="$enhanced__cancellation__token_8cpp.html" title=" " alt="" coords="5,208,231,252"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="120,173,120,208,116,206,116,177"/>
+</map>

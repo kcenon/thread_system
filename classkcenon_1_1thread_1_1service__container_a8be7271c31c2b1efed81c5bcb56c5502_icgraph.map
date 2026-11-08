@@ -1,0 +1,28 @@
+<map id="kcenon::thread::service_container::global" name="kcenon::thread::service_container::global">
+<area shape="rect" id="Node000001" title="Get the global service container instance." alt="" coords="367,237,540,282"/>
+<area shape="rect" id="Node000002" href="$integration__example_8cpp.html#ab1a0004b3a04a02621ceb5741c13e5dc" title="Example 3: Complete integration with both logger and monitoring." alt="" coords="133,177,294,222"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="349,235,295,222,293,217,354,233"/>
+<area shape="rect" id="Node000004" href="$composition__example_8cpp.html#a2cc626209026644ec679ff229ca36a06" title="Demonstrate composition&#45;based design." alt="" coords="118,5,309,33"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="436,222,417,184,391,138,358,92,317,53,286,36,285,31,321,49,362,89,396,135,422,182,441,223"/>
+<area shape="rect" id="Node000005" href="$composition__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,56,60,84"/>
+<area shape="poly" id="edge10_Node000001_Node000005" title=" " alt="" coords="432,223,413,192,387,157,355,124,318,97,285,83,249,73,177,63,111,64,62,68,58,64,111,58,177,58,250,68,286,78,320,93,358,120,391,153,417,189,437,223"/>
+<area shape="rect" id="Node000006" href="$composition__example_8cpp.html#a353f73822e6878864dca0d8706ad075d" title="Demonstrate using thread pool without any services." alt="" coords="131,108,296,152"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="411,227,368,197,318,167,293,155,291,150,320,162,371,192,416,227"/>
+<area shape="rect" id="Node000007" href="$integration__example_8cpp.html#a0f0b39a9116011a8ebfff831aca8ff5a" title="Example 4: Dynamic service registration." alt="" coords="116,245,311,273"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="349,260,313,262,311,257,354,258"/>
+<area shape="rect" id="Node000008" href="$classkcenon_1_1thread_1_1thread__context__builder.html#a150b7bd5c7e8483efebcd781cb3483f2" title=" " alt="" coords="129,298,298,359"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="357,288,299,307,297,302,362,285"/>
+<area shape="rect" id="Node000009" href="$classkcenon_1_1thread_1_1scoped__service.html#a7adfe3bb8e43ab9577a214501bb3cbf0" title=" " alt="" coords="122,384,305,428"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="422,291,376,335,320,373,295,385,293,381,318,369,372,331,418,294"/>
+<area shape="rect" id="Node000010" href="$integration__example_8cpp.html#aa204e12bb384a3637482664094389b48" title="Example 1: Thread pool with external logger only." alt="" coords="123,453,304,498"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="437,293,391,370,358,409,321,443,300,455,298,450,317,438,355,405,386,367,433,297"/>
+<area shape="rect" id="Node000011" href="$integration__example_8cpp.html#a7128eab2a6c79a31acdc494497275084" title="Example 2: Thread pool with external monitoring only." alt="" coords="108,522,319,567"/>
+<area shape="poly" id="edge14_Node000001_Node000011" title=" " alt="" coords="444,295,428,346,402,403,367,461,345,488,321,512,303,524,301,519,317,508,341,485,362,458,397,401,423,344,440,299"/>
+<area shape="rect" id="Node000003" href="$integration__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,353,60,381"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="118,227,109,236,84,264,64,297,40,354,35,352,59,294,79,261,106,232,121,223"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="145,40,62,64,59,60,148,36"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="128,104,61,81,59,76,132,101"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="118,281,109,288,89,303,71,321,45,354,41,352,67,317,86,299,106,284,122,277"/>
+<area shape="poly" id="edge13_Node000010_Node000003" title=" " alt="" coords="114,446,106,443,70,413,45,384,45,379,73,409,109,438,120,445"/>
+<area shape="poly" id="edge15_Node000011_Node000003" title=" " alt="" coords="110,513,106,512,78,480,58,444,37,384,38,379,62,442,82,477,110,508,115,514"/>
+</map>

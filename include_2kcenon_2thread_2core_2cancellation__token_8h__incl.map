@@ -1,0 +1,23 @@
+<map id="include/kcenon/thread/core/cancellation_token.h" name="include/kcenon/thread/core/cancellation_token.h">
+<area shape="rect" id="Node000001" title="Implementation of a cancellation token for cooperative cancellation." alt="" coords="386,5,577,50"/>
+<area shape="rect" id="Node000002" href="$include_2kcenon_2thread_2core_2error__handling_8h.html" title="Error codes and utilities for the thread system." alt="" coords="125,98,272,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="411,52,282,95,280,90,416,49"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="296,106,362,134"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="447,49,366,101,363,96,442,52"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="386,106,472,134"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="471,49,446,95,443,91,467,52"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="496,106,573,134"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="495,48,522,94,517,92,493,53"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="596,106,660,134"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="517,48,597,98,591,98,516,53"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="683,106,746,134"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="547,48,673,96,678,100,673,99,671,100,546,53"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,199,64,227"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="160,146,73,194,70,189,158,141"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="88,199,184,227"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="186,142,155,188,152,184,181,144"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="208,199,315,227"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="215,141,246,187,241,186,212,145"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="340,191,527,235"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="255,141,366,184,360,185,254,146"/>
+</map>

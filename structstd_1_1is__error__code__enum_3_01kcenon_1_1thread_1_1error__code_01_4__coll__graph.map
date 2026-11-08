@@ -1,0 +1,5 @@
+<map id="std::is_error_code_enum&lt; kcenon::thread::error_code &gt;" name="std::is_error_code_enum&lt; kcenon::thread::error_code &gt;">
+<area shape="rect" id="Node000001" title="Specialization to enable implicit conversion of thread_system::error_code to std::error_code." alt="" coords="5,126,172,232"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="38,5,139,78"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,90,91,127,86,126,88,95"/>
+</map>

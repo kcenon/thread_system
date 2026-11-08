@@ -1,0 +1,7 @@
+<map id="demonstrate_minimal_usage" name="demonstrate_minimal_usage">
+<area shape="rect" id="Node000001" title="Demonstrate using thread pool without any services." alt="" coords="5,40,171,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1service__container.html#a4271562a2c462c29645e5173d4d599be" title="Clear all registered services." alt="" coords="219,5,392,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,47,206,43,201,45,172,52"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1service__container.html#a8be7271c31c2b1efed81c5bcb56c5502" title="Get the global service container instance." alt="" coords="219,75,392,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,73,206,80,200,81,171,78"/>
+</map>

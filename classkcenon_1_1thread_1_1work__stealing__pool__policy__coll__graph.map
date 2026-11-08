@@ -1,0 +1,20 @@
+<map id="kcenon::thread::work_stealing_pool_policy" name="kcenon::thread::work_stealing_pool_policy">
+<area shape="rect" id="Node000001" title="Pool policy that implements work&#45;stealing behavior for load balancing." alt="" coords="289,848,453,1229"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1pool__policy.html" title="Base interface for thread pool policies." alt="" coords="5,420,153,643"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,654,141,711,167,765,227,859,292,944,287,945,223,862,162,767,136,713,117,659"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1worker__policy.html" title="Worker behavior policy configuration." alt="" coords="177,297,374,766"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="320,763,335,832,330,831,319,768"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="238,160,313,232"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="276,229,278,280,273,279,275,234"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="212,5,339,95"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="276,107,278,160,273,159,275,112"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="398,495,540,568"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="464,565,413,833,408,831,460,570"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="502,160,624,232"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="548,244,547,257,480,496,475,494,541,255,546,249"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="563,495,758,568"/>
+<area shape="poly" id="edge9_Node000009_Node000007" title=" " alt="" coords="600,242,608,255,631,319,647,386,661,496,656,495,641,387,626,321,604,257,600,247"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="554,14,573,86"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="564,83,566,143,561,142,563,89"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="648,565,608,660,554,767,465,910,461,906,549,765,603,657,645,570"/>
+</map>

@@ -1,0 +1,19 @@
+<map id="include/kcenon/thread/lockfree/lockfree_queue.h" name="include/kcenon/thread/lockfree/lockfree_queue.h">
+<area shape="rect" id="Node000001" title="Backward compatibility header for concurrent_queue." alt="" coords="288,5,482,50"/>
+<area shape="rect" id="Node000002" href="$concurrent__queue_8h.html" title="Thread&#45;safe MPMC queue with blocking wait support." alt="" coords="292,98,479,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="387,48,387,84,383,81,384,52"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,191,72,218"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="292,144,87,192,86,187,291,139"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="95,191,160,218"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="320,144,176,191,175,186,314,143"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="185,191,326,218"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="353,143,290,184,288,180,348,144"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="350,191,420,218"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="387,141,387,177,383,173,383,145"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="444,191,508,218"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="410,141,452,180,447,179,408,146"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="532,191,606,218"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="435,141,528,184,523,184,433,146"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="630,191,722,218"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="463,141,618,186,613,186,462,146"/>
+</map>

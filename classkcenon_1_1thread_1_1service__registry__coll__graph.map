@@ -1,0 +1,13 @@
+<map id="kcenon::thread::service_registry" name="kcenon::thread::service_registry">
+<area shape="rect" id="Node000001" title="Lightweight service registry for dependency lookup." alt="" coords="85,508,248,664"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,314,159,443"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,440,131,492,126,492,107,445"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="12,143,152,232"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="83,244,85,315,80,314,82,250"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="35,5,55,78"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="42,75,49,118,52,127,46,127,44,119,42,80"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="112,5,130,78"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="111,80,101,127,96,126,112,75"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="183,342,315,414"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="237,412,206,493,201,490,233,416"/>
+</map>

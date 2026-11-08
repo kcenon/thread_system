@@ -1,0 +1,7 @@
+<map id="kcenon::thread::metrics::MetricsBase" name="kcenon::thread::metrics::MetricsBase">
+<area shape="rect" id="Node000001" title="Abstract base class for thread pool metrics." alt="" coords="151,5,316,564"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1metrics_1_1EnhancedThreadPoolMetrics.html" title="Enhanced thread pool metrics with histograms and percentiles." alt="" coords="5,612,237,1192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,576,177,613,171,611,179,581"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1metrics_1_1ThreadPoolMetrics.html" title="Lightweight metrics container shared between thread_pool and workers." alt="" coords="261,802,430,1002"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="288,576,330,802,325,802,285,581"/>
+</map>

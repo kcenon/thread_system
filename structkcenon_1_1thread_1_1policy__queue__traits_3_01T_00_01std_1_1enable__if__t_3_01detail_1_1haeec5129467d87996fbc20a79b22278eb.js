@@ -1,0 +1,7 @@
+var structkcenon_1_1thread_1_1policy__queue__traits_3_01T_00_01std_1_1enable__if__t_3_01detail_1_1haeec5129467d87996fbc20a79b22278eb =
+[
+    [ "bound_policy_type", "structkcenon_1_1thread_1_1policy__queue__traits_3_01T_00_01std_1_1enable__if__t_3_01detail_1_1haeec5129467d87996fbc20a79b22278eb.html#a9d05336206288feeec33eb10bdbf72ce", null ],
+    [ "overflow_policy_type", "structkcenon_1_1thread_1_1policy__queue__traits_3_01T_00_01std_1_1enable__if__t_3_01detail_1_1haeec5129467d87996fbc20a79b22278eb.html#aacf800a1c634160214736101df99e3f4", null ],
+    [ "sync_policy_type", "structkcenon_1_1thread_1_1policy__queue__traits_3_01T_00_01std_1_1enable__if__t_3_01detail_1_1haeec5129467d87996fbc20a79b22278eb.html#afc5616c296865c6ebc30b51b87b9e6fd", null ],
+    [ "is_policy_queue", "structkcenon_1_1thread_1_1policy__queue__traits_3_01T_00_01std_1_1enable__if__t_3_01detail_1_1haeec5129467d87996fbc20a79b22278eb.html#a980d7160f352720a0726a20daf7cafb2", null ]
+];

@@ -1,0 +1,20 @@
+<map id="include/kcenon/thread/impl/typed_pool/typed_thread_worker.h" name="include/kcenon/thread/impl/typed_pool/typed_thread_worker.h">
+<area shape="rect" id="Node000001" title="Worker thread for typed_thread_pool processing priority job queues." alt="" coords="527,5,698,67"/>
+<area shape="rect" id="Node000002" href="$core_2typed__thread__worker_8h.html" title="Worker thread specialized for typed_thread_pool with priority queues." alt="" coords="237,124,442,168"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="519,74,396,125,393,121,524,72"/>
+<area shape="rect" id="Node000003" href="$impl_2typed__pool_2typed__thread__pool_8h.html" title="Type&#45;based thread pool with priority scheduling and job type routing." alt="" coords="466,115,637,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="590,79,570,116,567,113,586,82"/>
+<area shape="rect" id="Node000008" href="$typed__thread__pool_8cpp.html" title=" " alt="" coords="670,233,843,278"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="639,78,702,175,743,234,738,232,697,178,637,83"/>
+<area shape="rect" id="Node000009" href="$typed__thread__worker_8cpp.html" title=" " alt="" coords="712,124,900,168"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="680,72,770,123,765,123,680,77"/>
+<area shape="rect" id="Node000004" href="$typed__thread__pool__sample_8cpp.html" title="Typed thread pool with priority&#45;based job routing using built&#45;in job_types." alt="" coords="5,225,207,286"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="449,178,334,204,219,227,208,230,206,225,217,222,333,199,454,176"/>
+<area shape="rect" id="Node000005" href="$typed__thread__pool__sample__2_8cpp.html" title="Typed thread pool with a custom priority enum (test_priority)" alt="" coords="230,225,432,286"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="478,183,394,227,392,222,473,185"/>
+<area shape="rect" id="Node000006" href="$core_2typed__thread__pool_8h.html" title="Public forwarding header for type&#45;safe thread pool." alt="" coords="456,233,646,278"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="553,190,554,234,549,231,550,194"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="623,182,718,233,713,233,622,187"/>
+<area shape="rect" id="Node000007" href="$typed__thread__pool_8h.html" title="Stable public include for typed_thread_pool_t." alt="" coords="469,334,634,379"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="553,291,553,336,549,332,549,295"/>
+</map>

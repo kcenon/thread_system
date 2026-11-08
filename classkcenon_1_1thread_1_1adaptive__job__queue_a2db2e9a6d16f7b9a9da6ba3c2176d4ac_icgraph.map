@@ -1,0 +1,7 @@
+<map id="kcenon::thread::adaptive_job_queue::empty" name="kcenon::thread::adaptive_job_queue::empty">
+<area shape="rect" id="Node000001" title="Checks if the queue is empty." alt="" coords="289,5,472,50"/>
+<area shape="rect" id="Node000002" href="$adaptive__queue__sample_8cpp.html#ad3807da4331da23479052ba772a377f0" title=" " alt="" coords="108,5,241,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="271,28,242,30,241,25,276,28"/>
+<area shape="rect" id="Node000003" href="$adaptive__queue__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,14,60,42"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,29,61,30,60,25,94,27"/>
+</map>

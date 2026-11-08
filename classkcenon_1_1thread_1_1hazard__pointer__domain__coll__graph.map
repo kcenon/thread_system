@@ -1,0 +1,9 @@
+<map id="kcenon::thread::hazard_pointer_domain&lt; T &gt;" name="kcenon::thread::hazard_pointer_domain&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Domain managing hazard pointers and retirement for a specific type." alt="" coords="5,485,206,731"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="30,280,182,352"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,349,108,469,103,468,105,354"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="45,143,167,215"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="106,227,108,281,103,280,106,232"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="96,5,115,78"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="106,75,108,126,103,126,106,80"/>
+</map>

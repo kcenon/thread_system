@@ -1,0 +1,27 @@
+<map id="include/kcenon/thread/scaling/scaling_metrics.h" name="include/kcenon/thread/scaling/scaling_metrics.h">
+<area shape="rect" id="Node000001" title="Scaling direction and metrics for autoscaling decisions." alt="" coords="198,5,388,50"/>
+<area shape="rect" id="Node000002" href="$autoscaler_8h.html" title="Automatic scaling of thread pool workers based on load metrics." alt="" coords="150,208,316,252"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="272,66,261,99,246,157,238,208,233,207,240,156,256,97,274,61"/>
+<area shape="rect" id="Node000011" href="$autoscaling__policy_8h.html" title="Configuration for autoscaling behavior and thresholds." alt="" coords="270,98,436,160"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="314,61,337,97,332,98,314,66"/>
+<area shape="rect" id="Node000003" href="$autoscaling__pool__policy_8h.html" title="Pool policy implementing automatic worker scaling based on load." alt="" coords="218,300,408,362"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="260,262,291,300,286,300,260,267"/>
+<area shape="rect" id="Node000010" href="$autoscaler_8cpp.html" title=" " alt="" coords="5,317,194,345"/>
+<area shape="poly" id="edge10_Node000002_Node000010" title=" " alt="" coords="190,264,119,319,115,315,193,259"/>
+<area shape="rect" id="Node000004" href="$thread__pool__builder_8h.html" title="Fluent builder for creating and configuring thread pools." alt="" coords="346,410,544,455"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="366,369,419,409,413,410,365,374"/>
+<area shape="rect" id="Node000009" href="$autoscaling__pool__policy_8cpp.html" title=" " alt="" coords="114,410,322,455"/>
+<area shape="poly" id="edge9_Node000003_Node000009" title=" " alt="" coords="272,376,241,411,237,408,275,372"/>
+<area shape="rect" id="Node000005" href="$event__bus_8h.html" title="Type&#45;safe publish&#45;subscribe event bus for thread system events." alt="" coords="264,503,429,547"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="412,464,371,504,368,500,408,467"/>
+<area shape="rect" id="Node000008" href="$thread__pool__builder_8cpp.html" title=" " alt="" coords="453,503,634,547"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="480,463,523,502,517,502,479,468"/>
+<area shape="rect" id="Node000006" href="$configuration__manager_8h.html" title="Runtime configuration management with typed key&#45;value storage." alt="" coords="164,595,382,640"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="321,558,292,597,288,593,317,561"/>
+<area shape="rect" id="Node000007" href="$core_8cppm.html" title="C++20 module partition for thread_system core components." alt="" coords="260,688,432,716"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="376,557,397,594,402,618,397,641,381,668,362,690,359,685,377,665,392,639,396,618,392,596,374,562"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="303,649,337,688,332,687,301,654"/>
+<area shape="poly" id="edge14_Node000011_Node000002" title=" " alt="" coords="303,172,261,209,257,205,306,168"/>
+<area shape="poly" id="edge13_Node000011_Node000003" title=" " alt="" coords="345,172,321,301,316,299,343,177"/>
+<area shape="poly" id="edge12_Node000011_Node000004" title=" " alt="" coords="373,172,399,233,422,300,436,359,444,410,439,409,431,360,417,301,394,235,372,177"/>
+</map>

@@ -1,0 +1,100 @@
+<map id="include/kcenon/thread/core/thread_logger.h" name="include/kcenon/thread/core/thread_logger.h">
+<area shape="rect" id="Node000001" title="Internal logging interface for the thread system." alt="" coords="4254,5,4419,50"/>
+<area shape="rect" id="Node000002" href="$thread__context_8h.html" title="Context object providing access to optional thread system services." alt="" coords="2836,98,3040,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="4236,36,3041,115,3040,110,4241,35"/>
+<area shape="rect" id="Node000015" href="$core_8cppm.html" title="C++20 module partition for thread_system core components." alt="" coords="2600,722,2772,750"/>
+<area shape="poly" id="edge60_Node000001_Node000015" title=" " alt="" coords="4338,63,4339,220,4339,561,4336,576,4325,590,4285,616,4222,638,4141,657,4043,674,3932,688,3682,709,3417,724,3160,732,2772,737,2772,732,3160,727,3416,718,3682,704,3931,682,4042,668,4139,652,4221,633,4282,611,4321,586,4331,574,4334,560,4334,220,4335,67"/>
+<area shape="rect" id="Node000024" href="$thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="3508,427,3662,472"/>
+<area shape="poly" id="edge59_Node000001_Node000024" title=" " alt="" coords="4328,63,4303,140,4269,230,4229,312,4209,344,4189,364,4169,376,4144,385,4084,396,4013,402,3937,403,3788,403,3724,405,3675,413,3628,429,3627,424,3673,407,3724,400,3788,397,3937,398,4013,396,4083,391,4142,379,4166,371,4186,360,4205,340,4225,310,4264,228,4298,138,4324,67"/>
+<area shape="rect" id="Node000037" href="$thread__base_8cpp.html" title="Implementation of the core thread base class." alt="" coords="4374,106,4558,134"/>
+<area shape="poly" id="edge57_Node000001_Node000037" title=" " alt="" coords="4380,56,4450,106,4445,105,4379,61"/>
+<area shape="rect" id="Node000038" href="$thread__logger__init_8cpp.html" title="Early initialization of thread_logger shutdown handler for SDOF prevention." alt="" coords="4582,98,4748,143"/>
+<area shape="poly" id="edge58_Node000001_Node000038" title=" " alt="" coords="4430,52,4589,98,4584,97,4429,57"/>
+<area shape="rect" id="Node000003" href="$composition__example_8cpp.html" title="Composition&#45;based design with service container, logger, and monitoring." alt="" coords="2853,418,3023,480"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="2940,156,2940,420,2936,417,2936,160"/>
+<area shape="rect" id="Node000004" href="$integration__example_8cpp.html" title="Integration of thread_system with external logger and monitoring services." alt="" coords="3047,418,3208,480"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="2959,154,3113,419,3108,417,2957,158"/>
+<area shape="rect" id="Node000005" href="$minimal__thread__pool_8cpp.html" title="Minimal thread pool example without external logger dependency." alt="" coords="5,427,231,472"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="2818,123,2259,132,1486,145,781,165,543,178,468,186,428,193,379,215,333,244,289,276,249,310,181,377,137,428,132,425,177,373,245,306,286,272,330,239,377,211,427,188,467,180,543,173,781,160,1486,140,2259,127,2823,122"/>
+<area shape="rect" id="Node000006" href="$multi__process__monitoring__integration_8cpp.html" title="Multi&#45;process monitoring integration with multiple thread pools." alt="" coords="254,410,448,489"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="2818,122,2386,125,1783,133,1471,142,1179,154,928,171,738,193,628,204,538,211,498,220,459,237,420,263,380,302,365,326,355,354,350,410,345,408,350,353,360,324,376,299,417,259,457,232,496,215,537,206,628,199,738,188,928,166,1179,149,1471,136,1783,128,2386,120,2823,121"/>
+<area shape="rect" id="Node000007" href="$core_2thread__pool_8h.html" title="Core thread pool implementation with work stealing and auto&#45;scaling." alt="" coords="1782,309,1947,354"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="2818,145,1948,316,1947,311,2824,144"/>
+<area shape="poly" id="edge56_Node000002_Node000015" title=" " alt="" coords="3047,145,3116,172,3149,190,3180,210,3207,235,3228,262,3242,294,3247,330,3247,561,3244,579,3233,596,3216,612,3194,627,3138,653,3068,675,2992,694,2913,708,2773,728,2772,723,2912,703,2990,688,3067,670,3136,648,3192,622,3213,608,3229,593,3239,577,3242,560,3242,330,3237,296,3224,265,3203,238,3177,215,3147,194,3114,177,3046,150"/>
+<area shape="rect" id="Node000019" href="$thread__pool__builder_8h.html" title="Fluent builder for creating and configuring thread pools." alt="" coords="2631,427,2829,472"/>
+<area shape="poly" id="edge33_Node000002_Node000019" title=" " alt="" coords="2919,154,2745,429,2742,424,2914,157"/>
+<area shape="rect" id="Node000026" href="$thread__worker_8h.html" title="Specialized worker thread that processes jobs from a job_queue." alt="" coords="750,199,915,244"/>
+<area shape="poly" id="edge34_Node000002_Node000026" title=" " alt="" coords="2820,130,916,219,916,214,2821,125"/>
+<area shape="rect" id="Node000028" href="$impl_2typed__pool_2typed__thread__pool_8h.html" title="Type&#45;based thread pool with priority scheduling and job type routing." alt="" coords="3562,300,3733,362"/>
+<area shape="poly" id="edge45_Node000002_Node000028" title=" " alt="" coords="3056,140,3158,161,3264,188,3432,243,3577,300,3571,300,3430,248,3263,193,3157,166,3056,145"/>
+<area shape="rect" id="Node000034" href="$impl_2typed__pool_2typed__thread__worker_8h.html" title="Worker thread for typed_thread_pool processing priority job queues." alt="" coords="3766,191,3937,252"/>
+<area shape="poly" id="edge51_Node000002_Node000034" title=" " alt="" coords="3055,132,3768,211,3763,211,3055,137"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="1963,334,2420,360,2664,381,2765,394,2841,407,2871,418,2865,418,2840,413,2764,399,2664,387,2419,365,1963,339"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="1963,332,2205,340,2514,355,2816,377,2940,391,3035,407,3064,418,3058,418,3033,413,2939,396,2815,382,2514,360,2204,346,1963,338"/>
+<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="1764,334,1441,343,1001,357,562,380,380,395,243,413,179,429,176,424,241,407,380,390,562,374,1001,352,1441,338,1769,333"/>
+<area shape="poly" id="edge12_Node000007_Node000006" title=" " alt="" coords="1764,333,1541,338,1230,348,873,372,690,390,512,413,450,424,448,419,511,407,690,384,872,367,1229,343,1541,332,1769,332"/>
+<area shape="rect" id="Node000008" href="$crash__protection_2main_8cpp.html" title="Crash protection demonstration for thread system." alt="" coords="954,427,1151,472"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="1764,337,1644,347,1493,361,1328,382,1164,413,1108,429,1107,424,1163,407,1327,377,1493,355,1644,342,1769,336"/>
+<area shape="rect" id="Node000009" href="$job__cancellation__example_8cpp.html" title="Cooperative job cancellation and graceful shutdown patterns." alt="" coords="1175,418,1370,480"/>
+<area shape="poly" id="edge10_Node000007_Node000009" title=" " alt="" coords="1764,344,1587,371,1484,390,1383,413,1355,421,1353,415,1381,407,1483,385,1586,366,1769,343"/>
+<area shape="rect" id="Node000010" href="$service__registry__sample_2main_8cpp.html" title="Service registry sample showing singleton service registration and thread pool usage." alt="" coords="736,427,929,472"/>
+<area shape="poly" id="edge13_Node000007_Node000010" title=" " alt="" coords="1764,333,1608,340,1402,351,1172,374,1056,391,943,413,887,429,885,424,941,407,1055,386,1171,369,1401,346,1608,334,1769,332"/>
+<area shape="rect" id="Node000011" href="$thread__pool__sample_8cpp.html" title="Thread pool sample with logger integration and batch job submission." alt="" coords="1824,427,2063,472"/>
+<area shape="poly" id="edge14_Node000007_Node000011" title=" " alt="" coords="1889,364,1931,428,1926,426,1887,369"/>
+<area shape="rect" id="Node000012" href="$common__executor__adapter_8h.html" title="Adapter to bridge thread_system pools with common IExecutor interface." alt="" coords="2087,418,2293,480"/>
+<area shape="poly" id="edge15_Node000007_Node000012" title=" " alt="" coords="1940,356,2108,418,2103,418,1939,362"/>
+<area shape="rect" id="Node000013" href="$event__bus_8h.html" title="Type&#45;safe publish&#45;subscribe event bus for thread system events." alt="" coords="2603,537,2769,581"/>
+<area shape="poly" id="edge16_Node000007_Node000013" title=" " alt="" coords="1963,330,2115,335,2292,347,2378,357,2457,370,2522,387,2570,408,2590,425,2600,444,2608,465,2621,487,2666,537,2661,535,2617,490,2603,467,2595,446,2586,429,2567,412,2520,392,2455,375,2378,362,2292,352,2115,340,1963,336"/>
+<area shape="poly" id="edge31_Node000007_Node000015" title=" " alt="" coords="1839,364,1821,395,1807,427,1803,459,1806,473,1813,487,1836,510,1866,532,1948,573,2051,609,2166,641,2287,668,2405,690,2602,724,2597,723,2404,695,2286,673,2165,646,2049,614,1946,578,1863,536,1832,514,1809,490,1801,475,1797,459,1802,425,1816,393,1835,367"/>
+<area shape="rect" id="Node000016" href="$numa__thread__pool_8h.html" title="NUMA&#45;aware thread pool optimized for Non&#45;Uniform Memory Access architectures." alt="" coords="2367,427,2557,472"/>
+<area shape="poly" id="edge20_Node000007_Node000016" title=" " alt="" coords="1962,341,2143,366,2247,385,2349,407,2406,427,2401,426,2348,413,2246,390,2143,372,1962,346"/>
+<area shape="rect" id="Node000017" href="$thread__pool_8h.html" title="Stable public include for thread_pool and numa_thread_pool." alt="" coords="2217,537,2382,581"/>
+<area shape="poly" id="edge28_Node000007_Node000017" title=" " alt="" coords="1963,333,2059,340,2162,353,2250,375,2284,390,2307,408,2316,423,2322,440,2325,475,2319,509,2310,538,2306,534,2314,508,2319,474,2317,441,2311,426,2303,412,2281,395,2249,380,2161,359,2059,345,1963,338"/>
+<area shape="poly" id="edge23_Node000007_Node000019" title=" " alt="" coords="1962,333,2093,341,2256,355,2435,376,2613,407,2674,427,2669,426,2612,413,2434,382,2255,360,2092,346,1963,339"/>
+<area shape="rect" id="Node000021" href="$dag__scheduler_8h.html" title="DAG&#45;based job scheduler with dependency management and topological execution." alt="" coords="1583,427,1749,472"/>
+<area shape="poly" id="edge26_Node000007_Node000021" title=" " alt="" coords="1817,361,1704,429,1702,424,1812,363"/>
+<area shape="rect" id="Node000023" href="$thread__pool__diagnostics_8cpp.html" title=" " alt="" coords="1394,427,1559,472"/>
+<area shape="poly" id="edge29_Node000007_Node000023" title=" " alt="" coords="1770,354,1673,382,1572,413,1528,429,1526,424,1570,407,1671,377,1764,356"/>
+<area shape="poly" id="edge30_Node000007_Node000024" title=" " alt="" coords="1963,330,2290,333,2734,343,2963,353,3176,367,3359,385,3497,407,3546,427,3541,426,3496,413,3359,390,3176,372,2963,358,2734,349,2290,338,1963,335"/>
+<area shape="rect" id="Node000025" href="$autoscaler_8cpp.html" title=" " alt="" coords="524,436,712,463"/>
+<area shape="poly" id="edge32_Node000007_Node000025" title=" " alt="" coords="1764,336,1530,348,1230,363,936,385,816,398,724,413,684,424,648,437,646,432,682,419,723,407,815,393,936,379,1229,358,1530,342,1769,335"/>
+<area shape="rect" id="Node000014" href="$configuration__manager_8h.html" title="Runtime configuration management with typed key&#45;value storage." alt="" coords="2650,629,2868,674"/>
+<area shape="poly" id="edge17_Node000013_Node000014" title=" " alt="" coords="2714,591,2745,630,2740,628,2712,596"/>
+<area shape="poly" id="edge19_Node000013_Node000015" title=" " alt="" coords="2659,592,2641,630,2636,652,2640,673,2655,699,2674,723,2669,721,2651,702,2636,675,2631,652,2635,628,2655,595"/>
+<area shape="poly" id="edge18_Node000014_Node000015" title=" " alt="" coords="2733,684,2699,724,2697,719,2728,687"/>
+<area shape="poly" id="edge21_Node000016_Node000017" title=" " alt="" coords="2419,480,2333,539,2331,534,2414,481"/>
+<area shape="rect" id="Node000018" href="$numa__thread__pool_8cpp.html" title=" " alt="" coords="2406,537,2579,581"/>
+<area shape="poly" id="edge22_Node000016_Node000018" title=" " alt="" coords="2474,485,2489,538,2484,535,2471,489"/>
+<area shape="poly" id="edge24_Node000019_Node000013" title=" " alt="" coords="2717,485,2696,538,2693,534,2713,488"/>
+<area shape="rect" id="Node000020" href="$thread__pool__builder_8cpp.html" title=" " alt="" coords="2793,537,2974,581"/>
+<area shape="poly" id="edge25_Node000019_Node000020" title=" " alt="" coords="2774,479,2855,537,2850,535,2773,484"/>
+<area shape="rect" id="Node000022" href="$dag__scheduler_8cpp.html" title=" " alt="" coords="1556,545,1749,573"/>
+<area shape="poly" id="edge27_Node000021_Node000022" title=" " alt="" coords="1663,485,1656,547,1652,543,1660,489"/>
+<area shape="poly" id="edge37_Node000026_Node000005" title=" " alt="" coords="732,231,656,241,566,255,471,275,379,303,312,331,248,365,150,428,146,424,246,361,310,326,377,298,470,270,565,250,655,236,737,229"/>
+<area shape="poly" id="edge38_Node000026_Node000006" title=" " alt="" coords="732,233,651,246,563,260,486,279,456,290,434,302,410,326,390,354,364,411,360,408,386,351,406,322,431,298,454,286,485,274,562,255,650,240,737,231"/>
+<area shape="poly" id="edge40_Node000026_Node000007" title=" " alt="" coords="930,230,1784,320,1780,323,931,236"/>
+<area shape="poly" id="edge35_Node000026_Node000008" title=" " alt="" coords="865,252,1034,427,1029,426,863,257"/>
+<area shape="poly" id="edge36_Node000026_Node000009" title=" " alt="" coords="889,249,1217,417,1211,419,888,254"/>
+<area shape="poly" id="edge39_Node000026_Node000010" title=" " alt="" coords="834,258,835,428,830,425,831,262"/>
+<area shape="poly" id="edge43_Node000026_Node000015" title=" " alt="" coords="779,253,702,303,658,334,613,364,582,377,556,382,534,391,513,412,503,432,498,451,501,469,513,487,530,501,555,515,627,542,724,566,843,589,1132,629,1463,661,1806,687,2130,707,2602,731,2597,731,2129,712,1805,693,1463,667,1132,634,842,594,723,571,625,547,553,520,527,505,509,490,496,470,493,451,498,430,509,408,531,386,554,377,581,372,610,360,655,330,699,298,783,251"/>
+<area shape="poly" id="edge41_Node000026_Node000023" title=" " alt="" coords="914,246,1127,317,1383,407,1427,427,1422,426,1381,413,1126,322,914,252"/>
+<area shape="poly" id="edge44_Node000026_Node000025" title=" " alt="" coords="804,254,632,437,629,433,800,256"/>
+<area shape="rect" id="Node000027" href="$thread__worker_8cpp.html" title="Implementation of worker thread for thread pool execution." alt="" coords="445,309,599,354"/>
+<area shape="poly" id="edge42_Node000026_Node000027" title=" " alt="" coords="753,251,586,311,584,306,758,248"/>
+<area shape="rect" id="Node000029" href="$typed__thread__pool__sample_8cpp.html" title="Typed thread pool with priority&#45;based job routing using built&#45;in job_types." alt="" coords="3283,418,3484,480"/>
+<area shape="poly" id="edge46_Node000028_Node000029" title=" " alt="" coords="3567,368,3453,420,3451,415,3562,369"/>
+<area shape="rect" id="Node000030" href="$typed__thread__pool__sample__2_8cpp.html" title="Typed thread pool with a custom priority enum (test_priority)" alt="" coords="3686,418,3888,480"/>
+<area shape="poly" id="edge47_Node000028_Node000030" title=" " alt="" coords="3696,370,3754,419,3749,417,3695,375"/>
+<area shape="rect" id="Node000031" href="$core_2typed__thread__pool_8h.html" title="Public forwarding header for type&#45;safe thread pool." alt="" coords="3912,427,4102,472"/>
+<area shape="poly" id="edge48_Node000028_Node000031" title=" " alt="" coords="3748,360,3901,407,3951,427,3946,426,3900,413,3748,366"/>
+<area shape="rect" id="Node000033" href="$typed__thread__pool_8cpp.html" title=" " alt="" coords="4126,427,4299,472"/>
+<area shape="poly" id="edge50_Node000028_Node000033" title=" " alt="" coords="3749,360,3852,376,3933,381,4014,388,4115,407,4166,427,4161,426,4113,413,4013,393,3933,386,3851,381,3748,365"/>
+<area shape="rect" id="Node000032" href="$typed__thread__pool_8h.html" title="Stable public include for typed_thread_pool_t." alt="" coords="3925,537,4090,581"/>
+<area shape="poly" id="edge49_Node000031_Node000032" title=" " alt="" coords="4009,486,4009,538,4005,534,4005,489"/>
+<area shape="poly" id="edge53_Node000034_Node000028" title=" " alt="" coords="3783,259,3705,302,3704,297,3778,261"/>
+<area shape="poly" id="edge54_Node000034_Node000033" title=" " alt="" coords="3952,231,4021,242,4091,256,4150,275,4173,286,4189,299,4208,329,4218,364,4220,398,4218,429,4214,425,4215,398,4212,365,4203,331,4185,302,4170,291,4148,280,4090,261,4021,247,3952,236"/>
+<area shape="rect" id="Node000035" href="$core_2typed__thread__worker_8h.html" title="Worker thread specialized for typed_thread_pool with priority queues." alt="" coords="3970,309,4175,354"/>
+<area shape="poly" id="edge52_Node000034_Node000035" title=" " alt="" coords="3928,257,4031,309,4025,308,3927,262"/>
+<area shape="rect" id="Node000036" href="$typed__thread__worker_8cpp.html" title=" " alt="" coords="3757,309,3946,354"/>
+<area shape="poly" id="edge55_Node000034_Node000036" title=" " alt="" coords="3853,266,3853,310,3849,307,3850,270"/>
+</map>

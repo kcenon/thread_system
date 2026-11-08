@@ -1,0 +1,7 @@
+<map id="kcenon::thread::policy_queue::enqueue" name="kcenon::thread::policy_queue::enqueue">
+<area shape="rect" id="Node000001" title="Enqueue a job into the queue." alt="" coords="219,40,384,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1policy__queue.html#abdaa7ada92b1824470c91869aad537f2" title="Type&#45;safe enqueue for job subclasses." alt="" coords="5,5,171,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,47,171,44,171,38,206,46"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1policy__queue.html#a5718facbc6dec8f7411f494305ee6b50" title="Schedule a job (delegates to enqueue)" alt="" coords="5,75,171,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="201,79,172,86,171,81,206,78"/>
+</map>

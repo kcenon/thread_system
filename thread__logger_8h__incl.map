@@ -1,0 +1,25 @@
+<map id="include/kcenon/thread/core/thread_logger.h" name="include/kcenon/thread/core/thread_logger.h">
+<area shape="rect" id="Node000001" title="Internal logging interface for the thread system." alt="" coords="444,5,609,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,64,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="441,39,279,63,79,100,78,95,278,58,446,37"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="88,98,184,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="444,49,200,100,199,95,442,44"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="208,98,274,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="453,50,289,99,288,94,448,51"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="297,98,372,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="478,50,380,94,378,89,473,51"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="396,98,470,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="504,49,461,90,458,85,499,51"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="495,98,558,126"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="528,49,529,84,524,81,525,52"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="583,98,646,126"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="551,48,592,88,587,86,549,53"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="671,98,750,126"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="576,48,670,91,664,91,575,53"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="775,98,841,126"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="602,48,762,97,757,97,601,53"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="865,98,929,126"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="610,42,852,97,847,97,609,48"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="953,98,1012,126"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="610,37,759,60,941,98,935,98,758,65,610,42"/>
+</map>

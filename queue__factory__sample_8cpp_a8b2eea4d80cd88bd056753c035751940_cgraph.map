@@ -1,0 +1,7 @@
+<map id="simple_factory_usage" name="simple_factory_usage">
+<area shape="rect" id="Node000001" title="Example 1: Simple factory usage." alt="" coords="5,48,170,76"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1queue__factory.html#a8265741f74ebf4cf825be54fe7412006" title="Create adaptive queue (RECOMMENDED for most use cases)" alt="" coords="218,5,451,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,48,205,45,200,47,171,53"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1queue__factory.html#a18c052cbe5654bb536063d626aea8a93" title="Create standard job_queue." alt="" coords="218,75,451,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="170,71,205,78,200,79,170,77"/>
+</map>

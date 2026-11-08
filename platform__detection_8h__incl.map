@@ -1,0 +1,9 @@
+<map id="include/kcenon/thread/utils/platform_detection.h" name="include/kcenon/thread/utils/platform_detection.h">
+<area shape="rect" id="Node000001" title="CPU architecture and platform detection utilities." alt="" coords="27,5,220,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,71,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,49,65,89,61,85,99,52"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="94,98,152,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="125,48,126,83,121,81,122,52"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="177,98,240,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="147,48,187,87,181,87,145,53"/>
+</map>

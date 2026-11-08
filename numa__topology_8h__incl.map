@@ -1,0 +1,7 @@
+<map id="include/kcenon/thread/stealing/numa_topology.h" name="include/kcenon/thread/stealing/numa_topology.h">
+<area shape="rect" id="Node000001" title="NUMA node topology detection and information." alt="" coords="5,5,198,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="23,98,92,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,49,74,85,70,82,88,52"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="116,98,178,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="115,48,135,84,130,84,112,53"/>
+</map>

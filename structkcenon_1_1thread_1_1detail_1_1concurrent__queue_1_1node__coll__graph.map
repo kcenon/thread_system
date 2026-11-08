@@ -1,0 +1,12 @@
+<map id="kcenon::thread::detail::concurrent_queue&lt; T &gt;::node" name="kcenon::thread::detail::concurrent_queue&lt; T &gt;::node">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,468,163,597"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="100,297,282,403"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,401,136,429,121,455,117,452,131,426,148,405"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1detail_1_1concurrent__queue_1_1node.html" title=" " alt="" coords="187,468,344,597"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="182,401,185,424,189,443,194,454,188,453,184,445,179,425,180,406"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="248,468,234,428,231,421,233,416,239,426,253,469"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="130,143,252,215"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="192,228,193,298,188,297,190,233"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="182,5,200,78"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="191,75,193,126,188,126,190,80"/>
+</map>

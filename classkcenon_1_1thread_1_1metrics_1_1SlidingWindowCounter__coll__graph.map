@@ -1,0 +1,17 @@
+<map id="kcenon::thread::metrics::SlidingWindowCounter" name="kcenon::thread::metrics::SlidingWindowCounter">
+<area shape="rect" id="Node000001" title="Sliding window counter for throughput measurement." alt="" coords="5,939,200,1469"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="128,767,309,874"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,871,191,924,186,922,202,876"/>
+<area shape="rect" id="Node000003" href="$structkcenon_1_1thread_1_1metrics_1_1SlidingWindowCounter_1_1Bucket.html" title="Time bucket structure." alt="" coords="119,507,284,702"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="210,699,216,751,211,750,209,705"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="44,335,239,408"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="130,410,120,455,109,507,98,611,92,717,90,921,85,921,86,717,93,611,104,506,115,454,131,405"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="150,405,175,490,169,491,151,410"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="121,143,242,215"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="140,230,138,240,133,264,131,289,136,336,131,336,126,289,128,263,133,238,142,225"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="232,5,251,78"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="232,66,206,128,201,126,233,61"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="263,239,380,311"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="251,67,306,222,301,223,251,72"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="330,323,340,409,342,515,338,573,330,632,316,689,296,745,281,769,276,766,291,742,311,688,325,631,333,573,337,515,335,409,329,329"/>
+</map>

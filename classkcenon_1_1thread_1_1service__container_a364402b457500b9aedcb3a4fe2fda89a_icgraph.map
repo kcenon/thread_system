@@ -1,0 +1,18 @@
+<map id="kcenon::thread::service_container::register_singleton" name="kcenon::thread::service_container::register_singleton">
+<area shape="rect" id="Node000001" title="Register a service with singleton lifetime." alt="" coords="367,125,581,170"/>
+<area shape="rect" id="Node000002" href="$integration__example_8cpp.html#ab1a0004b3a04a02621ceb5741c13e5dc" title="Example 3: Complete integration with both logger and monitoring." alt="" coords="133,5,294,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="421,117,373,92,318,65,290,53,289,48,320,60,375,87,426,117"/>
+<area shape="rect" id="Node000004" href="$integration__example_8cpp.html#a0f0b39a9116011a8ebfff831aca8ff5a" title="Example 4: Dynamic service registration." alt="" coords="116,74,311,102"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="357,122,277,105,277,99,362,120"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1scoped__service.html#a7adfe3bb8e43ab9577a214501bb3cbf0" title=" " alt="" coords="122,125,305,170"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="348,148,306,150,305,145,354,147"/>
+<area shape="rect" id="Node000006" href="$integration__example_8cpp.html#aa204e12bb384a3637482664094389b48" title="Example 1: Thread pool with external logger only." alt="" coords="123,195,304,239"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="370,175,301,197,299,192,375,174"/>
+<area shape="rect" id="Node000007" href="$integration__example_8cpp.html#a7128eab2a6c79a31acdc494497275084" title="Example 2: Thread pool with external monitoring only." alt="" coords="108,264,319,309"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="435,179,381,219,320,254,292,266,291,261,318,249,378,214,430,181"/>
+<area shape="rect" id="Node000003" href="$integration__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,139,60,167"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="117,57,109,64,88,82,70,102,44,140,40,137,66,99,85,78,106,60,121,53"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="125,108,109,115,58,141,55,137,107,111,129,105"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="124,190,107,185,60,166,60,161,109,180,129,188"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="112,256,106,254,84,234,64,210,40,170,41,165,69,207,87,230,109,250,118,256"/>
+</map>

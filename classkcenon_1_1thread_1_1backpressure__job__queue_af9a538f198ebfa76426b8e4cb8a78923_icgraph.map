@@ -1,0 +1,5 @@
+<map id="kcenon::thread::backpressure_job_queue::get_pressure_ratio" name="kcenon::thread::backpressure_job_queue::get_pressure_ratio">
+<area shape="rect" id="Node000001" title="Returns the current pressure as a ratio." alt="" coords="267,5,491,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#a5b87f40b7ec00c87c8a909737149eb1d" title="Returns string representation including backpressure state." alt="" coords="5,5,219,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="248,28,219,30,219,25,254,28"/>
+</map>

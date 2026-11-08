@@ -1,0 +1,19 @@
+<map id="kcenon::thread::lockfree::work_stealing_deque&lt; T &gt;" name="kcenon::thread::lockfree::work_stealing_deque&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Lock&#45;free work&#45;stealing deque based on Chase&#45;Lev algorithm." alt="" coords="215,485,409,887"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,314,192,386"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,383,208,518,203,519,120,389"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="167,143,289,215"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="153,205,132,221,113,241,104,258,99,276,97,314,92,314,94,276,99,256,108,237,128,216,156,201"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="230,297,394,403"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="222,227,226,251,232,272,248,297,243,298,227,274,221,252,221,232"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="456,5,475,78"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="455,50,306,136,302,132,458,46"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="458,75,409,274,401,286,396,283,404,272,455,80"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="425,297,588,403"/>
+<area shape="poly" id="edge8_Node000006_Node000004" title=" " alt="" coords="471,75,500,281,495,280,469,80"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="606,143,724,215"/>
+<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="474,46,603,133,597,134,475,52"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="313,401,315,469,309,467,311,406"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="478,401,420,505,416,502,475,405"/>
+<area shape="poly" id="edge9_Node000006_Node000007" title=" " alt="" coords="621,228,557,299,553,295,624,224"/>
+</map>

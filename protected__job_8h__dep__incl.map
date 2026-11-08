@@ -1,0 +1,5 @@
+<map id="include/kcenon/thread/resilience/protected_job.h" name="include/kcenon/thread/resilience/protected_job.h">
+<area shape="rect" id="Node000001" title="Job wrapper integrating circuit breaker protection." alt="" coords="5,5,199,50"/>
+<area shape="rect" id="Node000002" href="$protected__job_8cpp.html" title=" " alt="" coords="15,98,189,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,64,104,99,100,97,100,68"/>
+</map>

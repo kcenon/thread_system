@@ -1,0 +1,27 @@
+<map id="src/core/thread_logger_init.cpp" name="src/core/thread_logger_init.cpp">
+<area shape="rect" id="Node000001" title="Early initialization of thread_logger shutdown handler for SDOF prevention." alt="" coords="443,5,610,50"/>
+<area shape="rect" id="Node000002" href="$thread__logger_8h.html" title="Internal logging interface for the thread system." alt="" coords="453,98,600,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="528,48,529,84,524,81,525,52"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,191,64,218"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="450,130,286,155,79,193,78,188,285,150,456,129"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="88,191,184,218"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="454,140,200,193,199,187,452,134"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="208,191,274,218"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="456,142,289,192,288,187,450,143"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="297,191,372,218"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="478,143,380,187,378,182,473,144"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="396,191,470,218"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="504,142,461,183,458,178,499,144"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="495,191,558,218"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="528,141,529,177,524,173,525,145"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="583,191,646,218"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="551,141,592,181,587,179,549,146"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="671,191,750,218"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="576,141,670,184,664,184,575,146"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="775,191,841,218"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="600,140,762,189,757,189,600,146"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="865,191,929,218"/>
+<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="600,133,853,190,848,190,600,138"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="953,191,1012,218"/>
+<area shape="poly" id="edge12_Node000002_Node000013" title=" " alt="" coords="600,128,752,151,941,190,935,190,752,157,600,134"/>
+</map>

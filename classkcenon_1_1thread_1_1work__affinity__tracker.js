@@ -1,0 +1,26 @@
+var classkcenon_1_1thread_1_1work__affinity__tracker =
+[
+    [ "work_affinity_tracker", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a60f5490442b86e60038c6c17efe4b048", null ],
+    [ "work_affinity_tracker", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a2fcb818f425395c5d375332f502e4d4e", null ],
+    [ "work_affinity_tracker", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a5a2a72dc4d8b9d45f96a1fb75ff81fa4", null ],
+    [ "work_affinity_tracker", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a817586653e0f3b1269fc7318077cfc90", null ],
+    [ "~work_affinity_tracker", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a9c44583d487d0cb24b76b5768e8ffbd4", null ],
+    [ "get_affinity", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a285e3fa8e5791f29b0c81a864cee8551", null ],
+    [ "get_matrix_index", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a8e269ba1c2de1efdf0a97d2507920064", null ],
+    [ "get_preferred_victims", "classkcenon_1_1thread_1_1work__affinity__tracker.html#afcdf69a0f81fe26003971ece9ac4dc79", null ],
+    [ "history_size", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a5d308ea6cf2012a3e88f9138f145379a", null ],
+    [ "normalize_pair", "classkcenon_1_1thread_1_1work__affinity__tracker.html#ab7f9933b718203b939239954aac3a2e7", null ],
+    [ "operator=", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a0f73d422c17b23b5f04c93582fdb0dd9", null ],
+    [ "operator=", "classkcenon_1_1thread_1_1work__affinity__tracker.html#ad4216672eea173ec9afae970fdd257f8", null ],
+    [ "record_cooperation", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a687f8b624edcdde822a657ceafc5e86c", null ],
+    [ "reset", "classkcenon_1_1thread_1_1work__affinity__tracker.html#ad51ce4953f02c5901690039cf33cd5f1", null ],
+    [ "total_cooperations", "classkcenon_1_1thread_1_1work__affinity__tracker.html#ae3481ae9295910549e89b65792e4ab49", null ],
+    [ "worker_count", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a33efe0e77951181ce213885aa94b32db", null ],
+    [ "cooperation_matrix_", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a8d5940a376e0ff19d6c98c3d3d28d82d", null ],
+    [ "history_size_", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a6300c36bcc032b30c0660cd5df011307", null ],
+    [ "matrix_size_", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a9d0989e3d3af9f0cce19568a57f1cd5a", null ],
+    [ "MAX_TRACKED_WORKERS", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a349ead13768f498b97372cca72c0a6b1", null ],
+    [ "total_cooperations_", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a7547110f9ea70122ae704ed30e7b8da8", null ],
+    [ "tracked_count_", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a77ad68653c1a3cf42bf5bc94004fd711", null ],
+    [ "worker_count_", "classkcenon_1_1thread_1_1work__affinity__tracker.html#a8699d7c56b3afd744b1ca7c3ff224508", null ]
+];

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::detail::has_do_work_method&lt; T, typename &gt;" name="kcenon::thread::detail::has_do_work_method&lt; T, typename &gt;">
+<area shape="rect" id="Node000001" title="SFINAE helper to detect if a type has a do_work method." alt="" coords="5,126,177,232"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="38,5,144,78"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,90,94,127,89,126,90,95"/>
+</map>

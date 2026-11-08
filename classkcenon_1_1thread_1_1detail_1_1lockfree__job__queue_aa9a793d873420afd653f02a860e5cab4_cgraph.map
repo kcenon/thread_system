@@ -1,0 +1,15 @@
+<map id="kcenon::thread::detail::lockfree_job_queue::retire_node" name="kcenon::thread::detail::lockfree_job_queue::retire_node">
+<area shape="rect" id="Node000001" title="Retire a node through hazard pointers, recycling via pool on reclamation." alt="" coords="5,48,170,110"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a489ed9f947f27820791f237e1ed3576f" title="Get singleton instance." alt="" coords="218,5,399,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,60,205,55,200,58,171,65"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a5dbea55217b9dbb8bf8dfe167e548ca7" title="Retire a pointer for later reclamation." alt="" coords="218,91,399,152"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="170,92,205,100,200,102,170,97"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#a4757c51c9a4bd33934e5a928df10b902" title="Collect reclaimable objects." alt="" coords="448,48,629,110"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="399,102,435,98,430,99,400,107"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#ae53dcb6a4fe401fba69359eeca5fc910" title="Get adaptive threshold based on active thread count." alt="" coords="447,133,629,195"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="400,136,434,144,429,144,399,141"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__domain.html#affee714bf1ce5f368c1f3d77fb9fe611" title="Collect reclaimable objects (internal, lock held)" alt="" coords="677,48,859,110"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="629,76,664,79,659,79,630,81"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1safe__hazard__pointer__record.html#ae368cdbfdf4ea5e527bbf7432ee53f58" title="Get protected pointer at slot." alt="" coords="907,56,1109,101"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="859,76,894,79,889,79,859,81"/>
+</map>

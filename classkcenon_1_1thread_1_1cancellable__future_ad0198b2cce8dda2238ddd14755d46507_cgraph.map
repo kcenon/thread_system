@@ -1,0 +1,5 @@
+<map id="kcenon::thread::cancellable_future::cancel" name="kcenon::thread::cancellable_future::cancel">
+<area shape="rect" id="Node000001" title="Request cancellation of the operation." alt="" coords="5,5,206,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1cancellation__token.html#a28cd0249c272db21c45622fbcda35f66" title="Cancels the operation." alt="" coords="254,5,459,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,25,241,27,235,28,206,30"/>
+</map>

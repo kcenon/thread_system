@@ -1,0 +1,5 @@
+<map id="kcenon::thread::atomic_wait_helper&lt; T &gt;" name="kcenon::thread::atomic_wait_helper&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Helper class to add wait/notify functionality to std::atomic." alt="" coords="5,143,166,277"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="45,5,126,78"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,75,88,126,83,126,85,80"/>
+</map>

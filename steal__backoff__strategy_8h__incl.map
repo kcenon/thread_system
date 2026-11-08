@@ -1,0 +1,13 @@
+<map id="include/kcenon/thread/stealing/steal_backoff_strategy.h" name="include/kcenon/thread/stealing/steal_backoff_strategy.h">
+<area shape="rect" id="Node000001" title="Backoff strategies for work&#45;stealing operations." alt="" coords="154,5,322,67"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,90,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,69,90,110,88,106,173,66"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="114,115,179,143"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,66,172,106,169,102,205,68"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="204,115,273,143"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="240,66,240,101,236,98,236,69"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="298,115,363,143"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="270,65,309,104,303,103,268,70"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="386,115,458,143"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="300,65,385,108,379,108,299,70"/>
+</map>

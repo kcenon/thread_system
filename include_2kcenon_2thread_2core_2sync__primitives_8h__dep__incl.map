@@ -1,0 +1,7 @@
+<map id="include/kcenon/thread/core/sync_primitives.h" name="include/kcenon/thread/core/sync_primitives.h">
+<area shape="rect" id="Node000001" title="RAII&#45;based synchronization primitives including scoped lock with timeout." alt="" coords="101,5,273,50"/>
+<area shape="rect" id="Node000002" href="$core_2sync_2include_2sync__primitives_8h.html" title=" " alt="" coords="5,98,174,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,59,114,100,111,95,150,62"/>
+<area shape="rect" id="Node000003" href="$core_8cppm.html" title="C++20 module partition for thread_system core components." alt="" coords="198,106,370,134"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,58,273,106,267,106,220,63"/>
+</map>

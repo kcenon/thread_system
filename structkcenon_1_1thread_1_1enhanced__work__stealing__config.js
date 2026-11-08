@@ -1,0 +1,25 @@
+var structkcenon_1_1thread_1_1enhanced__work__stealing__config =
+[
+    [ "batch_optimized", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a2b2ebb6b917ed2727f13fa8a87b5cb47", null ],
+    [ "default_config", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a5afc927373059def84e9cba02e76feed", null ],
+    [ "hierarchical_numa", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a053ced45c373a66304eae80be04e9ec2", null ],
+    [ "locality_optimized", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#aaa6687f1f4ec4bb02e7172945d01d7a8", null ],
+    [ "numa_optimized", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a876c59267e44bd2ac7eb9a339d8cc47a", null ],
+    [ "adaptive_batch_size", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#aeb8d1117aea1422d2a4066626c387c93", null ],
+    [ "backoff_multiplier", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#aa41a0df20b5496e2d040d8ea5e054e85", null ],
+    [ "backoff_strategy", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a281f82291b8fabbd2662d0312ce8817f", null ],
+    [ "collect_statistics", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a4ad15bee031847d7d67ce27dddceed92", null ],
+    [ "enabled", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#aadf9e02f7ea8bf0d0bfb55417d5322f8", null ],
+    [ "initial_backoff", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a5c457eb50950e9289788a988164c03f5", null ],
+    [ "locality_history_size", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#aca00f2e1269cb717d0e72f78f2fc97e5", null ],
+    [ "max_backoff", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a047424f65dfecc8d5f62b2d703346fb5", null ],
+    [ "max_consecutive_failures", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#ac5877ae139a2c3a132f2b055de10c4af", null ],
+    [ "max_steal_attempts", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a1f717ce8be1d7e71d86bb346bc3b54ca", null ],
+    [ "max_steal_batch", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a0f4d1278e85e467d377d97b7adb1b54e", null ],
+    [ "min_steal_batch", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a2d7ba3b0562ac7cbd26ec4df77b1da84", null ],
+    [ "numa_aware", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a6d77b3245881d1b7e74637115a805120", null ],
+    [ "numa_penalty_factor", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#ae3e19373a50280b0f8880ef8a4d91ecf", null ],
+    [ "policy", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#adf3ad17194d74fa79ba113a58f5859dd", null ],
+    [ "prefer_same_node", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#af40d01e49bf3799161595991fcc713c8", null ],
+    [ "track_locality", "structkcenon_1_1thread_1_1enhanced__work__stealing__config.html#a159c3b856e2ef844c01e5bfbbeac4bc2", null ]
+];

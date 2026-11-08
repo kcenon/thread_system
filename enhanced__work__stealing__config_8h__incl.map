@@ -1,0 +1,20 @@
+<map id="include/kcenon/thread/stealing/enhanced_work_stealing_config.h" name="include/kcenon/thread/stealing/enhanced_work_stealing_config.h">
+<area shape="rect" id="Node000001" title="Configuration for enhanced work&#45;stealing with NUMA awareness." alt="" coords="269,5,452,67"/>
+<area shape="rect" id="Node000002" href="$enhanced__steal__policy_8h.html" title="Enhanced policies for selecting work&#45;stealing victims." alt="" coords="5,115,185,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="270,70,149,112,147,107,273,66"/>
+<area shape="rect" id="Node000004" href="$steal__backoff__strategy_8h.html" title="Backoff strategies for work&#45;stealing operations." alt="" coords="208,115,387,143"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="342,66,317,104,314,100,337,69"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="361,191,426,218"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="381,65,393,89,402,114,405,146,401,177,397,174,399,146,396,116,388,91,378,70"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="451,191,520,218"/>
+<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="384,65,421,113,469,179,464,177,417,117,382,70"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="66,191,132,218"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,141,100,176,95,174,94,145"/>
+<area shape="poly" id="edge7_Node000004_Node000003" title=" " alt="" coords="265,143,147,188,146,183,259,143"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="253,191,337,218"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="299,141,298,177,294,173,295,145"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="316,141,367,181,362,181,314,146"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="332,141,441,185,436,185,331,146"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="158,191,229,218"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="282,142,225,184,223,179,277,144"/>
+</map>

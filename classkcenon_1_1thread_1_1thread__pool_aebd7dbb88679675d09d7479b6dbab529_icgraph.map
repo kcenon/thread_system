@@ -1,0 +1,15 @@
+<map id="kcenon::thread::thread_pool::get_job_queue" name="kcenon::thread::thread_pool::get_job_queue">
+<area shape="rect" id="Node000001" title="Returns the shared job_queue used by this thread pool." alt="" coords="750,82,919,126"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a02c6b078d35493754223fcfdaaf57d45" title="Checks queue component health." alt="" coords="502,5,702,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="739,77,703,68,703,63,744,77"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a9ab588881fb90a45966cf463c9e7990d" title="Performs comprehensive health check." alt="" coords="254,39,454,100"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="732,98,454,79,454,74,738,96"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a4b93368a3bdd15a158627d9c2c9672e6" title="Analyzes for bottlenecks." alt="" coords="254,124,454,186"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="738,114,455,147,454,142,732,115"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="484,52,455,59,454,53,489,51"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a228383967039855596df136bcd696ab7" title="Exports diagnostics as JSON." alt="" coords="5,124,206,186"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="250,105,198,126,197,121,245,107"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a3869a283fd860d747c4cf485242103c1" title="Exports diagnostics as Prometheus&#45;compatible metrics." alt="" coords="5,39,206,100"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="236,70,207,72,205,67,241,69"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="236,155,206,157,206,152,241,155"/>
+</map>

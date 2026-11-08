@@ -1,0 +1,12 @@
+<map id="kcenon::thread::thread_context_builder" name="kcenon::thread::thread_context_builder">
+<area shape="rect" id="Node000001" title="Builder for thread_context with fluent interface." alt="" coords="119,417,291,574"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,280,191,352"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,349,152,403,147,403,118,355"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="131,143,276,215"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="166,229,127,282,123,279,168,224"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="216,280,407,352"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="241,224,286,280,281,281,240,229"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="194,5,213,78"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="204,75,206,126,201,126,203,80"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="293,350,262,405,258,401,289,354"/>
+</map>

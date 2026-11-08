@@ -1,0 +1,7 @@
+<map id="cancellable_long_job::do_work" name="cancellable_long_job::do_work">
+<area shape="rect" id="Node000001" title="The core task execution method to be overridden by derived classes." alt="" coords="5,40,163,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1job.html#ac4d4e155b7951df7721ec40de03d40f4" title="Retrieves the name of this job." alt="" coords="240,5,386,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,48,227,40,222,42,163,53"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1cancellation__token.html#ae6f752c51fe6a2a735313550812edbfc" title="Checks if the token has been canceled." alt="" coords="211,75,416,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="163,72,198,79,192,79,163,77"/>
+</map>

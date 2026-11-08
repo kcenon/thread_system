@@ -1,0 +1,11 @@
+<map id="kcenon::thread::safe_hazard_pointer_domain::retire" name="kcenon::thread::safe_hazard_pointer_domain::retire">
+<area shape="rect" id="Node000001" title="Retire a pointer for later reclamation." alt="" coords="437,48,618,110"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#aa9a793d873420afd653f02a860e5cab4" title="Retire a node through hazard pointers, recycling via pool on reclamation." alt="" coords="225,8,389,70"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="419,60,390,56,390,51,424,59"/>
+<area shape="rect" id="Node000004" href="$namespacekcenon_1_1thread.html#abbef4c71250bf88a52b80313ec1db89d" title=" " alt="" coords="230,95,384,140"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="424,97,385,107,384,101,419,98"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1detail_1_1lockfree__job__queue.html#a0358cd30749f36d3f3e00570b20d46e0" title="Destructor." alt="" coords="9,5,173,67"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="207,39,174,40,173,35,212,37"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1typed__safe__hazard__domain.html#aa81f5a9cbeb6d72a8ed6e9cf78bd298e" title=" " alt="" coords="5,91,177,152"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="211,120,177,123,177,117,217,119"/>
+</map>

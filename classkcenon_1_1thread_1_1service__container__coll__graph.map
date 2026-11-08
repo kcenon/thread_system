@@ -1,0 +1,20 @@
+<map id="kcenon::thread::service_container" name="kcenon::thread::service_container">
+<area shape="rect" id="Node000001" title="Modern service container for dependency injection." alt="" coords="8,833,171,1057"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,670,86,743"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="52,740,69,816,63,817,52,745"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="110,645,294,768"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="174,766,152,820,147,817,172,770"/>
+<area shape="rect" id="Node000004" href="$structkcenon_1_1thread_1_1service__container_1_1service__entry.html" title=" " alt="" coords="42,468,217,580"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="147,577,164,620,168,630,163,630,159,622,147,583"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="39,297,204,369"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="123,366,129,452,124,451,123,372"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="18,151,164,224"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="101,235,117,297,112,298,102,240"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="114,5,132,78"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="113,59,105,78,95,102,91,135,86,134,90,101,100,76,115,54"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="187,143,328,232"/>
+<area shape="poly" id="edge9_Node000008_Node000007" title=" " alt="" coords="131,54,155,85,181,117,194,131,189,132,177,120,150,88,133,60"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="262,244,266,322,265,416,257,519,240,622,233,646,228,644,235,620,252,519,260,416,261,322,261,250"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="252,5,272,78"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="261,75,262,126,257,125,260,80"/>
+</map>

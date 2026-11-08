@@ -1,0 +1,15 @@
+<map id="src/stealing/numa_topology.cpp" name="src/stealing/numa_topology.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="177,5,404,33"/>
+<area shape="rect" id="Node000002" href="$numa__topology_8h.html" title="NUMA node topology detection and information." alt="" coords="5,81,176,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,35,159,77,157,72,260,32"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="200,90,285,117"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="285,32,260,78,256,74,281,35"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="309,90,368,117"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="299,31,326,77,321,76,297,36"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="392,90,456,117"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="312,31,392,81,387,81,311,36"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="12,174,81,201"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="81,124,63,161,59,158,77,128"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="105,174,167,201"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="104,124,124,160,119,160,101,128"/>
+</map>

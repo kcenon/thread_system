@@ -1,0 +1,17 @@
+<map id="include/kcenon/thread/diagnostics/health_status.h" name="include/kcenon/thread/diagnostics/health_status.h">
+<area shape="rect" id="Node000001" title="Health status thresholds and monitoring for thread pools." alt="" coords="206,5,409,50"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,98,71,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,53,87,99,85,94,235,48"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="95,98,160,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="262,50,171,94,169,89,257,51"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="184,98,258,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="287,49,247,89,244,85,282,51"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="282,98,332,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="309,48,310,84,305,81,305,52"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="357,98,431,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="331,48,372,88,367,87,329,53"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="456,98,514,126"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="355,48,445,91,440,91,354,53"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="538,98,600,126"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="377,48,525,96,520,96,376,53"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kcenon::thread::token_bucket::available_tokens" name="kcenon::thread::token_bucket::available_tokens">
+<area shape="rect" id="Node000001" title="Returns the current number of available tokens." alt="" coords="5,5,195,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1token__bucket.html#acc8ab145afb6fa04f9feef168c2087a0" title="Refills tokens based on elapsed time since last refill." alt="" coords="243,5,405,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,25,230,27,224,28,195,30"/>
+</map>

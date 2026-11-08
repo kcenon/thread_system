@@ -1,0 +1,5 @@
+<map id="kcenon::thread::autoscaler::~autoscaler" name="kcenon::thread::autoscaler::~autoscaler">
+<area shape="rect" id="Node000001" title="Destructor. Stops the monitor thread if running." alt="" coords="5,5,200,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1autoscaler.html#ab32457dfc63f19f1729fce7bd94912f9" title="Stops the autoscaling monitor thread." alt="" coords="248,5,442,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,25,235,27,230,28,200,30"/>
+</map>

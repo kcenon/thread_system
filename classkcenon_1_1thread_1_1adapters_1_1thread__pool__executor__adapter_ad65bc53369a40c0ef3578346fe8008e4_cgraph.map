@@ -1,0 +1,7 @@
+<map id="kcenon::thread::adapters::thread_pool_executor_adapter::shutdown" name="kcenon::thread::adapters::thread_pool_executor_adapter::shutdown">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,189,67"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1thread__pool.html#af0d13085ca8af0504a4b4a82630fc18d" title="Stops the thread pool and all worker threads." alt="" coords="237,14,405,58"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,34,224,36,218,36,189,39"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1utils_1_1formatter.html#aec5fe973e44efa3d1040ff7bec85f822" title="Formats a narrow&#45;character string with the given arguments." alt="" coords="453,14,607,58"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="406,34,440,36,435,36,406,39"/>
+</map>

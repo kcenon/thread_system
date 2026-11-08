@@ -1,0 +1,16 @@
+<map id="kcenon::thread::metrics::MetricsBackend" name="kcenon::thread::metrics::MetricsBackend">
+<area shape="rect" id="Node000001" title="Abstract interface for metrics export backends." alt="" coords="160,468,325,736"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="198,160,274,232"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="273,229,289,255,302,304,305,354,303,404,295,453,290,451,297,403,300,354,296,304,284,257,273,235"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="106,314,257,403"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="221,229,213,257,200,299,195,297,208,255,219,234"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="172,5,300,95"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="237,107,239,160,233,159,235,112"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="193,400,207,452,202,452,192,406"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,160,128,232"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="68,244,76,268,85,289,108,315,103,317,80,291,71,270,68,249"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="30,14,50,86"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="38,83,44,135,46,143,41,144,39,136,38,89"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="107,14,125,86"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="106,81,87,145,82,143,107,76"/>
+</map>

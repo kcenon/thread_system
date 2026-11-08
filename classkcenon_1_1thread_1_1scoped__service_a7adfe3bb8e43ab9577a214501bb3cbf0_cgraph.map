@@ -1,0 +1,7 @@
+<map id="kcenon::thread::scoped_service::scoped_service" name="kcenon::thread::scoped_service::scoped_service">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,40,189,85"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1service__container.html#a8be7271c31c2b1efed81c5bcb56c5502" title="Get the global service container instance." alt="" coords="257,5,430,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,47,244,41,239,43,190,52"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1service__container.html#a364402b457500b9aedcb3a4fe2fda89a" title="Register a service with singleton lifetime." alt="" coords="237,75,451,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="189,73,224,80,218,80,189,78"/>
+</map>

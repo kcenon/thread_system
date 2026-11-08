@@ -1,0 +1,7 @@
+<map id="kcenon::thread::cancellation_token::create_linked" name="kcenon::thread::cancellation_token::create_linked">
+<area shape="rect" id="Node000001" title="Creates a linked token that is canceled when any of the parent tokens are canceled." alt="" coords="5,5,211,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1cancellation__token.html#a96d31c388122def979393ed4b19a3061" title="Creates a new cancellation token." alt="" coords="259,5,464,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,25,245,27,240,28,211,30"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1cancellation__token.html#a43cb9007fd321a0e234353ea7b6f252b" title=" " alt="" coords="512,5,717,50"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="465,25,499,28,493,28,465,30"/>
+</map>

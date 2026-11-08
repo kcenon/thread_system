@@ -1,0 +1,18 @@
+<map id="include/kcenon/thread/stealing/steal_backoff_strategy.h" name="include/kcenon/thread/stealing/steal_backoff_strategy.h">
+<area shape="rect" id="Node000001" title="Backoff strategies for work&#45;stealing operations." alt="" coords="136,5,304,67"/>
+<area shape="rect" id="Node000002" href="$enhanced__work__stealing__config_8h.html" title="Configuration for enhanced work&#45;stealing with NUMA awareness." alt="" coords="64,115,248,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,83,176,116,172,113,196,78"/>
+<area shape="rect" id="Node000006" href="$numa__work__stealer_8h.html" title="NUMA&#45;aware work stealer with enhanced victim selection policies." alt="" coords="175,225,396,269"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="245,78,263,114,278,173,286,225,281,224,273,174,257,116,245,83"/>
+<area shape="rect" id="Node000003" href="$numa__thread__pool_8h.html" title="NUMA&#45;aware thread pool optimized for Non&#45;Uniform Memory Access architectures." alt="" coords="50,317,240,362"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="155,190,149,318,144,316,152,194"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="208,184,260,224,255,225,207,189"/>
+<area shape="rect" id="Node000004" href="$thread__pool_8h.html" title="Stable public include for thread_pool and numa_thread_pool." alt="" coords="5,410,171,455"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="126,373,103,412,99,408,121,376"/>
+<area shape="rect" id="Node000005" href="$numa__thread__pool_8cpp.html" title=" " alt="" coords="195,410,368,455"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="191,368,252,409,246,410,190,374"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="237,280,180,319,177,315,241,276"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="287,283,284,411,279,409,282,286"/>
+<area shape="rect" id="Node000007" href="$numa__work__stealer_8cpp.html" title=" " alt="" coords="318,317,495,362"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="326,276,380,317,375,317,325,281"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="kcenon::thread::job_queue::get_max_size" name="kcenon::thread::job_queue::get_max_size">
+<area shape="rect" id="Node000001" title="Get the maximum queue size." alt="" coords="539,5,705,50"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#af9a538f198ebfa76426b8e4cb8a78923" title="Returns the current pressure as a ratio." alt="" coords="267,5,491,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="521,28,492,30,491,25,526,28"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1backpressure__job__queue.html#a5b87f40b7ec00c87c8a909737149eb1d" title="Returns string representation including backpressure state." alt="" coords="5,5,219,50"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="248,28,219,30,219,25,254,28"/>
+</map>

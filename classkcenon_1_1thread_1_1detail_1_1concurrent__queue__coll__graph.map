@@ -1,0 +1,20 @@
+<map id="kcenon::thread::detail::concurrent_queue&lt; T &gt;" name="kcenon::thread::detail::concurrent_queue&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Thread&#45;safe MPMC queue with blocking wait support (Internal implementation)" alt="" coords="406,559,578,871"/>
+<area shape="rect" id="Node000002" href="$structkcenon_1_1thread_1_1detail_1_1concurrent__queue_1_1node.html" title=" " alt="" coords="5,143,163,271"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="52,273,39,316,29,364,30,413,35,436,45,458,77,503,115,543,158,577,205,607,254,633,302,654,393,688,387,689,300,659,251,638,202,612,155,582,111,547,73,506,41,461,30,438,24,414,24,363,34,314,53,268"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="104,353,286,460"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="79,268,85,300,95,328,103,340,97,342,90,331,80,302,78,274"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="161,354,147,331,126,288,125,283,152,328,166,353"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="383,171,505,243"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="367,222,332,233,293,249,257,270,226,297,209,324,201,354,196,353,205,322,221,294,254,265,291,244,330,228,371,218"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="310,370,490,443"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="434,256,410,372,405,370,432,260"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="515,370,656,443"/>
+<area shape="poly" id="edge10_Node000008_Node000004" title=" " alt="" coords="493,251,530,294,554,332,573,371,568,370,550,335,526,297,493,257"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="435,5,454,78"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="445,75,447,155,442,153,443,80"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="680,370,760,443"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="704,440,646,536,591,607,588,603,642,533,700,444"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="412,440,443,543,438,542,409,445"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="577,440,547,544,542,541,573,444"/>
+</map>

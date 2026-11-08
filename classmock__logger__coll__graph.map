@@ -1,0 +1,7 @@
+<map id="mock_logger" name="mock_logger">
+<area shape="rect" id="Node000001" title="Mock logger implementation for demonstration." alt="" coords="118,160,251,478"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,201,95"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,107,139,160,134,160,121,112"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="226,14,306,86"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="256,84,240,145,235,143,254,88"/>
+</map>

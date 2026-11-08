@@ -1,0 +1,15 @@
+<map id="kcenon::thread::work_affinity_tracker" name="kcenon::thread::work_affinity_tracker">
+<area shape="rect" id="Node000001" title="Tracks cooperation patterns between workers for locality&#45;aware stealing." alt="" coords="5,644,204,1158"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="244,473,392,579"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="287,581,215,713,210,710,290,577"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="26,335,221,408"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="111,410,98,473,91,549,89,627,84,627,86,549,93,472,112,405"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="168,405,241,461,236,463,169,410"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="111,143,232,215"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="123,230,120,240,114,264,112,289,117,336,112,336,107,289,109,263,115,238,125,224"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="224,5,242,78"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="223,66,197,128,192,126,224,61"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="245,239,391,311"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="242,65,302,223,297,224,242,71"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="319,324,321,473,316,473,317,329"/>
+</map>

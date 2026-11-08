@@ -1,0 +1,9 @@
+<map id="kcenon::thread::numa_node" name="kcenon::thread::numa_node">
+<area shape="rect" id="Node000001" title="Information about a single NUMA node." alt="" coords="5,417,197,512"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="38,280,164,352"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,350,104,401,99,400,100,354"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="42,143,160,215"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="102,227,104,281,99,280,101,232"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="92,5,110,78"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="102,75,104,126,99,126,101,80"/>
+</map>

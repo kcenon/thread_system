@@ -1,0 +1,15 @@
+<map id="kcenon::thread::thread_pool::is_running" name="kcenon::thread::thread_pool::is_running">
+<area shape="rect" id="Node000001" title="Check if the thread pool is currently running." alt="" coords="750,142,919,186"/>
+<area shape="rect" id="Node000002" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#af4c2c61cb9816ef9d83d26428cf44893" title="Checks worker component health." alt="" coords="502,48,702,110"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="755,136,688,113,688,108,760,136"/>
+<area shape="rect" id="Node000006" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#ab73d65dbef6010a9f0d728d396c9f904" title="Quick check if pool is healthy." alt="" coords="502,133,702,195"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="733,164,703,167,703,162,738,164"/>
+<area shape="rect" id="Node000007" href="$classkcenon_1_1thread_1_1adapters_1_1thread__pool__executor__adapter.html#a987270ea619ad8c239a309cdb157b30d" title=" " alt="" coords="510,219,694,280"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="760,192,689,221,687,215,755,193"/>
+<area shape="rect" id="Node000003" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a9ab588881fb90a45966cf463c9e7990d" title="Performs comprehensive health check." alt="" coords="254,48,454,110"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="484,79,455,81,454,76,489,78"/>
+<area shape="rect" id="Node000004" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a228383967039855596df136bcd696ab7" title="Exports diagnostics as JSON." alt="" coords="5,5,206,67"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="236,60,207,56,205,51,241,58"/>
+<area shape="rect" id="Node000005" href="$classkcenon_1_1thread_1_1diagnostics_1_1thread__pool__diagnostics.html#a3869a283fd860d747c4cf485242103c1" title="Exports diagnostics as Prometheus&#45;compatible metrics." alt="" coords="5,91,206,152"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="236,100,207,107,205,102,241,97"/>
+</map>
