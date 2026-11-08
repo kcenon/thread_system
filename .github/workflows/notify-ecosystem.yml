@@ -9,7 +9,7 @@ permissions:
 jobs:
   notify:
     name: Notify common and await raw ecosystem results
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: vars.ECOSYSTEM_DISPATCH_ENABLED == 'true' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
     runs-on: ubuntu-24.04
     timeout-minutes: 80
     steps:
