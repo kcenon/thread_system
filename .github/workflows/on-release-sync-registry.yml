@@ -56,7 +56,7 @@ jobs:
 
   sync:
     needs: verify-archive
-    uses: kcenon/common_system/.github/workflows/sync-vcpkg-registry.yml@13de8adc727f0df4c6f2bf9d11f949bd9e0038c7
+    uses: kcenon/common_system/.github/workflows/sync-vcpkg-registry.yml@9edf2e5b91461353c296821e33fff1df4a2395e2
     with:
       port-name: kcenon-thread-system
       version: ${{ github.event.release.tag_name }}
